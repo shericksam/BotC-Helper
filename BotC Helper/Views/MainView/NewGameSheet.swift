@@ -11,12 +11,21 @@ struct NewGameSheet: View {
     var onStart: (BoardState) -> Void
     @Environment(\.dismiss) var dismiss
     @State private var playerCount = 5
+    @State private var yourSeat = 1
 
     var body: some View {
         NavigationView {
             Form {
                 Section(header: Text("Cantidad de jugadores")) {
                     Stepper("\(playerCount) jugadores", value: $playerCount, in: 5...20)
+                }
+                Section(header: Text("¿En qué asiento eres tú?")) {
+                    Picker("Tu asiento", selection: $yourSeat) {
+                        ForEach(1...playerCount, id: \.self) { idx in
+                            Text("Asiento \(idx)").tag(idx)
+                        }
+                    }
+                    .pickerStyle(.wheel)
                 }
             }
             .navigationTitle("Nueva Partida")
@@ -25,8 +34,8 @@ struct NewGameSheet: View {
                     Button("Iniciar") {
                         dismiss()
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
-                            let players = (1...playerCount).map {
-                                Player(seatNumber: $0, name: "", claim: "")
+                            let players = (1...playerCount).map { i in
+                                Player(seatNumber: i, name: "", claim: "", isMe: (i == yourSeat))
                             }
                             // Día 0: todos vivos, nadie votó
                             let day0 = players.map { p in PlayerStatusPerDay(seatNumber: p.seatNumber) }
@@ -42,6 +51,7 @@ struct NewGameSheet: View {
         }
     }
 }
+
 #Preview {
-    NewGameSheet(onStart: { _ in print("Started game!")})
+    NewGameSheet(onStart: { _  in print("Started game!")})
 }

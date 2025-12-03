@@ -35,10 +35,14 @@ struct BoardView: View {
                     Spacer()
                     Button(action: {
                         // Añadir nuevo día, copiando el estado del día actual
-//                        nextDayCopy(from: board.currentDay - 1)
                         Task {
                             let prevStatuses = board.days[board.currentDay]
-                            let copied = prevStatuses.map { $0 } // Clona el arreglo
+                            let copied = prevStatuses.map { prevStatus in
+                                var newStatus = prevStatus
+                                newStatus.voted = false
+                                newStatus.nominated = false
+                                return newStatus
+                            } // Clona el arreglo
                             Task { @MainActor in
                                 board.days.append(copied)
                                 board.currentDay = board.days.count - 1 // pasa al nuevo día
@@ -69,7 +73,8 @@ struct BoardView: View {
                                 let pos = positions[idx]
                                 PlayerCircle(
                                     player: board.players[idx],
-                                    status: board.days[board.currentDay][idx]
+                                    status: board.days[board.currentDay][idx],
+                                    isMe: board.players[idx].isMe
                                 ) { editingIndex = idx }
                                     .position(pos)
                             }
@@ -104,35 +109,32 @@ struct BoardView: View {
         }
         .navigationTitle("Tablero")
         // Sheet para editar jugador
-        .sheet(isPresented: .constant(editingIndex != nil), onDismiss: { editingIndex = nil }) {
+        .sheet(isPresented: .constant(editingIndex != nil), onDismiss: {
+            editingIndex = nil
+        }) {
             if let idx = editingIndex, idx < board.players.count, idx < board.days[board.currentDay].count {
                 // copia de status activo
+                let isMe = board.players[idx].isMe
                 let status = board.days[board.currentDay][idx]
-
-                PlayerEditor(player: $board.players[idx], status: status) { updated in
-                    board.days[board.currentDay][idx] = updated
-                }
+                let statusHistorial = board.days.map { $0[idx] }
+                PlayerEditor(
+                    player: $board.players[idx],
+                    status: status,
+                    onSave: { updated, notes in
+                        board.days[board.currentDay][idx] = updated
+                        board.players[idx].personalNotes = notes
+                    },
+                    isMe: isMe,
+                    totalDays: board.days.count,
+                    statusesByDay: statusHistorial,
+                    currentDayIndex: board.currentDay
+                )
             } else {
                 // Fallback defensivo si el índice no es válido
                 Text("No hay jugador para editar")
             }
         }
     }
-
-//    func nextDayCopy(from previousDay: GameDay) -> GameDay {
-//        let nextDay = GameDay(dayNumber: previousDay.dayNumber + 1)
-//        nextDay.playerStatuses = previousDay.playerStatuses.map { prevStatus in
-//            PlayerStatus(
-//                seatNumber: prevStatus.seatNumber,
-//                voted: false,
-//                nominated: false,
-//                dead: prevStatus.dead, // Solo el estado de muerte se hereda
-//                notes: "",
-//                personalNotes: ""
-//            )
-//        }
-//        return nextDay
-//    }
 
     func squarePerimeterPositions(count: Int, in size: CGSize) -> [CGPoint] {
         // Calcula cuántos van por lado

@@ -10,12 +10,13 @@ import SwiftUI
 struct PlayerCircle: View {
     var player: Player
     var status: PlayerStatusPerDay
+    var isMe: Bool
     var onTap: () -> Void
 
     var body: some View {
         ZStack {
             Circle()
-                .strokeBorder(status.dead ? Color.red : Color("brownColor"), lineWidth: 3)
+                .strokeBorder(isMe ? Color.green : (status.dead ? .red : Color("brownColor")), lineWidth: 3)
                 .frame(width: 60, height: 60)
                 .overlay(
                     Text(!player.name.isEmpty ? player.initials : "#\(player.seatNumber)")
@@ -59,7 +60,7 @@ struct PlayerCircle: View {
             .frame(minWidth: 0)
             .edgesIgnoringSafeArea(.all)
 
-        PlayerCircle(player: .init(seatNumber: 1, name: "Erick", claim: ""), status: .init(seatNumber: 1)) {
+        PlayerCircle(player: .init(seatNumber: 1, name: "Erick", claim: ""), status: .init(seatNumber: 1), isMe: true) {
             print("tapped")
         }
     }

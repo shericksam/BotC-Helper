@@ -24,6 +24,8 @@ struct Player: Identifiable, Equatable {
     var initials: String { initialsForName(name) }
     var name: String
     var claim: String     // <-- ¡Ahora el rol declarado ("claim") también aquí!
+    var isMe: Bool = false
+    var personalNotes: [Int: String] = [:] // <- notas personales por día
 
     /// Calcula iniciales robustamente
     private func initialsForName(_ name: String) -> String {
