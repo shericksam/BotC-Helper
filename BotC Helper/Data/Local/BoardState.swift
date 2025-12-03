@@ -7,8 +7,8 @@
 
 import Foundation
 
-struct BoardState {
-    let id: UUID = UUID()
+struct BoardState: Codable, Equatable {
+    var id: UUID = UUID()
     var players: [Player]
     // [Día 0, Día 1, Día 2, ...] (status de cada jugador por día)
     var days: [[PlayerStatusPerDay]]
@@ -29,7 +29,7 @@ struct BoardState {
     }
 }
 
-struct GameConfig {
+struct GameConfig: Codable, Equatable {
     var numPlayers: Int
     var numTownsfolk: Int
     var numOutsider: Int

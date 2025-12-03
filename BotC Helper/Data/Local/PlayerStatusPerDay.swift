@@ -7,7 +7,7 @@
 
 import Foundation
 // Representa el estado de un jugador en un día específico
-struct PlayerStatusPerDay: Identifiable {
+struct PlayerStatusPerDay: Identifiable, Codable, Equatable {
     let id = UUID()
     var seatNumber: Int
     var voted: Bool = false
@@ -18,8 +18,8 @@ struct PlayerStatusPerDay: Identifiable {
 }
 
 // El jugador (sus datos constantes)
-struct Player: Identifiable, Equatable {
-    let id = UUID()
+struct Player: Identifiable, Codable, Equatable {
+    var id = UUID()
     var seatNumber: Int
     var initials: String { initialsForName(name) }
     var name: String

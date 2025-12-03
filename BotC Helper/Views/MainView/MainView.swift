@@ -15,6 +15,8 @@ struct MainView: View {
     @State private var showingEditionsSheet = false
     @State private var isShowingGameBoard: Bool = false
 
+    @State private var showingLoadView = false
+
     @State private var boardState: BoardState? = nil // el nuevo tablero
 
     var body: some View {
@@ -79,14 +81,20 @@ struct MainView: View {
                         }
 
                         Button(action: {
-                            // Aquí colocarás la navegación a tus partidas previas
+                            showingLoadView.toggle()
                         }) {
                             Label("Partidas Anteriores", systemImage: "clock.fill")
                                 .font(.title3)
                                 .padding()
                                 .frame(maxWidth: .infinity)
                                 .background(Color.gray.opacity(0.1))
-
+                        }
+                        .sheet(isPresented: $showingLoadView) {
+                            LoadGameListView { loadedBoard in
+                                boardState = loadedBoard
+                                isShowingGameBoard = true
+                                showingLoadView = false
+                            }
                         }
                     }
                     Spacer()

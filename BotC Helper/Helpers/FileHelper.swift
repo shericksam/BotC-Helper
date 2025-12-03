@@ -62,3 +62,44 @@ func loadDefaultEditionIfNeeded(modelContext: ModelContext) async throws {
     )
     modelContext.insert(edition)
 }
+
+func saveBoardState(_ board: BoardState, fileName: String) {
+    let url = getDocumentsDirectory().appendingPathComponent(fileName + ".json")
+    do {
+        let data = try JSONEncoder().encode(board)
+        try data.write(to: url)
+        print("BoardState guardado correctamente.")
+    } catch {
+        print("Error al guardar BoardState: \(error)")
+    }
+}
+
+func loadBoardState() -> BoardState? {
+    let url = getDocumentsDirectory().appendingPathComponent("saved_board.json")
+    do {
+        let data = try Data(contentsOf: url)
+        let board = try JSONDecoder().decode(BoardState.self, from: data)
+        return board
+    } catch {
+        print("Error al cargar BoardState: \(error)")
+        return nil
+    }
+}
+
+func getDocumentsDirectory() -> URL {
+    FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+}
+
+func suggestedFileName(for board: BoardState) -> String {
+    let date = Date()
+    let formatter = DateFormatter()
+    formatter.dateFormat = "MMMdd" // "Dec03"
+    let dateString = formatter.string(from: date)
+    return "\(dateString)-\(board.players.count)P"
+}
+
+func loadBoardState(fileName: String) -> BoardState? {
+    let url = getDocumentsDirectory().appendingPathComponent(fileName + ".json")
+    guard let data = try? Data(contentsOf: url) else { return nil }
+    return try? JSONDecoder().decode(BoardState.self, from: data)
+}

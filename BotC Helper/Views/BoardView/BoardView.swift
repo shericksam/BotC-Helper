@@ -12,6 +12,7 @@ struct BoardView: View {
     @State private var selectedPlayer: Player?
     @State private var selectedStatus: PlayerStatusPerDay?
     @State private var editingIndex: Int?
+    @State private var showingSaveSheet = false
 
     var body: some View {
         ZStack {
@@ -24,36 +25,37 @@ struct BoardView: View {
 
                 HStack {
                     // Botón para agregar nuevo día
-                    if board.currentDay > 0 {
-                        Button(action: {
-                            board.currentDay -= 1
-                        }) {
-                            Label("Día anterior", systemImage: "arrow.left")
-                        }
-                        .foregroundStyle(Color.white)
-                    }
-                    Spacer()
+//                    if board.currentDay > 0 {
+//                        Button(action: {
+//                            board.currentDay -= 1
+//                        }) {
+//                            Label("Día anterior", systemImage: "arrow.left")
+//                        }
+//                        .foregroundStyle(Color.white)
+//                    }
+//                    Spacer()
                     Button(action: {
                         // Añadir nuevo día, copiando el estado del día actual
-                        Task {
-                            let prevStatuses = board.days[board.currentDay]
-                            let copied = prevStatuses.map { prevStatus in
-                                var newStatus = prevStatus
-                                newStatus.voted = false
-                                newStatus.nominated = false
-                                return newStatus
-                            } // Clona el arreglo
-                            Task { @MainActor in
-                                board.days.append(copied)
-                                board.currentDay = board.days.count - 1 // pasa al nuevo día
-                            }
-                        }
+                        //                        Task {
+                        let prevStatuses = board.days[board.currentDay]
+                        let copied = prevStatuses.map { prevStatus in
+                            var newStatus = prevStatus
+                            newStatus.voted = false
+                            newStatus.nominated = false
+                            return newStatus
+                        } // Clona el arreglo
+                        //                            Task { @MainActor in
+                        board.days.append(copied)
+                        board.currentDay = board.days.count - 1 // pasa al nuevo día
+                        //                            }
+                        //                        }
                     }) {
                         Label("Nuevo Día", systemImage: "plus.circle")
                     }
                     .foregroundStyle(Color.white)
                 }
                 .padding()
+                .padding(.top, 20)
                 // Selector de Día
                 Picker("Día", selection: $board.currentDay) {
                     ForEach(0..<board.days.count, id: \.self) { i in
@@ -87,27 +89,40 @@ struct BoardView: View {
                     // Configuración en el centro
                     VStack {
                         Text("Jugadores: \(board.players.count)")
-                            .font(.headline)
+                            .font(.title2)
+                            .bold()
                         Text("Poblado: \(board.config.numTownsfolk)")
-                            .font(.caption)
+                            .font(.body)
                         Text("Forasteros: \(board.config.numOutsider)")
-                            .font(.caption)
+                            .font(.body)
                         Text("Esbirros: \(board.config.numMinions)")
-                            .font(.caption)
+                            .font(.body)
                         Text("Demonio: \(board.config.numDemon)")
-                            .font(.caption)
+                            .font(.body)
                     }
                     .multilineTextAlignment(.center)
                     .foregroundStyle(Color.white)
                     .padding()
                 }
-                .padding(20)
-                // Cambiar de día
-
-
+                .padding(30)
+            }
+        }
+        .sheet(isPresented: $showingSaveSheet) {
+            SaveGameSheet(
+                isPresented: $showingSaveSheet,
+                suggestedName: suggestedFileName(for: board)
+            ) { name in
+                saveBoardState(board, fileName: name)
             }
         }
         .navigationTitle("Tablero")
+        .toolbar {
+            ToolbarItem(placement: .navigationBarTrailing) {
+                Button("Guardar") {
+                    showingSaveSheet = true
+                }
+            }
+        }
         // Sheet para editar jugador
         .sheet(isPresented: .constant(editingIndex != nil), onDismiss: {
             editingIndex = nil

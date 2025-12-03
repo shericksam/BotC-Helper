@@ -19,9 +19,16 @@ struct PlayerCircle: View {
                 .strokeBorder(isMe ? Color.green : (status.dead ? .red : Color("brownColor")), lineWidth: 3)
                 .frame(width: 60, height: 60)
                 .overlay(
-                    Text(!player.name.isEmpty ? player.initials : "#\(player.seatNumber)")
+                    VStack {
+                        Text(!player.name.isEmpty ? player.initials : "#\(player.seatNumber)")
                             .foregroundColor(.black)
                             .font(.headline)
+                        if !player.name.isEmpty {
+                            Text(player.name)
+                                .foregroundColor(.black)
+                                .font(.caption2)
+                        }
+                    }
                 )
                 .background(
                     Image("background")
