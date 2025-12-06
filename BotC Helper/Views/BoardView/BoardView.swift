@@ -50,7 +50,8 @@ struct BoardView: View {
                                 PlayerCircle(
                                     player: board.players[idx],
                                     status: board.days[board.currentDay][idx],
-                                    isMe: board.players[idx].isMe
+                                    isMe: board.players[idx].isMe,
+                                    roles: board.edition?.characters ?? []
                                 ) {
                                     if isVotingPhase {
                                         board.days[board.currentDay][idx].voted.toggle()
@@ -187,7 +188,8 @@ struct BoardView: View {
                     isMe: isMe,
                     totalDays: board.days.count,
                     statusesByDay: statusHistorial,
-                    currentDayIndex: board.currentDay
+                    currentDayIndex: board.currentDay,
+                    roles: board.edition?.characters ?? []
                 )
             } else {
                 Text("No hay jugador para editar")
@@ -197,7 +199,7 @@ struct BoardView: View {
 
     func addPlayer() {
         let nextSeat = board.players.count + 1
-        board.players.append(Player(seatNumber: nextSeat, name: "", claim: "", isMe: false, personalNotes: [:]))
+        board.players.append(Player(seatNumber: nextSeat, name: "", claimManual: "", isMe: false, personalNotes: [:]))
         // Añade estado a todos los días existentes para este jugador:
         for i in 0..<board.days.count {
             board.days[i].append(PlayerStatusPerDay(

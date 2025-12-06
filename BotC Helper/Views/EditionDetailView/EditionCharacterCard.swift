@@ -12,9 +12,9 @@ struct EditionCharacterCard: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             HStack(alignment: .center, spacing: 12) {
-                Image(character.iconName)
-                    .resizable()
-                    .scaledToFit()
+                RolIcon(name: character.iconName)
+//                    .resizable()
+//                    .scaledToFit()
                     .frame(width: 48, height: 48)
                     .clipShape(RoundedRectangle(cornerRadius: 8))
                 Text(character.name)
@@ -65,8 +65,4 @@ struct EditionCharacterCard: View {
         .shadow(radius: 1)
         .padding(.bottom, 12)
     }
-}
-
-#Preview {
-//    EditionCharacterCard(character: )
 }

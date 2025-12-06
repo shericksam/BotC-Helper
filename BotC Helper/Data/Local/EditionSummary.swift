@@ -12,6 +12,7 @@ struct EditionSummary: Identifiable, Codable, Equatable, Hashable {
     let name: String
     let fileName: String // Por ejemplo: "trouble_brewing.json"
     let imageName: String?
+    var isFromBundle: Bool = true
 }
 
 
@@ -31,7 +32,7 @@ extension EditionSummary {
                   let name = meta["name"] as? String
             else { return nil }
             let logo = meta["logo"] as? String
-            return EditionSummary(id: id, name: name, fileName: url.lastPathComponent, imageName: logo)
+            return EditionSummary(id: id, name: name, fileName: url.lastPathComponent, imageName: logo, isFromBundle: false)
         }
         return defauls + editions
     }

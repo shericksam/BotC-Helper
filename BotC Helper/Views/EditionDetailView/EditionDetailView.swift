@@ -84,17 +84,10 @@ struct NightOrderView: View {
         VStack(alignment: .leading, spacing: 4) {
             ForEach(order, id: \.self) { item in
                 HStack {
-                    Image(getImage(by: item))
-                        .resizable()
-                        .scaledToFit()
-                        .frame(width: 40, height: 60)
+                    RolIcon(name: item)
                 }
             }
         }
-    }
-
-    func getImage(by name: String) -> String {
-        name.replacing("secta_", with: "")
     }
 }
 

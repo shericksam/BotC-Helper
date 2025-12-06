@@ -11,7 +11,13 @@ struct PlayerCircle: View {
     var player: Player
     var status: PlayerStatusPerDay
     var isMe: Bool
+    var roles: [RoleDefinition]
+
     var onTap: () -> Void
+    var claimedRole: RoleDefinition? {
+        guard let id = player.claimRoleId else { return nil }
+        return roles.first(where: { $0.id == id })
+    }
 
     var body: some View {
         VStack {
@@ -57,10 +63,23 @@ struct PlayerCircle: View {
                         .font(.largeTitle)
                         .foregroundColor(.red)
                 }
+                // Rol asignado (opcional)
+                if let role = claimedRole {
+                        RolIcon(name: role.id)
+                            .frame(width: 70, height: 50)
+                            .clipShape(Circle())
+                            .offset(x: 0, y: -22)
+                }
             }
-            Text("Seat \(player.seatNumber)")
-                .foregroundColor(.white)
-                .font(.caption)
+            Group {
+                if let role = claimedRole {
+                    Text(role.name)
+                } else {
+                    Text("Seat \(player.seatNumber)")
+                }
+            }
+            .foregroundColor(.white)
+            .font(.caption)
         }
         .onTapGesture(perform: onTap)
     }
@@ -74,7 +93,7 @@ struct PlayerCircle: View {
             .frame(minWidth: 0)
             .edgesIgnoringSafeArea(.all)
 
-        PlayerCircle(player: .init(seatNumber: 1, name: "Erick", claim: ""), status: .init(seatNumber: 1), isMe: true) {
+        PlayerCircle(player: .init(seatNumber: 1, name: "Erick", claimRoleId: "secta_washerwoman", claimManual: ""), status: .init(seatNumber: 1), isMe: true, roles: [RoleDefinition(id: "secta_washerwoman", name: "Lavandera", team: .townsfolk)]) {
             print("tapped")
         }
     }

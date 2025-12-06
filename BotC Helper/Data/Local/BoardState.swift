@@ -20,7 +20,7 @@ struct BoardState: Codable, Equatable {
         static var example: BoardState {
             let playerCount = 20
             let players = (1...playerCount).map {
-                Player(seatNumber: $0, name: "", claim: "")
+                Player(seatNumber: $0, name: "", claimManual: "")
             }
             // Día 0: todos vivos, nadie votó
             let day0 = players.map { p in PlayerStatusPerDay(seatNumber: p.seatNumber) }

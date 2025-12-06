@@ -23,7 +23,8 @@ struct Player: Identifiable, Codable, Equatable {
     var seatNumber: Int
     var initials: String { initialsForName(name) }
     var name: String
-    var claim: String     // <-- ¡Ahora el rol declarado ("claim") también aquí!
+    var claimRoleId: String?
+    var claimManual: String
     var isMe: Bool = false
     var personalNotes: [Int: String] = [:] // <- notas personales por día
 

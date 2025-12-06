@@ -18,26 +18,30 @@ struct EditionsSheet: View {
 
     var body: some View {
         NavigationStack {
-            VStack {
-                ForEach(editions) { edition in
-                    Button {
-                        loadEditionDetails(edition: edition)
-                    } label: {
-                        VStack(alignment: .center) {
-                            if let imageName = edition.imageName {
-                                Image(imageName)
-                                    .resizable()
-                                    .scaledToFit()
-                                    .frame(height: 150)
+            ScrollView {
+                VStack {
+                    ForEach(editions) { edition in
+                        Button {
+                            loadEditionDetails(edition: edition)
+                        } label: {
+                            VStack(alignment: .center) {
+                                if let imageName = edition.imageName {
+                                    Image(imageName)
+                                        .resizable()
+                                        .scaledToFit()
+                                        .frame(height: 150)
+                                }
+                                Text(edition.name).font(.headline)
+                                    .padding()
+                                Divider()
                             }
-                            Text(edition.name).font(.headline)
-                            Divider()
+                            .frame(maxWidth: .infinity)
+                            .background(.ultraThinMaterial)
+                            .cornerRadius(12)
+                            .shadow(radius: 1)
+                            .padding(.bottom, 12)
                         }
-                        .frame(maxWidth: .infinity)
-                        .background(.ultraThinMaterial)
-                        .cornerRadius(12)
-                        .shadow(radius: 1)
-                        .padding(.bottom, 12)
+                        .padding(.horizontal)
                     }
                 }
             }
@@ -65,7 +69,7 @@ struct EditionsSheet: View {
     func loadEditionDetails(edition: EditionSummary) {
         loading = true
         DispatchQueue.global(qos: .userInitiated).async {
-            if let url = Bundle.main.url(forResource: edition.fileName.replacingOccurrences(of: ".json", with: ""), withExtension: "json"),
+            if let url = editionURL(for: edition),
                let loaded = try? loadEdition(from: url) {
                 DispatchQueue.main.async {
                     self.selectedEdition = loaded

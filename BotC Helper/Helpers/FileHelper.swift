@@ -127,3 +127,25 @@ func allEditionFiles() -> [URL] {
 
     return userFiles
 }
+
+func loadEditionDetails(_ edition: EditionSummary) -> EditionData? {
+    if let url = editionURL(for: edition),
+       let loaded = try? loadEdition(from: url) {
+        return loaded
+    } else {
+        return nil
+    }
+}
+
+
+func editionURL(for summary: EditionSummary) -> URL? {
+    if summary.isFromBundle {
+        // Elimina el ".json" para buscarlo en el bundle
+        let base = summary.fileName.replacingOccurrences(of: ".json", with: "")
+        return Bundle.main.url(forResource: base, withExtension: "json")
+    } else {
+        // Document directory, nombre exacto
+        let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+        return dir.appendingPathComponent(summary.fileName)
+    }
+}

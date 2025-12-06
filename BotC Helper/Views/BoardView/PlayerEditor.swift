@@ -17,34 +17,59 @@ struct PlayerEditor: View {
     var totalDays: Int
     var statusesByDay: [PlayerStatusPerDay]
     var currentDayIndex: Int
+    var roles: [RoleDefinition]
+    @State private var searchClaim: String = ""
+    @State private var filteredRoles: [RoleDefinition] = []
+    @State private var showRolesList = false
+
+    var selectedRole: RoleDefinition? {
+        guard let id = player.claimRoleId else { return nil }
+        return roles.first { $0.id == id }
+    }
 
     @State var localPersonalNotes: [Int: String] = [:]
 
-    init(
-        player: Binding<Player>,
-        status: PlayerStatusPerDay,
-        onSave: @escaping (PlayerStatusPerDay, [Int: String]) -> Void,
-        isMe: Bool,
-        totalDays: Int,
-        statusesByDay: [PlayerStatusPerDay],
-        currentDayIndex: Int
-    ) {
-        self._player = player
-        self._status = State(initialValue: status)
-        self.onSave = onSave
-        self.isMe = isMe
-        self.totalDays = totalDays
-        self.statusesByDay = statusesByDay
-        self.currentDayIndex = currentDayIndex
-        self._localPersonalNotes = State(initialValue: player.wrappedValue.personalNotes)
-    }
+//    init(
+//        player: Binding<Player>,
+//        status: PlayerStatusPerDay,
+//        onSave: @escaping (PlayerStatusPerDay, [Int: String]) -> Void,
+//        isMe: Bool,
+//        totalDays: Int,
+//        statusesByDay: [PlayerStatusPerDay],
+//        currentDayIndex: Int
+//    ) {
+//        self._player = player
+//        self._status = State(initialValue: status)
+//        self.onSave = onSave
+//        self.isMe = isMe
+//        self.totalDays = totalDays
+//        self.statusesByDay = statusesByDay
+//        self.currentDayIndex = currentDayIndex
+//        self._localPersonalNotes = State(initialValue: player.wrappedValue.personalNotes)
+//    }
 
     var body: some View {
         NavigationView {
             Form {
                 Section("Datos del Jugador") {
                     TextField("Nombre", text: $player.name)
-                    TextField("Claim (rol declarado)", text: $player.claim)
+//                    TextField("Claim (rol declarado)", text: $player.claim)
+                    claimRol()
+                }
+                if let selected = selectedRole {
+                    Section("Rol declarado: \(selected.name)") {
+                        RolIcon(name: selected.iconName)
+                                .frame(width: 50, height: 50)
+                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                        Text(selected.ability ?? "Sin descripción")
+                            .font(.body)
+                        if let reminder = selected.firstNightReminder {
+                            Text("Noche inicial: \(reminder)").font(.footnote)
+                        }
+                        if let reminder = selected.otherNightReminder {
+                            Text("Otras noches: \(reminder)").font(.footnote)
+                        }
+                    }
                 }
                 Section("Acciones (día actual)") {
                     Toggle("Votó", isOn: $status.voted)
@@ -104,6 +129,65 @@ struct PlayerEditor: View {
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Cancelar") { dismiss() }
                 }
+            }
+        }
+    }
+
+    @ViewBuilder
+    func claimRol() -> some View {
+        VStack(alignment: .leading) {
+            TextField(
+                "Claim (rol declarado)",
+                text: Binding(
+                    get: { searchClaim },
+                    set: { newValue in
+                        searchClaim = newValue
+                        showRolesList = !newValue.isEmpty
+                        filteredRoles = roles.filter {
+                            $0.name.localizedCaseInsensitiveContains(newValue)
+                        }
+                        // Si borras, quita el claimRoleId para no mantenerlo atado a un antiguo rol
+                        if newValue.isEmpty {
+                            player.claimRoleId = nil
+                        }
+                        // Si hay match exacto, setea el claim
+                        if let exact = roles.first(where: { $0.name.caseInsensitiveCompare(newValue) == .orderedSame }) {
+                            player.claimRoleId = exact.id
+                            player.claimManual = "" // Limpia claim manual
+                        } else {
+                            player.claimRoleId = nil
+                            player.claimManual = newValue
+                        }
+                    }
+                )
+            )
+            .onAppear {
+                // Si ya tenía rol asignado, muestra el nombre, si era texto libre muestra eso
+                if let rid = player.claimRoleId,
+                   let rolename = roles.first(where: { $0.id == rid })?.name {
+                    searchClaim = rolename
+                } else {
+                    searchClaim = player.claimManual
+                }
+            }
+            // Lista de resultados
+            if showRolesList && !filteredRoles.isEmpty {
+                List(filteredRoles.prefix(7), id: \.id) { role in
+                    Button {
+                        player.claimRoleId = role.id
+                        player.claimManual = ""
+                        searchClaim = role.name
+                        showRolesList = false
+                    } label: {
+                        HStack{
+                            RolIcon(name: role.iconName)
+                                .frame(width: 48, height: 48)
+                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                            Text(role.name)
+                        }
+                    }
+                }
+                .frame(maxHeight: 180)
             }
         }
     }

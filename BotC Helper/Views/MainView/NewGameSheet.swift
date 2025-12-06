@@ -45,7 +45,7 @@ struct NewGameSheet: View {
                         dismiss()
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
                             let players = (1...playerCount).map { i in
-                                Player(seatNumber: i, name: "", claim: "", isMe: (i == yourSeat))
+                                Player(seatNumber: i, name: "", claimManual: "", isMe: (i == yourSeat))
                             }
                             // Día 0: todos vivos, nadie votó
                             let day0 = players.map { p in PlayerStatusPerDay(seatNumber: p.seatNumber) }
@@ -62,15 +62,6 @@ struct NewGameSheet: View {
                     Button("Cancelar", action: { dismiss() })
                 }
             }
-        }
-    }
-
-    func loadEditionDetails(_ edition: EditionSummary) -> EditionData? {
-        if let url = Bundle.main.url(forResource: edition.fileName.replacingOccurrences(of: ".json", with: ""), withExtension: "json"),
-           let loaded = try? loadEdition(from: url) {
-            return loaded
-        } else {
-            return nil
         }
     }
 }

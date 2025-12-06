@@ -67,6 +67,30 @@ struct RoleDefinition: Decodable, Identifiable, Encodable, Hashable, Equatable {
         self.special = try container.decodeIfPresent([RoleDefinition.SpecialProperty].self, forKey: .special)
     }
 
+    init(
+        id: String,
+        name: String,
+        team: Team? = nil,
+        ability: String? = nil,
+        setup: Bool? = nil,
+        reminders: [String]? = nil,
+        remindersGlobal: [String]? = nil,
+        firstNightReminder: String? = nil,
+        otherNightReminder: String? = nil,
+        special: [SpecialProperty]? = nil
+    ) {
+        self.id = id
+        self.name = name
+        self.team = team
+        self.ability = ability
+        self.setup = setup
+        self.reminders = reminders
+        self.remindersGlobal = remindersGlobal
+        self.firstNightReminder = firstNightReminder
+        self.otherNightReminder = otherNightReminder
+        self.special = special
+    }
+
     static func == (lhs: RoleDefinition, rhs: RoleDefinition) -> Bool {
         lhs.id == rhs.id
     }

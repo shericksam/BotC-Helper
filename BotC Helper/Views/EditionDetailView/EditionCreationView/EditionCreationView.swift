@@ -36,8 +36,7 @@ struct EditionCreationView: View {
                     Section(header: Text(team.displayName).foregroundColor(team.color)) {
                         ForEach(roles) { role in
                             HStack {
-                                Image(role.iconName)
-                                    .resizable()
+                                RolIcon(name: role.iconName)
                                     .frame(width: 32, height: 32)
                                 Text(role.name)
                                 Spacer()
@@ -72,18 +71,29 @@ struct EditionCreationView: View {
     }
 
     func saveEdition() {
-        let editionDict: [String: Any] = [
+        // Meta mínimo requerido, además puedes pedirlo en el formulario
+        let meta: [String: Any] = [
             "id": UUID().uuidString,
             "name": name,
-            "roles": selectedRoles.map { role in
-                // Usar JSONEncoder para hacer la vida fácil
-                try? JSONSerialization.jsonObject(with: JSONEncoder().encode(role))
-            }
+            "author": "usuario",
+            "firstNight": [],   // puedes agregar interface para tomar el orden de noche
+            "otherNight": []
         ]
         let fileName = name.replacingOccurrences(of: " ", with: "_").lowercased() + ".json"
+        saveEdition(meta: meta, roles: Array(selectedRoles), fileName: fileName)
+    }
+
+    func saveEdition(meta: [String: Any], roles: [RoleDefinition], fileName: String) {
+        // 1. Convierte los roles a [Any] (dictionaries)
+        let rolesArr: [Any] = selectedRoles.compactMap { role in
+            try? JSONSerialization.jsonObject(with: JSONEncoder().encode(role))
+        }
+        // 2. El array que irá al archivo
+        var fullArray: [Any] = [meta]
+        fullArray.append(contentsOf: rolesArr)
+
         let url = getDocumentsDirectory().appendingPathComponent(fileName)
-        // Convierte a Data
-        if let data = try? JSONSerialization.data(withJSONObject: [editionDict], options: .prettyPrinted) {
+        if let data = try? JSONSerialization.data(withJSONObject: fullArray, options: .prettyPrinted) {
             try? data.write(to: url)
         }
     }
@@ -92,6 +102,3 @@ struct EditionCreationView: View {
         FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
     }
 }
-//#Preview {
-//    SwiftUIView()
-//}
