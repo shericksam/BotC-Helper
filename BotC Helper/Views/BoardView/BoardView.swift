@@ -43,14 +43,20 @@ struct BoardView: View {
                     GeometryReader { geo in
                         let positions = squarePerimeterPositions(count: board.players.count, in: geo.size)
                         ZStack {
-                            ForEach(board.players.indices, id: \.self) { idx in
-                                let pos = positions[idx]
+                            ForEach(Array(board.players.indices), id: \.self) { idx in
+//                                let pos =
                                 PlayerCircle(
                                     player: board.players[idx],
                                     status: board.days[board.currentDay][idx],
                                     isMe: board.players[idx].isMe
-                                ) { editingIndex = idx }
-                                    .position(pos)
+                                ) {
+                                    if isVotingPhase {
+                                        board.days[board.currentDay][idx].voted.toggle()
+                                    } else {
+                                        editingIndex = EditingIndex(value: idx)
+                                    }
+                                }
+                                    .position(positions[idx])
                             }
                         }
                     }
@@ -60,6 +66,12 @@ struct BoardView: View {
 
                     // Configuración en el centro
                     VStack {
+                        if isVotingPhase {
+                            VStack {
+                                Image(systemName: "flag.pattern.checkered")
+                                Text("Votando...")
+                            }
+                        }
                         Button(action: {
                             // Copia profunda manual: el status debe ser un struct totalmente independiente
                             let prevStatuses = board.days[board.currentDay]
@@ -82,7 +94,6 @@ struct BoardView: View {
                         }) {
                             Label("Nuevo Día", systemImage: "sun.max")
                         }
-                        .foregroundStyle(Color.white)
                         .buttonStyle(.borderedProminent)
 
                         Text("Jugadores: \(board.players.count)")
@@ -113,7 +124,6 @@ struct BoardView: View {
                 saveBoardState(board, fileName: name)
             }
         }
-//        .navigationTitle("Tablero")
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Menu {
@@ -124,7 +134,8 @@ struct BoardView: View {
                         addPlayer()
                     }
 
-                    Button(isVotingPhase ? "Terminar votación" : "Iniciar votación") {
+                    Button(isVotingPhase ? "Terminar votación" : "Iniciar votación",
+                           systemImage: isVotingPhase ? "flag.filled.and.flag.crossed" : "flag.pattern.checkered") {
                         isVotingPhase.toggle()
                         // Si terminas votación, podrías limpiar o validar algo si quieres
                     }
@@ -167,15 +178,6 @@ struct BoardView: View {
                 Text("No hay jugador para editar")
             }
         }
-    }
-
-    func votingPlayer() {
-
-//            if isVotingPhase {
-//                board.days[board.currentDay][idx].voted.toggle()
-//            } else {
-//                editingIndex = idx
-//            }
     }
 
     func addPlayer() {
