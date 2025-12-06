@@ -7,12 +7,18 @@
 
 import SwiftUI
 
+struct EditingIndex: Identifiable {
+    var id: Int { value }
+    var value: Int
+}
+
 struct BoardView: View {
     @State var board: BoardState
     @State private var selectedPlayer: Player?
     @State private var selectedStatus: PlayerStatusPerDay?
-    @State private var editingIndex: Int?
+    @State private var editingIndex: EditingIndex?
     @State private var showingSaveSheet = false
+    @State private var isVotingPhase = false
 
     var body: some View {
         ZStack {
@@ -22,44 +28,10 @@ struct BoardView: View {
                 .frame(minWidth: 0)
                 .edgesIgnoringSafeArea(.all)
             VStack {
-
-                HStack {
-                    // Botón para agregar nuevo día
-//                    if board.currentDay > 0 {
-//                        Button(action: {
-//                            board.currentDay -= 1
-//                        }) {
-//                            Label("Día anterior", systemImage: "arrow.left")
-//                        }
-//                        .foregroundStyle(Color.white)
-//                    }
-//                    Spacer()
-                    Button(action: {
-                        // Añadir nuevo día, copiando el estado del día actual
-                        //                        Task {
-                        let prevStatuses = board.days[board.currentDay]
-                        let copied = prevStatuses.map { prevStatus in
-                            var newStatus = prevStatus
-                            newStatus.voted = false
-                            newStatus.nominated = false
-                            return newStatus
-                        } // Clona el arreglo
-                        //                            Task { @MainActor in
-                        board.days.append(copied)
-                        board.currentDay = board.days.count - 1 // pasa al nuevo día
-                        //                            }
-                        //                        }
-                    }) {
-                        Label("Nuevo Día", systemImage: "plus.circle")
-                    }
-                    .foregroundStyle(Color.white)
-                }
-                .padding()
-                .padding(.top, 20)
                 // Selector de Día
                 Picker("Día", selection: $board.currentDay) {
                     ForEach(0..<board.days.count, id: \.self) { i in
-                        Text("D \(i)").tag(i)
+                        Text("Día \(i)").tag(i)
                     }
                 }
                 .pickerStyle(.segmented)
@@ -88,6 +60,31 @@ struct BoardView: View {
 
                     // Configuración en el centro
                     VStack {
+                        Button(action: {
+                            // Copia profunda manual: el status debe ser un struct totalmente independiente
+                            let prevStatuses = board.days[board.currentDay]
+                            // ¡Importante! No solo .map { $0 }, debes crear nuevos structs para evitar referencias compartidas.
+                            let copied = prevStatuses.map { prevStatus in
+                                PlayerStatusPerDay(
+                                    seatNumber: prevStatus.seatNumber,
+                                    voted: false,
+                                    nominated: false,
+                                    dead: prevStatus.dead,   // Mantén solo el estado de muerto
+                                    claim: prevStatus.claim,
+                                    notes: ""                // puedes dejar vacío o copiar si quieres
+                                )
+                            }
+                            // Ahora haz el cambio en el board completo:
+                            var newBoard = board
+                            newBoard.days.append(copied)
+                            newBoard.currentDay = newBoard.days.count - 1
+                            board = newBoard
+                        }) {
+                            Label("Nuevo Día", systemImage: "sun.max")
+                        }
+                        .foregroundStyle(Color.white)
+                        .buttonStyle(.borderedProminent)
+
                         Text("Jugadores: \(board.players.count)")
                             .font(.title2)
                             .bold()
@@ -105,6 +102,7 @@ struct BoardView: View {
                     .padding()
                 }
                 .padding(30)
+                .padding(.bottom, 30)
             }
         }
         .sheet(isPresented: $showingSaveSheet) {
@@ -115,20 +113,39 @@ struct BoardView: View {
                 saveBoardState(board, fileName: name)
             }
         }
-        .navigationTitle("Tablero")
+//        .navigationTitle("Tablero")
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
-                Button("Guardar") {
-                    showingSaveSheet = true
+                Menu {
+                    Button("Guardar partida", systemImage: "square.and.arrow.down") {
+                        showingSaveSheet = true
+                    }
+                    Button("Agregar jugador", systemImage: "person.crop.circle.badge.plus") {
+                        addPlayer()
+                    }
+
+                    Button(isVotingPhase ? "Terminar votación" : "Iniciar votación") {
+                        isVotingPhase.toggle()
+                        // Si terminas votación, podrías limpiar o validar algo si quieres
+                    }
+                    .foregroundColor(isVotingPhase ? .red : .blue)
+
+                    Button("Limpiar todos los votos", systemImage: "checkmark.circle") {
+                        clearAllVotes()
+                    }
+                    Button("Limpiar todas las acusaciones", systemImage: "exclamationmark.bubble") {
+                        clearAllNominations()
+                    }
+                } label: {
+                    Image(systemName: "ellipsis.circle")
+                        .imageScale(.large)
+                        .foregroundColor(.white)
                 }
             }
         }
-        // Sheet para editar jugador
-        .sheet(isPresented: .constant(editingIndex != nil), onDismiss: {
-            editingIndex = nil
-        }) {
-            if let idx = editingIndex, idx < board.players.count, idx < board.days[board.currentDay].count {
-                // copia de status activo
+        .sheet(item: $editingIndex) { item in
+            let idx = item.value
+            if idx < board.players.count {
                 let isMe = board.players[idx].isMe
                 let status = board.days[board.currentDay][idx]
                 let statusHistorial = board.days.map { $0[idx] }
@@ -138,6 +155,8 @@ struct BoardView: View {
                     onSave: { updated, notes in
                         board.days[board.currentDay][idx] = updated
                         board.players[idx].personalNotes = notes
+                        // cierra el sheet
+                        editingIndex = nil
                     },
                     isMe: isMe,
                     totalDays: board.days.count,
@@ -145,8 +164,41 @@ struct BoardView: View {
                     currentDayIndex: board.currentDay
                 )
             } else {
-                // Fallback defensivo si el índice no es válido
                 Text("No hay jugador para editar")
+            }
+        }
+    }
+
+    func votingPlayer() {
+
+//            if isVotingPhase {
+//                board.days[board.currentDay][idx].voted.toggle()
+//            } else {
+//                editingIndex = idx
+//            }
+    }
+
+    func addPlayer() {
+        let nextSeat = board.players.count + 1
+        board.players.append(Player(seatNumber: nextSeat, name: "", claim: "", isMe: false, personalNotes: [:]))
+        // Añade estado a todos los días existentes para este jugador:
+        for i in 0..<board.days.count {
+            board.days[i].append(PlayerStatusPerDay(
+                seatNumber: nextSeat, voted: false, nominated: false, dead: false, claim: "", notes: ""
+            ))
+        }
+    }
+    func clearAllVotes() {
+        for day in 0..<board.days.count {
+            for idx in 0..<board.days[day].count {
+                board.days[day][idx].voted = false
+            }
+        }
+    }
+    func clearAllNominations() {
+        for day in 0..<board.days.count {
+            for idx in 0..<board.days[day].count {
+                board.days[day][idx].nominated = false
             }
         }
     }

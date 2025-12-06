@@ -14,46 +14,53 @@ struct PlayerCircle: View {
     var onTap: () -> Void
 
     var body: some View {
-        ZStack {
-            Circle()
-                .strokeBorder(isMe ? Color.green : (status.dead ? .red : Color("brownColor")), lineWidth: 3)
-                .frame(width: 60, height: 60)
-                .overlay(
-                    VStack {
-                        Text(!player.name.isEmpty ? player.initials : "#\(player.seatNumber)")
-                            .foregroundColor(.black)
-                            .font(.headline)
-                        if !player.name.isEmpty {
-                            Text(player.name)
-                                .foregroundColor(.black)
-                                .font(.caption2)
+        VStack {
+            ZStack {
+                Circle()
+                    .strokeBorder(isMe ? Color.green : (status.dead ? .red : Color("brownColor")), lineWidth: 3)
+                    .frame(width: 60, height: 60)
+                    .overlay(
+                        VStack {
+                            if !player.name.isEmpty {
+                                Text(player.name)
+                                    .foregroundColor(.black)
+                                    .font(.caption)
+                                    .lineLimit(3)
+                            } else {
+                                Text(!player.name.isEmpty ? player.initials : "#\(player.seatNumber)")
+                                    .foregroundColor(.black)
+                                    .font(.headline)
+                            }
                         }
-                    }
-                )
-                .background(
-                    Image("background")
-                        .resizable()
-                        .scaledToFill()
-                        .clipShape(Circle())
-                )
-            // Voto
-            if status.voted {
-                Image(systemName: "checkmark.circle.fill")
-                    .foregroundColor(.green)
-                    .offset(x: -22, y: -22)
+                    )
+                    .background(
+                        Image("background")
+                            .resizable()
+                            .scaledToFill()
+                            .clipShape(Circle())
+                    )
+                // Voto
+                if status.voted {
+                    Image(systemName: "checkmark.circle.fill")
+                        .foregroundColor(.green)
+                        .offset(x: -22, y: -22)
+                }
+                // Nominó
+                if status.nominated {
+                    Image(systemName: "hand.point.up.left.fill")
+                        .foregroundColor(.blue)
+                        .offset(x: 22, y: -22)
+                }
+                // Muerto (tachado X)
+                if status.dead {
+                    Image(systemName: "xmark")
+                        .font(.largeTitle)
+                        .foregroundColor(.red)
+                }
             }
-            // Nominó
-            if status.nominated {
-                Image(systemName: "hand.point.up.left.fill")
-                    .foregroundColor(.blue)
-                    .offset(x: 22, y: -22)
-            }
-            // Muerto (tachado X)
-            if status.dead {
-                Image(systemName: "xmark")
-                    .font(.largeTitle)
-                    .foregroundColor(.red)
-            }
+            Text("Seat \(player.seatNumber)")
+                .foregroundColor(.white)
+                .font(.caption)
         }
         .onTapGesture(perform: onTap)
     }
