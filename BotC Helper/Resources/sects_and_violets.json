@@ -1,0 +1,510 @@
+[
+    {
+        "id": "_meta",
+        "name": "Sects & Violets",
+        "author": "Steven Medway",
+        "logo": "logo_sects_and_violets",
+        "firstNight": [
+            "dusk",
+            "secta_barista",
+            "secta_philosopher",
+            "minioninfo",
+            "demoninfo",
+            "secta_snakecharmer",
+            "secta_eviltwin",
+            "secta_witch",
+            "secta_cerenovus",
+            "secta_clockmaker",
+            "secta_dreamer",
+            "secta_seamstress",
+            "secta_mathematician",
+            "dawn"
+        ],
+        "otherNight": [
+            "dusk",
+            "secta_barista",
+            "secta_harlot",
+            "secta_bonecollector",
+            "secta_philosopher",
+            "secta_snakecharmer",
+            "secta_witch",
+            "secta_cerenovus",
+            "secta_pithag",
+            "secta_fanggu",
+            "secta_nodashii",
+            "secta_vortox",
+            "secta_vigormortis",
+            "secta_sweetheart",
+            "secta_sage",
+            "secta_barber",
+            "secta_dreamer",
+            "secta_flowergirl",
+            "secta_towncrier",
+            "secta_oracle",
+            "secta_seamstress",
+            "secta_juggler",
+            "secta_mathematician",
+            "dawn"
+        ]
+    },
+    {
+        "id": "secta_clockmaker",
+        "name": "Clockmaker",
+        "team": "townsfolk",
+        "ability": "Empiezas sabiendo la distancia entre el Demonio y su Esbirro m\u00e1s cercano.",
+        "setup": false,
+        "image": [
+            "http://villacuervos.es/personajes/icono/clockmaker",
+            "http://villacuervos.es/personajes/icono/clockmaker/alterno"
+        ],
+        "firstNightReminder": "Haz una se\u00f1al con los dedos."
+    },
+    {
+        "id": "secta_snakecharmer",
+        "name": "Snake Charmer",
+        "team": "townsfolk",
+        "ability": "Cada noche, elige a un jugador vivo: si es el Demonio, cambi\u00e1is personaje y alineamiento, entonces \u00e9l es envenenado.",
+        "setup": false,
+        "image": [
+            "http://villacuervos.es/personajes/icono/snakecharmer",
+            "http://villacuervos.es/personajes/icono/snakecharmer/alterno"
+        ],
+        "reminders": [
+            "Envenenado"
+        ],
+        "firstNightReminder": "El Encantador de Serpientes elige a un jugador. Si elige al Demonio: Muestra las fichas T\u00da ERES y Demonio. Pon el pulgar hacia abajo. Intercambia las fichas de Encantador de Serpientes y Demonio. Pon al antiguo Encantador de Serpientes a dormir. Despierta al antiguo Demonio. Muestra las fichas de T\u00da ERES y Encantador de Serpientes y pon el pulgar hacia arriba. :reminder:",
+        "otherNightReminder": "El Encantador de Serpientes elige a un jugador. Si elige al Demonio: Muestra las fichas T\u00da ERES y Demonio. Pon el pulgar hacia abajo. Intercambia las fichas de Encantador de Serpientes y Demonio. Pon al antiguo Encantador de Serpientes a dormir. Despierta al antiguo Demonio. Muestra las fichas de T\u00da ERES y Encantador de Serpientes y pon el pulgar hacia arriba. :reminder:"
+    },
+    {
+        "id": "secta_mathematician",
+        "name": "Mathematician",
+        "team": "townsfolk",
+        "ability": "Cada noche, descubres cu\u00e1ntas habilidades de los jugadores funcionaron anormalmente (desde el amanecer) debido a la habilidad de otro personaje.",
+        "setup": false,
+        "image": [
+            "http://villacuervos.es/personajes/icono/mathematician",
+            "http://villacuervos.es/personajes/icono/mathematician/alterno"
+        ],
+        "reminders": [
+            "Habilidad Anormal",
+            "Habilidad Anormal",
+            "Habilidad Anormal",
+            "Habilidad Anormal",
+            "Habilidad Anormal"
+        ],
+        "firstNightReminder": "Haz una se\u00f1al con los dedos.",
+        "otherNightReminder": "Haz una se\u00f1al con los dedos."
+    },
+    {
+        "id": "secta_dreamer",
+        "name": "Dreamer",
+        "team": "townsfolk",
+        "ability": "Cada noche, elige a un jugador (ni a ti mismo ni a Viajeros): descubres 1 personaje bueno y 1 malvado, 1 de los cuales es correcto.",
+        "setup": false,
+        "image": [
+            "http://villacuervos.es/personajes/icono/dreamer",
+            "http://villacuervos.es/personajes/icono/dreamer/alterno"
+        ],
+        "firstNightReminder": "El So\u00f1ador apunta a un jugador. Mu\u00e9strale 1 ficha de personaje bueno y 1 de personaje malvado, 1 de los cuales es su personaje.",
+        "otherNightReminder": "El So\u00f1ador apunta a un jugador. Mu\u00e9strale 1 ficha de personaje bueno y 1 de personaje malvado, 1 de los cuales es su personaje."
+    },
+    {
+        "id": "secta_flowergirl",
+        "name": "Flowergirl",
+        "team": "townsfolk",
+        "ability": "Cada noche*, descubres si un Demonio ha votado hoy.",
+        "setup": false,
+        "image": [
+            "http://villacuervos.es/personajes/icono/flowergirl",
+            "http://villacuervos.es/personajes/icono/flowergirl/alterno"
+        ],
+        "reminders": [
+            "Demonio Votado",
+            "Demonio No Votado"
+        ],
+        "otherNightReminder": "Asiente o mueve la cabeza."
+    },
+    {
+        "id": "secta_towncrier",
+        "name": "Town Crier",
+        "team": "townsfolk",
+        "ability": "Cada noche*, descubres si alg\u00fan Esbirro ha nominado hoy.",
+        "setup": false,
+        "image": [
+            "http://villacuervos.es/personajes/icono/towncrier",
+            "http://villacuervos.es/personajes/icono/towncrier/alterno"
+        ],
+        "reminders": [
+            "Esbirro Nominado",
+            "Esbirro No Nominado"
+        ],
+        "otherNightReminder": "Asiente o mueve la cabeza."
+    },
+    {
+        "id": "secta_oracle",
+        "name": "Oracle",
+        "team": "townsfolk",
+        "ability": "Cada noche*, descubres cu\u00e1ntos jugadores muertos son malvados.",
+        "setup": false,
+        "image": [
+            "http://villacuervos.es/personajes/icono/oracle",
+            "http://villacuervos.es/personajes/icono/oracle/alterno"
+        ],
+        "otherNightReminder": "Haz una se\u00f1al con los dedos."
+    },
+    {
+        "id": "secta_savant",
+        "name": "Savant",
+        "team": "townsfolk",
+        "ability": "Cada d\u00eda, puedes visitar al Narrador en privado para descubrir 2 cosas: 1 es cierta y 1 es falsa.",
+        "setup": false,
+        "image": [
+            "http://villacuervos.es/personajes/icono/savant",
+            "http://villacuervos.es/personajes/icono/savant/alterno"
+        ]
+    },
+    {
+        "id": "secta_seamstress",
+        "name": "Seamstress",
+        "team": "townsfolk",
+        "ability": "Una vez por partida, por la noche, elige a 2 jugadores (no a ti mismo): descubres si son del mismo alineamiento.",
+        "setup": false,
+        "image": [
+            "http://villacuervos.es/personajes/icono/seamstress",
+            "http://villacuervos.es/personajes/icono/seamstress/alterno"
+        ],
+        "reminders": [
+            "Sin Habilidad"
+        ],
+        "firstNightReminder": "La Costurera podr\u00eda elegir a 2 jugadores. Asiente o mueve la cabeza. :reminder:",
+        "otherNightReminder": "La Costurera podr\u00eda elegir a 2 jugadores. Asiente o mueve la cabeza. :reminder:"
+    },
+    {
+        "id": "secta_philosopher",
+        "name": "Philosopher",
+        "team": "townsfolk",
+        "ability": "Una vez por partida, por la noche, elige a un personaje bueno: gana esa habilidad. Si este personaje est\u00e1 en juego, est\u00e1 borracho.",
+        "setup": false,
+        "image": [
+            "http://villacuervos.es/personajes/icono/philosopher",
+            "http://villacuervos.es/personajes/icono/philosopher/alterno"
+        ],
+        "reminders": [
+            "Borracho"
+        ],
+        "remindersGlobal": [
+            "Es el Fil\u00f3sofo"
+        ],
+        "firstNightReminder": "El Fil\u00f3sofo puede elegir un personaje. Si es necesario, intercambia sus fichas de personaje. :reminder:",
+        "otherNightReminder": "El Fil\u00f3sofo puede elegir un personaje. Si es necesario, intercambia sus fichas de personaje. :reminder:",
+        "special": [
+            {
+                "name": "replace-character",
+                "type": "reveal"
+            }
+        ]
+    },
+    {
+        "id": "secta_artist",
+        "name": "Artist",
+        "team": "townsfolk",
+        "ability": "Una vez por partida, durante el d\u00eda, haz en privado al Narrador cualquier pregunta de respuesta s\u00ed/no.",
+        "setup": false,
+        "image": [
+            "http://villacuervos.es/personajes/icono/artist",
+            "http://villacuervos.es/personajes/icono/artist/alterno"
+        ],
+        "reminders": [
+            "Sin Habilidad"
+        ]
+    },
+    {
+        "id": "secta_juggler",
+        "name": "Juggler",
+        "team": "townsfolk",
+        "ability": "El primer d\u00eda, adivina p\u00fablicamente hasta 5 personajes de jugadores. Esa noche descubres cu\u00e1ntos has acertado.",
+        "setup": false,
+        "image": [
+            "http://villacuervos.es/personajes/icono/juggler",
+            "http://villacuervos.es/personajes/icono/juggler/alterno"
+        ],
+        "reminders": [
+            "Correcto",
+            "Correcto",
+            "Correcto",
+            "Correcto",
+            "Correcto"
+        ],
+        "otherNightReminder": "Haz una se\u00f1al con los dedos."
+    },
+    {
+        "id": "secta_sage",
+        "name": "Sage",
+        "team": "townsfolk",
+        "ability": "Si el Demonio te mata, descubres que \u00e9l es 1 de 2 jugadores.",
+        "setup": false,
+        "image": [
+            "http://villacuervos.es/personajes/icono/sage",
+            "http://villacuervos.es/personajes/icono/sage/alterno"
+        ],
+        "otherNightReminder": "Si el Demonio ha matado al Sabio, despierta al Sabio y apunta a 2 jugadores, 1 de los cuales es el Demonio."
+    },
+    {
+        "id": "secta_sweetheart",
+        "name": "Sweetheart",
+        "team": "outsider",
+        "ability": "Cuando mueras, 1 jugador estar\u00e1 borracho a partir de ese momento.",
+        "setup": false,
+        "image": [
+            "http://villacuervos.es/personajes/icono/sweetheart",
+            "http://villacuervos.es/personajes/icono/sweetheart/alterno"
+        ],
+        "reminders": [
+            "Borracho"
+        ],
+        "otherNightReminder": "Si la Adorable ha muerto, un jugador se emborracha inmediatamente. Si a\u00fan no has hecho esto, hazlo ahora. :reminder:"
+    },
+    {
+        "id": "secta_klutz",
+        "name": "Klutz",
+        "team": "outsider",
+        "ability": "Cuando descubres que has muerto, elige p\u00fablicamente a 1 jugador vivo: si es malvado, tu equipo pierde.",
+        "setup": false,
+        "image": [
+            "http://villacuervos.es/personajes/icono/klutz",
+            "http://villacuervos.es/personajes/icono/klutz/alterno"
+        ]
+    },
+    {
+        "id": "secta_barber",
+        "name": "Barber",
+        "team": "outsider",
+        "ability": "Si has muerto hoy o esta noche, el Demonio puede elegir 2 jugadores (no a otro Demonio) para intercambiar los personajes.",
+        "setup": false,
+        "image": [
+            "http://villacuervos.es/personajes/icono/barber",
+            "http://villacuervos.es/personajes/icono/barber/alterno"
+        ],
+        "reminders": [
+            "Corte de Pelo Esta Noche"
+        ],
+        "otherNightReminder": "Si el Barbero ha muerto hoy o esta noche, muestra al Demonio las fichas de ESTE PERSONAJE TE HA ELEGIDO y Barbero. Si el Demonio ha elegido a 2 jugadores, despi\u00e9rtalos de uno en uno. Muestra las fichas T\u00da ERES y su nuevo personaje (se intercambian sus fichas de personaje)."
+    },
+    {
+        "id": "secta_mutant",
+        "name": "Mutant",
+        "team": "outsider",
+        "ability": "Si est\u00e1s \u00abloco\u00bb por ser un Forastero, podr\u00edas ser ejecutado.",
+        "setup": false,
+        "image": [
+            "http://villacuervos.es/personajes/icono/mutant",
+            "http://villacuervos.es/personajes/icono/mutant/alterno"
+        ]
+    },
+    {
+        "id": "secta_witch",
+        "name": "Witch",
+        "team": "minion",
+        "ability": "Cada noche, elige a un jugador: si nominara ma\u00f1ana, muere. Si solo viven 3 jugadores, pierdes esta habilidad.",
+        "setup": false,
+        "image": [
+            "http://villacuervos.es/personajes/icono/witch",
+            "http://villacuervos.es/personajes/icono/witch/alterno"
+        ],
+        "reminders": [
+            "Maldito"
+        ],
+        "firstNightReminder": "La Bruja elige un jugador. :reminder:",
+        "otherNightReminder": "La Bruja elige un jugador. :reminder:"
+    },
+    {
+        "id": "secta_cerenovus",
+        "name": "Cerenovus",
+        "team": "minion",
+        "ability": "Cada noche, elige a un jugador y a un personaje bueno: est\u00e1 \u00abloco\u00bb por ser ese personaje ma\u00f1ana, de lo contrario podr\u00eda ser ejecutado.",
+        "setup": false,
+        "image": [
+            "http://villacuervos.es/personajes/icono/cerenovus",
+            "http://villacuervos.es/personajes/icono/cerenovus/alterno"
+        ],
+        "reminders": [
+            "Loco"
+        ],
+        "firstNightReminder": "El Cerenovus elige un jugador y un personaje. :reminder: Duerme al Cerenovus. Despierta al objetivo. Mu\u00e9strale la ficha ESTE PERSONAJE TE HA ELEGIDO, la ficha de Cerenovus, y a continuaci\u00f3n la ficha de loco de personaje.",
+        "otherNightReminder": "El Cerenovus elige un jugador y un personaje. :reminder: Duerme al Cerenovus. Despierta al objetivo. Mu\u00e9strale la ficha ESTE PERSONAJE TE HA ELEGIDO, la ficha de Cerenovus, y a continuaci\u00f3n la ficha de loco de personaje."
+    },
+    {
+        "id": "secta_pithag",
+        "name": "Pit-Hag",
+        "team": "minion",
+        "ability": "Cada noche*, elige a un jugador y a un personaje en el que se convierte (si no est\u00e1 en juego). Si se crea un Demonio, las muertes de esa noche ser\u00e1n arbitrarias.",
+        "setup": false,
+        "image": [
+            "http://villacuervos.es/personajes/icono/pithag",
+            "http://villacuervos.es/personajes/icono/pithag/alterno"
+        ],
+        "otherNightReminder": "El Pit-Hag elige un jugador y un personaje. Si elige un personaje que no est\u00e1 en juego: Duerme al Pit-Hag. Despierta al objetivo. Muestra la ficha T\u00da ERES y su nueva ficha de personaje."
+    },
+    {
+        "id": "secta_eviltwin",
+        "name": "Evil Twin",
+        "team": "minion",
+        "ability": "Un jugador contrario (de la otra alineaci\u00f3n) y t\u00fa os conoc\u00e9is. Si el jugador bueno es ejecutado, el Mal gana. El Bien no puede ganar si ambos viv\u00eds.",
+        "setup": false,
+        "image": [
+            "http://villacuervos.es/personajes/icono/eviltwin",
+            "http://villacuervos.es/personajes/icono/eviltwin/alterno"
+        ],
+        "reminders": [
+            "Gemela"
+        ],
+        "firstNightReminder": "Despierta a ambas gemelas. Permite el contacto visual. Elige a la Gemela Malvada, muestra su ficha a la otra gemela, y viceversa."
+    },
+    {
+        "id": "secta_nodashii",
+        "name": "No Dashii",
+        "team": "demon",
+        "ability": "Cada noche*, elige a un jugador: muere. Tus 2 vecinos Aldeanos est\u00e1n envenenados.",
+        "setup": false,
+        "image": [
+            "http://villacuervos.es/personajes/icono/nodashii",
+            "http://villacuervos.es/personajes/icono/nodashii/alterno"
+        ],
+        "reminders": [
+            "Muerto",
+            "Envenenado",
+            "Envenenado"
+        ],
+        "otherNightReminder": "El No Dashii elige a un jugador. :reminder:"
+    },
+    {
+        "id": "secta_vigormortis",
+        "name": "Vigormortis",
+        "team": "demon",
+        "ability": "Cada noche*, elige a un jugador: muere. Los Esbirros que mates conservan su habilidad y envenenan a 1 Aldeano vecino. [-1 Forastero]",
+        "setup": true,
+        "image": [
+            "http://villacuervos.es/personajes/icono/vigormortis",
+            "http://villacuervos.es/personajes/icono/vigormortis/alterno"
+        ],
+        "reminders": [
+            "Muerto",
+            "Tiene Habilidad",
+            "Tiene Habilidad",
+            "Tiene Habilidad",
+            "Envenenado",
+            "Envenenado",
+            "Envenenado"
+        ],
+        "otherNightReminder": "El Vigormortis elige a un jugador. :reminder: Si ese jugador es un Esbirro, envenena a un vecino Aldeano. :reminder: :reminder:"
+    },
+    {
+        "id": "secta_vortox",
+        "name": "Vortox",
+        "team": "demon",
+        "ability": "Cada noche*, elige a un jugador: muere. Las habilidades de los Aldeanos dan informaci\u00f3n falsa. Cada d\u00eda, si nadie es ejecutado, el Mal gana.",
+        "setup": false,
+        "image": [
+            "http://villacuervos.es/personajes/icono/vortox",
+            "http://villacuervos.es/personajes/icono/vortox/alterno"
+        ],
+        "reminders": [
+            "Muerto"
+        ],
+        "otherNightReminder": "El Vortox elige a un jugador. :reminder:"
+    },
+    {
+        "id": "secta_fanggu",
+        "name": "Fang Gu",
+        "team": "demon",
+        "ability": "Cada noche*, elige a un jugador: muere. El 1er Forastero que mates se convierte en el nuevo Fang Gu y t\u00fa mueres en su lugar. [+1 Forastero]",
+        "setup": true,
+        "image": [
+            "http://villacuervos.es/personajes/icono/fanggu",
+            "http://villacuervos.es/personajes/icono/fanggu/alterno"
+        ],
+        "reminders": [
+            "Muerto",
+            "Una Vez"
+        ],
+        "otherNightReminder": "El Fang Gu elige un jugador. :reminder: Si elige a un Forastero (solo una vez): Sustituye la ficha de Forastero por la ficha de Fang Gu. Duerme al Fang Gu. Despierta al objetivo. Muestra las fichas T\u00da ERES y Fang Gu y pon un pulgar hacia abajo. :reminder:"
+    },
+    {
+        "id": "secta_barista",
+        "name": "Barista",
+        "team": "traveller",
+        "ability": "Cada noche, hasta el anochecer, 1) un jugador se vuelva sobrio, sano y obtiene informaci\u00f3n verdadera, o, 2) su habilidad funciona dos veces. \u00c9l descubre cu\u00e1l.",
+        "setup": false,
+        "image": [
+            "http://villacuervos.es/personajes/icono/barista",
+            "http://villacuervos.es/personajes/icono/barista/alterno",
+            "http://villacuervos.es/personajes/icono/barista/alterno2"
+        ],
+        "reminders": [
+            "Sobrio y Sano",
+            "Act\u00faa dos veces",
+            "?",
+            "?"
+        ],
+        "firstNightReminder": "Elige a 1 jugador, despi\u00e9rtale y dile qu\u00e9 poder del Barista est\u00e1 afect\u00e1ndole. Trata su habilidad seg\u00fan eso (informaci\u00f3n sobria/sana/verdadera o activar su habilidad 2 veces).",
+        "otherNightReminder": "Elige a 1 jugador, despi\u00e9rtale y dile qu\u00e9 poder del Barista est\u00e1 afect\u00e1ndole. Trata su habilidad seg\u00fan eso (informaci\u00f3n sobria/sana/verdadera o activar su habilidad 2 veces)."
+    },
+    {
+        "id": "secta_harlot",
+        "name": "Harlot",
+        "team": "traveller",
+        "ability": "Cada noche*, elige a un jugador vivo: si est\u00e1s de acuerdo, descubres su personaje, pero ambos pod\u00e9is morir.",
+        "setup": false,
+        "image": [
+            "http://villacuervos.es/personajes/icono/harlot",
+            "http://villacuervos.es/personajes/icono/harlot/alterno",
+            "http://villacuervos.es/personajes/icono/harlot/alterno2"
+        ],
+        "reminders": [
+            "Muerto",
+            "Muerto"
+        ],
+        "otherNightReminder": "La Meretriz elige a 1 jugadora viva. Manda a la Meretriz a dormir. Despierta a la jugadora elegida y ens\u00e9\u00f1ale las fichas de ESTE PERSONAJE TE HA ELEGIDO y Meretriz. La jugadora elegida afirma o niega con la cabeza. Si afirma, despierta a la\u00a0Meretriz y ens\u00e9\u00f1ale el personaje de la jugadora elegida. Despu\u00e9s puedes decidir matar a ambas\u00a0jugadoras. :reminder: :reminder:"
+    },
+    {
+        "id": "secta_butcher",
+        "name": "Butcher",
+        "team": "traveller",
+        "ability": "Cada d\u00eda, despu\u00e9s de la 1\u00aa ejecuci\u00f3n, puedes nominar de nuevo.",
+        "setup": false,
+        "image": [
+            "http://villacuervos.es/personajes/icono/butcher",
+            "http://villacuervos.es/personajes/icono/butcher/alterno",
+            "http://villacuervos.es/personajes/icono/butcher/alterno2"
+        ]
+    },
+    {
+        "id": "secta_bonecollector",
+        "name": "Bone Collector",
+        "team": "traveller",
+        "ability": "Una vez por partida, por la noche*, elige a un jugador muerto: recupera su habilidad hasta el anochecer.",
+        "setup": false,
+        "image": [
+            "http://villacuervos.es/personajes/icono/bonecollector",
+            "http://villacuervos.es/personajes/icono/bonecollector/alterno",
+            "http://villacuervos.es/personajes/icono/bonecollector/alterno2"
+        ],
+        "reminders": [
+            "Sin Habilidad",
+            "Sin Habilidad"
+        ],
+        "otherNightReminder": "El Coleccionista de Huesos puede elegir a 1 jugador muerto. :reminder: Manda al Coleccionista de Huesos a dormir. Si ha elegido, despierta al objetivo si es necesario."
+    },
+    {
+        "id": "secta_deviant",
+        "name": "Deviant",
+        "team": "traveller",
+        "ability": "Si hoy has sido gracioso, no puedes morir exiliado.",
+        "setup": false,
+        "image": [
+            "http://villacuervos.es/personajes/icono/deviant",
+            "http://villacuervos.es/personajes/icono/deviant/alterno",
+            "http://villacuervos.es/personajes/icono/deviant/alterno2"
+        ]
+    }
+]

@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct NewGameSheet: View {
+    @State var editions: [EditionSummary] = EditionSummary.defaultEditions
+    @State var editionSelected: EditionSummary = EditionSummary.defaultEditions.first!
     var onStart: (BoardState) -> Void
     @Environment(\.dismiss) var dismiss
     @State private var playerCount = 5
@@ -27,6 +29,14 @@ struct NewGameSheet: View {
                     }
                     .pickerStyle(.wheel)
                 }
+
+                Section(header: Text("Edition")) {
+                    Picker("Nombre", selection: $editionSelected) {
+                        ForEach(editions, id: \.self) { editions in
+                            Text("\(editions.name)").tag(editions)
+                        }
+                    }
+                }
             }
             .navigationTitle("Nueva Partida")
             .toolbar {
@@ -40,7 +50,11 @@ struct NewGameSheet: View {
                             // Día 0: todos vivos, nadie votó
                             let day0 = players.map { p in PlayerStatusPerDay(seatNumber: p.seatNumber) }
                             let config = getConfigForPlayerCount(playerCount)
-                            onStart(BoardState(players: players, days: [day0], currentDay: 0, config: config))
+                            onStart(BoardState(players: players,
+                                               days: [day0],
+                                               currentDay: 0,
+                                               config: config,
+                                               edition: loadEditionDetails(editionSelected)))
                         }
                     }
                 }
@@ -48,6 +62,15 @@ struct NewGameSheet: View {
                     Button("Cancelar", action: { dismiss() })
                 }
             }
+        }
+    }
+
+    func loadEditionDetails(_ edition: EditionSummary) -> EditionData? {
+        if let url = Bundle.main.url(forResource: edition.fileName.replacingOccurrences(of: ".json", with: ""), withExtension: "json"),
+           let loaded = try? loadEdition(from: url) {
+            return loaded
+        } else {
+            return nil
         }
     }
 }

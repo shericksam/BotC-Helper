@@ -19,6 +19,7 @@ struct BoardView: View {
     @State private var editingIndex: EditingIndex?
     @State private var showingSaveSheet = false
     @State private var isVotingPhase = false
+    @State private var showDetail = false
 
     var body: some View {
         ZStack {
@@ -27,6 +28,7 @@ struct BoardView: View {
                 .scaledToFill()
                 .frame(minWidth: 0)
                 .edgesIgnoringSafeArea(.all)
+
             VStack {
                 // Selector de Día
                 Picker("Día", selection: $board.currentDay) {
@@ -95,9 +97,15 @@ struct BoardView: View {
                             Label("Nuevo Día", systemImage: "sun.max")
                         }
                         .buttonStyle(.borderedProminent)
-
+                        if let edition = board.edition {
+                            Button(edition.meta.name) {
+                                showDetail.toggle()
+                            }
+                                .font(.title2)
+                                .bold()
+                        }
                         Text("Jugadores: \(board.players.count)")
-                            .font(.title2)
+                            .font(.title3)
                             .bold()
                         Text("Poblado: \(board.config.numTownsfolk)")
                             .font(.body)
@@ -152,6 +160,13 @@ struct BoardView: View {
                         .imageScale(.large)
                         .foregroundColor(.white)
                 }
+            }
+        }
+        .navigationDestination(isPresented: $showDetail) {
+            if let data = board.edition {
+                EditionDetailView(editionMeta: data)
+            } else {
+                EmptyView()
             }
         }
         .sheet(item: $editingIndex) { item in

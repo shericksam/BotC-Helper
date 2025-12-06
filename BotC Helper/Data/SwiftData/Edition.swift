@@ -8,15 +8,17 @@
 import Foundation
 import SwiftData
 
-@Model
-final class Edition {
-    @Attribute(.unique) var id: String
+//@Model
+final class EditionSwiftData {
+//    @Attribute(.unique)
+    var id: String
     var name: String
     var synopsis: String?
     var howToPlay: String?
     var nightOrderFirst: [String]      // ids (ej: ["secta_chef",...])
     var nightOrderOther: [String]
-    @Relationship(deleteRule: .cascade) var scripts: [Script] = []
+//    @Relationship(deleteRule: .cascade)
+    var scripts: [Script] = []
 
     init(id: String, name: String, synopsis: String? = nil, howToPlay: String? = nil, nightOrderFirst: [String], nightOrderOther: [String], scripts: [Script] = []) {
         self.id = id

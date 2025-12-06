@@ -8,7 +8,7 @@
 import Foundation
 // Representa el estado de un jugador en un día específico
 struct PlayerStatusPerDay: Identifiable, Codable, Equatable {
-    let id = UUID()
+    var id = UUID()
     var seatNumber: Int
     var voted: Bool = false
     var nominated: Bool = false

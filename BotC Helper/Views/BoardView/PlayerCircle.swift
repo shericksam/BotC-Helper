@@ -17,7 +17,7 @@ struct PlayerCircle: View {
         VStack {
             ZStack {
                 Circle()
-                    .strokeBorder(isMe ? Color.green : (status.dead ? .red : Color("brownColor")), lineWidth: 3)
+                    .strokeBorder(isMe ? Color.green : (status.dead ? .red : Color.primaryBrown), lineWidth: 3)
                     .frame(width: 60, height: 60)
                     .overlay(
                         VStack {

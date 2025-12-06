@@ -8,64 +8,78 @@
 import SwiftUI
 
 struct EditionsSheet: View {
-//    @Binding var editions: [Edition]
-    @Environment(\.dismiss) var dismiss
-    @State private var showingAddEdition = false
-    @State private var newEditionName = ""
-    @State private var newEditionDescription = ""
+    @State var editions: [EditionSummary] = EditionSummary.defaultEditions
+    @State private var selectedEdition: EditionData? // Para navegación/Sheet
+    @State private var loading = false
+    @State private var showDetail = false
+    @State private var showingCreateEdition = false
+
+    // Puedes agregar lógica para agregar/editar/borrar ediciones
 
     var body: some View {
-        NavigationView {
-            List {
-                Text("")
-//                ForEach($editions) { edition in
-//                    VStack(alignment: .leading) {
-//                        Text(edition.name)
-//                            .font(.headline)
-//                        Text(edition.description)
-//                            .font(.subheadline)
-//                            .foregroundColor(.secondary)
-//                    }
-//                }
-//                .onDelete { offsets in
-//                    editions.remove(atOffsets: offsets)
-//                }
+        NavigationStack {
+            VStack {
+                ForEach(editions) { edition in
+                    Button {
+                        loadEditionDetails(edition: edition)
+                    } label: {
+                        VStack(alignment: .center) {
+                            if let imageName = edition.imageName {
+                                Image(imageName)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(height: 150)
+                            }
+                            Text(edition.name).font(.headline)
+                            Divider()
+                        }
+                        .frame(maxWidth: .infinity)
+                        .background(.ultraThinMaterial)
+                        .cornerRadius(12)
+                        .shadow(radius: 1)
+                        .padding(.bottom, 12)
+                    }
+                }
             }
             .navigationTitle("Ediciones")
-            .toolbar {
-                ToolbarItem(placement: .cancellationAction) {
-                    Button("Cerrar") { dismiss() }
+            .navigationDestination(isPresented: $showDetail) {
+                if let data = selectedEdition {
+                    EditionDetailView(editionMeta: data)
+                } else {
+                    EmptyView()
                 }
-                ToolbarItem(placement: .confirmationAction) {
-                    Button(action: { showingAddEdition.toggle() }) {
-                        Label("Añadir", systemImage: "plus")
+            }
+            .toolbar {
+                ToolbarItem(placement: .primaryAction) {
+                    Button(action: { showingCreateEdition = true }) {
+                        Label("Crear edición", systemImage: "plus")
                     }
                 }
             }
-            .sheet(isPresented: $showingAddEdition) {
-                NavigationView {
-                    Form {
-                        TextField("Nombre", text: $newEditionName)
-                        TextField("Descripción", text: $newEditionDescription)
-                    }
-                    .navigationTitle("Nueva Edición")
-                    .toolbar {
-                        ToolbarItem(placement: .confirmationAction) {
-                            Button("Guardar") {
-//                                let newEdition = Edition(name: newEditionName, description: newEditionDescription)
-//                                editions.append(newEdition)
-//                                newEditionName = ""
-//                                newEditionDescription = ""
-//                                showingAddEdition = false
-                            }
-                            .disabled(newEditionName.isEmpty)
-                        }
-                        ToolbarItem(placement: .cancellationAction) {
-                            Button("Cancelar") { showingAddEdition = false }
-                        }
-                    }
-                }
+            .sheet(isPresented: $showingCreateEdition) {
+                EditionCreationView()
             }
         }
     }
+
+    func loadEditionDetails(edition: EditionSummary) {
+        loading = true
+        DispatchQueue.global(qos: .userInitiated).async {
+            if let url = Bundle.main.url(forResource: edition.fileName.replacingOccurrences(of: ".json", with: ""), withExtension: "json"),
+               let loaded = try? loadEdition(from: url) {
+                DispatchQueue.main.async {
+                    self.selectedEdition = loaded
+                    self.showDetail = true
+                    self.loading = false
+                }
+            } else {
+                DispatchQueue.main.async { self.loading = false }
+                // Maneja error de carga aquí si quieres
+            }
+        }
+    }
+}
+
+#Preview {
+    EditionsSheet()
 }

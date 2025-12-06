@@ -14,6 +14,7 @@ struct BoardState: Codable, Equatable {
     var days: [[PlayerStatusPerDay]]
     var currentDay: Int
     var config: GameConfig
+    var edition: EditionData? = nil
 
     struct Mock {
         static var example: BoardState {
@@ -24,7 +25,7 @@ struct BoardState: Codable, Equatable {
             // Día 0: todos vivos, nadie votó
             let day0 = players.map { p in PlayerStatusPerDay(seatNumber: p.seatNumber) }
             let config = getConfigForPlayerCount(playerCount)
-            return BoardState(players: players, days: [day0], currentDay: 0, config: config)
+            return BoardState(players: players, days: [day0], currentDay: 0, config: config, edition: EditionData.Mock.editionData)
         }
     }
 }

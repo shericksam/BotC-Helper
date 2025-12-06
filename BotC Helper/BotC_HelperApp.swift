@@ -12,7 +12,7 @@ import SwiftData
 struct BotC_HelperApp: App {
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
-            Edition.self,
+//            Edition.self,
             Character.self,
             Script.self
         ])
