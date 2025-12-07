@@ -13,13 +13,14 @@ struct EditionsSheet: View {
     @State private var loading = false
     @State private var showDetail = false
     @State private var showingCreateEdition = false
+    @State private var editingEdition: EditionSummary? = nil
 
     // Puedes agregar lógica para agregar/editar/borrar ediciones
 
     var body: some View {
         NavigationStack {
-            ScrollView {
-                VStack {
+            VStack {
+                List {
                     ForEach(editions) { edition in
                         Button {
                             loadEditionDetails(edition: edition)
@@ -33,17 +34,36 @@ struct EditionsSheet: View {
                                 }
                                 Text(edition.name).font(.headline)
                                     .padding()
-                                Divider()
                             }
                             .frame(maxWidth: .infinity)
                             .background(.ultraThinMaterial)
                             .cornerRadius(12)
                             .shadow(radius: 1)
-                            .padding(.bottom, 12)
                         }
-                        .padding(.horizontal)
+                        // Agrega un swipe actions solo si se puede borrar
+                        .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                            if !edition.isFromBundle {
+                                Button(role: .destructive) {
+                                    deleteEdition(edition)
+                                } label: {
+                                    Label("Borrar", systemImage: "trash")
+                                }
+                            }
+                            if !edition.isFromBundle {
+                                Button {
+                                    editEdition(edition)
+                                } label: {
+                                    Label("Editar", systemImage: "pencil")
+                                }
+                                .tint(.yellow)
+                            }
+                        }
                     }
                 }
+                .listStyle(.plain)
+            }
+            .sheet(item: $editingEdition, onDismiss: refreshEditions) { editionToEdit in
+                EditionCreationView(editingEdition: editionToEdit)
             }
             .navigationTitle("Ediciones")
             .navigationDestination(isPresented: $showDetail) {
@@ -66,6 +86,24 @@ struct EditionsSheet: View {
         }
     }
 
+    func deleteEdition(_ edition: EditionSummary) {
+        // Solo locales! (no las bundle)
+        guard !edition.isFromBundle else { return }
+        let url = getDocumentsDirectory().appendingPathComponent(edition.fileName)
+        do {
+            try FileManager.default.removeItem(at: url)
+            // Remueve de la lista local
+            editions.removeAll { $0.id == edition.id }
+        } catch {
+            // Manejo de error opcional
+        }
+    }
+
+    func editEdition(_ edition: EditionSummary) {
+        // Abre la vista edición pre-rellena con esta edición
+        editingEdition = edition
+    }
+
     func loadEditionDetails(edition: EditionSummary) {
         loading = true
         DispatchQueue.global(qos: .userInitiated).async {
@@ -81,6 +119,11 @@ struct EditionsSheet: View {
                 // Maneja error de carga aquí si quieres
             }
         }
+    }
+
+    func refreshEditions() {
+        // Tu función para recargar las ediciones de bundle+usuario
+        editions = EditionSummary.defaultEditions
     }
 }
 

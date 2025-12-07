@@ -7,6 +7,15 @@
 
 import Foundation
 
+func getOpenAIKey() -> String {
+    if let path = Bundle.main.path(forResource: "Secrets", ofType: "plist"),
+       let dict = NSDictionary(contentsOfFile: path),
+       let apiKey = dict["OPENAI_API_KEY"] as? String {
+        return apiKey
+    }
+    return ""
+}
+
 struct OpenAIMessage: Encodable {
     let role: String    // "user" o "assistant" o "system"
     let content: String

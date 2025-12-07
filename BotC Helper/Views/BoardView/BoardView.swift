@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+internal import UniformTypeIdentifiers
 
 struct EditingIndex: Identifiable {
     var id: Int { value }
@@ -19,6 +20,10 @@ struct BoardView: View {
     @State private var editingIndex: EditingIndex?
     @State private var isVotingPhase = false
     @State private var showDetail = false
+
+    @State private var dragOffset: CGSize = .zero
+    @State private var draggedPlayer: Int? = nil  // idx del jugador arrastrado
+    @State private var showResetAlert = false
 
     var body: some View {
         ZStack {
@@ -46,6 +51,7 @@ struct BoardView: View {
                         let positions = squarePerimeterPositions(count: board.players.count, in: geo.size)
                         ZStack {
                             ForEach(Array(board.players.indices), id: \.self) { idx in
+                                let pos = positions[idx]
                                 PlayerCircle(
                                     player: board.players[idx],
                                     status: board.days[board.currentDay][idx],
@@ -58,7 +64,43 @@ struct BoardView: View {
                                         editingIndex = EditingIndex(value: idx)
                                     }
                                 }
-                                    .position(positions[idx])
+                                .position(pos + (draggedPlayer == idx ? dragOffset : .zero))
+                                .zIndex(draggedPlayer == idx ? 1 : 0)
+                                .gesture(
+                                    LongPressGesture(minimumDuration: 0.2)
+                                        .onEnded { _ in
+                                            draggedPlayer = idx
+                                            dragOffset = .zero
+                                        }
+                                        .sequenced(before: DragGesture())
+                                        .onChanged { value in
+                                            switch value {
+                                            case .second(true, let drag?):
+                                                dragOffset = drag.translation
+                                            default:
+                                                break
+                                            }
+                                        }
+                                        .onEnded { value in
+                                            if let draggedIdx = draggedPlayer {
+                                                // Detectar a qué círculo se soltó encima:
+                                                let newPosition = positions[draggedIdx] + dragOffset
+                                                if let targetIdx = positions.enumerated().min(by: {
+                                                    distance($0.element, newPosition) < distance($1.element, newPosition)
+                                                })?.offset,
+                                                targetIdx != draggedIdx {
+                                                    board.players.swapAt(draggedIdx, targetIdx)
+                                                    // Actualiza seatNumber si es necesario
+                                                    for (i, _) in board.players.enumerated() {
+                                                        board.players[i].seatNumber = i+1
+                                                    }
+                                                }
+                                                // Regresa a su lugar
+                                                draggedPlayer = nil
+                                                dragOffset = .zero
+                                            }
+                                        }
+                                )
                             }
                         }
                     }
@@ -93,6 +135,7 @@ struct BoardView: View {
                             newBoard.days.append(copied)
                             newBoard.currentDay = newBoard.days.count - 1
                             board = newBoard
+                            saveBoardState(board)
                         }) {
                             Label("Nuevo Día", systemImage: "sun.max")
                         }
@@ -132,7 +175,7 @@ struct BoardView: View {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Menu {
                     Button("Guardar partida", systemImage: "square.and.arrow.down") {
-                        saveBoardState(board, fileName: board.suggestedName)
+                        saveBoardState(board)
                     }
                     Button("Agregar jugador", systemImage: "person.crop.circle.badge.plus") {
                         addPlayer()
@@ -151,13 +194,29 @@ struct BoardView: View {
                     Button("Limpiar todas las acusaciones", systemImage: "exclamationmark.bubble") {
                         clearAllNominations()
                     }
-                    
+                    // 🚀 ¡Nuevo botón!
+                    Button("Nueva partida", systemImage: "arrow.clockwise") {
+                        showResetAlert = true
+                    }
+                    .tint(.red)
+
                 } label: {
                     Image(systemName: "ellipsis.circle")
                         .imageScale(.large)
                         .foregroundColor(.white)
                 }
             }
+        }
+        .onDisappear {
+            saveBoardState(board)
+        }
+        .alert("¿Borrar progreso?", isPresented: $showResetAlert) {
+            Button("Sí, limpiar todo", role: .destructive) {
+                resetBoardForNewGame()
+            }
+            Button("Cancelar", role: .cancel) { }
+        } message: {
+            Text("Esto deja las posiciones y nombres, pero borra todos los claims, notas y progreso actual. ¿Seguro que quieres reiniciar la partida?")
         }
         .navigationDestination(isPresented: $showDetail) {
             if let data = board.edition {
@@ -178,6 +237,7 @@ struct BoardView: View {
                     onSave: { updated, notes in
                         board.days[board.currentDay][idx] = updated
                         board.players[idx].personalNotes = notes
+                        saveBoardState(board)
                         // cierra el sheet
                         editingIndex = nil
                     },
@@ -192,7 +252,10 @@ struct BoardView: View {
             }
         }
     }
-
+    // suma de puntos
+    func distance(_ a: CGPoint, _ b: CGPoint) -> CGFloat {
+        sqrt(pow(a.x - b.x, 2) + pow(a.y - b.y, 2))
+    }
     func addPlayer() {
         let nextSeat = board.players.count + 1
         board.players.append(Player(seatNumber: nextSeat, name: "", claimManual: "", isMe: false, personalNotes: [:]))
@@ -216,6 +279,30 @@ struct BoardView: View {
                 board.days[day][idx].nominated = false
             }
         }
+    }
+
+    func resetBoardForNewGame() {
+        // Limpia solo lo mutable: roles, claims, notas, estados
+        var newPlayers: [Player] = []
+        for p in board.players {
+            var newPlayer = p
+            newPlayer.claimRoleId = nil
+            newPlayer.claimManual = ""
+            newPlayer.personalNotes = [:]
+            // Mantén nombre y seatNumber y isMe
+            newPlayers.append(newPlayer)
+        }
+        // Crea días nuevos: 1 solo, todos vivos (asumiendo PlayerStatusPerDay básico)
+        let day0: [PlayerStatusPerDay] = newPlayers.map {
+            PlayerStatusPerDay(seatNumber: $0.seatNumber)
+        }
+        board.players = newPlayers
+        board.days = [day0]
+        board.currentDay = 0
+        board.suggestedName = suggestedFileName(playersCount: board.players.count)
+        board.config = getConfigForPlayerCount(board.players.count)
+        // Listo para nuevo juego, pero conserva nombres, asientos e “isMe”
+        saveBoardState(board)
     }
 
     func squarePerimeterPositions(count: Int, in size: CGSize) -> [CGPoint] {
@@ -258,6 +345,32 @@ struct BoardView: View {
 
 }
 
+struct PlayerDropDelegate: DropDelegate {
+    let fromPlayer: Player?
+    let toPlayer: Player
+    @Binding var board: BoardState
+
+    func performDrop(info: DropInfo) -> Bool {
+        guard let from = fromPlayer, from.id != toPlayer.id else { return false }
+        if let idxFrom = board.players.firstIndex(where: { $0.id == from.id }),
+           let idxTo = board.players.firstIndex(where: { $0.id == toPlayer.id }) {
+            // Intercambia los jugadores (recuerda swap seatNumber!)
+            board.players.swapAt(idxFrom, idxTo)
+
+            // Mantén seatNumber actualizado si es necesario
+            for (i, _) in board.players.enumerated() {
+                board.players[i].seatNumber = i+1
+            }
+        }
+        return true
+    }
+}
+
+extension CGPoint {
+    static func + (a: CGPoint, b: CGSize) -> CGPoint {
+        CGPoint(x: a.x + b.width, y: a.y + b.height)
+    }
+}
 #Preview {
     BoardView(board: BoardState.Mock.example)
 }

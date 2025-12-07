@@ -33,28 +33,28 @@ struct EditionDetailView: View {
                             .foregroundColor(.secondary)
                     }
                     Divider()
-
-                    DisclosureGroup("ORDEN DE NOCHE INICIAL", isExpanded: $isExpandedFirstNigth) {
-                        NightOrderView(order: editionMeta.meta.firstNight)
-                            .padding()
+                    if !editionMeta.meta.firstNight.isEmpty {
+                        DisclosureGroup("Orden de noche inicial", isExpanded: $isExpandedFirstNigth) {
+                            NightOrderView(order: editionMeta.meta.firstNight, roles: editionMeta.characters)
+                                .padding()
+                        }
+                        .padding()
+                        .cornerRadius(10)
+                        .shadow(radius: 1)
                     }
-                    .padding()
-                    .background(Color.white)
-                    .cornerRadius(10)
-                    .shadow(radius: 1)
 
-                    DisclosureGroup("ORDEN DE OTRAS NOCHES", isExpanded: $isExpandedFirstNigth) {
-                        NightOrderView(order: editionMeta.meta.otherNight)
-                            .padding()
-                            .background(Color.gray.opacity(0.1))
-                            .cornerRadius(8)
+                    if !editionMeta.meta.otherNight.isEmpty {
+                        DisclosureGroup("Orden de otras noches", isExpanded: $isExpandedOtherNigth) {
+                            NightOrderView(order: editionMeta.meta.otherNight, roles: editionMeta.characters)
+                                .padding()
+                        }
+                        .padding()
+                        .cornerRadius(10)
+                        .shadow(radius: 1)
                     }
-                    .padding()
-                    .background(Color.white)
-                    .cornerRadius(10)
-                    .shadow(radius: 1)
-
-                    Divider()
+                    if !editionMeta.meta.otherNight.isEmpty && !editionMeta.meta.firstNight.isEmpty {
+                        Divider()
+                    }
                 }
 
                 // Personajes
@@ -80,17 +80,60 @@ struct EditionDetailView: View {
 
 struct NightOrderView: View {
     let order: [String]
+    let roles: [RoleDefinition]
+
     var body: some View {
-        VStack(alignment: .leading, spacing: 4) {
-            ForEach(order, id: \.self) { item in
-                HStack {
-                    RolIcon(name: item)
+            VStack(alignment: .leading, spacing: 4) {
+                ForEach(order, id: \.self) { item in
+                    HStack {
+                        if let special = orderLabelsES[item] {
+                            // Noche, amanecer o info especial
+                            HStack(spacing: 8) {
+                                Image(item)
+                                    .resizable()
+                                    .frame(width: 50, height: 50)
+                                    .cornerRadius(5)
+                                Text(item.capitalized)
+                                    .font(.body)
+                            }
+                        } else if item.hasPrefix("secta_"),
+                           let role = roles.first(where: { $0.id == item }) {
+                            // Es un rol, muestra icono y nombre bonito
+                            HStack(spacing: 8) {
+                                Image(role.iconName)
+                                    .resizable()
+                                    .frame(width: 50, height: 50)
+                                    .cornerRadius(5)
+                                Text(role.name)
+                                    .font(.body)
+                            }
+                        } else {
+                            // ¿Otro identificador raro? Solo muestra su nombre sin prefijo
+                            Text(item.replacingOccurrences(of: "secta_", with: ""))
+                        }
+                    }
                 }
             }
         }
-    }
+
+        // Opción: Cambia el ícono para eventos especiales
+        func iconSpecial(for item: String) -> String {
+            switch item {
+            case "dusk": return "moon.stars.fill"
+            case "dawn": return "sun.max.fill"
+            case "minioninfo": return "person.2.wave.2.fill"
+            case "demoninfo": return "flame"
+            default: return "circle"
+            }
+        }
 }
 
+let orderLabelsES: [String: String] = [
+    "dusk": "Anochecer",
+    "dawn": "Amanecer",
+    "minioninfo": "Info de Esbirros",
+    "demoninfo": "Info de Demonio"
+]
 
 #Preview {
     EditionDetailView(editionMeta: EditionData.Mock.editionData!)

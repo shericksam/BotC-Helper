@@ -47,7 +47,9 @@ struct LoadGameListView: View {
     func loadFiles() {
         let dir = getDocumentsDirectory()
         if let files = try? FileManager.default.contentsOfDirectory(atPath: dir.path) {
-            self.fileNames = files.filter { $0.hasSuffix(".json") }
+            self.fileNames = files.filter {
+                $0.lowercased().contains("juego") && $0.hasSuffix(".json")
+            }
         }
     }
 

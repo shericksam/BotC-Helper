@@ -63,8 +63,8 @@ import SwiftData
 //    modelContext.insert(edition)
 //}
 
-func saveBoardState(_ board: BoardState, fileName: String) {
-    let url = getDocumentsDirectory().appendingPathComponent(fileName + ".json")
+func saveBoardState(_ board: BoardState) {
+    let url = getDocumentsDirectory().appendingPathComponent(board.suggestedName + ".json")
     do {
         let data = try JSONEncoder().encode(board)
         try data.write(to: url)

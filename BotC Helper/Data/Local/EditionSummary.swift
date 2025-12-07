@@ -10,7 +10,7 @@ import Foundation
 struct EditionSummary: Identifiable, Codable, Equatable, Hashable {
     let id: String
     let name: String
-    let fileName: String // Por ejemplo: "trouble_brewing.json"
+    let fileName: String
     let imageName: String?
     var isFromBundle: Bool = true
 }
