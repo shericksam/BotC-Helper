@@ -36,6 +36,7 @@ final class RoleDefinition {
     var remindersGlobal: [String]?
     var firstNightReminder: String?
     var otherNightReminder: String?
+    @Relationship(inverse: \SpecialProperty.parentRole)
     var special: [SpecialProperty]?
 
     var team: Team? {
@@ -69,19 +70,22 @@ final class RoleDefinition {
         self.special = special
     }
 
-    @Model
-    final class SpecialProperty {
-        var name: String
-        var type: String
-        var time: String?
-        var value: String?
+}
 
-        init(name: String, type: String, time: String? = nil, value: String? = nil) {
-            self.name = name
-            self.type = type
-            self.time = time
-            self.value = value
-        }
+@Model
+final class SpecialProperty {
+    var name: String
+    var type: String
+    var time: String?
+    var value: String?
+    @Relationship var parentRole: RoleDefinition?
+
+    init(name: String, type: String, time: String? = nil, value: String? = nil, parentRole: RoleDefinition? = nil) {
+        self.name = name
+        self.type = type
+        self.time = time
+        self.value = value
+        self.parentRole = parentRole
     }
 }
 

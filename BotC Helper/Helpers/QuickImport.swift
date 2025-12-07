@@ -16,8 +16,9 @@ struct QuickImport {
             firstNight: structEdition.meta.firstNight,
             otherNight: structEdition.meta.otherNight
         )
+
         let roles = structEdition.characters.map { role in
-            RoleDefinition(
+            let roleEntity = RoleDefinition(
                 id: role.id,
                 name: role.name,
                 team: role.team,
@@ -28,10 +29,22 @@ struct QuickImport {
                 remindersGlobal: role.remindersGlobal,
                 firstNightReminder: role.firstNightReminder,
                 otherNightReminder: role.otherNightReminder,
-                special: role.special?.map { sp in
-                    RoleDefinition.SpecialProperty(name: sp.name, type: sp.type, time: sp.time, value: sp.value)
-                }
+                special: []
             )
+            if let specials = role.special {
+                let spEntities = specials.map { spModel in
+                    let sp = SpecialProperty(
+                        name: spModel.name,
+                        type: spModel.type,
+                        time: spModel.time,
+                        value: spModel.value
+                    )
+                    sp.parentRole = roleEntity       // RELACIÓN INVERSA CLAVE
+                    return sp
+                }
+                roleEntity.special = spEntities
+            }
+            return roleEntity
         }
         return EditionData(meta: meta, characters: roles)
     }

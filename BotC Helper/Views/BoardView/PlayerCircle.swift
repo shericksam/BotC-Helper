@@ -8,43 +8,44 @@
 import SwiftUI
 
 struct PlayerCircle: View {
-    var player: PlayerModel
-    var status: PlayerStatusPerDayModel
+    var player: Player
+    var status: PlayerStatus
     var isMe: Bool
-    var roles: [RoleDefinitionModel]
-
+    var roles: [RoleDefinition]
     var onTap: () -> Void
-    var claimedRole: RoleDefinitionModel? {
+
+    var claimedRole: RoleDefinition? {
         guard let id = player.claimRoleId else { return nil }
         return roles.first(where: { $0.id == id })
     }
 
     var body: some View {
-        VStack {
+        VStack(spacing: 4) {
             ZStack {
                 Circle()
                     .strokeBorder(isMe ? Color.green : (status.dead ? .red : Color.primaryBrown), lineWidth: 3)
                     .frame(width: 60, height: 60)
-                    .overlay(
-                        VStack {
-                            if !player.name.isEmpty {
-                                Text(player.name)
-                                    .foregroundColor(.black)
-                                    .font(.caption)
-                                    .lineLimit(3)
-                            } else {
-                                Text(!player.name.isEmpty ? player.initials : "#\(player.seatNumber)")
-                                    .foregroundColor(.black)
-                                    .font(.headline)
-                            }
-                        }
-                    )
+//                    .overlay(
+
+//                    )
                     .background(
                         Image("background")
                             .resizable()
                             .scaledToFill()
                             .clipShape(Circle())
                     )
+                VStack {
+                    if !player.name.isEmpty {
+                        Text(player.name)
+                            .foregroundColor(.black)
+                            .font(.caption)
+                            .lineLimit(3)
+                    } else {
+                        Text("#\(player.seatNumber)")
+                            .foregroundColor(.black)
+                            .font(.headline)
+                    }
+                }
                 // Voto
                 if status.voted {
                     Image(systemName: "checkmark.circle.fill")
@@ -63,16 +64,16 @@ struct PlayerCircle: View {
                         .font(.largeTitle)
                         .foregroundColor(.red)
                 }
-                // Rol asignado (opcional)
-                if let role = claimedRole, !iAmBadGuy() {
-                        RolIcon(name: role.id)
-                            .frame(width: 70, height: 50)
-                            .clipShape(Circle())
-                            .offset(x: 0, y: -22)
+                // Rol asignado: sólo muestra el icono si no eres tú y malvado
+                if let role = claimedRole, !iAmBadGuy(role: role) {
+                    RolIcon(name: role.iconName ?? role.id)
+                        .frame(width: 70, height: 50)
+                        .clipShape(Circle())
+                        .offset(x: 0, y: -22)
                 }
             }
             Group {
-                if let role = claimedRole, !iAmBadGuy() {
+                if let role = claimedRole, !iAmBadGuy(role: role) {
                     Text(role.name)
                 } else {
                     Text("Seat \(player.seatNumber)")
@@ -84,9 +85,10 @@ struct PlayerCircle: View {
         .onTapGesture(perform: onTap)
     }
 
-    func iAmBadGuy() -> Bool {
-        isMe && (claimedRole?.team == .demon || claimedRole?.team == .minion)
+    func iAmBadGuy(role: RoleDefinition) -> Bool {
+        isMe && ((role.team == .demon) || (role.team == .minion))
     }
+
 }
 
 #Preview {
@@ -97,8 +99,33 @@ struct PlayerCircle: View {
             .frame(minWidth: 0)
             .edgesIgnoringSafeArea(.all)
 
-        PlayerCircle(player: .init(seatNumber: 1, name: "Erick", claimRoleId: "secta_po", claimManual: ""), status: .init(seatNumber: 1), isMe: true, roles: [RoleDefinitionModel(id: "secta_po", name: "Po", team: .demon)]) {
-            print("tapped")
+        VStack {
+            PlayerCircle(player: .init(seatNumber: 1, name: "Erick", claimRoleId: "secta_po", claimManual: ""),
+                         status: .init(seatNumber: 1),
+                         isMe: true,
+                         roles: [RoleDefinition(id: "secta_po",
+                                                name: "Po",
+                                                team: .demon)]) {
+                print("tapped")
+            }
+
+            PlayerCircle(player: .init(seatNumber: 1, name: "Erick", claimRoleId: "secta_assassin", claimManual: ""),
+                         status: .init(seatNumber: 1),
+                         isMe: true,
+                         roles: [RoleDefinition(id: "secta_assassin",
+                                                name: "Assassin",
+                                                team: .minion)]) {
+                print("tapped")
+            }
+
+            PlayerCircle(player: .init(seatNumber: 1, name: "Erick", claimRoleId: "secta_grandmother", claimManual: ""),
+                         status: .init(seatNumber: 1),
+                         isMe: true,
+                         roles: [RoleDefinition(id: "secta_grandmother",
+                                                name: "Grandmother",
+                                                team: .townsfolk)]) {
+                print("tapped")
+            }
         }
     }
 }

@@ -17,8 +17,23 @@ struct MainView: View {
     @State private var showingLoadView = false
 
     @State private var boardState: BoardState? = nil // el nuevo tablero
-
+    @State private var didPreload = false
     var body: some View {
+        Group {
+            if didPreload {
+                bodyLoaded // O lo que sea tu vista principal, aquí aparece el query
+            } else {
+                ProgressView("Cargando recursos...")
+            }
+        }
+
+        .task {
+            await PreloadContent().preloadDefaultEditionsAndRolesIfNeeded(modelContext: modelContext)
+            didPreload = true
+        }
+    }
+
+    var bodyLoaded: some View {
         NavigationStack {
             ZStack {
                 Image("background")
@@ -102,22 +117,10 @@ struct MainView: View {
             }
             .navigationDestination(isPresented: $isShowingGameBoard) {
                 if let board = boardState {
-//                    BoardView(board: board)
+                    BoardView(board: board)
                 } else {
                     Text("No hay tablero disponible")
                 }
-            }
-            .task {
-                await PreloadContent().preloadDefaultEditionsAndRolesIfNeeded(modelContext: modelContext)
-            }
-        }
-    }
-
-    @ViewBuilder
-    func showBoardGame(board: BoardStateModel?) -> some View {
-        Group {
-            if let board = board {
-                BoardView(board: board)
             }
         }
     }

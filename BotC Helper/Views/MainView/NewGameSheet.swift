@@ -53,6 +53,9 @@ struct NewGameSheet: View {
                     Button("Cancelar", action: { dismiss() })
                 }
             }
+            .onAppear(){
+                print(allEditions)
+            }
         }
     }
 

@@ -12,9 +12,15 @@ import SwiftData
 struct BotC_HelperApp: App {
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
-//            Edition.self,
-            Character.self,
-            Script.self
+            BoardState.self,
+            Player.self,
+            GameDay.self,
+            PlayerStatus.self,
+            PersonalNote.self,
+            EditionData.self,
+            EditionMeta.self,
+            RoleDefinition.self,
+            SpecialProperty.self
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 

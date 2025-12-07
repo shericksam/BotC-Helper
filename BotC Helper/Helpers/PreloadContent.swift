@@ -14,7 +14,7 @@ struct PreloadContent {
     @MainActor
     func preloadDefaultEditionsAndRolesIfNeeded(modelContext: ModelContext) async {
         let didPreload = UserDefaults.standard.bool(forKey: didPreloadKey)
-        guard !didPreload else { return }
+//        guard !didPreload else { return }
 
         // 1. Pre-cargar ediciones base del bundle
         for editionSummary in EditionSummaryModel.defaultEditions {
@@ -38,7 +38,7 @@ struct PreloadContent {
 
             // Instancia entidad SwiftData:
             let metaEntity = EditionMeta(id: metaStruct.id, name: metaStruct.name, author: metaStruct.author, firstNight: metaStruct.firstNight, otherNight: metaStruct.otherNight)
-            let rolesEntities = roles.map { r in
+            let roleEntities: [RoleDefinition] = roles.map { r in
                 RoleDefinition(
                     id: r.id,
                     name: r.name,
@@ -50,15 +50,32 @@ struct PreloadContent {
                     remindersGlobal: r.remindersGlobal,
                     firstNightReminder: r.firstNightReminder,
                     otherNightReminder: r.otherNightReminder,
-                    special: r.special?.map { RoleDefinition.SpecialProperty(name: $0.name, type: $0.type, time: $0.time, value: $0.value) }
+                    special: []
                 )
             }
-            let editionEntity = EditionData(meta: metaEntity, characters: rolesEntities)
+            for (index, role) in roles.enumerated() {
+                guard let specials = role.special else { continue }
+                let roleEntity = roleEntities[index]
+                let specialEntities = specials.map { s in
+                    let special = SpecialProperty(
+                        name: s.name,
+                        type: s.type,
+                        time: s.time,
+                        value: s.value
+                    )
+                    special.parentRole = roleEntity
+                    return special
+                }
+                // 3. Asigna la relación al roleEntity
+                roleEntity.special = specialEntities
+            }
+            let editionEntity = EditionData(meta: metaEntity, characters: roleEntities)
             modelContext.insert(editionEntity)
         }
 
         // 2. Pre-cargar todos los roles posibles (si tu modelo lo requiere aparte)
         for role in loadPredefinedRoles() {
+            // 1. Crea roleEntity sin specials
             let roleEntity = RoleDefinition(
                 id: role.id,
                 name: role.name,
@@ -70,11 +87,26 @@ struct PreloadContent {
                 remindersGlobal: role.remindersGlobal,
                 firstNightReminder: role.firstNightReminder,
                 otherNightReminder: role.otherNightReminder,
-                special: role.special?.map { RoleDefinition.SpecialProperty(name: $0.name, type: $0.type, time: $0.time, value: $0.value) }
+                special: [] // temporalmente vacío
             )
+            // 2. Crea los special con la relación inversa apuntando al roleEntity
+            if let specials = role.special {
+                let spEntities = specials.map { spModel in
+                    let sp = SpecialProperty(
+                        name: spModel.name,
+                        type: spModel.type,
+                        time: spModel.time,
+                        value: spModel.value
+                    )
+                    sp.parentRole = roleEntity       // RELACIÓN INVERSA CLAVE
+                    return sp
+                }
+                roleEntity.special = spEntities
+            }
             modelContext.insert(roleEntity)
         }
 
         UserDefaults.standard.set(true, forKey: didPreloadKey)
+        try? modelContext.save()
     }
 }
