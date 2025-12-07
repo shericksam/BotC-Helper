@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		22B80CF52EE4E13900DAEB9B /* OpenAIKit in Frameworks */ = {isa = PBXBuildFile; productRef = 22B80CF42EE4E13900DAEB9B /* OpenAIKit */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		225D984C2EDFD86000236040 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -52,6 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				22B80CF52EE4E13900DAEB9B /* OpenAIKit in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -112,6 +117,7 @@
 			);
 			name = "BotC Helper";
 			packageProductDependencies = (
+				22B80CF42EE4E13900DAEB9B /* OpenAIKit */,
 			);
 			productName = "BotC Helper";
 			productReference = 225D983C2EDFD85F00236040 /* BotC Helper.app */;
@@ -195,6 +201,9 @@
 			);
 			mainGroup = 225D98332EDFD85F00236040;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				22B80CF32EE4E13900DAEB9B /* XCRemoteSwiftPackageReference "OpenAIKit" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 225D983D2EDFD85F00236040 /* Products */;
 			projectDirPath = "";
@@ -574,6 +583,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		22B80CF32EE4E13900DAEB9B /* XCRemoteSwiftPackageReference "OpenAIKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/OpenDive/OpenAIKit.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.0.1;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		22B80CF42EE4E13900DAEB9B /* OpenAIKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 22B80CF32EE4E13900DAEB9B /* XCRemoteSwiftPackageReference "OpenAIKit" */;
+			productName = OpenAIKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 225D98342EDFD85F00236040 /* Project object */;
 }

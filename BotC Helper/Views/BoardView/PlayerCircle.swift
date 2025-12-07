@@ -64,7 +64,7 @@ struct PlayerCircle: View {
                         .foregroundColor(.red)
                 }
                 // Rol asignado (opcional)
-                if let role = claimedRole {
+                if let role = claimedRole, !iAmBadGuy() {
                         RolIcon(name: role.id)
                             .frame(width: 70, height: 50)
                             .clipShape(Circle())
@@ -72,7 +72,7 @@ struct PlayerCircle: View {
                 }
             }
             Group {
-                if let role = claimedRole {
+                if let role = claimedRole, !iAmBadGuy() {
                     Text(role.name)
                 } else {
                     Text("Seat \(player.seatNumber)")
@@ -82,6 +82,10 @@ struct PlayerCircle: View {
             .font(.caption)
         }
         .onTapGesture(perform: onTap)
+    }
+
+    func iAmBadGuy() -> Bool {
+        isMe && (claimedRole?.team == .demon || claimedRole?.team == .minion)
     }
 }
 
@@ -93,7 +97,7 @@ struct PlayerCircle: View {
             .frame(minWidth: 0)
             .edgesIgnoringSafeArea(.all)
 
-        PlayerCircle(player: .init(seatNumber: 1, name: "Erick", claimRoleId: "secta_washerwoman", claimManual: ""), status: .init(seatNumber: 1), isMe: true, roles: [RoleDefinition(id: "secta_washerwoman", name: "Lavandera", team: .townsfolk)]) {
+        PlayerCircle(player: .init(seatNumber: 1, name: "Erick", claimRoleId: "secta_po", claimManual: ""), status: .init(seatNumber: 1), isMe: true, roles: [RoleDefinition(id: "secta_po", name: "Po", team: .demon)]) {
             print("tapped")
         }
     }

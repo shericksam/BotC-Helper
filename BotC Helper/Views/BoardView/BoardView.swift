@@ -17,7 +17,6 @@ struct BoardView: View {
     @State private var selectedPlayer: Player?
     @State private var selectedStatus: PlayerStatusPerDay?
     @State private var editingIndex: EditingIndex?
-    @State private var showingSaveSheet = false
     @State private var isVotingPhase = false
     @State private var showDetail = false
 
@@ -38,6 +37,7 @@ struct BoardView: View {
                 }
                 .pickerStyle(.segmented)
                 .padding()
+                .padding(.top, 25)
 
                 Spacer()
                 ZStack {
@@ -46,7 +46,6 @@ struct BoardView: View {
                         let positions = squarePerimeterPositions(count: board.players.count, in: geo.size)
                         ZStack {
                             ForEach(Array(board.players.indices), id: \.self) { idx in
-//                                let pos =
                                 PlayerCircle(
                                     player: board.players[idx],
                                     status: board.days[board.currentDay][idx],
@@ -116,6 +115,10 @@ struct BoardView: View {
                             .font(.body)
                         Text("Demonio: \(board.config.numDemon)")
                             .font(.body)
+                        
+                        NavigationLink(destination: GPTAssistantView(board: board)) {
+                            Label("Análisis AI", systemImage: "bolt.circle.fill")
+                        }
                     }
                     .multilineTextAlignment(.center)
                     .foregroundStyle(Color.white)
@@ -125,19 +128,11 @@ struct BoardView: View {
                 .padding(.bottom, 30)
             }
         }
-        .sheet(isPresented: $showingSaveSheet) {
-            SaveGameSheet(
-                isPresented: $showingSaveSheet,
-                suggestedName: suggestedFileName(for: board)
-            ) { name in
-                saveBoardState(board, fileName: name)
-            }
-        }
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Menu {
                     Button("Guardar partida", systemImage: "square.and.arrow.down") {
-                        showingSaveSheet = true
+                        saveBoardState(board, fileName: board.suggestedName)
                     }
                     Button("Agregar jugador", systemImage: "person.crop.circle.badge.plus") {
                         addPlayer()
@@ -156,6 +151,7 @@ struct BoardView: View {
                     Button("Limpiar todas las acusaciones", systemImage: "exclamationmark.bubble") {
                         clearAllNominations()
                     }
+                    
                 } label: {
                     Image(systemName: "ellipsis.circle")
                         .imageScale(.large)
@@ -259,6 +255,7 @@ struct BoardView: View {
         }
         return result
     }
+
 }
 
 #Preview {

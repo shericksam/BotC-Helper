@@ -90,12 +90,12 @@ func getDocumentsDirectory() -> URL {
     FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
 }
 
-func suggestedFileName(for board: BoardState) -> String {
+func suggestedFileName(playersCount : Int) -> String {
     let date = Date()
     let formatter = DateFormatter()
-    formatter.dateFormat = "MMMdd" // "Dec03"
+    formatter.dateFormat = "MMMddyyyy'T'HH:mm:ss" // "Dec03"
     let dateString = formatter.string(from: date)
-    return "\(dateString)-\(board.players.count)P"
+    return "Juego: \(dateString)-\(playersCount)P"
 }
 
 func loadBoardState(fileName: String) -> BoardState? {

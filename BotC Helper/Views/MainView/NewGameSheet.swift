@@ -50,7 +50,8 @@ struct NewGameSheet: View {
                             // Día 0: todos vivos, nadie votó
                             let day0 = players.map { p in PlayerStatusPerDay(seatNumber: p.seatNumber) }
                             let config = getConfigForPlayerCount(playerCount)
-                            onStart(BoardState(players: players,
+                            onStart(BoardState(suggestedName: suggestedFileName(playersCount: playerCount),
+                                               players: players,
                                                days: [day0],
                                                currentDay: 0,
                                                config: config,
