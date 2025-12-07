@@ -16,7 +16,7 @@ struct MainView: View {
 
     @State private var showingLoadView = false
 
-    @State private var boardState: BoardStateModel? = nil // el nuevo tablero
+    @State private var boardState: BoardState? = nil // el nuevo tablero
 
     var body: some View {
         NavigationStack {
@@ -58,7 +58,7 @@ struct MainView: View {
                         }
                         .sheet(isPresented: $showingNewGameSheet) {
                             NewGameSheet { config in
-//                                boardState = config
+                                boardState = config
                                 isShowingGameBoard = true
                                 showingNewGameSheet = false
                             }
@@ -102,7 +102,7 @@ struct MainView: View {
             }
             .navigationDestination(isPresented: $isShowingGameBoard) {
                 if let board = boardState {
-                    BoardView(board: board)
+//                    BoardView(board: board)
                 } else {
                     Text("No hay tablero disponible")
                 }
