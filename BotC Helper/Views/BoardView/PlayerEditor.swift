@@ -21,7 +21,7 @@ struct PlayerEditor: View {
     @State private var searchClaim: String = ""
     @State private var filteredRoles: [RoleDefinition] = []
     @State private var showRolesList = false
-
+    @State private var editRole = false
     var selectedRole: RoleDefinition? {
         guard let id = player.claimRoleId else { return nil }
         return roles.first { $0.id == id }
@@ -29,34 +29,22 @@ struct PlayerEditor: View {
 
     @State var localPersonalNotes: [Int: String] = [:]
 
-//    init(
-//        player: Binding<Player>,
-//        status: PlayerStatusPerDay,
-//        onSave: @escaping (PlayerStatusPerDay, [Int: String]) -> Void,
-//        isMe: Bool,
-//        totalDays: Int,
-//        statusesByDay: [PlayerStatusPerDay],
-//        currentDayIndex: Int
-//    ) {
-//        self._player = player
-//        self._status = State(initialValue: status)
-//        self.onSave = onSave
-//        self.isMe = isMe
-//        self.totalDays = totalDays
-//        self.statusesByDay = statusesByDay
-//        self.currentDayIndex = currentDayIndex
-//        self._localPersonalNotes = State(initialValue: player.wrappedValue.personalNotes)
-//    }
-
     var body: some View {
         NavigationView {
             Form {
                 Section("Datos del Jugador") {
                     TextField("Nombre", text: $player.name)
-//                    TextField("Claim (rol declarado)", text: $player.claim)
-                    claimRol()
+
+                    if isMe {
+                        Button("Editar rol") {
+                            editRole.toggle()
+                        }
+                    }
+                    if  editRole || !isMe {
+                        claimRol()
+                    }
                 }
-                if let selected = selectedRole {
+                if let selected = selectedRole, !iAmBadGuy() {
                     Section("Rol declarado: \(selected.name)") {
                         RolIcon(name: selected.iconName)
                                 .frame(width: 50, height: 50)
@@ -116,6 +104,11 @@ struct PlayerEditor: View {
                         }
                         .padding(.vertical, 2)
                     }
+                }
+            }
+            .onAppear {
+                for (day, note) in player.personalNotes {
+                    self.localPersonalNotes[day] = note
                 }
             }
             .navigationTitle("Editar Jugador \(player.seatNumber)")
@@ -190,5 +183,9 @@ struct PlayerEditor: View {
                 .frame(maxHeight: 180)
             }
         }
+    }
+
+    func iAmBadGuy() -> Bool {
+        isMe && (selectedRole?.team == .demon || selectedRole?.team == .minion)
     }
 }

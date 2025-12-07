@@ -9,6 +9,7 @@ import Foundation
 
 struct BoardState: Codable, Equatable {
     var id: UUID = UUID()
+    var suggestedName: String
     var players: [Player]
     // [Día 0, Día 1, Día 2, ...] (status de cada jugador por día)
     var days: [[PlayerStatusPerDay]]
@@ -25,9 +26,10 @@ struct BoardState: Codable, Equatable {
             // Día 0: todos vivos, nadie votó
             let day0 = players.map { p in PlayerStatusPerDay(seatNumber: p.seatNumber) }
             let config = getConfigForPlayerCount(playerCount)
-            return BoardState(players: players, days: [day0], currentDay: 0, config: config, edition: EditionData.Mock.editionData)
+            return BoardState(suggestedName: suggestedFileName(playersCount: playerCount), players: players, days: [day0], currentDay: 0, config: config, edition: EditionData.Mock.editionData)
         }
     }
+
 }
 
 struct GameConfig: Codable, Equatable {
