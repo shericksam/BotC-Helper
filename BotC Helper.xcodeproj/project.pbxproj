@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		22B80CF52EE4E13900DAEB9B /* OpenAIKit in Frameworks */ = {isa = PBXBuildFile; productRef = 22B80CF42EE4E13900DAEB9B /* OpenAIKit */; };
+		22B80D032EE501EC00DAEB9B /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = 22B80D022EE501EC00DAEB9B /* MarkdownUI */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -57,6 +58,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				22B80CF52EE4E13900DAEB9B /* OpenAIKit in Frameworks */,
+				22B80D032EE501EC00DAEB9B /* MarkdownUI in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -118,6 +120,7 @@
 			name = "BotC Helper";
 			packageProductDependencies = (
 				22B80CF42EE4E13900DAEB9B /* OpenAIKit */,
+				22B80D022EE501EC00DAEB9B /* MarkdownUI */,
 			);
 			productName = "BotC Helper";
 			productReference = 225D983C2EDFD85F00236040 /* BotC Helper.app */;
@@ -203,6 +206,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				22B80CF32EE4E13900DAEB9B /* XCRemoteSwiftPackageReference "OpenAIKit" */,
+				22B80D012EE501EC00DAEB9B /* XCRemoteSwiftPackageReference "MarkdownUI" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 225D983D2EDFD85F00236040 /* Products */;
@@ -593,6 +597,14 @@
 				minimumVersion = 2.0.1;
 			};
 		};
+		22B80D012EE501EC00DAEB9B /* XCRemoteSwiftPackageReference "MarkdownUI" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/gonzalezreal/MarkdownUI.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 2.4.1;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -600,6 +612,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 22B80CF32EE4E13900DAEB9B /* XCRemoteSwiftPackageReference "OpenAIKit" */;
 			productName = OpenAIKit;
+		};
+		22B80D022EE501EC00DAEB9B /* MarkdownUI */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 22B80D012EE501EC00DAEB9B /* XCRemoteSwiftPackageReference "MarkdownUI" */;
+			productName = MarkdownUI;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
