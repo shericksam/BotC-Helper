@@ -14,9 +14,9 @@ struct EditingIndex: Identifiable {
 }
 
 struct BoardView: View {
-    @State var board: BoardState
-    @State private var selectedPlayer: Player?
-    @State private var selectedStatus: PlayerStatusPerDay?
+    @State var board: BoardStateModel
+    @State private var selectedPlayer: PlayerModel?
+    @State private var selectedStatus: PlayerStatusPerDayModel?
     @State private var editingIndex: EditingIndex?
     @State private var isVotingPhase = false
     @State private var showDetail = false
@@ -120,7 +120,7 @@ struct BoardView: View {
                             let prevStatuses = board.days[board.currentDay]
                             // ¡Importante! No solo .map { $0 }, debes crear nuevos structs para evitar referencias compartidas.
                             let copied = prevStatuses.map { prevStatus in
-                                PlayerStatusPerDay(
+                                PlayerStatusPerDayModel(
                                     seatNumber: prevStatus.seatNumber,
                                     voted: false,
                                     nominated: false,
@@ -244,10 +244,10 @@ struct BoardView: View {
     }
     func addPlayer() {
         let nextSeat = board.players.count + 1
-        board.players.append(Player(seatNumber: nextSeat, name: "", claimManual: "", isMe: false, personalNotes: [:]))
+        board.players.append(PlayerModel(seatNumber: nextSeat, name: "", claimManual: "", isMe: false, personalNotes: [:]))
         // Añade estado a todos los días existentes para este jugador:
         for i in 0..<board.days.count {
-            board.days[i].append(PlayerStatusPerDay(
+            board.days[i].append(PlayerStatusPerDayModel(
                 seatNumber: nextSeat, voted: false, nominated: false, dead: false, claim: "", notes: ""
             ))
         }
@@ -308,9 +308,9 @@ struct BoardView: View {
 }
 
 struct PlayerDropDelegate: DropDelegate {
-    let fromPlayer: Player?
-    let toPlayer: Player
-    @Binding var board: BoardState
+    let fromPlayer: PlayerModel?
+    let toPlayer: PlayerModel
+    @Binding var board: BoardStateModel
 
     func performDrop(info: DropInfo) -> Bool {
         guard let from = fromPlayer, from.id != toPlayer.id else { return false }
@@ -334,5 +334,5 @@ extension CGPoint {
     }
 }
 #Preview {
-    BoardView(board: BoardState.Mock.example)
+    BoardView(board: BoardStateModel.Mock.example)
 }

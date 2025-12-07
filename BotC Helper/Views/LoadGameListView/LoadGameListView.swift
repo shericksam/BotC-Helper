@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct LoadGameListView: View {
-    var onLoad: (BoardState) -> Void
+    var onLoad: (BoardStateModel) -> Void
     @Environment(\.dismiss) var dismiss
 
     @State private var fileNames: [String] = []

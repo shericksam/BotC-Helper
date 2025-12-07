@@ -9,7 +9,7 @@ import SwiftUI
 import MarkdownUI
 
 struct GPTAssistantView: View {
-    let board: BoardState
+    let board: BoardStateModel
 
     @State private var chatHistory: [ChatMessage] = []
     @State private var userInput: String = ""
@@ -87,12 +87,12 @@ struct GPTAssistantView: View {
         "gptchat-\(board.suggestedName)"
     }
 
-    func saveChatHistory(_ chat: [ChatMessage], for board: BoardState) {
+    func saveChatHistory(_ chat: [ChatMessage], for board: BoardStateModel) {
         guard let data = try? JSONEncoder().encode(chat) else { return }
         UserDefaults.standard.set(data, forKey: chatKey())
     }
 
-    func loadChatHistory(for board: BoardState) -> [ChatMessage] {
+    func loadChatHistory(for board: BoardStateModel) -> [ChatMessage] {
         guard let data = UserDefaults.standard.data(forKey: chatKey()),
               let history = try? JSONDecoder().decode([ChatMessage].self, from: data) else {
             return []
@@ -113,7 +113,7 @@ struct GPTAssistantView: View {
     }
 
     // Genera el prompt inicial/resumen del estado de juego
-    func makeInitialPrompt(board: BoardState) -> String {
+    func makeInitialPrompt(board: BoardStateModel) -> String {
         let editionName = board.edition?.meta.name ?? "Desconocido"
         let players = board.players.map { p in
             let name = p.name.isEmpty ? "Jugador \(p.seatNumber)" : p.name
@@ -203,7 +203,7 @@ struct GPTAssistantView: View {
         userInput = ""
     }
 
-    func gptPrompt(for board: BoardState, userMessage: String) -> String {
+    func gptPrompt(for board: BoardStateModel, userMessage: String) -> String {
         let myPlayer = board.players.first(where: { $0.isMe })
         let myNotes: [String] = myPlayer?.personalNotes.values.compactMap { $0 }.filter { !$0.isEmpty } ?? []
         let claims: [String] = board.players.compactMap {
@@ -227,7 +227,7 @@ struct GPTAssistantView: View {
         return base + "\nPregunta del usuario: \(userMessage)"
     }
 
-    func systemPrompt(for board: BoardState) -> String {
+    func systemPrompt(for board: BoardStateModel) -> String {
         let myPlayer = board.players.first(where: { $0.isMe })
         let team = detectTeam(me: myPlayer, edition: board.edition)
         switch team {
@@ -239,7 +239,7 @@ struct GPTAssistantView: View {
     }
 
     /** Detecta a qué tipo de jugador eres para el prompt */
-    func detectTeam(me: Player?, edition: EditionData?) -> String {
+    func detectTeam(me: PlayerModel?, edition: EditionDataModel?) -> String {
         guard let id = me?.claimRoleId, let role = edition?.characters.first(where: { $0.id == id }) else { return "unknown" }
         return role.team?.rawValue ?? "unknown"
     }

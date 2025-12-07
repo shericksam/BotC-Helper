@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct EditionsSheet: View {
-    @State var editions: [EditionSummary] = EditionSummary.defaultEditions
-    @State private var selectedEdition: EditionData? // Para navegación/Sheet
+    @State var editions: [EditionSummaryModel] = EditionSummaryModel.defaultEditions
+    @State private var selectedEdition: EditionDataModel? // Para navegación/Sheet
     @State private var loading = false
     @State private var showDetail = false
     @State private var showingCreateEdition = false
-    @State private var editingEdition: EditionSummary? = nil
+    @State private var editingEdition: EditionSummaryModel? = nil
 
     // Puedes agregar lógica para agregar/editar/borrar ediciones
 
@@ -86,7 +86,7 @@ struct EditionsSheet: View {
         }
     }
 
-    func deleteEdition(_ edition: EditionSummary) {
+    func deleteEdition(_ edition: EditionSummaryModel) {
         // Solo locales! (no las bundle)
         guard !edition.isFromBundle else { return }
         let url = getDocumentsDirectory().appendingPathComponent(edition.fileName)
@@ -99,12 +99,12 @@ struct EditionsSheet: View {
         }
     }
 
-    func editEdition(_ edition: EditionSummary) {
+    func editEdition(_ edition: EditionSummaryModel) {
         // Abre la vista edición pre-rellena con esta edición
         editingEdition = edition
     }
 
-    func loadEditionDetails(edition: EditionSummary) {
+    func loadEditionDetails(edition: EditionSummaryModel) {
         loading = true
         DispatchQueue.global(qos: .userInitiated).async {
             if let url = editionURL(for: edition),
@@ -123,7 +123,7 @@ struct EditionsSheet: View {
 
     func refreshEditions() {
         // Tu función para recargar las ediciones de bundle+usuario
-        editions = EditionSummary.defaultEditions
+        editions = EditionSummaryModel.defaultEditions
     }
 }
 

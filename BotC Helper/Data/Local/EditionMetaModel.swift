@@ -1,12 +1,12 @@
 //
-//  EditionMeta.swift
+//  EditionMetaModel.swift
 //  BotC Helper
 //
 //  Created by Erick Samuel Guerrero Arreola on 06/12/25.
 //
 
 import Foundation
-struct EditionMeta: Decodable, Encodable {
+struct EditionMetaModel: Decodable, Encodable {
     let id: String
     let name: String
     let author: String?
@@ -14,7 +14,7 @@ struct EditionMeta: Decodable, Encodable {
     let otherNight: [String]
 }
 
-struct RoleDefinition: Decodable, Identifiable, Encodable, Hashable, Equatable {
+struct RoleDefinitionModel: Decodable, Identifiable, Encodable, Hashable, Equatable {
     let id: String
     let name: String
     let team: Team?
@@ -64,7 +64,7 @@ struct RoleDefinition: Decodable, Identifiable, Encodable, Hashable, Equatable {
         self.remindersGlobal = try container.decodeIfPresent([String].self, forKey: .remindersGlobal)
         self.firstNightReminder = try container.decodeIfPresent(String.self, forKey: .firstNightReminder)
         self.otherNightReminder = try container.decodeIfPresent(String.self, forKey: .otherNightReminder)
-        self.special = try container.decodeIfPresent([RoleDefinition.SpecialProperty].self, forKey: .special)
+        self.special = try container.decodeIfPresent([RoleDefinitionModel.SpecialProperty].self, forKey: .special)
     }
 
     init(
@@ -91,7 +91,7 @@ struct RoleDefinition: Decodable, Identifiable, Encodable, Hashable, Equatable {
         self.special = special
     }
 
-    static func == (lhs: RoleDefinition, rhs: RoleDefinition) -> Bool {
+    static func == (lhs: RoleDefinitionModel, rhs: RoleDefinitionModel) -> Bool {
         lhs.id == rhs.id
     }
     func getImageName() -> String {
@@ -99,20 +99,20 @@ struct RoleDefinition: Decodable, Identifiable, Encodable, Hashable, Equatable {
     }
 }
 
-struct EditionData: Decodable, Encodable, Equatable {
+struct EditionDataModel: Decodable, Encodable, Equatable {
     var id: String { meta.id }
-    let meta: EditionMeta
-    let characters: [RoleDefinition]
+    let meta: EditionMetaModel
+    let characters: [RoleDefinitionModel]
 
-    static func == (lhs: EditionData, rhs: EditionData) -> Bool {
+    static func == (lhs: EditionDataModel, rhs: EditionDataModel) -> Bool {
         lhs.id == rhs.id
     }
 }
 
-extension EditionData {
+extension EditionDataModel {
     struct Mock {
-        static var editionData: EditionData? {
-            let edition = EditionSummary(id: "tb", name: "Trouble Brewing", fileName: "trouble_brewing.json", imageName: "logo_trouble_brewing")
+        static var editionData: EditionDataModel? {
+            let edition = EditionSummaryModel(id: "tb", name: "Trouble Brewing", fileName: "trouble_brewing.json", imageName: "logo_trouble_brewing")
             return mockLoadEditionDetails(edition: edition)
         }
     }

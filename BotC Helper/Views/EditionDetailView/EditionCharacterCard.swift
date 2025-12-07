@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct EditionCharacterCard: View {
-    let character: RoleDefinition
+    let character: RoleDefinitionModel
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             HStack(alignment: .center, spacing: 12) {

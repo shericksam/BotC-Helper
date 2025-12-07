@@ -8,13 +8,13 @@
 import SwiftUI
 
 struct PlayerCircle: View {
-    var player: Player
-    var status: PlayerStatusPerDay
+    var player: PlayerModel
+    var status: PlayerStatusPerDayModel
     var isMe: Bool
-    var roles: [RoleDefinition]
+    var roles: [RoleDefinitionModel]
 
     var onTap: () -> Void
-    var claimedRole: RoleDefinition? {
+    var claimedRole: RoleDefinitionModel? {
         guard let id = player.claimRoleId else { return nil }
         return roles.first(where: { $0.id == id })
     }
@@ -97,7 +97,7 @@ struct PlayerCircle: View {
             .frame(minWidth: 0)
             .edgesIgnoringSafeArea(.all)
 
-        PlayerCircle(player: .init(seatNumber: 1, name: "Erick", claimRoleId: "secta_po", claimManual: ""), status: .init(seatNumber: 1), isMe: true, roles: [RoleDefinition(id: "secta_po", name: "Po", team: .demon)]) {
+        PlayerCircle(player: .init(seatNumber: 1, name: "Erick", claimRoleId: "secta_po", claimManual: ""), status: .init(seatNumber: 1), isMe: true, roles: [RoleDefinitionModel(id: "secta_po", name: "Po", team: .demon)]) {
             print("tapped")
         }
     }
