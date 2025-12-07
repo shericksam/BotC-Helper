@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct EditionCreationView: View {
+    var editingEdition: EditionSummary? = nil
+    @State private var isUpdate = false
+
     @Environment(\.dismiss) var dismiss
     @State private var searchText: String = ""
     @State private var name = ""
@@ -54,17 +57,28 @@ struct EditionCreationView: View {
                 }
             }
             .searchable(text: $searchText, prompt: "Buscar rol por nombre")
-            .navigationTitle("Nueva Edición")
+            .navigationTitle(isUpdate ? "Editar edición" : "Nueva Edición")
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Guardar") {
+                    Button(isUpdate ? "Actualizar" : "Guardar") {
                         saveEdition()
-                        dismiss()
+                        // Cierra tu Sheet/Modal aquí según contexto
                     }
                     .disabled(name.trimmingCharacters(in: .whitespaces).isEmpty || selectedRoles.isEmpty)
                 }
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Cancelar") { dismiss() }
+                }
+            }
+            .onAppear {
+                if let editionToEdit = editingEdition {
+                    isUpdate = true
+                    name = editionToEdit.name
+                    // Carga roles de esa edición:
+                    if let url = editionURL(for: editionToEdit),
+                       let editionData = try? loadEdition(from: url) {
+                        selectedRoles = Set(editionData.characters)
+                    }
                 }
             }
         }
@@ -73,13 +87,19 @@ struct EditionCreationView: View {
     func saveEdition() {
         // Meta mínimo requerido, además puedes pedirlo en el formulario
         let meta: [String: Any] = [
-            "id": UUID().uuidString,
+            "id": editingEdition?.id ?? UUID().uuidString,
             "name": name,
             "author": "usuario",
-            "firstNight": [],   // puedes agregar interface para tomar el orden de noche
+            "firstNight": [],
             "otherNight": []
         ]
-        let fileName = name.replacingOccurrences(of: " ", with: "_").lowercased() + ".json"
+        let fileName: String
+        if let editingEdition = editingEdition {
+            fileName = editingEdition.fileName      // Sobreescribe en ese nombre
+        } else {
+            fileName = name.replacingOccurrences(of: " ", with: "_").lowercased() + ".json"
+        }
+
         saveEdition(meta: meta, roles: Array(selectedRoles), fileName: fileName)
     }
 
@@ -96,6 +116,7 @@ struct EditionCreationView: View {
         if let data = try? JSONSerialization.data(withJSONObject: fullArray, options: .prettyPrinted) {
             try? data.write(to: url)
         }
+        dismiss()
     }
 
     func getDocumentsDirectory() -> URL {
