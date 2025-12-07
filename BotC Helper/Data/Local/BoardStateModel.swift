@@ -14,7 +14,7 @@ struct BoardStateModel: Codable, Equatable {
     // [Día 0, Día 1, Día 2, ...] (status de cada jugador por día)
     var days: [[PlayerStatusPerDayModel]]
     var currentDay: Int
-    var config: GameConfig
+    var config: GameConfigModel
     var edition: EditionDataModel? = nil
 
     struct Mock {
@@ -25,14 +25,24 @@ struct BoardStateModel: Codable, Equatable {
             }
             // Día 0: todos vivos, nadie votó
             let day0 = players.map { p in PlayerStatusPerDayModel(seatNumber: p.seatNumber) }
-            let config = getConfigForPlayerCount(playerCount)
-            return BoardStateModel(suggestedName: suggestedFileName(playersCount: playerCount), players: players, days: [day0], currentDay: 0, config: config, edition: EditionDataModel.Mock.editionData)
+            let newConfig = getConfigForPlayerCount(playerCount)
+            let config = GameConfigModel(numPlayers: newConfig.numPlayers,
+                                         numTownsfolk: newConfig.numTownsfolk,
+                                         numOutsider: newConfig.numOutsider,
+                                         numMinions: newConfig.numMinions,
+                                         numDemon: newConfig.numDemon)
+            return BoardStateModel(suggestedName: suggestedFileName(playersCount: playerCount),
+                                   players: players,
+                                   days: [day0],
+                                   currentDay: 0,
+                                   config: config,
+                                   edition: EditionDataModel.Mock.editionData)
         }
     }
 
 }
 
-struct GameConfig: Codable, Equatable {
+struct GameConfigModel: Codable, Equatable {
     var numPlayers: Int
     var numTownsfolk: Int
     var numOutsider: Int

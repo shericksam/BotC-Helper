@@ -9,8 +9,7 @@ import SwiftUI
 import SwiftData
 
 struct MainView: View {
-    // Simuladas por ahora, luego vendrán de database/SwiftData
-//    @State private var editions: [Edition] = Edition.Mock.all()
+    @Environment(\.modelContext) var modelContext
     @State private var showingNewGameSheet = false
     @State private var showingEditionsSheet = false
     @State private var isShowingGameBoard: Bool = false
@@ -59,7 +58,7 @@ struct MainView: View {
                         }
                         .sheet(isPresented: $showingNewGameSheet) {
                             NewGameSheet { config in
-                                boardState = config
+//                                boardState = config
                                 isShowingGameBoard = true
                                 showingNewGameSheet = false
                             }
@@ -107,6 +106,9 @@ struct MainView: View {
                 } else {
                     Text("No hay tablero disponible")
                 }
+            }
+            .task {
+                await PreloadContent().preloadDefaultEditionsAndRolesIfNeeded(modelContext: modelContext)
             }
         }
     }
