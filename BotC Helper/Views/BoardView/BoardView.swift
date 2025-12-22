@@ -17,6 +17,10 @@ struct BoardView: View {
     @State private var draggedPlayerIdx: Int? = nil
     @Environment(\.modelContext) private var modelContext
 
+    @State private var dragOffset: CGSize = .zero
+    @State private var draggedPlayer: Int? = nil  // idx del jugador arrastrado
+    @State private var showResetAlert = false
+
     var body: some View {
         ZStack {
             Image("background-side")
@@ -116,6 +120,12 @@ struct BoardView: View {
                     }
                     Button("Limpiar todos los votos", systemImage: "checkmark.circle") { clearAllVotes() }
                     Button("Limpiar todas las acusaciones", systemImage: "exclamationmark.bubble") { clearAllNominations() }
+                    // 🚀 ¡Nuevo botón!
+                    Button("Nueva partida", systemImage: "arrow.clockwise") {
+                        showResetAlert = true
+                    }
+                    .tint(.red)
+
                 } label: {
                     Image(systemName: "ellipsis.circle")
                         .imageScale(.large)
@@ -126,6 +136,30 @@ struct BoardView: View {
         .sheet(item: $editingIndex) { idx in
             if let player = board.players[safe: idx.value],
                let status = board.days[board.currentDay].playerStatuses[safe: idx.value] {
+        .onDisappear {
+            saveBoardState(board)
+        }
+        .alert("¿Borrar progreso?", isPresented: $showResetAlert) {
+            Button("Sí, limpiar todo", role: .destructive) {
+                resetBoardForNewGame()
+            }
+            Button("Cancelar", role: .cancel) { }
+        } message: {
+            Text("Esto deja las posiciones y nombres, pero borra todos los claims, notas y progreso actual. ¿Seguro que quieres reiniciar la partida?")
+        }
+        .navigationDestination(isPresented: $showDetail) {
+            if let data = board.edition {
+                EditionDetailView(editionMeta: data)
+            } else {
+                EmptyView()
+            }
+        }
+        .sheet(item: $editingIndex) { item in
+            let idx = item.value
+            if idx < board.players.count {
+                let isMe = board.players[idx].isMe
+                let status = board.days[board.currentDay][idx]
+                let statusHistorial = board.days.map { $0[idx] }
                 PlayerEditor(
                     player: player,
                     status: status,
@@ -159,6 +193,10 @@ struct BoardView: View {
         try? modelContext.save()
     }
 
+    // suma de puntos
+    func distance(_ a: CGPoint, _ b: CGPoint) -> CGFloat {
+        sqrt(pow(a.x - b.x, 2) + pow(a.y - b.y, 2))
+    }
     func addPlayer() {
         let nextSeat = board.players.count + 1
         let player = Player(seatNumber: nextSeat, name: "", claimRoleId: nil, claimManual: "", isMe: false)
@@ -194,6 +232,30 @@ struct BoardView: View {
     // Utils
     func distance(_ a: CGPoint, _ b: CGPoint) -> CGFloat {
         sqrt(pow(a.x - b.x, 2) + pow(a.y - b.y, 2))
+    }
+
+    func resetBoardForNewGame() {
+        // Limpia solo lo mutable: roles, claims, notas, estados
+        var newPlayers: [Player] = []
+        for p in board.players {
+            var newPlayer = p
+            newPlayer.claimRoleId = nil
+            newPlayer.claimManual = ""
+            newPlayer.personalNotes = [:]
+            // Mantén nombre y seatNumber y isMe
+            newPlayers.append(newPlayer)
+        }
+        // Crea días nuevos: 1 solo, todos vivos (asumiendo PlayerStatusPerDay básico)
+        let day0: [PlayerStatusPerDay] = newPlayers.map {
+            PlayerStatusPerDay(seatNumber: $0.seatNumber)
+        }
+        board.players = newPlayers
+        board.days = [day0]
+        board.currentDay = 0
+        board.suggestedName = suggestedFileName(playersCount: board.players.count)
+        board.config = getConfigForPlayerCount(board.players.count)
+        // Listo para nuevo juego, pero conserva nombres, asientos e “isMe”
+        saveBoardState(board)
     }
 
     func squarePerimeterPositions(count: Int, in size: CGSize) -> [CGPoint] {
@@ -277,6 +339,32 @@ extension Array {
     subscript(safe idx: Int) -> Element? { (startIndex..<endIndex).contains(idx) ? self[idx] : nil }
 }
 
+struct PlayerDropDelegate: DropDelegate {
+    let fromPlayer: Player?
+    let toPlayer: Player
+    @Binding var board: BoardState
+
+    func performDrop(info: DropInfo) -> Bool {
+        guard let from = fromPlayer, from.id != toPlayer.id else { return false }
+        if let idxFrom = board.players.firstIndex(where: { $0.id == from.id }),
+           let idxTo = board.players.firstIndex(where: { $0.id == toPlayer.id }) {
+            // Intercambia los jugadores (recuerda swap seatNumber!)
+            board.players.swapAt(idxFrom, idxTo)
+
+            // Mantén seatNumber actualizado si es necesario
+            for (i, _) in board.players.enumerated() {
+                board.players[i].seatNumber = i+1
+            }
+        }
+        return true
+    }
+}
+
+extension CGPoint {
+    static func + (a: CGPoint, b: CGSize) -> CGPoint {
+        CGPoint(x: a.x + b.width, y: a.y + b.height)
+    }
+}
 #Preview {
     // Crea modelo in-memory
     let config = ModelConfiguration(isStoredInMemoryOnly: true)

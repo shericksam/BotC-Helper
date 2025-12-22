@@ -68,6 +68,11 @@ struct PlayerEditor: View {
                         .frame(height: 80)
                 }
             }
+            .onAppear {
+                for (day, note) in player.personalNotes {
+                    self.localPersonalNotes[day] = note
+                }
+            }
             .navigationTitle("Editar Jugador \(player.seatNumber)")
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
@@ -139,10 +144,7 @@ struct PlayerEditor: View {
     }
 
     func iAmBadGuy() -> Bool {
-        if let team = selectedRole?.team {
-            return isMe && (team == .demon || team == .minion)
-        }
-        return false
+        isMe && (selectedRole?.team == .demon || selectedRole?.team == .minion)
     }
 }
 

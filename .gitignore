@@ -1,0 +1,5 @@
+Secrets.plist
+BotC Helper/Resources/Secrets.plist
+*.xcworkspace/xcuserdata/
+*.xcodeproj/xcuserdata/
+xcuserdata/
