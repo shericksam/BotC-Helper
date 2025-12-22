@@ -26,7 +26,7 @@ struct BoardStateModel: Codable, Equatable {
             // Día 0: todos vivos, nadie votó
             let day0 = players.map { p in PlayerStatusPerDayModel(seatNumber: p.seatNumber) }
             let config = getConfigForPlayerCount(playerCount)
-            return BoardStateModel(suggestedName: suggestedFileName(playersCount: playerCount), players: players, days: [day0], currentDay: 0, config: config, edition: EditionDataModel.Mock.editionData)
+            return BoardStateModel(suggestedName: suggestedFileName(playersCount: playerCount), players: players, days: [day0], currentDay: 0, config: .init(numPlayers: playerCount, numTownsfolk: 8, numOutsider: 0, numMinions: 0, numDemon: 0), edition: EditionDataModel.Mock.editionData)
         }
     }
 

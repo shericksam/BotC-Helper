@@ -15,6 +15,7 @@ struct BotC_HelperApp: App {
             BoardState.self,
             Player.self,
             GameDay.self,
+            GameConfig.self,
             PlayerStatus.self,
             PersonalNote.self,
             EditionData.self,

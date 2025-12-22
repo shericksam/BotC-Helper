@@ -300,7 +300,7 @@ struct BoardView: View {
         board.days = [day0]
         board.currentDay = 0
         board.suggestedName = suggestedFileName(playersCount: board.players.count)
-        board.config = getConfigForPlayerCount(board.players.count)
+//        board.config = getConfigForPlayerCount(board.players.count)
         // Listo para nuevo juego, pero conserva nombres, asientos e “isMe”
         saveBoardState(board)
     }

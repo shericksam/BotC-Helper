@@ -10,7 +10,7 @@ import SwiftData
 
 struct NewGameSheet: View {
     @Environment(\.modelContext) private var modelContext
-    @Query(sort: \EditionData.meta!.name) var allEditions: [EditionData]
+    @Query(sort: \EditionData.id) var allEditions: [EditionData]
     @State private var editionSelected: EditionData?
     var onStart: (BoardState) -> Void
     @Environment(\.dismiss) var dismiss

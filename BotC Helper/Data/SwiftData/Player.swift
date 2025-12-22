@@ -16,7 +16,6 @@ final class Player {
     var claimRoleId: String?
     var claimManual: String
     var isMe: Bool
-    // No Dictionary; modela como lista de notas personales asociadas a día:
     @Relationship(deleteRule: .cascade) var personalNotes: [PersonalNote] = []
 
     init(

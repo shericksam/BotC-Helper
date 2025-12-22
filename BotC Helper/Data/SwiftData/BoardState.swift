@@ -15,7 +15,7 @@ final class BoardState {
     @Relationship(deleteRule: .cascade) var players: [Player] = []
     @Relationship(deleteRule: .cascade) var days: [GameDay] = []
     var currentDay: Int
-    var config: GameConfigModel
+    var config: GameConfig
     @Relationship var edition: EditionData?
 
     init(
@@ -23,7 +23,7 @@ final class BoardState {
         players: [Player],
         days: [GameDay],
         currentDay: Int,
-        config: GameConfigModel,
+        config: GameConfig,
         edition: EditionData? = nil
     ) {
         id = UUID()
@@ -33,39 +33,5 @@ final class BoardState {
         self.currentDay = currentDay
         self.config = config
         self.edition = edition
-    }
-}
-
-@Model
-final class GameDay {
-    @Attribute(.unique) var id: UUID
-    var index: Int
-    @Relationship(deleteRule: .cascade) var playerStatuses: [PlayerStatus] = []
-
-    init(index: Int, playerStatuses: [PlayerStatus]) {
-        id = UUID()
-        self.index = index
-        self.playerStatuses = playerStatuses
-    }
-}
-
-@Model
-final class PlayerStatus {
-    @Attribute(.unique) var id: UUID
-    var seatNumber: Int
-    var voted: Bool
-    var nominated: Bool
-    var dead: Bool
-    var claim: String
-    var notes: String
-
-    init(seatNumber: Int, voted: Bool = false, nominated: Bool = false, dead: Bool = false, claim: String = "", notes: String = "") {
-        self.id = UUID()
-        self.seatNumber = seatNumber
-        self.voted = voted
-        self.nominated = nominated
-        self.dead = dead
-        self.claim = claim
-        self.notes = notes
     }
 }

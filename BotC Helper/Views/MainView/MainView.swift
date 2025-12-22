@@ -16,19 +16,20 @@ struct MainView: View {
 
     @State private var showingLoadView = false
 
-    @State private var boardState: BoardState? = nil // el nuevo tablero
+    @State private var boardState: BoardState? = nil
     @State private var didPreload = false
     var body: some View {
         Group {
             if didPreload {
-                bodyLoaded // O lo que sea tu vista principal, aquí aparece el query
+                bodyLoaded
             } else {
                 ProgressView("Cargando recursos...")
             }
         }
 
         .task {
-            await PreloadContent().preloadDefaultEditionsAndRolesIfNeeded(modelContext: modelContext)
+            await PreloadContent()
+                .preloadDefaultEditionsAndRolesIfNeeded(modelContext: modelContext)
             didPreload = true
         }
     }
@@ -104,11 +105,11 @@ struct MainView: View {
                                 .background(Color.gray.opacity(0.1))
                         }
                         .sheet(isPresented: $showingLoadView) {
-//                            LoadGameListView { loadedBoard in
-//                                boardState = loadedBoard
-//                                isShowingGameBoard = true
-//                                showingLoadView = false
-//                            }
+                            LoadGameListView { loadedBoard in
+                                boardState = loadedBoard
+                                isShowingGameBoard = true
+                                showingLoadView = false
+                            }
                         }
                     }
                     Spacer()

@@ -10,10 +10,11 @@ import SwiftData
 
 struct PreloadContent {
     let didPreloadKey = "didPreloadInitialData"
-    // Llama esto solo la primera vez (usa la bandera UserDefaults)
+
     @MainActor
     func preloadDefaultEditionsAndRolesIfNeeded(modelContext: ModelContext) async {
         let didPreload = UserDefaults.standard.bool(forKey: didPreloadKey)
+        print("didPreload--->\(didPreload)")
 //        guard !didPreload else { return }
 
         // 1. Pre-cargar ediciones base del bundle
