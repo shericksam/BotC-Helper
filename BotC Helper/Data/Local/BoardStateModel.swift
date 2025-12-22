@@ -14,7 +14,7 @@ struct BoardStateModel: Codable, Equatable {
     // [Día 0, Día 1, Día 2, ...] (status de cada jugador por día)
     var days: [[PlayerStatusPerDayModel]]
     var currentDay: Int
-    var config: GameConfig
+    var config: GameConfigModel
     var edition: EditionDataModel? = nil
 
     struct Mock {
@@ -32,7 +32,7 @@ struct BoardStateModel: Codable, Equatable {
 
 }
 
-struct GameConfig: Codable, Equatable {
+struct GameConfigModel: Codable, Equatable {
     var numPlayers: Int
     var numTownsfolk: Int
     var numOutsider: Int

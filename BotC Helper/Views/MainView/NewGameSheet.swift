@@ -6,11 +6,13 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct NewGameSheet: View {
-    @State var editions: [EditionSummaryModel] = EditionSummaryModel.defaultEditions
-    @State var editionSelected: EditionSummaryModel = EditionSummaryModel.defaultEditions.first!
-    var onStart: (BoardStateModel) -> Void
+    @Environment(\.modelContext) private var modelContext
+    @Query(sort: \EditionData.meta!.name) var allEditions: [EditionData]
+    @State private var editionSelected: EditionData?
+    var onStart: (BoardState) -> Void
     @Environment(\.dismiss) var dismiss
     @State private var playerCount = 5
     @State private var yourSeat = 1
@@ -30,12 +32,13 @@ struct NewGameSheet: View {
                     .pickerStyle(.wheel)
                 }
 
-                Section(header: Text("Edition")) {
+                Section(header: Text("Edición")) {
                     Picker("Nombre", selection: $editionSelected) {
-                        ForEach(editions, id: \.self) { editions in
-                            Text("\(editions.name)").tag(editions)
+                        ForEach(allEditions, id: \.self) { edition in
+                            Text(edition.meta?.name ?? "(Sin nombre)").tag(Optional(edition))
                         }
                     }
+                    .pickerStyle(.navigationLink)
                 }
             }
             .navigationTitle("Nueva Partida")
@@ -43,26 +46,50 @@ struct NewGameSheet: View {
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Iniciar") {
                         dismiss()
-                        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
-                            let players = (1...playerCount).map { i in
-                                PlayerModel(seatNumber: i, name: "", claimManual: "", isMe: (i == yourSeat))
-                            }
-                            // Día 0: todos vivos, nadie votó
-                            let day0 = players.map { p in PlayerStatusPerDayModel(seatNumber: p.seatNumber) }
-                            let config = getConfigForPlayerCount(playerCount)
-                            onStart(BoardStateModel(suggestedName: suggestedFileName(playersCount: playerCount),
-                                               players: players,
-                                               days: [day0],
-                                               currentDay: 0,
-                                               config: config,
-                                               edition: loadEditionDetails(editionSelected)))
-                        }
+                        startGame()
                     }
                 }
                 ToolbarItem(placement: .cancellationAction) {
                     Button("Cancelar", action: { dismiss() })
                 }
             }
+            .onAppear(){
+                print(allEditions)
+            }
+        }
+    }
+
+    func startGame() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
+            // Carga edition (opcionalmente, aquí solo guarda el id o clave, no el JSON completo)
+            guard let editionData = editionSelected else { return }
+
+            // Crea los jugadores
+            let players = (1...playerCount).map { i in
+                Player(seatNumber: i, name: "", claimRoleId: nil, claimManual: "", isMe: (i == yourSeat))
+            }
+
+            // Día 0: todos vivos, nadie votó
+            let day0Statuses = players.map { p in PlayerStatus(seatNumber: p.seatNumber) }
+            let day0 = GameDay(index: 0, playerStatuses: day0Statuses)
+
+            // Config
+            let config = getConfigForPlayerCount(playerCount)
+
+            // Crea el objeto SwiftData principal
+            let newGame = BoardState(
+                suggestedName: suggestedFileName(playersCount: playerCount),
+                players: players,
+                days: [day0],
+                currentDay: 0,
+                config: config,
+                edition: editionData
+            )
+
+            // Guarda en SwiftData
+            modelContext.insert(newGame)
+
+            onStart(newGame)
         }
     }
 }

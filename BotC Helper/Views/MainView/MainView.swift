@@ -9,17 +9,31 @@ import SwiftUI
 import SwiftData
 
 struct MainView: View {
-    // Simuladas por ahora, luego vendrán de database/SwiftData
-//    @State private var editions: [Edition] = Edition.Mock.all()
+    @Environment(\.modelContext) var modelContext
     @State private var showingNewGameSheet = false
     @State private var showingEditionsSheet = false
     @State private var isShowingGameBoard: Bool = false
 
     @State private var showingLoadView = false
 
-    @State private var boardState: BoardStateModel? = nil // el nuevo tablero
-
+    @State private var boardState: BoardState? = nil // el nuevo tablero
+    @State private var didPreload = false
     var body: some View {
+        Group {
+            if didPreload {
+                bodyLoaded // O lo que sea tu vista principal, aquí aparece el query
+            } else {
+                ProgressView("Cargando recursos...")
+            }
+        }
+
+        .task {
+            await PreloadContent().preloadDefaultEditionsAndRolesIfNeeded(modelContext: modelContext)
+            didPreload = true
+        }
+    }
+
+    var bodyLoaded: some View {
         NavigationStack {
             ZStack {
                 Image("background")
@@ -90,11 +104,11 @@ struct MainView: View {
                                 .background(Color.gray.opacity(0.1))
                         }
                         .sheet(isPresented: $showingLoadView) {
-                            LoadGameListView { loadedBoard in
-                                boardState = loadedBoard
-                                isShowingGameBoard = true
-                                showingLoadView = false
-                            }
+//                            LoadGameListView { loadedBoard in
+//                                boardState = loadedBoard
+//                                isShowingGameBoard = true
+//                                showingLoadView = false
+//                            }
                         }
                     }
                     Spacer()
@@ -103,19 +117,10 @@ struct MainView: View {
             }
             .navigationDestination(isPresented: $isShowingGameBoard) {
                 if let board = boardState {
-                    BoardView(board: board)
+//                    BoardView(board: board)
                 } else {
                     Text("No hay tablero disponible")
                 }
-            }
-        }
-    }
-
-    @ViewBuilder
-    func showBoardGame(board: BoardStateModel?) -> some View {
-        Group {
-            if let board = board {
-                BoardView(board: board)
             }
         }
     }

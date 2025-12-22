@@ -121,7 +121,7 @@ struct BoardView: View {
                             let prevStatuses = board.days[board.currentDay]
                             // ¡Importante! No solo .map { $0 }, debes crear nuevos structs para evitar referencias compartidas.
                             let copied = prevStatuses.map { prevStatus in
-                                PlayerStatusPerDay(
+                                PlayerStatusPerDayModel(
                                     seatNumber: prevStatus.seatNumber,
                                     voted: false,
                                     nominated: false,
