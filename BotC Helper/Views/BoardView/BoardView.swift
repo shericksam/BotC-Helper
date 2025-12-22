@@ -159,9 +159,9 @@ struct BoardView: View {
                         Text("Demonio: \(board.config.numDemon)")
                             .font(.body)
                         
-                        NavigationLink(destination: GPTAssistantView(board: board)) {
-                            Label("Análisis AI", systemImage: "bolt.circle.fill")
-                        }
+//                        NavigationLink(destination: GPTAssistantView(board: board)) {
+//                            Label("Análisis AI", systemImage: "bolt.circle.fill")
+//                        }
                     }
                     .multilineTextAlignment(.center)
                     .foregroundStyle(Color.white)
