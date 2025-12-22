@@ -8,17 +8,17 @@
 import SwiftUI
 
 struct EditionCreationView: View {
-    var editingEdition: EditionSummary? = nil
+    var editingEdition: EditionSummaryModel? = nil
     @State private var isUpdate = false
 
     @Environment(\.dismiss) var dismiss
     @State private var searchText: String = ""
     @State private var name = ""
-    @State private var selectedRoles: Set<RoleDefinition> = []
-    @State private var allRoles: [RoleDefinition] = loadPredefinedRoles()
+    @State private var selectedRoles: Set<RoleDefinitionModel> = []
+    @State private var allRoles: [RoleDefinitionModel] = loadPredefinedRoles()
 
     // Agrupa roles por equipo
-    var groupedRoles: [(Team, [RoleDefinition])] {
+    var groupedRoles: [(Team, [RoleDefinitionModel])] {
         Team.allCases.compactMap { team in
             let filtered = allRoles.filter {
                 $0.team == team &&
@@ -103,7 +103,7 @@ struct EditionCreationView: View {
         saveEdition(meta: meta, roles: Array(selectedRoles), fileName: fileName)
     }
 
-    func saveEdition(meta: [String: Any], roles: [RoleDefinition], fileName: String) {
+    func saveEdition(meta: [String: Any], roles: [RoleDefinitionModel], fileName: String) {
         // 1. Convierte los roles a [Any] (dictionaries)
         let rolesArr: [Any] = selectedRoles.compactMap { role in
             try? JSONSerialization.jsonObject(with: JSONEncoder().encode(role))

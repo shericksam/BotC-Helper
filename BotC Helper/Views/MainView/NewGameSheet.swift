@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct NewGameSheet: View {
-    @State var editions: [EditionSummary] = EditionSummary.defaultEditions
-    @State var editionSelected: EditionSummary = EditionSummary.defaultEditions.first!
-    var onStart: (BoardState) -> Void
+    @State var editions: [EditionSummaryModel] = EditionSummaryModel.defaultEditions
+    @State var editionSelected: EditionSummaryModel = EditionSummaryModel.defaultEditions.first!
+    var onStart: (BoardStateModel) -> Void
     @Environment(\.dismiss) var dismiss
     @State private var playerCount = 5
     @State private var yourSeat = 1
@@ -45,12 +45,12 @@ struct NewGameSheet: View {
                         dismiss()
                         DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
                             let players = (1...playerCount).map { i in
-                                Player(seatNumber: i, name: "", claimManual: "", isMe: (i == yourSeat))
+                                PlayerModel(seatNumber: i, name: "", claimManual: "", isMe: (i == yourSeat))
                             }
                             // Día 0: todos vivos, nadie votó
-                            let day0 = players.map { p in PlayerStatusPerDay(seatNumber: p.seatNumber) }
+                            let day0 = players.map { p in PlayerStatusPerDayModel(seatNumber: p.seatNumber) }
                             let config = getConfigForPlayerCount(playerCount)
-                            onStart(BoardState(suggestedName: suggestedFileName(playersCount: playerCount),
+                            onStart(BoardStateModel(suggestedName: suggestedFileName(playersCount: playerCount),
                                                players: players,
                                                days: [day0],
                                                currentDay: 0,

@@ -14,9 +14,9 @@ struct EditingIndex: Identifiable {
 }
 
 struct BoardView: View {
-    @State var board: BoardState
-    @State private var selectedPlayer: Player?
-    @State private var selectedStatus: PlayerStatusPerDay?
+    @State var board: BoardStateModel
+    @State private var selectedPlayer: PlayerModel?
+    @State private var selectedStatus: PlayerStatusPerDayModel?
     @State private var editingIndex: EditingIndex?
     @State private var isVotingPhase = false
     @State private var showDetail = false
@@ -258,10 +258,10 @@ struct BoardView: View {
     }
     func addPlayer() {
         let nextSeat = board.players.count + 1
-        board.players.append(Player(seatNumber: nextSeat, name: "", claimManual: "", isMe: false, personalNotes: [:]))
+        board.players.append(PlayerModel(seatNumber: nextSeat, name: "", claimManual: "", isMe: false, personalNotes: [:]))
         // Añade estado a todos los días existentes para este jugador:
         for i in 0..<board.days.count {
-            board.days[i].append(PlayerStatusPerDay(
+            board.days[i].append(PlayerStatusPerDayModel(
                 seatNumber: nextSeat, voted: false, nominated: false, dead: false, claim: "", notes: ""
             ))
         }
@@ -283,7 +283,7 @@ struct BoardView: View {
 
     func resetBoardForNewGame() {
         // Limpia solo lo mutable: roles, claims, notas, estados
-        var newPlayers: [Player] = []
+        var newPlayers: [PlayerModel] = []
         for p in board.players {
             var newPlayer = p
             newPlayer.claimRoleId = nil
@@ -293,8 +293,8 @@ struct BoardView: View {
             newPlayers.append(newPlayer)
         }
         // Crea días nuevos: 1 solo, todos vivos (asumiendo PlayerStatusPerDay básico)
-        let day0: [PlayerStatusPerDay] = newPlayers.map {
-            PlayerStatusPerDay(seatNumber: $0.seatNumber)
+        let day0: [PlayerStatusPerDayModel] = newPlayers.map {
+            PlayerStatusPerDayModel(seatNumber: $0.seatNumber)
         }
         board.players = newPlayers
         board.days = [day0]
@@ -346,9 +346,9 @@ struct BoardView: View {
 }
 
 struct PlayerDropDelegate: DropDelegate {
-    let fromPlayer: Player?
-    let toPlayer: Player
-    @Binding var board: BoardState
+    let fromPlayer: PlayerModel?
+    let toPlayer: PlayerModel
+    @Binding var board: BoardStateModel
 
     func performDrop(info: DropInfo) -> Bool {
         guard let from = fromPlayer, from.id != toPlayer.id else { return false }
@@ -372,5 +372,5 @@ extension CGPoint {
     }
 }
 #Preview {
-    BoardView(board: BoardState.Mock.example)
+    BoardView(board: BoardStateModel.Mock.example)
 }

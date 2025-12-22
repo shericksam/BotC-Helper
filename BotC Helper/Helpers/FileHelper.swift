@@ -63,7 +63,7 @@ import SwiftData
 //    modelContext.insert(edition)
 //}
 
-func saveBoardState(_ board: BoardState) {
+func saveBoardState(_ board: BoardStateModel) {
     let url = getDocumentsDirectory().appendingPathComponent(board.suggestedName + ".json")
     do {
         let data = try JSONEncoder().encode(board)
@@ -74,11 +74,11 @@ func saveBoardState(_ board: BoardState) {
     }
 }
 
-func loadBoardState() -> BoardState? {
+func loadBoardState() -> BoardStateModel? {
     let url = getDocumentsDirectory().appendingPathComponent("saved_board.json")
     do {
         let data = try Data(contentsOf: url)
-        let board = try JSONDecoder().decode(BoardState.self, from: data)
+        let board = try JSONDecoder().decode(BoardStateModel.self, from: data)
         return board
     } catch {
         print("Error al cargar BoardState: \(error)")
@@ -98,25 +98,25 @@ func suggestedFileName(playersCount : Int) -> String {
     return "Juego: \(dateString)-\(playersCount)P"
 }
 
-func loadBoardState(fileName: String) -> BoardState? {
+func loadBoardState(fileName: String) -> BoardStateModel? {
     let url = getDocumentsDirectory().appendingPathComponent(fileName + ".json")
     guard let data = try? Data(contentsOf: url) else { return nil }
-    return try? JSONDecoder().decode(BoardState.self, from: data)
+    return try? JSONDecoder().decode(BoardStateModel.self, from: data)
 }
 
-func loadEdition(from url: URL) throws -> EditionData {
+func loadEdition(from url: URL) throws -> EditionDataModel {
     let array = try JSONSerialization.jsonObject(with: Data(contentsOf: url)) as! [[String: Any]]
-    let meta = try JSONDecoder().decode(EditionMeta.self, from: JSONSerialization.data(withJSONObject: array[0]))
+    let meta = try JSONDecoder().decode(EditionMetaModel.self, from: JSONSerialization.data(withJSONObject: array[0]))
     let chars = try array.dropFirst().map {
-        try JSONDecoder().decode(RoleDefinition.self, from: JSONSerialization.data(withJSONObject: $0))
+        try JSONDecoder().decode(RoleDefinitionModel.self, from: JSONSerialization.data(withJSONObject: $0))
     }
-    return EditionData(meta: meta, characters: chars)
+    return EditionDataModel(meta: meta, characters: chars)
 }
 
-func loadPredefinedRoles() -> [RoleDefinition] {
+func loadPredefinedRoles() -> [RoleDefinitionModel] {
     guard let url = Bundle.main.url(forResource: "all_roles", withExtension: "json"),
           let data = try? Data(contentsOf: url),
-          let roles = try? JSONDecoder().decode([RoleDefinition].self, from: data)
+          let roles = try? JSONDecoder().decode([RoleDefinitionModel].self, from: data)
     else { return [] }
     return roles
 }
@@ -128,7 +128,7 @@ func allEditionFiles() -> [URL] {
     return userFiles
 }
 
-func loadEditionDetails(_ edition: EditionSummary) -> EditionData? {
+func loadEditionDetails(_ edition: EditionSummaryModel) -> EditionDataModel? {
     if let url = editionURL(for: edition),
        let loaded = try? loadEdition(from: url) {
         return loaded
@@ -138,7 +138,7 @@ func loadEditionDetails(_ edition: EditionSummary) -> EditionData? {
 }
 
 
-func editionURL(for summary: EditionSummary) -> URL? {
+func editionURL(for summary: EditionSummaryModel) -> URL? {
     if summary.isFromBundle {
         // Elimina el ".json" para buscarlo en el bundle
         let base = summary.fileName.replacingOccurrences(of: ".json", with: "")

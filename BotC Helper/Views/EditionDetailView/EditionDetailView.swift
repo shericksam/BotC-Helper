@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct EditionDetailView: View {
-    let editionMeta: EditionData
+    let editionMeta: EditionDataModel
     @State private var isExpandedFirstNigth = false
     @State private var isExpandedOtherNigth = false
 
-    var teamSections: [(Team, [RoleDefinition])] {
+    var teamSections: [(Team, [RoleDefinitionModel])] {
         // Orden de secciones deseado
         let order: [Team] = [.townsfolk, .outsider, .minion, .demon, .traveller, .fabled]
         return order.compactMap { team in
@@ -80,7 +80,7 @@ struct EditionDetailView: View {
 
 struct NightOrderView: View {
     let order: [String]
-    let roles: [RoleDefinition]
+    let roles: [RoleDefinitionModel]
 
     var body: some View {
             VStack(alignment: .leading, spacing: 4) {
@@ -136,11 +136,11 @@ let orderLabelsES: [String: String] = [
 ]
 
 #Preview {
-    EditionDetailView(editionMeta: EditionData.Mock.editionData!)
+    EditionDetailView(editionMeta: EditionDataModel.Mock.editionData!)
 }
 
 
-func mockLoadEditionDetails(edition: EditionSummary) -> EditionData? {
+func mockLoadEditionDetails(edition: EditionSummaryModel) -> EditionDataModel? {
     if let url = Bundle.main.url(forResource: edition.fileName.replacingOccurrences(of: ".json", with: ""), withExtension: "json"),
        let loaded = try? loadEdition(from: url) {
         return loaded

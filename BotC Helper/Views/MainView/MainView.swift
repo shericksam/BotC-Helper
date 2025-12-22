@@ -17,7 +17,7 @@ struct MainView: View {
 
     @State private var showingLoadView = false
 
-    @State private var boardState: BoardState? = nil // el nuevo tablero
+    @State private var boardState: BoardStateModel? = nil // el nuevo tablero
 
     var body: some View {
         NavigationStack {
@@ -112,7 +112,7 @@ struct MainView: View {
     }
 
     @ViewBuilder
-    func showBoardGame(board: BoardState?) -> some View {
+    func showBoardGame(board: BoardStateModel?) -> some View {
         Group {
             if let board = board {
                 BoardView(board: board)

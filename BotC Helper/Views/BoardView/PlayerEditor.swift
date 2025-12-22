@@ -8,21 +8,21 @@
 import SwiftUI
 
 struct PlayerEditor: View {
-    @Binding var player: Player
-    @State var status: PlayerStatusPerDay
-    var onSave: (PlayerStatusPerDay, [Int: String]) -> Void
+    @Binding var player: PlayerModel
+    @State var status: PlayerStatusPerDayModel
+    var onSave: (PlayerStatusPerDayModel, [Int: String]) -> Void
     @Environment(\.dismiss) var dismiss
     var isMe: Bool
 
     var totalDays: Int
-    var statusesByDay: [PlayerStatusPerDay]
+    var statusesByDay: [PlayerStatusPerDayModel]
     var currentDayIndex: Int
-    var roles: [RoleDefinition]
+    var roles: [RoleDefinitionModel]
     @State private var searchClaim: String = ""
-    @State private var filteredRoles: [RoleDefinition] = []
+    @State private var filteredRoles: [RoleDefinitionModel] = []
     @State private var showRolesList = false
     @State private var editRole = false
-    var selectedRole: RoleDefinition? {
+    var selectedRole: RoleDefinitionModel? {
         guard let id = player.claimRoleId else { return nil }
         return roles.first { $0.id == id }
     }

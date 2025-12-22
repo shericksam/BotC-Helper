@@ -1,5 +1,5 @@
 //
-//  BoardState.swift
+//  BoardStateModel.swift
 //  BotC Helper
 //
 //  Created by Erick Samuel Guerrero Arreola on 03/12/25.
@@ -7,26 +7,26 @@
 
 import Foundation
 
-struct BoardState: Codable, Equatable {
+struct BoardStateModel: Codable, Equatable {
     var id: UUID = UUID()
     var suggestedName: String
-    var players: [Player]
+    var players: [PlayerModel]
     // [Día 0, Día 1, Día 2, ...] (status de cada jugador por día)
-    var days: [[PlayerStatusPerDay]]
+    var days: [[PlayerStatusPerDayModel]]
     var currentDay: Int
     var config: GameConfig
-    var edition: EditionData? = nil
+    var edition: EditionDataModel? = nil
 
     struct Mock {
-        static var example: BoardState {
+        static var example: BoardStateModel {
             let playerCount = 20
             let players = (1...playerCount).map {
-                Player(seatNumber: $0, name: "", claimManual: "")
+                PlayerModel(seatNumber: $0, name: "", claimManual: "")
             }
             // Día 0: todos vivos, nadie votó
-            let day0 = players.map { p in PlayerStatusPerDay(seatNumber: p.seatNumber) }
+            let day0 = players.map { p in PlayerStatusPerDayModel(seatNumber: p.seatNumber) }
             let config = getConfigForPlayerCount(playerCount)
-            return BoardState(suggestedName: suggestedFileName(playersCount: playerCount), players: players, days: [day0], currentDay: 0, config: config, edition: EditionData.Mock.editionData)
+            return BoardStateModel(suggestedName: suggestedFileName(playersCount: playerCount), players: players, days: [day0], currentDay: 0, config: config, edition: EditionDataModel.Mock.editionData)
         }
     }
 

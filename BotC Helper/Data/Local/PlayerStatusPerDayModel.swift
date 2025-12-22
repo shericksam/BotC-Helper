@@ -1,5 +1,5 @@
 //
-//  PlayerStatusPerDay.swift
+//  PlayerStatusPerDayModel.swift
 //  BotC Helper
 //
 //  Created by Erick Samuel Guerrero Arreola on 03/12/25.
@@ -7,7 +7,7 @@
 
 import Foundation
 // Representa el estado de un jugador en un día específico
-struct PlayerStatusPerDay: Identifiable, Codable, Equatable {
+struct PlayerStatusPerDayModel: Identifiable, Codable, Equatable {
     var id = UUID()
     var seatNumber: Int
     var voted: Bool = false
@@ -18,7 +18,7 @@ struct PlayerStatusPerDay: Identifiable, Codable, Equatable {
 }
 
 // El jugador (sus datos constantes)
-struct Player: Identifiable, Codable, Equatable {
+struct PlayerModel: Identifiable, Codable, Equatable {
     var id = UUID()
     var seatNumber: Int
     var initials: String { initialsForName(name) }
