@@ -9,7 +9,7 @@ import SwiftUI
 import MarkdownUI
 
 struct GPTAssistantView: View {
-    let board: BoardStateModel
+    let board: BoardState
 
     @State private var chatHistory: [ChatMessageModel] = []
     @State private var userInput: String = ""
@@ -87,12 +87,12 @@ struct GPTAssistantView: View {
         "gptchat-\(board.suggestedName)"
     }
 
-    func saveChatHistory(_ chat: [ChatMessageModel], for board: BoardStateModel) {
+    func saveChatHistory(_ chat: [ChatMessageModel], for board: BoardState) {
         guard let data = try? JSONEncoder().encode(chat) else { return }
         UserDefaults.standard.set(data, forKey: chatKey())
     }
 
-    func loadChatHistory(for board: BoardStateModel) -> [ChatMessageModel] {
+    func loadChatHistory(for board: BoardState) -> [ChatMessageModel] {
         guard let data = UserDefaults.standard.data(forKey: chatKey()),
               let history = try? JSONDecoder().decode([ChatMessageModel].self, from: data) else {
             return []
@@ -113,13 +113,14 @@ struct GPTAssistantView: View {
     }
 
     // Genera el prompt inicial/resumen del estado de juego
-    func makeInitialPrompt(board: BoardStateModel) -> String {
+    func makeInitialPrompt(board: BoardState) -> String {
         let editionName = board.edition?.meta.name ?? "Desconocido"
-        let players = board.players.map { p in
+        let players = board.players.sorted { $0.seatNumber < $1.seatNumber }.map { p in
             let name = p.name.isEmpty ? "Jugador \(p.seatNumber)" : p.name
             let claim = board.edition?.characters.first(where: { $0.id == p.claimRoleId })?.name ?? ""
-            let status = (board.days[board.currentDay][p.seatNumber-1].dead ? "muerto" : "vivo")
-            let notas = p.personalNotes.count > 0 ? "Notas de \(name) por día: \(p.personalNotes.sorted(by: { $0.key < $1.key }).map {"Día \($0.key + 1): \($0.value)" }.joined(separator: "\n"))" : "No tiene"
+            let status = p.statuses[safe: board.currentDay]?.dead == true ? "muerto" : "vivo"
+            let notas = p.personalNotes.count > 0 ?
+                "Notas de \(name) por día: \(p.personalNotes.sorted(by: { $0.text < $1.text }).map {"Día \($0.dayIndex + 1): \($0.text)"}.joined(separator: "\n"))" : "No tiene"
             return "\(name) (\(status))" + (claim.isEmpty ? "" : " - CLAIM: \(claim)") + " \n notas: \(notas)"
         }
         let myPlayer = board.players.first(where: { $0.isMe })
@@ -130,29 +131,22 @@ struct GPTAssistantView: View {
         let outsiderRoles = board.edition?.characters.filter { $0.team == .outsider }.map(\.name) ?? []
         let travellerRoles = board.edition?.characters.filter { $0.team == .traveller }.map(\.name) ?? []
 
-        let prompt = """
+        return """
         Estado actual de la partida de Blood on the Clocktower, edición '\(editionName)', día \(board.currentDay + 1):
-        
         Jugadores (\(players.count)):
         \(players.joined(separator: "\n"))
-        
         Yo soy: \(myPlayer?.name ?? "") (\(myPlayer?.seatNumber ?? 0)). 
         Mi CLAIM: \(myselfClaim.isEmpty ? "Sin claim aún" : myselfClaim)
-        
         Roles en juego: 
         Ciudadanos: \(townsfolkRoles.joined(separator: ", "))
         Forasteros: \(outsiderRoles.joined(separator: ", "))
         Esbirros: \(minionRoles.joined(separator: ", "))
         Demonio: \(demonRoles.joined(separator: ", "))
         Viajeros: \(travellerRoles.joined(separator: ", "))
-        
         Notas personales propias: 
-        \(myPlayer?.personalNotes.sorted(by: { $0.key < $1.key }).map {"Día \($0.key + 1): \($0.value)" }.joined(separator: "\n") ?? "Sin notas")
-        
-        
+        \(myPlayer?.personalNotes.sorted(by: { $0.text < $1.text }).map {"Día \($0.dayIndex + 1): \($0.text)"}.joined(separator: "\n") ?? "Sin notas")
         Con esta información, dame tus tips o estrategias para mi equipo y mi rol en base a lo que observes.
         """
-        return prompt
     }
 
     func sendToOpenAI(history: [ChatMessageModel], userPrompt: String) async -> String {
@@ -203,9 +197,9 @@ struct GPTAssistantView: View {
         userInput = ""
     }
 
-    func gptPrompt(for board: BoardStateModel, userMessage: String) -> String {
+    func gptPrompt(for board: BoardState, userMessage: String) -> String {
         let myPlayer = board.players.first(where: { $0.isMe })
-        let myNotes: [String] = myPlayer?.personalNotes.values.compactMap { $0 }.filter { !$0.isEmpty } ?? []
+        let myNotes: [String] = myPlayer?.personalNotes.compactMap { $0.text }.filter { !$0.isEmpty } ?? []
         let claims: [String] = board.players.compactMap {
             guard let rid = $0.claimRoleId else { return nil }
             let claimName = board.edition?.characters.first(where: { $0.id == rid })?.name ?? $0.claimManual
@@ -227,7 +221,7 @@ struct GPTAssistantView: View {
         return base + "\nPregunta del usuario: \(userMessage)"
     }
 
-    func systemPrompt(for board: BoardStateModel) -> String {
+    func systemPrompt(for board: BoardState) -> String {
         let myPlayer = board.players.first(where: { $0.isMe })
         let team = detectTeam(me: myPlayer, edition: board.edition)
         switch team {
@@ -239,7 +233,7 @@ struct GPTAssistantView: View {
     }
 
     /** Detecta a qué tipo de jugador eres para el prompt */
-    func detectTeam(me: PlayerModel?, edition: EditionDataModel?) -> String {
+    func detectTeam(me: Player?, edition: EditionData?) -> String {
         guard let id = me?.claimRoleId, let role = edition?.characters.first(where: { $0.id == id }) else { return "unknown" }
         return role.team?.rawValue ?? "unknown"
     }
@@ -286,7 +280,6 @@ private struct MessageRow: View {
 
     private var assistantBubble: some View {
         Markdown(message.text)
-//        Text(message.text)
             .font(.body)
             .foregroundColor(.primary)
             .padding(8)
@@ -299,8 +292,4 @@ private struct MessageRow: View {
                 }
             }
     }
-}
-
-#Preview {
-    GPTAssistantView(board: .Mock.example)
 }
