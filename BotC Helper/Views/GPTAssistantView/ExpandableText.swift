@@ -19,7 +19,7 @@ struct ExpandableText: View {
                 .lineLimit(expanded ? nil : lineLimit)
                 .animation(.easeInOut(duration: 0.2), value: expanded)
             if text.count > 70 {
-                Button(expanded ? "Ver menos" : "Ver más") {
+                Button(expanded ? MSG("see_less") : MSG("see_more")) {
                     expanded.toggle()
                 }
                 .font(.caption)

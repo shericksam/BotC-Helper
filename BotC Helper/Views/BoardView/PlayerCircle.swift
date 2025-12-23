@@ -77,7 +77,7 @@ struct PlayerCircle: View {
                 if let role = claimedRole, !iAmBadGuy() {
                     Text(role.name)
                 } else {
-                    Text("Seat \(player.seatNumber)")
+                    Text(MSG("new_game_seat_picker", player.seatNumber))
                 }
             }
             .foregroundColor(.white)

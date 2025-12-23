@@ -26,10 +26,9 @@ struct BoardView: View {
 
     var body: some View {
         VStack {
-
-            Picker("Día", selection: $board.currentDay) {
+            Picker(MSG("board_day", board.currentDay + 1), selection: $board.currentDay) {
                 ForEach(0..<board.totalDays, id: \.self) { idx in
-                    Text("Día \(idx)").tag(idx)
+                    Text(MSG("board_day", idx + 1)).tag(idx)
                 }
             }
             .pickerStyle(.segmented)
@@ -45,12 +44,12 @@ struct BoardView: View {
                     if isVotingPhase {
                         VStack {
                             Image(systemName: "flag.pattern.checkered")
-                            Text("Votando...")
+                            Text(MSG("board_voting"))
                         }.onTapGesture {
                             isVotingPhase.toggle()
                         }
                     }
-                    Button("Nuevo Día") { addDay() }
+                    Button(MSG("board_new_day")) { addDay() }
                         .buttonStyle(.borderedProminent)
                         .padding(.vertical, 5)
                     if let edition = board.edition {
@@ -59,11 +58,11 @@ struct BoardView: View {
                         }
                         .font(.title2)
                     }
-                    Text("Jugadores: \(board.players.count)").font(.title3).bold()
-                    Text("Poblado: \(board.config.numTownsfolk)").font(.body)
-                    Text("Forasteros: \(board.config.numOutsider)").font(.body)
-                    Text("Esbirros: \(board.config.numMinions)").font(.body)
-                    Text("Demonio: \(board.config.numDemon)").font(.body)
+                    Text(MSG("board_players_count", board.players.count)).font(.title3).bold()
+                    Text(MSG("board_townsfolk", board.config.numTownsfolk)).font(.body)
+                    Text(MSG("board_outsider", board.config.numOutsider)).font(.body)
+                    Text(MSG("board_minion", board.config.numMinions)).font(.body)
+                    Text(MSG("board_demon", board.config.numDemon)).font(.body)
 //                    NavigationLink(destination: GPTAssistantView(board: board)) {
 //                        Label("Análisis AI", systemImage: "bolt.circle.fill")
 //                    }
@@ -82,19 +81,19 @@ struct BoardView: View {
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Menu {
-                    Button("Guardar partida", systemImage: "square.and.arrow.down") {
+                    Button(MSG("board_save"), systemImage: "square.and.arrow.down") {
                         try? modelContext.save()
                     }
-                    Button("Agregar jugador", systemImage: "person.crop.circle.badge.plus") {
+                    Button(MSG("board_add_player"), systemImage: "person.crop.circle.badge.plus") {
                         addPlayer()
                     }
-                    Button(isVotingPhase ? "Terminar votación" : "Iniciar votación",
+                    Button(isVotingPhase ? MSG("board_stop_voting") : MSG("board_start_voting"),
                            systemImage: isVotingPhase ? "flag.filled.and.flag.crossed" : "flag.pattern.checkered") {
                         isVotingPhase.toggle()
                     }
-                    Button("Limpiar todos los votos", systemImage: "checkmark.circle") { clearAllVotes() }
-                    Button("Limpiar todas las acusaciones", systemImage: "exclamationmark.bubble") { clearAllNominations() }
-                    Button("Nueva partida", systemImage: "arrow.clockwise") { showResetAlert = true }
+                    Button(MSG("board_clear_votes"), systemImage: "checkmark.circle") { clearAllVotes() }
+                    Button(MSG("board_clear_nominations"), systemImage: "exclamationmark.bubble") { clearAllNominations() }
+                    Button(MSG("board_new_game"), systemImage: "arrow.clockwise") { showResetAlert = true }
                         .tint(.red)
                 } label: {
                     Image(systemName: "ellipsis.circle")
@@ -106,13 +105,13 @@ struct BoardView: View {
         .onDisappear {
             try? modelContext.save()
         }
-        .alert("¿Borrar progreso?", isPresented: $showResetAlert) {
-            Button("Sí, limpiar todo", role: .destructive) {
+        .alert(MSG("board_reset_title"), isPresented: $showResetAlert) {
+            Button(MSG("board_reset_button"), role: .destructive) {
                 resetBoardForNewGame()
             }
-            Button("Cancelar", role: .cancel) { }
+            Button(MSG("board_reset_cancel"), role: .cancel) { }
         } message: {
-            Text("Esto deja las posiciones y nombres, pero borra todos los claims, notas y progreso actual. ¿Seguro que quieres reiniciar la partida?")
+            Text(MSG("board_reset_message"))
         }
         .navigationDestination(isPresented: $showDetail) {
             if let data = board.edition {
@@ -138,7 +137,7 @@ struct BoardView: View {
                     roles: board.edition?.characters ?? []
                 )
             } else {
-                Text("No hay jugador para editar")
+                Text("No player to edit")
             }
         }
     }

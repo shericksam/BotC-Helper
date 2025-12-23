@@ -23,6 +23,6 @@ struct RolIcon: View {
 
 
 #Preview {
-    RolIcon(name: "secta_grandmother")
+    RolIcon(name: "grandmother")
         .frame(width: 40, height: 60)
 }

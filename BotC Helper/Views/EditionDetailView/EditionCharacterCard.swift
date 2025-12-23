@@ -9,6 +9,7 @@ import SwiftUI
 
 struct EditionCharacterCard: View {
     let character: RoleDefinition
+
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             HStack(alignment: .center, spacing: 12) {
@@ -19,7 +20,7 @@ struct EditionCharacterCard: View {
                     .font(.title2)
                     .bold()
                 if let team = character.team {
-                    Text(team.displayName)
+                    Text(MSG("role_team_label", team.displayName))
                         .font(.caption)
                         .padding(.horizontal, 8)
                         .padding(.vertical, 2)
@@ -30,31 +31,27 @@ struct EditionCharacterCard: View {
                 Spacer()
             }
             if let ability = character.ability {
-                Text(ability)
+                Text(MSG("role_ability_label", ability))
                     .font(.body)
             }
             if let reminders = character.reminders, !reminders.isEmpty {
-                Text("Recordatorios: \(reminders.joined(separator: ", "))").font(.footnote)
+                Text(MSG("role_reminders", reminders.joined(separator: ", ")))
+                    .font(.footnote)
             }
             if let global = character.remindersGlobal, !global.isEmpty {
-                Text("Recordatorios Globales: \(global.joined(separator: ", "))").font(.footnote)
+                Text(MSG("role_global_reminders", global.joined(separator: ", ")))
+                    .font(.footnote)
             }
             if let fn = character.firstNightReminder {
-                Text("Noche inicial: \(fn)").font(.footnote).foregroundColor(.secondary)
+                Text(MSG("role_first_night", fn))
+                    .font(.footnote)
+                    .foregroundColor(.secondary)
             }
             if let on = character.otherNightReminder {
-                Text("Otras noches: \(on)").font(.footnote).foregroundColor(.secondary)
+                Text(MSG("role_other_night", on))
+                    .font(.footnote)
+                    .foregroundColor(.secondary)
             }
-//            if let special = character.special {
-//                VStack(alignment: .leading, spacing: 0) {
-//                    Text("Especiales:").font(.footnote)
-//                    ForEach(special, id: \.name) { s in
-//                        Text("• \(s.name) (\(s.type)\(s.value != nil ? ": " + s.value! : ""))")
-//                            .font(.footnote)
-//                            .foregroundColor(.secondary)
-//                    }
-//                }
-//            }
         }
         .padding()
         .frame(maxWidth: .infinity)

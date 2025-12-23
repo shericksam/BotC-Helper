@@ -1,6 +1,6 @@
 [
   {
-    "id": "secta_grandmother",
+    "id": "grandmother",
     "name": "Grandmother",
     "team": "townsfolk",
     "ability": "Empiezas sabiendo un jugador bueno y su personaje. Si el Demonio lo mata, t\u00fa tambi\u00e9n mueres.",
@@ -14,7 +14,7 @@
     "otherNightReminder": "Si el jugador marcado como Nieto ha sido asesinado por el Demonio, la Abuela tambi\u00e9n muere. :reminder:"
   },
   {
-    "id": "secta_sailor",
+    "id": "sailor",
     "name": "Sailor",
     "team": "townsfolk",
     "ability": "No puedes morir. Cada noche, elige a un jugador vivo: o \u00e9l o t\u00fa est\u00e1is borrachos hasta el anochecer.",
@@ -28,7 +28,7 @@
     "otherNightReminder": "El Marinero elige a un jugador vivo. :reminder:"
   },
   {
-    "id": "secta_chambermaid",
+    "id": "chambermaid",
     "name": "Chambermaid",
     "team": "townsfolk",
     "ability": "Cada noche, elige 2 jugadores vivos (no a ti mismo): descubres cu\u00e1ntos se han despertado esta noche gracias a su habilidad.",
@@ -41,7 +41,7 @@
     "otherNightReminder": "La Sirvienta elige a 2 jugadores vivos, no a ella misma. Haz una se\u00f1al con los dedos."
   },
   {
-    "id": "secta_innkeeper",
+    "id": "innkeeper",
     "name": "Innkeeper",
     "team": "townsfolk",
     "ability": "Cada noche*, elige a 2 jugadores: no pueden morir esta noche, pero 1 est\u00e1 borracho hasta el anochecer.",
@@ -54,7 +54,7 @@
     "otherNightReminder": "El Posadero elige a 2 jugadores. :reminder: :reminder: :reminder:"
   },
   {
-    "id": "secta_gambler",
+    "id": "gambler",
     "name": "Gambler",
     "team": "townsfolk",
     "ability": "Cada noche*, elige a un jugador y adivina su personaje: si te equivocas, mueres.",
@@ -67,7 +67,7 @@
     "otherNightReminder": "El Tah\u00far elige un jugador y un personaje. :reminder:"
   },
   {
-    "id": "secta_exorcist",
+    "id": "exorcist",
     "name": "Exorcist",
     "team": "townsfolk",
     "ability": "Cada noche*, elige a un jugador (diferente al de la noche anterior): el Demonio, si es elegido, descubre qui\u00e9n eres y no se despierta esta noche.",
@@ -80,7 +80,7 @@
     "otherNightReminder": "El Exorcista elige un jugador. :reminder: Duerme al Exorcista. Si el Exorcista ha elegido al Demonio: Despierta al Demonio. Mu\u00e9strale las fichas ESTE PERSONAJE TE HA ELEGIDO y Exorcista. Apunta al Exorcista."
   },
   {
-    "id": "secta_gossip",
+    "id": "gossip",
     "name": "Gossip",
     "team": "townsfolk",
     "ability": "Cada d\u00eda, puedes hacer una declaraci\u00f3n p\u00fablica. Si es cierta, un jugador muere esa noche.",
@@ -93,7 +93,7 @@
     "otherNightReminder": "Si el Chismoso debe matar a un jugador, el jugador muere. :reminder:"
   },
   {
-    "id": "secta_courtier",
+    "id": "courtier",
     "name": "Courtier",
     "team": "townsfolk",
     "ability": "Una vez por partida, por la noche, elige a un personaje: est\u00e1 borracho durante 3 noches y 3 d\u00edas.",
@@ -107,7 +107,7 @@
     "otherNightReminder": "El Cortesano puede elegir un personaje. :reminder: :reminder:"
   },
   {
-    "id": "secta_professor",
+    "id": "professor",
     "name": "Professor",
     "team": "townsfolk",
     "ability": "Una vez por partida, por la noche*, elige a un jugador muerto: si es un Aldeano, resucita.",
@@ -120,7 +120,7 @@
     "otherNightReminder": "El Profesor podr\u00eda elegir un jugador y muerto y revivirlo si es Aldeano. :reminder: :reminder:"
   },
   {
-    "id": "secta_minstrel",
+    "id": "minstrel",
     "name": "Minstrel",
     "team": "townsfolk",
     "ability": "Cuando un Esbirro muere ejecutado, todos los dem\u00e1s jugadores (excepto los Viajeros) est\u00e1n borrachos hasta el anochecer del d\u00eda siguiente.",
@@ -132,7 +132,7 @@
     "reminders": ["Todos est\u00e1n Borrachos"]
   },
   {
-    "id": "secta_tealady",
+    "id": "tealady",
     "name": "Tea Lady",
     "team": "townsfolk",
     "ability": "Si tus dos vecinos vivos son buenos, no pueden morir.",
@@ -144,7 +144,7 @@
     "reminders": ["No Puede Morir", "No Puede Morir"]
   },
   {
-    "id": "secta_fool",
+    "id": "fool",
     "name": "Fool",
     "team": "townsfolk",
     "ability": "La primera vez que mueres, no lo haces.",
@@ -156,7 +156,7 @@
     "reminders": ["Sin Habilidad"]
   },
   {
-    "id": "secta_pacifist",
+    "id": "pacifist",
     "name": "Pacifist",
     "team": "townsfolk",
     "ability": "Los jugadores buenos ejecutados podr\u00edan no morir.",
@@ -167,7 +167,7 @@
     ]
   },
   {
-    "id": "secta_goon",
+    "id": "goon",
     "name": "Goon",
     "team": "outsider",
     "ability": "Cada noche, el 1er jugador que te elija con su habilidad, se emborracha hasta el anochecer. Te conviertes a su alineamiento.",
@@ -179,7 +179,7 @@
     "reminders": ["Borracho"]
   },
   {
-    "id": "secta_lunatic",
+    "id": "lunatic",
     "name": "Lunatic",
     "team": "outsider",
     "ability": "Crees que eres un Demonio, pero no lo eres. El Demonio sabe qui\u00e9n eres y a qui\u00e9n eliges por la noche.",
@@ -193,7 +193,7 @@
     "otherNightReminder": "Haz lo que sea necesario para simular la actuaci\u00f3n del Demonio. Duerme al Lun\u00e1tico. Despierta al Demonio. Muestra la ficha del Lun\u00e1tico y se\u00f1\u00e1lalo, a continuaci\u00f3n a su(s) objetivo(s)."
   },
   {
-    "id": "secta_tinker",
+    "id": "tinker",
     "name": "Tinker",
     "team": "outsider",
     "ability": "Podr\u00edas morir en cualquier momento.",
@@ -206,7 +206,7 @@
     "otherNightReminder": "El Manitas podr\u00eda morir. :reminder:"
   },
   {
-    "id": "secta_moonchild",
+    "id": "moonchild",
     "name": "Moonchild",
     "team": "outsider",
     "ability": "Cuando descubres que has muerto, elige p\u00fablicamente a 1 jugador vivo. Si es un jugador bueno, muere esa noche.",
@@ -219,7 +219,7 @@
     "otherNightReminder": "Si la Ni\u00f1a de la Luna debe matar a 1 jugadora buena, muere. :reminder:"
   },
   {
-    "id": "secta_godfather",
+    "id": "godfather",
     "name": "Godfather",
     "team": "minion",
     "ability": "Empiezas sabiendo qu\u00e9 Forasteros est\u00e1n en juego. Si hoy ha muerto 1 durante el d\u00eda, elige a un jugador esta noche: muere. [-1 \u00f3 +1 Forastero]",
@@ -233,7 +233,7 @@
     "otherNightReminder": "Si un Forastero ha muerto hoy, el Padrino elige a un jugador. :reminder:"
   },
   {
-    "id": "secta_devilsadvocate",
+    "id": "devilsadvocate",
     "name": "Devil's Advocate",
     "team": "minion",
     "ability": "Cada noche elige 1 jugador vivo (diferente al de la noche anterior): si es ejecutado ma\u00f1ana, no muere.",
@@ -247,7 +247,7 @@
     "otherNightReminder": "El Abogado del diablo elige a 1 jugador vivo diferente al de ayer. :reminder:"
   },
   {
-    "id": "secta_assassin",
+    "id": "assassin",
     "name": "Assassin",
     "team": "minion",
     "ability": "Una vez por partida, por la noche*, elige a un jugador: muere, incluso si por alguna raz\u00f3n no pudiera.",
@@ -260,7 +260,7 @@
     "otherNightReminder": "El Asesino podr\u00eda elegir a un jugador: :reminder: :reminder:"
   },
   {
-    "id": "secta_mastermind",
+    "id": "mastermind",
     "name": "Mastermind",
     "team": "minion",
     "ability": "Si el Demonio muere ejecutado (terminando la partida), se juega 1 d\u00eda m\u00e1s. Si un jugador es ejecutado, su equipo pierde.",
@@ -271,7 +271,7 @@
     ]
   },
   {
-    "id": "secta_pukka",
+    "id": "pukka",
     "name": "Pukka",
     "team": "demon",
     "ability": "Cada noche, elige a un jugador: es envenenado. El jugador previamente envenenado muere y recupera la salud.",
@@ -285,7 +285,7 @@
     "otherNightReminder": "El Pukka elige un jugador. :reminder: El jugador previamente envenenado muere y luego vuelve a estar sano. :reminder:"
   },
   {
-    "id": "secta_shabaloth",
+    "id": "shabaloth",
     "name": "Shabaloth",
     "team": "demon",
     "ability": "Cada noche*, elige a 2 jugadores: mueren. Un jugador muerto que elegiste la noche anterior podr\u00eda ser regurgitado.",
@@ -298,7 +298,7 @@
     "otherNightReminder": "Un jugador previamente elegido podr\u00eda ser resucitado. :reminder: El Shabaloth elige 2 jugadores. :reminder: :reminder:"
   },
   {
-    "id": "secta_po",
+    "id": "po",
     "name": "Po",
     "team": "demon",
     "ability": "Cada noche*, puedes elegir a un jugador: muere. Si no elegiste a nadie la noche anterior, elige 3 jugadores esta noche.",
@@ -311,7 +311,7 @@
     "otherNightReminder": "El Po puede elegir a un jugador o a 3 jugadores si la noche anterior no eligi\u00f3 a nadie. :reminder: o :reminder: :reminder: :reminder:"
   },
   {
-    "id": "secta_zombuul",
+    "id": "zombuul",
     "name": "Zombuul",
     "team": "demon",
     "ability": "Cada noche*, si nadie ha muerto hoy, elige a un jugador: muere. La 1\u00aa vez que mueres, vives pero eres percibido como muerto.",
@@ -324,7 +324,7 @@
     "otherNightReminder": "Si hoy no ha muerto nadie, el Zombuul elige a un jugador. :reminder:"
   },
   {
-    "id": "secta_matron",
+    "id": "matron",
     "name": "Matron",
     "team": "traveller",
     "ability": "Cada d\u00eda, puedes elegir hasta 3 grupos de 2 jugadores para intercambiar asientos. Los jugadores no pueden abandonar sus asientos para hablar en privado.",
@@ -336,7 +336,7 @@
     ]
   },
   {
-    "id": "secta_judge",
+    "id": "judge",
     "name": "Judge",
     "team": "traveller",
     "ability": "Una vez por partida, si otro jugador ha nominado, puedes elegir forzar la ejecuci\u00f3n actual para aprobarla o fallar en contra.",
@@ -349,7 +349,7 @@
     "reminders": ["Sin Habilidad"]
   },
   {
-    "id": "secta_apprentice",
+    "id": "apprentice",
     "name": "Apprentice",
     "team": "traveller",
     "ability": "En tu 1\u00aa noche, obtienes una habilidad de Aldeano (si eres bueno), o una habilidad de Esbirro (si eres malvado).",
@@ -363,7 +363,7 @@
     "firstNightReminder": "Ense\u00f1a al Aprendiz la ficha de T\u00da ERES y despu\u00e9s la de 1 Aldeano o 1 Esbirro. En el Grimorio, reemplaza la ficha de Aprendiz por la del nuevo personaje y marca al Aprendiz con la ficha de ES EL APRENDIZ."
   },
   {
-    "id": "secta_bishop",
+    "id": "bishop",
     "name": "Bishop",
     "team": "traveller",
     "ability": "Solo el Narrador puede nominar. Al menos 1 jugador contrario debe ser nominado cada d\u00eda.",
@@ -376,7 +376,7 @@
     "reminders": ["Nominar al Malvado.Nominar al Bueno"]
   },
   {
-    "id": "secta_voudon",
+    "id": "voudon",
     "name": "Voudon",
     "team": "traveller",
     "ability": "Solo los muertos y t\u00fa pod\u00e9is votar. No necesitan una ficha de voto para hacerlo. No se requiere una mayor\u00eda del 50%.",
@@ -388,7 +388,7 @@
     ]
   },
   {
-    "id": "secta_clockmaker",
+    "id": "clockmaker",
     "name": "Clockmaker",
     "team": "townsfolk",
     "ability": "Empiezas sabiendo la distancia entre el Demonio y su Esbirro m\u00e1s cercano.",
@@ -400,7 +400,7 @@
     "firstNightReminder": "Haz una se\u00f1al con los dedos."
   },
   {
-    "id": "secta_snakecharmer",
+    "id": "snakecharmer",
     "name": "Snake Charmer",
     "team": "townsfolk",
     "ability": "Cada noche, elige a un jugador vivo: si es el Demonio, cambi\u00e1is personaje y alineamiento, entonces \u00e9l es envenenado.",
@@ -414,7 +414,7 @@
     "otherNightReminder": "El Encantador de Serpientes elige a un jugador. Si elige al Demonio: Muestra las fichas T\u00da ERES y Demonio. Pon el pulgar hacia abajo. Intercambia las fichas de Encantador de Serpientes y Demonio. Pon al antiguo Encantador de Serpientes a dormir. Despierta al antiguo Demonio. Muestra las fichas de T\u00da ERES y Encantador de Serpientes y pon el pulgar hacia arriba. :reminder:"
   },
   {
-    "id": "secta_mathematician",
+    "id": "mathematician",
     "name": "Mathematician",
     "team": "townsfolk",
     "ability": "Cada noche, descubres cu\u00e1ntas habilidades de los jugadores funcionaron anormalmente (desde el amanecer) debido a la habilidad de otro personaje.",
@@ -434,7 +434,7 @@
     "otherNightReminder": "Haz una se\u00f1al con los dedos."
   },
   {
-    "id": "secta_dreamer",
+    "id": "dreamer",
     "name": "Dreamer",
     "team": "townsfolk",
     "ability": "Cada noche, elige a un jugador (ni a ti mismo ni a Viajeros): descubres 1 personaje bueno y 1 malvado, 1 de los cuales es correcto.",
@@ -447,7 +447,7 @@
     "otherNightReminder": "El So\u00f1ador apunta a un jugador. Mu\u00e9strale 1 ficha de personaje bueno y 1 de personaje malvado, 1 de los cuales es su personaje."
   },
   {
-    "id": "secta_flowergirl",
+    "id": "flowergirl",
     "name": "Flowergirl",
     "team": "townsfolk",
     "ability": "Cada noche*, descubres si un Demonio ha votado hoy.",
@@ -460,7 +460,7 @@
     "otherNightReminder": "Asiente o mueve la cabeza."
   },
   {
-    "id": "secta_towncrier",
+    "id": "towncrier",
     "name": "Town Crier",
     "team": "townsfolk",
     "ability": "Cada noche*, descubres si alg\u00fan Esbirro ha nominado hoy.",
@@ -473,7 +473,7 @@
     "otherNightReminder": "Asiente o mueve la cabeza."
   },
   {
-    "id": "secta_oracle",
+    "id": "oracle",
     "name": "Oracle",
     "team": "townsfolk",
     "ability": "Cada noche*, descubres cu\u00e1ntos jugadores muertos son malvados.",
@@ -485,7 +485,7 @@
     "otherNightReminder": "Haz una se\u00f1al con los dedos."
   },
   {
-    "id": "secta_savant",
+    "id": "savant",
     "name": "Savant",
     "team": "townsfolk",
     "ability": "Cada d\u00eda, puedes visitar al Narrador en privado para descubrir 2 cosas: 1 es cierta y 1 es falsa.",
@@ -496,7 +496,7 @@
     ]
   },
   {
-    "id": "secta_seamstress",
+    "id": "seamstress",
     "name": "Seamstress",
     "team": "townsfolk",
     "ability": "Una vez por partida, por la noche, elige a 2 jugadores (no a ti mismo): descubres si son del mismo alineamiento.",
@@ -510,7 +510,7 @@
     "otherNightReminder": "La Costurera podr\u00eda elegir a 2 jugadores. Asiente o mueve la cabeza. :reminder:"
   },
   {
-    "id": "secta_philosopher",
+    "id": "philosopher",
     "name": "Philosopher",
     "team": "townsfolk",
     "ability": "Una vez por partida, por la noche, elige a un personaje bueno: gana esa habilidad. Si este personaje est\u00e1 en juego, est\u00e1 borracho.",
@@ -531,7 +531,7 @@
     ]
   },
   {
-    "id": "secta_artist",
+    "id": "artist",
     "name": "Artist",
     "team": "townsfolk",
     "ability": "Una vez por partida, durante el d\u00eda, haz en privado al Narrador cualquier pregunta de respuesta s\u00ed/no.",
@@ -543,7 +543,7 @@
     "reminders": ["Sin Habilidad"]
   },
   {
-    "id": "secta_juggler",
+    "id": "juggler",
     "name": "Juggler",
     "team": "townsfolk",
     "ability": "El primer d\u00eda, adivina p\u00fablicamente hasta 5 personajes de jugadores. Esa noche descubres cu\u00e1ntos has acertado.",
@@ -556,7 +556,7 @@
     "otherNightReminder": "Haz una se\u00f1al con los dedos."
   },
   {
-    "id": "secta_sage",
+    "id": "sage",
     "name": "Sage",
     "team": "townsfolk",
     "ability": "Si el Demonio te mata, descubres que \u00e9l es 1 de 2 jugadores.",
@@ -568,7 +568,7 @@
     "otherNightReminder": "Si el Demonio ha matado al Sabio, despierta al Sabio y apunta a 2 jugadores, 1 de los cuales es el Demonio."
   },
   {
-    "id": "secta_sweetheart",
+    "id": "sweetheart",
     "name": "Sweetheart",
     "team": "outsider",
     "ability": "Cuando mueras, 1 jugador estar\u00e1 borracho a partir de ese momento.",
@@ -581,7 +581,7 @@
     "otherNightReminder": "Si la Adorable ha muerto, un jugador se emborracha inmediatamente. Si a\u00fan no has hecho esto, hazlo ahora. :reminder:"
   },
   {
-    "id": "secta_klutz",
+    "id": "klutz",
     "name": "Klutz",
     "team": "outsider",
     "ability": "Cuando descubres que has muerto, elige p\u00fablicamente a 1 jugador vivo: si es malvado, tu equipo pierde.",
@@ -592,7 +592,7 @@
     ]
   },
   {
-    "id": "secta_barber",
+    "id": "barber",
     "name": "Barber",
     "team": "outsider",
     "ability": "Si has muerto hoy o esta noche, el Demonio puede elegir 2 jugadores (no a otro Demonio) para intercambiar los personajes.",
@@ -605,7 +605,7 @@
     "otherNightReminder": "Si el Barbero ha muerto hoy o esta noche, muestra al Demonio las fichas de ESTE PERSONAJE TE HA ELEGIDO y Barbero. Si el Demonio ha elegido a 2 jugadores, despi\u00e9rtalos de uno en uno. Muestra las fichas T\u00da ERES y su nuevo personaje (se intercambian sus fichas de personaje)."
   },
   {
-    "id": "secta_mutant",
+    "id": "mutant",
     "name": "Mutant",
     "team": "outsider",
     "ability": "Si est\u00e1s \u00abloco\u00bb por ser un Forastero, podr\u00edas ser ejecutado.",
@@ -616,7 +616,7 @@
     ]
   },
   {
-    "id": "secta_witch",
+    "id": "witch",
     "name": "Witch",
     "team": "minion",
     "ability": "Cada noche, elige a un jugador: si nominara ma\u00f1ana, muere. Si solo viven 3 jugadores, pierdes esta habilidad.",
@@ -630,7 +630,7 @@
     "otherNightReminder": "La Bruja elige un jugador. :reminder:"
   },
   {
-    "id": "secta_cerenovus",
+    "id": "cerenovus",
     "name": "Cerenovus",
     "team": "minion",
     "ability": "Cada noche, elige a un jugador y a un personaje bueno: est\u00e1 \u00abloco\u00bb por ser ese personaje ma\u00f1ana, de lo contrario podr\u00eda ser ejecutado.",
@@ -644,7 +644,7 @@
     "otherNightReminder": "El Cerenovus elige un jugador y un personaje. :reminder: Duerme al Cerenovus. Despierta al objetivo. Mu\u00e9strale la ficha ESTE PERSONAJE TE HA ELEGIDO, la ficha de Cerenovus, y a continuaci\u00f3n la ficha de loco de personaje."
   },
   {
-    "id": "secta_pithag",
+    "id": "pithag",
     "name": "Pit-Hag",
     "team": "minion",
     "ability": "Cada noche*, elige a un jugador y a un personaje en el que se convierte (si no est\u00e1 en juego). Si se crea un Demonio, las muertes de esa noche ser\u00e1n arbitrarias.",
@@ -656,7 +656,7 @@
     "otherNightReminder": "El Pit-Hag elige un jugador y un personaje. Si elige un personaje que no est\u00e1 en juego: Duerme al Pit-Hag. Despierta al objetivo. Muestra la ficha T\u00da ERES y su nueva ficha de personaje."
   },
   {
-    "id": "secta_eviltwin",
+    "id": "eviltwin",
     "name": "Evil Twin",
     "team": "minion",
     "ability": "Un jugador contrario (de la otra alineaci\u00f3n) y t\u00fa os conoc\u00e9is. Si el jugador bueno es ejecutado, el Mal gana. El Bien no puede ganar si ambos viv\u00eds.",
@@ -669,7 +669,7 @@
     "firstNightReminder": "Despierta a ambas gemelas. Permite el contacto visual. Elige a la Gemela Malvada, muestra su ficha a la otra gemela, y viceversa."
   },
   {
-    "id": "secta_nodashii",
+    "id": "nodashii",
     "name": "No Dashii",
     "team": "demon",
     "ability": "Cada noche*, elige a un jugador: muere. Tus 2 vecinos Aldeanos est\u00e1n envenenados.",
@@ -682,7 +682,7 @@
     "otherNightReminder": "El No Dashii elige a un jugador. :reminder:"
   },
   {
-    "id": "secta_vigormortis",
+    "id": "vigormortis",
     "name": "Vigormortis",
     "team": "demon",
     "ability": "Cada noche*, elige a un jugador: muere. Los Esbirros que mates conservan su habilidad y envenenan a 1 Aldeano vecino. [-1 Forastero]",
@@ -703,7 +703,7 @@
     "otherNightReminder": "El Vigormortis elige a un jugador. :reminder: Si ese jugador es un Esbirro, envenena a un vecino Aldeano. :reminder: :reminder:"
   },
   {
-    "id": "secta_vortox",
+    "id": "vortox",
     "name": "Vortox",
     "team": "demon",
     "ability": "Cada noche*, elige a un jugador: muere. Las habilidades de los Aldeanos dan informaci\u00f3n falsa. Cada d\u00eda, si nadie es ejecutado, el Mal gana.",
@@ -716,7 +716,7 @@
     "otherNightReminder": "El Vortox elige a un jugador. :reminder:"
   },
   {
-    "id": "secta_fanggu",
+    "id": "fanggu",
     "name": "Fang Gu",
     "team": "demon",
     "ability": "Cada noche*, elige a un jugador: muere. El 1er Forastero que mates se convierte en el nuevo Fang Gu y t\u00fa mueres en su lugar. [+1 Forastero]",
@@ -729,7 +729,7 @@
     "otherNightReminder": "El Fang Gu elige un jugador. :reminder: Si elige a un Forastero (solo una vez): Sustituye la ficha de Forastero por la ficha de Fang Gu. Duerme al Fang Gu. Despierta al objetivo. Muestra las fichas T\u00da ERES y Fang Gu y pon un pulgar hacia abajo. :reminder:"
   },
   {
-    "id": "secta_barista",
+    "id": "barista",
     "name": "Barista",
     "team": "traveller",
     "ability": "Cada noche, hasta el anochecer, 1) un jugador se vuelva sobrio, sano y obtiene informaci\u00f3n verdadera, o, 2) su habilidad funciona dos veces. \u00c9l descubre cu\u00e1l.",
@@ -744,7 +744,7 @@
     "otherNightReminder": "Elige a 1 jugador, despi\u00e9rtale y dile qu\u00e9 poder del Barista est\u00e1 afect\u00e1ndole. Trata su habilidad seg\u00fan eso (informaci\u00f3n sobria/sana/verdadera o activar su habilidad 2 veces)."
   },
   {
-    "id": "secta_harlot",
+    "id": "harlot",
     "name": "Harlot",
     "team": "traveller",
     "ability": "Cada noche*, elige a un jugador vivo: si est\u00e1s de acuerdo, descubres su personaje, pero ambos pod\u00e9is morir.",
@@ -758,7 +758,7 @@
     "otherNightReminder": "La Meretriz elige a 1 jugadora viva. Manda a la Meretriz a dormir. Despierta a la jugadora elegida y ens\u00e9\u00f1ale las fichas de ESTE PERSONAJE TE HA ELEGIDO y Meretriz. La jugadora elegida afirma o niega con la cabeza. Si afirma, despierta a la\u00a0Meretriz y ens\u00e9\u00f1ale el personaje de la jugadora elegida. Despu\u00e9s puedes decidir matar a ambas\u00a0jugadoras. :reminder: :reminder:"
   },
   {
-    "id": "secta_butcher",
+    "id": "butcher",
     "name": "Butcher",
     "team": "traveller",
     "ability": "Cada d\u00eda, despu\u00e9s de la 1\u00aa ejecuci\u00f3n, puedes nominar de nuevo.",
@@ -770,7 +770,7 @@
     ]
   },
   {
-    "id": "secta_bonecollector",
+    "id": "bonecollector",
     "name": "Bone Collector",
     "team": "traveller",
     "ability": "Una vez por partida, por la noche*, elige a un jugador muerto: recupera su habilidad hasta el anochecer.",
@@ -784,7 +784,7 @@
     "otherNightReminder": "El Coleccionista de Huesos puede elegir a 1 jugador muerto. :reminder: Manda al Coleccionista de Huesos a dormir. Si ha elegido, despierta al objetivo si es necesario."
   },
   {
-    "id": "secta_deviant",
+    "id": "deviant",
     "name": "Deviant",
     "team": "traveller",
     "ability": "Si hoy has sido gracioso, no puedes morir exiliado.",
@@ -796,7 +796,7 @@
     ]
   },
   {
-    "id": "secta_chef",
+    "id": "chef",
     "name": "Chef",
     "team": "townsfolk",
     "ability": "Empiezas sabiendo cu\u00e1ntas parejas de jugadores malvados hay. (Sentados uno al lado del otro).",
@@ -808,7 +808,7 @@
     "firstNightReminder": "Haz una se\u00f1al con los dedos."
   },
   {
-    "id": "secta_investigator",
+    "id": "investigator",
     "name": "Investigator",
     "team": "townsfolk",
     "ability": "Empiezas sabiendo que 1 de 2 jugadores es un determinado Esbirro.",
@@ -821,7 +821,7 @@
     "firstNightReminder": "Muestra la ficha de un personaje Esbirro en juego. Apunta tanto al jugador ESBIRRO como al EQUIVOCADO."
   },
   {
-    "id": "secta_washerwoman",
+    "id": "washerwoman",
     "name": "Washerwoman",
     "team": "townsfolk",
     "ability": "Empiezas sabiendo que 1 de 2 jugadores es un determinado Aldeano.",
@@ -834,7 +834,7 @@
     "firstNightReminder": "Muestra la ficha de un personaje Aldeano en juego. Apunta tanto al jugador ALDEANO como al EQUIVOCADO."
   },
   {
-    "id": "secta_librarian",
+    "id": "librarian",
     "name": "Librarian",
     "team": "townsfolk",
     "ability": "Empiezas sabiendo que 1 de 2 jugadores es un determinado Forastero. (O que no hay ninguno en juego).",
@@ -847,7 +847,7 @@
     "firstNightReminder": "Muestra la ficha de un personaje Forastero en juego. Apunta tanto al jugador ALDEANO como al EQUIVOCADO."
   },
   {
-    "id": "secta_empath",
+    "id": "empath",
     "name": "Empath",
     "team": "townsfolk",
     "ability": "Cada noche, descubres cu\u00e1ntos de tus 2 vecinos vivos son malvados.",
@@ -860,7 +860,7 @@
     "otherNightReminder": "Haz una se\u00f1al con los dedos."
   },
   {
-    "id": "secta_fortuneteller",
+    "id": "fortuneteller",
     "name": "Fortune Teller",
     "team": "townsfolk",
     "ability": "Cada noche, elige a 2 jugadores: descubres si alguno de ellos es un Demonio. Hay un jugador bueno que percibes como Demonio.",
@@ -874,7 +874,7 @@
     "otherNightReminder": "La Pitonisa elige a 2 jugadores. Asiente si alguno de ellos es el Demonio, o es percibido como tal, (o la CORTINA DE HUMO)."
   },
   {
-    "id": "secta_undertaker",
+    "id": "undertaker",
     "name": "Undertaker",
     "team": "townsfolk",
     "ability": "Cada noche*, descubres qu\u00e9 personaje ha muerto ejecutado durante el d\u00eda.",
@@ -887,7 +887,7 @@
     "otherNightReminder": "Si un jugador ha sido ejecutado en el d\u00eda de hoy, mu\u00e9strale la ficha del personaje ejecutado."
   },
   {
-    "id": "secta_monk",
+    "id": "monk",
     "name": "Monk",
     "team": "townsfolk",
     "ability": "Cada noche*, elige a un jugador (no a ti mismo): esta noche est\u00e1 a salvo del Demonio.",
@@ -900,7 +900,7 @@
     "otherNightReminder": "El Monje elige a un jugador. :reminder:"
   },
   {
-    "id": "secta_slayer",
+    "id": "slayer",
     "name": "Slayer",
     "team": "townsfolk",
     "ability": "Una vez por partida, durante el d\u00eda, elige p\u00fablicamente a un jugador: si es el Demonio, muere inmediatamente.",
@@ -912,7 +912,7 @@
     "reminders": ["Sin Habilidad"]
   },
   {
-    "id": "secta_soldier",
+    "id": "soldier",
     "name": "Soldier",
     "team": "townsfolk",
     "ability": "Est\u00e1s a salvo del Demonio.",
@@ -923,7 +923,7 @@
     ]
   },
   {
-    "id": "secta_ravenkeeper",
+    "id": "ravenkeeper",
     "name": "Ravenkeeper",
     "team": "townsfolk",
     "ability": "Si mueres por la noche, ser\u00e1s despertado para elegir a un jugador: descubres su personaje.",
@@ -935,7 +935,7 @@
     "otherNightReminder": "Si el Guardi\u00e1n de Cuervos ha muerto esta noche, el Guardi\u00e1n de Cuervos elige a un jugador. Mu\u00e9strale la ficha de personaje de ese jugador."
   },
   {
-    "id": "secta_mayor",
+    "id": "mayor",
     "name": "Mayor",
     "team": "townsfolk",
     "ability": "Si solo quedan 3 jugadores vivos y no hay ejecuci\u00f3n, tu equipo gana. Si mueres por la noche, puede que muera otro jugador en tu lugar.",
@@ -946,7 +946,7 @@
     ]
   },
   {
-    "id": "secta_virgin",
+    "id": "virgin",
     "name": "Virgin",
     "team": "townsfolk",
     "ability": "La 1\u00aa vez que seas nominado, si quien te nomina es un Aldeano, es ejecutado inmediatamente.",
@@ -958,7 +958,7 @@
     "reminders": ["Sin Habilidad"]
   },
   {
-    "id": "secta_butler",
+    "id": "butler",
     "name": "Butler",
     "team": "outsider",
     "ability": "Cada noche, elige a un jugador (no a ti mismo, puedes repetir al anterior): ma\u00f1ana, solo podr\u00e1s votar si \u00e9l tambi\u00e9n vota.",
@@ -972,7 +972,7 @@
     "otherNightReminder": "El Mayordomo elige a un jugador. :reminder:"
   },
   {
-    "id": "secta_drunk",
+    "id": "drunk",
     "name": "Drunk",
     "team": "outsider",
     "ability": "No sabes que eres el Borracho. Crees que eres un Aldeano, pero en realidad no lo eres.",
@@ -988,7 +988,7 @@
     ]
   },
   {
-    "id": "secta_recluse",
+    "id": "recluse",
     "name": "Recluse",
     "team": "outsider",
     "ability": "Podr\u00edas ser percibido tanto como malvado, como Esbirro o como Demonio, incluso estando muerto.",
@@ -999,7 +999,7 @@
     ]
   },
   {
-    "id": "secta_saint",
+    "id": "saint",
     "name": "Saint",
     "team": "outsider",
     "ability": "Si mueres ejecutado, tu equipo pierde.",
@@ -1010,7 +1010,7 @@
     ]
   },
   {
-    "id": "secta_poisoner",
+    "id": "poisoner",
     "name": "Poisoner",
     "team": "minion",
     "ability": "Cada noche, elige a un jugador: est\u00e1 envenenado esta noche y durante el siguiente d\u00eda.",
@@ -1024,7 +1024,7 @@
     "otherNightReminder": "El Envenenador elige a un jugador. :reminder:"
   },
   {
-    "id": "secta_spy",
+    "id": "spy",
     "name": "Spy",
     "team": "minion",
     "ability": "Cada noche, miras el Grimorio. Podr\u00edas ser percibido como bueno y como Aldeano o Forastero, incluso muerto.",
@@ -1038,7 +1038,7 @@
     "special": [{ "name": "grimoire", "type": "signal", "time": "night" }]
   },
   {
-    "id": "secta_scarletwoman",
+    "id": "scarletwoman",
     "name": "Scarlet Woman",
     "team": "minion",
     "ability": "Si hay 5 o m\u00e1s jugadores vivos (los Viajeros no cuentan) y el Demonio muere, te conviertes en el Demonio.",
@@ -1051,7 +1051,7 @@
     "otherNightReminder": "Si la Mujer Escarlata se ha convertido hoy en Demonio, mu\u00e9strale la ficha de T\u00da ERES, y a continuaci\u00f3n la ficha de Demonio."
   },
   {
-    "id": "secta_baron",
+    "id": "baron",
     "name": "Baron",
     "team": "minion",
     "ability": "Hay Forasteros extra en juego. [+2 Forasteros]",
@@ -1062,7 +1062,7 @@
     ]
   },
   {
-    "id": "secta_imp",
+    "id": "imp",
     "name": "Imp",
     "team": "demon",
     "ability": "Cada noche*, elige a un jugador: muere. Si te matas a ti mismo, un Esbirro se convierte en el Diablillo.",
@@ -1075,7 +1075,7 @@
     "otherNightReminder": "El Diablillo elige un jugador. :reminder: Si el Diablillo se eligiera a s\u00ed mismo: Sustituye 1 ficha de Esbirro vivo por una ficha de Diablillo sobrante. Duerme al antiguo Diablillo. Despierta al nuevo Diablillo. Muestra la ficha T\u00da ERES, a continuaci\u00f3n muestra la ficha Diablillo."
   },
   {
-    "id": "secta_thief",
+    "id": "thief",
     "name": "Thief",
     "team": "traveller",
     "ability": "Cada noche, elige a un jugador (no a ti mismo): ma\u00f1ana su voto contar\u00e1 de forma negativa.",
@@ -1091,7 +1091,7 @@
     "special": [{ "name": "multiplier", "type": "vote", "value": "-1" }]
   },
   {
-    "id": "secta_bureaucrat",
+    "id": "bureaucrat",
     "name": "Bureaucrat",
     "team": "traveller",
     "ability": "Cada noche, elige a un jugador (no a ti mismo): ma\u00f1ana su voto contar\u00e1 como 3 votos.",
@@ -1107,7 +1107,7 @@
     "special": [{ "name": "multiplier", "type": "vote", "value": "3" }]
   },
   {
-    "id": "secta_gunslinger",
+    "id": "gunslinger",
     "name": "Gunslinger",
     "team": "traveller",
     "ability": "Cada d\u00eda, tras el recuento de la 1\u00aa votaci\u00f3n, puedes elegir a un jugador que haya votado: muere.",
@@ -1119,7 +1119,7 @@
     ]
   },
   {
-    "id": "secta_beggar",
+    "id": "beggar",
     "name": "Beggar",
     "team": "traveller",
     "ability": "Debes usar una ficha de voto para votar. Si un jugador muerto te da la suya, descubres su alineamiento. Est\u00e1s sobrio y sano.",
@@ -1131,7 +1131,7 @@
     ]
   },
   {
-    "id": "secta_scapegoat",
+    "id": "scapegoat",
     "name": "Scapegoat",
     "team": "traveller",
     "ability": "Si un jugador de tu alineamiento es ejecutado, podr\u00edas ser ejecutado en su lugar.",

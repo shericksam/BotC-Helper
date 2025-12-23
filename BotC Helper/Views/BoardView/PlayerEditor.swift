@@ -31,10 +31,10 @@ struct PlayerEditor: View {
     var body: some View {
         NavigationView {
             Form {
-                Section("Datos del Jugador") {
-                    TextField("Nombre", text: $player.name)
+                Section(MSG("edit_player_section_data")) {
+                    TextField(MSG("edit_player_section_data"), text: $player.name)
                     if isMe {
-                        Button("Editar rol") { editRole.toggle() }
+                        Button(MSG("edit_player_section_editrole")) { editRole.toggle() }
                     }
                     if editRole || !isMe {
                         claimRol()
@@ -42,48 +42,48 @@ struct PlayerEditor: View {
                 }
 
                 if let selected = selectedRole, !iAmBadGuy() {
-                    Section("Rol declarado: \(selected.name)") {
+                    Section(MSG("edit_player_section_declaredrole", selected.name)) {
                         RolIcon(name: selected.iconName ?? selected.id)
                             .frame(width: 50, height: 50)
                             .clipShape(RoundedRectangle(cornerRadius: 8))
-                        Text(selected.ability ?? "Sin descripción")
+                        Text(selected.ability ?? MSG("edit_player_no_role_description"))
                             .font(.body)
                         if let reminder = selected.firstNightReminder {
-                            Text("Noche inicial: \(reminder)").font(.footnote)
+                            Text(MSG("edit_player_first_night", reminder)).font(.footnote)
                         }
                         if let reminder = selected.otherNightReminder {
-                            Text("Otras noches: \(reminder)").font(.footnote)
+                            Text(MSG("edit_player_other_night", reminder)).font(.footnote)
                         }
                     }
                 }
 
-                Section("Acciones (día actual)") {
-                    Toggle("Votó", isOn: $status.voted)
-                    Toggle("Nominó", isOn: $status.nominated)
-                    Toggle("Muerto", isOn: $status.dead)
+                Section(MSG("edit_player_section_actions")) {
+                    Toggle(MSG("edit_player_toggle_vote"), isOn: $status.voted)
+                    Toggle(MSG("edit_player_toggle_nominate"), isOn: $status.nominated)
+                    Toggle(MSG("edit_player_toggle_dead"), isOn: $status.dead)
                 }
-                Section("Notas Día actual") {
+                Section(MSG("edit_player_section_notes_today")) {
                     TextEditor(text: $status.notes)
                         .frame(height: 80)
                 }
-                Section("Notas y Acciones por Día") {
+                Section(MSG("edit_player_section_notes_days")) {
                     ForEach(0..<totalDays, id: \.self) { dayIdx in
                         let s = statusesByDay[safe: dayIdx] ?? PlayerStatus(dayIndex: 0, seatNumber: player.seatNumber)
                         VStack(alignment: .leading, spacing: 6) {
                             HStack {
-                                Text("Día \(dayIdx + 1)").font(.headline)
+                                Text(MSG("edit_player_day", dayIdx + 1)).font(.headline)
                                 if s.voted {
-                                    Label("Votó", systemImage: "checkmark.circle")
+                                    Label(MSG("edit_player_toggle_vote"), systemImage: "checkmark.circle")
                                         .labelStyle(.iconOnly)
                                         .foregroundColor(.green)
                                 }
                                 if s.nominated {
-                                    Label("Nominó", systemImage: "hand.point.up.left.fill")
+                                    Label(MSG("edit_player_toggle_nominate"), systemImage: "hand.point.up.left.fill")
                                         .labelStyle(.iconOnly)
                                         .foregroundColor(.blue)
                                 }
                                 if s.dead {
-                                    Label("Muerto", systemImage: "xmark")
+                                    Label(MSG("edit_player_toggle_dead"), systemImage: "xmark")
                                         .labelStyle(.iconOnly)
                                         .foregroundColor(.red)
                                 }
@@ -110,27 +110,29 @@ struct PlayerEditor: View {
             .navigationTitle(titleNav())
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Guardar") {
+                    Button(MSG("edit_player_save")) {
                         onSave(status, localPersonalNotes)
                         dismiss()
                     }
                 }
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancelar") { dismiss() }
+                    Button(MSG("edit_player_cancel")) { dismiss() }
                 }
             }
         }
     }
 
     func titleNav() -> String {
-        "Editar \(player.name.isEmpty ? "Jugador \(player.seatNumber)" : player.name)"
+        !player.name.isEmpty
+            ? MSG("edit_player_nav", player.name)
+            : MSG("edit_player_nav_unnamed", player.seatNumber)
     }
 
     @ViewBuilder
     func claimRol() -> some View {
         VStack(alignment: .leading) {
             TextField(
-                "Claim (rol declarado)",
+                MSG("edit_player_claim_placeholder"),
                 text: Binding(
                     get: { searchClaim },
                     set: { newValue in
