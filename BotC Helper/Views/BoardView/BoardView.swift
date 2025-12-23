@@ -220,7 +220,7 @@ struct BoardView: View {
         }
         .navigationDestination(isPresented: $showDetail) {
             if let data = board.edition {
-                EditionDetailView(editionMeta: data)
+//                EditionDetailView(editionMeta: data)
             } else {
                 EmptyView()
             }

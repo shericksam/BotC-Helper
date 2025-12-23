@@ -15,14 +15,14 @@ struct PreloadContent {
     func preloadDefaultEditionsAndRolesIfNeeded(modelContext: ModelContext) async {
         let didPreload = UserDefaults.standard.bool(forKey: didPreloadKey)
         print("didPreload--->\(didPreload)")
-        //        guard !didPreload else { return }
+        guard !didPreload else { return }
         loadAndSaveRoles(modelContext: modelContext)
 
         loadAndSaveJinxes(modelContext: modelContext)
 
         // 1. Pre-cargar ediciones base del bundle
         saveEditions(modelContext: modelContext)
-        //        UserDefaults.standard.set(true, forKey: didPreloadKey)
+        UserDefaults.standard.set(true, forKey: didPreloadKey)
         try? modelContext.save()
     }
 
@@ -66,8 +66,13 @@ struct PreloadContent {
                 return character
             }
 
-            let metaEntity = EditionMeta(id: metaStruct.id, name: metaStruct.name, author: metaStruct.author, firstNight: metaStruct.firstNight, otherNight: metaStruct.otherNight)
-            modelContext.insert(metaEntity)
+            let metaEntity = EditionMeta.upsert(id: metaStruct.id,
+                                                name: metaStruct.name,
+                                                author: metaStruct.author,
+                                                imageName: editionSummary.imageName,
+                                                firstNight: metaStruct.firstNight,
+                                                otherNight: metaStruct.otherNight,
+                                                modelContext: modelContext)
 
             var roleEntities: [RoleDefinition] = []
 
@@ -98,8 +103,7 @@ struct PreloadContent {
                 Set(jinx.roles).isSubset(of: roleIdsInEdition)
             }
 
-            let editionEntity = EditionData(meta: metaEntity, characters: roleEntities, jinxes: applicableJinxes)
-            modelContext.insert(editionEntity)
+            _ = EditionData.upsert(meta: metaEntity, characters: roleEntities, jinxes: applicableJinxes, modelContext: modelContext)
         }
     }
 

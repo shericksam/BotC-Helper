@@ -13,14 +13,43 @@ final class EditionMeta {
     @Attribute(.unique) var id: String
     var name: String
     var author: String?
+    var imageName: String?
     var firstNight: [String]
     var otherNight: [String]
 
-    init(id: String, name: String, author: String?, firstNight: [String], otherNight: [String]) {
+    init(id: String, name: String, author: String? = nil, imageName: String? = nil, firstNight: [String], otherNight: [String]) {
         self.id = id
         self.name = name
         self.author = author
+        self.imageName = imageName
         self.firstNight = firstNight
         self.otherNight = otherNight
+    }
+}
+
+extension EditionMeta {
+    static func upsert(id: String,
+                       name: String,
+                       author: String? = nil,
+                       imageName: String? = nil,
+                       firstNight: [String],
+                       otherNight: [String],
+                       modelContext: ModelContext) -> EditionMeta {
+        let fetch = FetchDescriptor<EditionMeta>(predicate: #Predicate { $0.id == id })
+        let fetched = (try? modelContext.fetch(fetch)) ?? []
+        if let existing = fetched.first {
+            // Actualizar si quieres, por ejemplo si la desc cambió
+            if existing.name != name { existing.name = name }
+            if existing.author != author { existing.author = author }
+            if existing.imageName != imageName { existing.imageName = imageName }
+            if existing.firstNight != firstNight { existing.firstNight = firstNight }
+            if existing.otherNight != otherNight { existing.otherNight = otherNight }
+            modelContext.insert(existing)
+            return existing
+        } else {
+            let new = EditionMeta(id: id, name: name, firstNight: firstNight, otherNight: otherNight)
+            modelContext.insert(new)
+            return new
+        }
     }
 }

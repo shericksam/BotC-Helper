@@ -121,13 +121,6 @@ func loadPredefinedRoles() -> [RoleDefinitionModel] {
     return roles
 }
 
-func allEditionFiles() -> [URL] {
-    let docDir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-    let userFiles = (try? FileManager.default.contentsOfDirectory(at: docDir, includingPropertiesForKeys: nil))?.filter { $0.pathExtension == "json" } ?? []
-
-    return userFiles
-}
-
 func loadEditionDetails(_ edition: EditionSummaryModel) -> EditionDataModel? {
     if let url = editionURL(for: edition),
        let loaded = try? loadEdition(from: url) {
@@ -147,5 +140,15 @@ func editionURL(for summary: EditionSummaryModel) -> URL? {
         // Document directory, nombre exacto
         let dir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
         return dir.appendingPathComponent(summary.fileName)
+    }
+}
+
+func mockLoadEditionDetails(edition: EditionSummaryModel) -> EditionDataModel? {
+    if let url = Bundle.main.url(forResource: edition.fileName.replacingOccurrences(of: ".json", with: ""), withExtension: "json"),
+       let loaded = try? loadEdition(from: url) {
+        return loaded
+    } else {
+        return nil
+        // Maneja error de carga aquí si quieres
     }
 }

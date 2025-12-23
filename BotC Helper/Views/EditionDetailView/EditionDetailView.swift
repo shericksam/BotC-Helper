@@ -8,11 +8,11 @@
 import SwiftUI
 
 struct EditionDetailView: View {
-    let editionMeta: EditionDataModel
+    let editionMeta: EditionData
     @State private var isExpandedFirstNigth = false
     @State private var isExpandedOtherNigth = false
 
-    var teamSections: [(Team, [RoleDefinitionModel])] {
+    var teamSections: [(Team, [RoleDefinition])] {
         // Orden de secciones deseado
         let order: [Team] = [.townsfolk, .outsider, .minion, .demon, .traveller, .fabled]
         return order.compactMap { team in
@@ -52,7 +52,7 @@ struct EditionDetailView: View {
                         .cornerRadius(10)
                         .shadow(radius: 1)
                     }
-                    if !editionMeta.meta.otherNight.isEmpty && !editionMeta.meta.firstNight.isEmpty {
+                    if !(editionMeta.meta.otherNight.isEmpty) && !(editionMeta.meta.firstNight.isEmpty) {
                         Divider()
                     }
                 }
@@ -80,13 +80,13 @@ struct EditionDetailView: View {
 
 struct NightOrderView: View {
     let order: [String]
-    let roles: [RoleDefinitionModel]
+    let roles: [RoleDefinition]
 
     var body: some View {
             VStack(alignment: .leading, spacing: 4) {
                 ForEach(order, id: \.self) { item in
                     HStack {
-                        if let special = orderLabelsES[item] {
+                        if orderLabelsES[item] != nil {
                             // Noche, amanecer o info especial
                             HStack(spacing: 8) {
                                 Image(item)
@@ -96,12 +96,10 @@ struct NightOrderView: View {
                                 Text(item.capitalized)
                                     .font(.body)
                             }
-                        } else if item.hasPrefix("secta_"),
-                           let role = roles.first(where: { $0.id == item }) {
+                        } else if let role = roles.first(where: { $0.id == item }) {
                             // Es un rol, muestra icono y nombre bonito
                             HStack(spacing: 8) {
-                                Image(role.iconName)
-                                    .resizable()
+                                RolIcon(name: role.id)
                                     .frame(width: 50, height: 50)
                                     .cornerRadius(5)
                                 Text(role.name)
@@ -135,17 +133,17 @@ let orderLabelsES: [String: String] = [
     "demoninfo": "Info de Demonio"
 ]
 
-#Preview {
-    EditionDetailView(editionMeta: EditionDataModel.Mock.editionData!)
-}
-
-
-func mockLoadEditionDetails(edition: EditionSummaryModel) -> EditionDataModel? {
-    if let url = Bundle.main.url(forResource: edition.fileName.replacingOccurrences(of: ".json", with: ""), withExtension: "json"),
-       let loaded = try? loadEdition(from: url) {
-        return loaded
-    } else {
-        return nil
-        // Maneja error de carga aquí si quieres
-    }
-}
+//#Preview {
+//    EditionDetailView(editionMeta: EditionDataModel.Mock.editionData!)
+//}
+//
+//
+//func mockLoadEditionDetails(edition: EditionSummaryModel) -> EditionDataModel? {
+//    if let url = Bundle.main.url(forResource: edition.fileName.replacingOccurrences(of: ".json", with: ""), withExtension: "json"),
+//       let loaded = try? loadEdition(from: url) {
+//        return loaded
+//    } else {
+//        return nil
+//        // Maneja error de carga aquí si quieres
+//    }
+//}

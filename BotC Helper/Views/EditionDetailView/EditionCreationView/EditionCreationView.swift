@@ -6,24 +6,26 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct EditionCreationView: View {
-    var editingEdition: EditionSummaryModel? = nil
-    @State private var isUpdate = false
+    @Environment(\.modelContext) private var modelContext
+    var editingEdition: EditionData? = nil  // Ahora el modelo SwiftData
 
-    @Environment(\.dismiss) var dismiss
+    @State private var isUpdate = false
     @State private var searchText: String = ""
     @State private var name = ""
-    @State private var selectedRoles: Set<RoleDefinitionModel> = []
-    @State private var allRoles: [RoleDefinitionModel] = loadPredefinedRoles()
+    @State private var author = ""
+    @State private var selectedRoles: Set<RoleDefinition> = []
 
-    // Agrupa roles por equipo
-    var groupedRoles: [(Team, [RoleDefinitionModel])] {
+    @Query(sort: \RoleDefinition.name) var allRoles: [RoleDefinition]
+    @Environment(\.dismiss) var dismiss
+
+    var groupedRoles: [(Team, [RoleDefinition])] {
         Team.allCases.compactMap { team in
             let filtered = allRoles.filter {
                 $0.team == team &&
-                (searchText.isEmpty ||
-                 $0.name.lowercased().contains(searchText.lowercased()))
+                (searchText.isEmpty || $0.name.lowercased().contains(searchText.lowercased()))
             }
             return filtered.isEmpty ? nil : (team, filtered)
         }
@@ -35,11 +37,14 @@ struct EditionCreationView: View {
                 Section("Nombre de la edición") {
                     TextField("Nombre", text: $name)
                 }
+                Section("Autor") {
+                    TextField("Autor", text: $author)
+                }
                 ForEach(groupedRoles, id: \.0) { (team, roles) in
                     Section(header: Text(team.displayName).foregroundColor(team.color)) {
                         ForEach(roles) { role in
                             HStack {
-                                RolIcon(name: role.iconName)
+                                RolIcon(name: role.id)
                                     .frame(width: 32, height: 32)
                                 Text(role.name)
                                 Spacer()
@@ -62,7 +67,6 @@ struct EditionCreationView: View {
                 ToolbarItem(placement: .confirmationAction) {
                     Button(isUpdate ? "Actualizar" : "Guardar") {
                         saveEdition()
-                        // Cierra tu Sheet/Modal aquí según contexto
                     }
                     .disabled(name.trimmingCharacters(in: .whitespaces).isEmpty || selectedRoles.isEmpty)
                 }
@@ -71,55 +75,39 @@ struct EditionCreationView: View {
                 }
             }
             .onAppear {
-                if let editionToEdit = editingEdition {
+                if let edition = editingEdition {
                     isUpdate = true
-                    name = editionToEdit.name
-                    // Carga roles de esa edición:
-                    if let url = editionURL(for: editionToEdit),
-                       let editionData = try? loadEdition(from: url) {
-                        selectedRoles = Set(editionData.characters)
-                    }
+                    name = edition.meta?.name ?? ""
+                    author = edition.meta?.author ?? ""
+                    selectedRoles = Set(edition.characters)
                 }
             }
         }
     }
 
     func saveEdition() {
-        // Meta mínimo requerido, además puedes pedirlo en el formulario
-        let meta: [String: Any] = [
-            "id": editingEdition?.id ?? UUID().uuidString,
-            "name": name,
-            "author": "usuario",
-            "firstNight": [],
-            "otherNight": []
-        ]
-        let fileName: String
-        if let editingEdition = editingEdition {
-            fileName = editingEdition.fileName      // Sobreescribe en ese nombre
+        if let edition = editingEdition {
+            // Actualiza meta y roles
+            edition.meta?.name = name
+            edition.meta?.author = author
+            edition.characters = Array(selectedRoles)
+            try? modelContext.save()
         } else {
-            fileName = name.replacingOccurrences(of: " ", with: "_").lowercased() + ".json"
-        }
-
-        saveEdition(meta: meta, roles: Array(selectedRoles), fileName: fileName)
-    }
-
-    func saveEdition(meta: [String: Any], roles: [RoleDefinitionModel], fileName: String) {
-        // 1. Convierte los roles a [Any] (dictionaries)
-        let rolesArr: [Any] = selectedRoles.compactMap { role in
-            try? JSONSerialization.jsonObject(with: JSONEncoder().encode(role))
-        }
-        // 2. El array que irá al archivo
-        var fullArray: [Any] = [meta]
-        fullArray.append(contentsOf: rolesArr)
-
-        let url = getDocumentsDirectory().appendingPathComponent(fileName)
-        if let data = try? JSONSerialization.data(withJSONObject: fullArray, options: .prettyPrinted) {
-            try? data.write(to: url)
+            // Nueva edición
+            let meta = EditionMeta(
+                id: UUID().uuidString,
+                name: name,
+                author: author,
+                firstNight: [],
+                otherNight: []
+            )
+            let edition = EditionData(
+                meta: meta,
+                characters: Array(selectedRoles)
+            )
+            modelContext.insert(edition)
+            try? modelContext.save()
         }
         dismiss()
-    }
-
-    func getDocumentsDirectory() -> URL {
-        FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
     }
 }
