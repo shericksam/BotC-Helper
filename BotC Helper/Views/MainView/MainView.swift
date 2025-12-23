@@ -118,7 +118,7 @@ struct MainView: View {
             }
             .navigationDestination(isPresented: $isShowingGameBoard) {
                 if let board = boardState {
-//                    BoardView(board: board)
+                    BoardView(board: board)
                 } else {
                     Text("No hay tablero disponible")
                 }

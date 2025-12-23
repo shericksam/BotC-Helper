@@ -13,21 +13,12 @@ struct EditionDetailView: View {
     @State private var isExpandedOtherNigth = false
     @State private var searchText: String = ""
 
-//    var teamSections: [(Team, [RoleDefinition])] {
-//        // Orden de secciones deseado
-//        let order: [Team] = [.townsfolk, .outsider, .minion, .demon, .traveller, .fabled]
-//        return order.compactMap { team in
-//            let chars = editionMeta.characters.filter { $0.team == team }
-//            return chars.isEmpty ? nil : (team, chars)
-//        }
-//    }
-
     var groupedRoles: [(Team, [RoleDefinition])] {
         Team.allCases.compactMap { team in
             let filtered = editionMeta.characters.filter {
                 $0.team == team &&
                 (searchText.isEmpty || $0.name.lowercased().contains(searchText.lowercased()))
-            }
+            }.sorted(by: { $0.name < $1.name })
             return filtered.isEmpty ? nil : (team, filtered)
         }
     }

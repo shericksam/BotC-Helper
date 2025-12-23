@@ -17,24 +17,30 @@ struct LoadGameListView: View {
 
     var body: some View {
         NavigationView {
-            List {
-                ForEach(allGames) { game in
-                    Button(action: {
-                        onLoad(game)
-                        dismiss()
-                    }) {
-                        VStack(alignment: .leading) {
-                            Text(game.suggestedName)
-                                .font(.headline)
-                            if let editionName = game.edition?.meta.name {
-                                Text("Edición: \(editionName)").font(.subheadline)
+            VStack {
+                if allGames.isEmpty {
+                    Text("No hay partidas guardadas.")
+                } else {
+                    List {
+                        ForEach(allGames) { game in
+                            Button(action: {
+                                onLoad(game)
+                                dismiss()
+                            }) {
+                                VStack(alignment: .leading) {
+                                    Text(game.suggestedName)
+                                        .font(.headline)
+                                    if let editionName = game.edition?.meta.name {
+                                        Text("Edición: \(editionName)").font(.subheadline)
+                                    }
+                                    Text("Jugadores: \(game.players.count)")
+                                        .font(.caption)
+                                }
                             }
-                            Text("Jugadores: \(game.players.count)")
-                                .font(.caption)
                         }
+                        .onDelete(perform: deleteGames)
                     }
                 }
-                .onDelete(perform: deleteGames)
             }
             .navigationTitle("Partidas Anteriores")
             .toolbar {

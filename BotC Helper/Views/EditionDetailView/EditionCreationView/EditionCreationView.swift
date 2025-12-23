@@ -26,7 +26,7 @@ struct EditionCreationView: View {
             let filtered = allRoles.filter {
                 $0.team == team &&
                 (searchText.isEmpty || $0.name.lowercased().contains(searchText.lowercased()))
-            }
+            }.sorted(by: { $0.name < $1.name })
             return filtered.isEmpty ? nil : (team, filtered)
         }
     }
