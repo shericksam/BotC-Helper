@@ -67,12 +67,13 @@ struct NewGameSheet: View {
 
             // Crea los jugadores
             let players = (1...playerCount).map { i in
-                Player(seatNumber: i, name: "", claimRoleId: nil, claimManual: "", isMe: (i == yourSeat))
+                Player(seatNumber: i,
+                       name: "",
+                       claimRoleId: nil,
+                       claimManual: "",
+                       isMe: (i == yourSeat),
+                       statuses: [PlayerStatus(dayIndex: 0, seatNumber: i)])
             }
-
-            // Día 0: todos vivos, nadie votó
-            let day0Statuses = players.map { p in PlayerStatus(seatNumber: p.seatNumber) }
-            let day0 = GameDay(index: 0, playerStatuses: day0Statuses)
 
             // Config
             let config = getConfigForPlayerCount(playerCount)
@@ -81,7 +82,6 @@ struct NewGameSheet: View {
             let newGame = BoardState(
                 suggestedName: suggestedFileName(playersCount: playerCount),
                 players: players,
-                days: [day0],
                 currentDay: 0,
                 config: config,
                 edition: editionData

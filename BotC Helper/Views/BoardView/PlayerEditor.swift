@@ -68,7 +68,7 @@ struct PlayerEditor: View {
                 }
                 Section("Notas y Acciones por Día") {
                     ForEach(0..<totalDays, id: \.self) { dayIdx in
-                        let s = statusesByDay[safe: dayIdx] ?? PlayerStatus(seatNumber: player.seatNumber)
+                        let s = statusesByDay[safe: dayIdx] ?? PlayerStatus(dayIndex: 0, seatNumber: player.seatNumber)
                         VStack(alignment: .leading, spacing: 6) {
                             HStack {
                                 Text("Día \(dayIdx + 1)").font(.headline)

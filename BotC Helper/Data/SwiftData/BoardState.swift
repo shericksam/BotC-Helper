@@ -13,23 +13,20 @@ final class BoardState {
     @Attribute(.unique) var id: UUID
     var suggestedName: String
     @Relationship(deleteRule: .cascade) var players: [Player] = []
-    @Relationship(deleteRule: .cascade) var days: [GameDay] = []
     var currentDay: Int
     var config: GameConfig
     @Relationship var edition: EditionData?
+    var totalDays: Int { players.first?.statuses.count ?? 0 }
 
-    init(
-        suggestedName: String,
-        players: [Player],
-        days: [GameDay],
-        currentDay: Int,
-        config: GameConfig,
-        edition: EditionData? = nil
-    ) {
-        id = UUID()
+    init(id: UUID = UUID(),
+         suggestedName: String,
+         players: [Player],
+         currentDay: Int,
+         config: GameConfig,
+         edition: EditionData? = nil) {
+        self.id = id
         self.suggestedName = suggestedName
         self.players = players
-        self.days = days
         self.currentDay = currentDay
         self.config = config
         self.edition = edition

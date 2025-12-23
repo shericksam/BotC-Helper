@@ -98,8 +98,9 @@ struct PlayerCircle: View {
             .scaledToFill()
             .frame(minWidth: 0)
             .edgesIgnoringSafeArea(.all)
-
-        PlayerCircle(player: .init(seatNumber: 1, name: "Erick", claimRoleId: "secta_po", claimManual: ""), status: .init(seatNumber: 1), isMe: true, roles: [RoleDefinition(id: "secta_po", name: "Po", team: .demon)]) {
+        let player = Player(seatNumber: 1, name: "Erick", claimRoleId: "secta_po", claimManual: "")
+        let status = player.statuses.first ?? .init(dayIndex: 0)
+        PlayerCircle(player: player, status: status, isMe: true, roles: [RoleDefinition(id: "secta_po", name: "Po", team: .demon)]) {
             print("tapped")
         }
     }

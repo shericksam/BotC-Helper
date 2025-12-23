@@ -17,7 +17,7 @@ final class EditionMeta {
     var firstNight: [String]
     var otherNight: [String]
 
-    init(id: String, name: String, author: String? = nil, imageName: String? = nil, firstNight: [String], otherNight: [String]) {
+    init(id: String, name: String, author: String? = nil, imageName: String? = nil, firstNight: [String] = [], otherNight: [String] = []) {
         self.id = id
         self.name = name
         self.author = author

@@ -17,20 +17,24 @@ final class Player {
     var claimManual: String
     var isMe: Bool
     @Relationship(deleteRule: .cascade) var personalNotes: [PersonalNote] = []
+    @Relationship(deleteRule: .cascade) var statuses: [PlayerStatus] = []
 
-    init(seatNumber: Int,
+    init(id: UUID = UUID(),
+         seatNumber: Int,
          name: String,
          claimRoleId: String? = nil,
          claimManual: String = "",
          isMe: Bool = false,
-         personalNotes: [PersonalNote] = []) {
-        self.id = UUID()
+         personalNotes: [PersonalNote] = [],
+         statuses: [PlayerStatus] = []) {
+        self.id = id
         self.seatNumber = seatNumber
         self.name = name
         self.claimRoleId = claimRoleId
         self.claimManual = claimManual
         self.isMe = isMe
         self.personalNotes = personalNotes
+        self.statuses = statuses
     }
 }
 

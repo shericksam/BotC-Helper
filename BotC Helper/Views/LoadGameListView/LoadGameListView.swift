@@ -75,12 +75,9 @@ struct LoadGameListView: View {
         characters: []
     )
     let players = (1...3).map { i in Player(seatNumber: i, name: "Jugador \(i)") }
-    let statuses = players.map { p in PlayerStatus(seatNumber: p.seatNumber) }
-    let day0 = GameDay(index: 0, playerStatuses: statuses)
     let game = BoardState(
         suggestedName: "Partida Mock",
         players: players,
-        days: [day0],
         currentDay: 0,
         config: GameConfig(numPlayers: 3, numTownsfolk: 1, numOutsider: 1, numMinions: 1, numDemon: 0),
         edition: edition

@@ -11,6 +11,7 @@ import SwiftData
 @Model
 final class PlayerStatus {
     @Attribute(.unique) var id: UUID
+    var dayIndex: Int
     var seatNumber: Int
     var voted: Bool
     var nominated: Bool
@@ -18,8 +19,9 @@ final class PlayerStatus {
     var claim: String
     var notes: String
 
-    init(seatNumber: Int, voted: Bool = false, nominated: Bool = false, dead: Bool = false, claim: String = "", notes: String = "") {
+    init(dayIndex: Int, seatNumber: Int = 0, voted: Bool = false, nominated: Bool = false, dead: Bool = false, claim: String = "", notes: String = "") {
         self.id = UUID()
+        self.dayIndex = dayIndex
         self.seatNumber = seatNumber
         self.voted = voted
         self.nominated = nominated
