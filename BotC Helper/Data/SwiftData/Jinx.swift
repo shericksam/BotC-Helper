@@ -24,13 +24,11 @@ final class Jinx {
 }
 
 extension Jinx {
-    static func upsert(
-        id: String,
-        roles: [String],
-        description: String,
-        image: [String]?,
-        modelContext: ModelContext
-    ) -> Jinx {
+    static func upsert(id: String,
+                       roles: [String],
+                       description: String,
+                       image: [String]?,
+                       modelContext: ModelContext) -> Jinx {
         let fetch = FetchDescriptor<Jinx>(predicate: #Predicate { $0.id == id })
         let fetched = (try? modelContext.fetch(fetch)) ?? []
         if let existing = fetched.first {
@@ -38,7 +36,6 @@ extension Jinx {
             existing.roles = roles
             existing.desc = description
             existing.image = image
-            modelContext.insert(existing)
             return existing
         } else {
             let new = Jinx(id: id, roles: roles, description: description, image: image)

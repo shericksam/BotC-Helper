@@ -103,7 +103,7 @@ struct PreloadContent {
                 Set(jinx.roles).isSubset(of: roleIdsInEdition)
             }
 
-            _ = EditionData.upsert(meta: metaEntity, characters: roleEntities, jinxes: applicableJinxes, modelContext: modelContext)
+            _ = EditionData.upsert(id: metaEntity.id, meta: metaEntity, characters: roleEntities, jinxes: applicableJinxes, modelContext: modelContext)
         }
     }
 

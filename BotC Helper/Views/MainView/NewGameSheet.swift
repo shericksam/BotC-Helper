@@ -35,7 +35,8 @@ struct NewGameSheet: View {
                 Section(header: Text("Edición")) {
                     Picker("Nombre", selection: $editionSelected) {
                         ForEach(allEditions, id: \.self) { edition in
-                            Text(edition.meta?.name ?? "(Sin nombre)").tag(Optional(edition))
+                            Text(edition.meta.name)
+                                .tag(Optional(edition))
                         }
                     }
                     .pickerStyle(.navigationLink)

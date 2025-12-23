@@ -26,13 +26,13 @@ struct EditionsSheet: View {
                         showDetail = true
                     } label: {
                         VStack(alignment: .center) {
-                            if let imageName = edition.meta?.imageName, !imageName.isEmpty {
+                            if let imageName = edition.meta.imageName, !imageName.isEmpty {
                                 Image(imageName)
                                     .resizable()
                                     .scaledToFit()
                                     .frame(height: 150)
                             }
-                            Text(edition.meta?.name ?? "Sin nombre")
+                            Text(edition.meta.name)
                                 .font(.headline).padding()
                         }
                         .frame(maxWidth: .infinity)
@@ -42,7 +42,7 @@ struct EditionsSheet: View {
                     }
                     .swipeActions(edge: .trailing, allowsFullSwipe: false) {
                         // Solo permite borrar/editar si NO es de bundle
-                        if edition.meta?.author != "Oficial" { // O tu flag
+                        if edition.meta.author != "Oficial" { // O tu flag
                             Button(role: .destructive) {
                                 deleteEdition(edition)
                             } label: {

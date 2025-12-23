@@ -77,8 +77,8 @@ struct EditionCreationView: View {
             .onAppear {
                 if let edition = editingEdition {
                     isUpdate = true
-                    name = edition.meta?.name ?? ""
-                    author = edition.meta?.author ?? ""
+                    name = edition.meta.name
+                    author = edition.meta.author ?? ""
                     selectedRoles = Set(edition.characters)
                 }
             }
@@ -88,8 +88,8 @@ struct EditionCreationView: View {
     func saveEdition() {
         if let edition = editingEdition {
             // Actualiza meta y roles
-            edition.meta?.name = name
-            edition.meta?.author = author
+            edition.meta.name = name
+            edition.meta.author = author
             edition.characters = Array(selectedRoles)
             try? modelContext.save()
         } else {

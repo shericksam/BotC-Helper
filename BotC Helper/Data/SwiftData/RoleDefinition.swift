@@ -79,7 +79,6 @@ extension RoleDefinition {
             if existing.firstNightReminder == nil || existing.firstNightReminder?.isEmpty == true { existing.firstNightReminder = firstNightReminder }
             if existing.otherNightReminder == nil || existing.otherNightReminder?.isEmpty == true { existing.otherNightReminder = otherNightReminder }
             if existing.setup == nil { existing.setup = setup }
-            modelContext.insert(existing)
             return existing
         } else {
             let new = RoleDefinition(

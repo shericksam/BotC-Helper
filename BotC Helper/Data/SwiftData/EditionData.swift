@@ -25,18 +25,21 @@ final class EditionData {
 }
 
 extension EditionData {
-    static func upsert(meta: EditionMeta,
+    static func upsert(id: String,
+                       meta: EditionMeta,
                        characters: [RoleDefinition],
                        jinxes: [Jinx],
                        modelContext: ModelContext) -> EditionData {
-        let fetch = FetchDescriptor<EditionData>(predicate: #Predicate { $0.id == meta.id })
+        // Compare EditionData.id to the concrete String value meta.id
+
+        let fetch = FetchDescriptor<EditionData>(predicate: #Predicate { $0.id == id })
         let fetched = (try? modelContext.fetch(fetch)) ?? []
+
         if let existing = fetched.first {
-            // Actualizar si quieres, por ejemplo si la desc cambió
+            // Update fields if changed
             if existing.meta != meta { existing.meta = meta }
             if existing.characters != characters { existing.characters = characters }
             if existing.jinxes != jinxes { existing.jinxes = jinxes }
-            modelContext.insert(existing)
             return existing
         } else {
             let new = EditionData(meta: meta, characters: characters, jinxes: jinxes)

@@ -11,16 +11,26 @@ struct EditionDetailView: View {
     let editionMeta: EditionData
     @State private var isExpandedFirstNigth = false
     @State private var isExpandedOtherNigth = false
+    @State private var searchText: String = ""
 
-    var teamSections: [(Team, [RoleDefinition])] {
-        // Orden de secciones deseado
-        let order: [Team] = [.townsfolk, .outsider, .minion, .demon, .traveller, .fabled]
-        return order.compactMap { team in
-            let chars = editionMeta.characters.filter { $0.team == team }
-            return chars.isEmpty ? nil : (team, chars)
+//    var teamSections: [(Team, [RoleDefinition])] {
+//        // Orden de secciones deseado
+//        let order: [Team] = [.townsfolk, .outsider, .minion, .demon, .traveller, .fabled]
+//        return order.compactMap { team in
+//            let chars = editionMeta.characters.filter { $0.team == team }
+//            return chars.isEmpty ? nil : (team, chars)
+//        }
+//    }
+
+    var groupedRoles: [(Team, [RoleDefinition])] {
+        Team.allCases.compactMap { team in
+            let filtered = editionMeta.characters.filter {
+                $0.team == team &&
+                (searchText.isEmpty || $0.name.lowercased().contains(searchText.lowercased()))
+            }
+            return filtered.isEmpty ? nil : (team, filtered)
         }
     }
-
 
     var body: some View {
         ScrollView {
@@ -58,7 +68,7 @@ struct EditionDetailView: View {
                 }
 
                 // Personajes
-                ForEach(teamSections, id: \.0) { (team, chars) in
+                ForEach(groupedRoles, id: \.0) { (team, chars) in
                     Section(header: Text(team.displayName)
                         .font(.title2)
                         .padding(.vertical, 4)
@@ -71,6 +81,8 @@ struct EditionDetailView: View {
                         }
                     }
                 }
+                .searchable(text: $searchText, prompt: "Buscar rol por nombre")
+
             }
             .padding()
         }
