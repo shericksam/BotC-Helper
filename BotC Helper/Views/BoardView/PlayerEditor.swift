@@ -8,16 +8,16 @@
 import SwiftUI
 
 struct PlayerEditor: View {
-    @Binding var player: Player
-    @State var status: PlayerStatusPerDay
-    var onSave: (PlayerStatusPerDay, [Int: String]) -> Void
+    @Bindable var player: Player
+    @Bindable var status: PlayerStatus
+    var onSave: (PlayerStatus, [Int: String]) -> Void
     @Environment(\.dismiss) var dismiss
     var isMe: Bool
-
     var totalDays: Int
-    var statusesByDay: [PlayerStatusPerDay]
+    var statusesByDay: [PlayerStatus]
     var currentDayIndex: Int
     var roles: [RoleDefinition]
+
     @State private var searchClaim: String = ""
     @State private var filteredRoles: [RoleDefinition] = []
     @State private var showRolesList = false
@@ -26,7 +26,6 @@ struct PlayerEditor: View {
         guard let id = player.claimRoleId else { return nil }
         return roles.first { $0.id == id }
     }
-
     @State var localPersonalNotes: [Int: String] = [:]
 
     var body: some View {
@@ -34,21 +33,19 @@ struct PlayerEditor: View {
             Form {
                 Section("Datos del Jugador") {
                     TextField("Nombre", text: $player.name)
-
                     if isMe {
-                        Button("Editar rol") {
-                            editRole.toggle()
-                        }
+                        Button("Editar rol") { editRole.toggle() }
                     }
-                    if  editRole || !isMe {
+                    if editRole || !isMe {
                         claimRol()
                     }
                 }
+
                 if let selected = selectedRole, !iAmBadGuy() {
                     Section("Rol declarado: \(selected.name)") {
-                        RolIcon(name: selected.iconName)
-                                .frame(width: 50, height: 50)
-                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                        RolIcon(name: selected.iconName ?? selected.id)
+                            .frame(width: 50, height: 50)
+                            .clipShape(RoundedRectangle(cornerRadius: 8))
                         Text(selected.ability ?? "Sin descripción")
                             .font(.body)
                         if let reminder = selected.firstNightReminder {
@@ -59,6 +56,7 @@ struct PlayerEditor: View {
                         }
                     }
                 }
+
                 Section("Acciones (día actual)") {
                     Toggle("Votó", isOn: $status.voted)
                     Toggle("Nominó", isOn: $status.nominated)
@@ -70,12 +68,10 @@ struct PlayerEditor: View {
                 }
                 Section("Notas y Acciones por Día") {
                     ForEach(0..<totalDays, id: \.self) { dayIdx in
-                        let s = statusesByDay[dayIdx]
+                        let s = statusesByDay[safe: dayIdx] ?? PlayerStatus(dayIndex: 0, seatNumber: player.seatNumber)
                         VStack(alignment: .leading, spacing: 6) {
                             HStack {
-                                Text("Día \(dayIdx + 1)")
-                                    .font(.headline)
-                                // Estados de ese día:
+                                Text("Día \(dayIdx + 1)").font(.headline)
                                 if s.voted {
                                     Label("Votó", systemImage: "checkmark.circle")
                                         .labelStyle(.iconOnly)
@@ -107,11 +103,11 @@ struct PlayerEditor: View {
                 }
             }
             .onAppear {
-                for (day, note) in player.personalNotes {
-                    self.localPersonalNotes[day] = note
+                for note in player.personalNotes {
+                    self.localPersonalNotes[note.dayIndex] = note.text
                 }
             }
-            .navigationTitle("Editar Jugador \(player.seatNumber)")
+            .navigationTitle(titleNav())
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
                     Button("Guardar") {
@@ -124,6 +120,10 @@ struct PlayerEditor: View {
                 }
             }
         }
+    }
+
+    func titleNav() -> String {
+        "Editar \(player.name.isEmpty ? "Jugador \(player.seatNumber)" : player.name)"
     }
 
     @ViewBuilder
@@ -139,14 +139,12 @@ struct PlayerEditor: View {
                         filteredRoles = roles.filter {
                             $0.name.localizedCaseInsensitiveContains(newValue)
                         }
-                        // Si borras, quita el claimRoleId para no mantenerlo atado a un antiguo rol
                         if newValue.isEmpty {
                             player.claimRoleId = nil
                         }
-                        // Si hay match exacto, setea el claim
                         if let exact = roles.first(where: { $0.name.caseInsensitiveCompare(newValue) == .orderedSame }) {
                             player.claimRoleId = exact.id
-                            player.claimManual = "" // Limpia claim manual
+                            player.claimManual = ""
                         } else {
                             player.claimRoleId = nil
                             player.claimManual = newValue
@@ -155,7 +153,6 @@ struct PlayerEditor: View {
                 )
             )
             .onAppear {
-                // Si ya tenía rol asignado, muestra el nombre, si era texto libre muestra eso
                 if let rid = player.claimRoleId,
                    let rolename = roles.first(where: { $0.id == rid })?.name {
                     searchClaim = rolename
@@ -163,17 +160,16 @@ struct PlayerEditor: View {
                     searchClaim = player.claimManual
                 }
             }
-            // Lista de resultados
             if showRolesList && !filteredRoles.isEmpty {
-                List(filteredRoles.prefix(7), id: \.id) { role in
+                List(filteredRoles.prefix(3), id: \.id) { role in
                     Button {
                         player.claimRoleId = role.id
                         player.claimManual = ""
                         searchClaim = role.name
                         showRolesList = false
                     } label: {
-                        HStack{
-                            RolIcon(name: role.iconName)
+                        HStack {
+                            RolIcon(name: role.iconName ?? role.id)
                                 .frame(width: 48, height: 48)
                                 .clipShape(RoundedRectangle(cornerRadius: 8))
                             Text(role.name)

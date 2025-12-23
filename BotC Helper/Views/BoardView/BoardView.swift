@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 internal import UniformTypeIdentifiers
 
 struct EditingIndex: Identifiable {
@@ -14,192 +15,87 @@ struct EditingIndex: Identifiable {
 }
 
 struct BoardView: View {
-    @State var board: BoardState
-    @State private var selectedPlayer: Player?
-    @State private var selectedStatus: PlayerStatusPerDay?
-    @State private var editingIndex: EditingIndex?
+    @Bindable var board: BoardState
+    @State private var editingPlayer: Player?
     @State private var isVotingPhase = false
     @State private var showDetail = false
-
     @State private var dragOffset: CGSize = .zero
-    @State private var draggedPlayer: Int? = nil  // idx del jugador arrastrado
+    @State private var draggedPlayerIdx: Int? = nil
     @State private var showResetAlert = false
+    @Environment(\.modelContext) private var modelContext
 
     var body: some View {
-        ZStack {
+        VStack {
+
+            Picker("Día", selection: $board.currentDay) {
+                ForEach(0..<board.totalDays, id: \.self) { idx in
+                    Text("Día \(idx)").tag(idx)
+                }
+            }
+            .pickerStyle(.segmented)
+            .padding(.top, 25)
+
+            Spacer()
+
+            ZStack {
+                playerGridView()
+
+                // --- Configuración central ---
+                VStack {
+                    if isVotingPhase {
+                        VStack {
+                            Image(systemName: "flag.pattern.checkered")
+                            Text("Votando...")
+                        }.onTapGesture {
+                            isVotingPhase.toggle()
+                        }
+                    }
+                    Button("Nuevo Día") { addDay() }
+                        .buttonStyle(.borderedProminent)
+                        .padding(.vertical, 5)
+                    if let edition = board.edition {
+                        Button(edition.meta.name) {
+                            showDetail.toggle()
+                        }
+                        .font(.title2)
+                    }
+                    Text("Jugadores: \(board.players.count)").font(.title3).bold()
+                    Text("Poblado: \(board.config.numTownsfolk)").font(.body)
+                    Text("Forasteros: \(board.config.numOutsider)").font(.body)
+                    Text("Esbirros: \(board.config.numMinions)").font(.body)
+                    Text("Demonio: \(board.config.numDemon)").font(.body)
+//                    NavigationLink(destination: GPTAssistantView(board: board)) {
+//                        Label("Análisis AI", systemImage: "bolt.circle.fill")
+//                    }
+                }
+                .foregroundColor(.white)
+                .padding()
+            }
+        }
+
+        .background(
             Image("background-side")
                 .resizable()
                 .scaledToFill()
-                .frame(minWidth: 0)
                 .edgesIgnoringSafeArea(.all)
-
-            VStack {
-                // Selector de Día
-                Picker("Día", selection: $board.currentDay) {
-                    ForEach(0..<board.days.count, id: \.self) { i in
-                        Text("Día \(i)").tag(i)
-                    }
-                }
-                .pickerStyle(.segmented)
-                .padding()
-                .padding(.top, 25)
-
-                Spacer()
-                ZStack {
-                    // Distribución de Jugadores en círculo
-                    GeometryReader { geo in
-                        let positions = squarePerimeterPositions(count: board.players.count, in: geo.size)
-                        ZStack {
-                            ForEach(Array(board.players.indices), id: \.self) { idx in
-                                let pos = positions[idx]
-                                PlayerCircle(
-                                    player: board.players[idx],
-                                    status: board.days[board.currentDay][idx],
-                                    isMe: board.players[idx].isMe,
-                                    roles: board.edition?.characters ?? []
-                                ) {
-                                    if isVotingPhase {
-                                        board.days[board.currentDay][idx].voted.toggle()
-                                    } else {
-                                        editingIndex = EditingIndex(value: idx)
-                                    }
-                                }
-                                .position(pos + (draggedPlayer == idx ? dragOffset : .zero))
-                                .zIndex(draggedPlayer == idx ? 1 : 0)
-                                .gesture(
-                                    LongPressGesture(minimumDuration: 0.2)
-                                        .onEnded { _ in
-                                            draggedPlayer = idx
-                                            dragOffset = .zero
-                                        }
-                                        .sequenced(before: DragGesture())
-                                        .onChanged { value in
-                                            switch value {
-                                            case .second(true, let drag?):
-                                                dragOffset = drag.translation
-                                            default:
-                                                break
-                                            }
-                                        }
-                                        .onEnded { value in
-                                            if let draggedIdx = draggedPlayer {
-                                                // Detectar a qué círculo se soltó encima:
-                                                let newPosition = positions[draggedIdx] + dragOffset
-                                                if let targetIdx = positions.enumerated().min(by: {
-                                                    distance($0.element, newPosition) < distance($1.element, newPosition)
-                                                })?.offset,
-                                                targetIdx != draggedIdx {
-                                                    board.players.swapAt(draggedIdx, targetIdx)
-                                                    // Actualiza seatNumber si es necesario
-                                                    for (i, _) in board.players.enumerated() {
-                                                        board.players[i].seatNumber = i+1
-                                                    }
-                                                }
-                                                // Regresa a su lugar
-                                                draggedPlayer = nil
-                                                dragOffset = .zero
-                                            }
-                                        }
-                                )
-                            }
-                        }
-                    }
-                    .frame(height: min(UIScreen.main.bounds.width, UIScreen.main.bounds.height) * 1.4)
-                    .aspectRatio(1, contentMode: .fit)
-                    .padding()
-
-                    // Configuración en el centro
-                    VStack {
-                        if isVotingPhase {
-                            VStack {
-                                Image(systemName: "flag.pattern.checkered")
-                                Text("Votando...")
-                            }
-                        }
-                        Button(action: {
-                            // Copia profunda manual: el status debe ser un struct totalmente independiente
-                            let prevStatuses = board.days[board.currentDay]
-                            // ¡Importante! No solo .map { $0 }, debes crear nuevos structs para evitar referencias compartidas.
-                            let copied = prevStatuses.map { prevStatus in
-                                PlayerStatusPerDay(
-                                    seatNumber: prevStatus.seatNumber,
-                                    voted: false,
-                                    nominated: false,
-                                    dead: prevStatus.dead,   // Mantén solo el estado de muerto
-                                    claim: prevStatus.claim,
-                                    notes: ""                // puedes dejar vacío o copiar si quieres
-                                )
-                            }
-                            // Ahora haz el cambio en el board completo:
-                            var newBoard = board
-                            newBoard.days.append(copied)
-                            newBoard.currentDay = newBoard.days.count - 1
-                            board = newBoard
-                            saveBoardState(board)
-                        }) {
-                            Label("Nuevo Día", systemImage: "sun.max")
-                        }
-                        .buttonStyle(.borderedProminent)
-                        if let edition = board.edition {
-                            Button(edition.meta.name) {
-                                showDetail.toggle()
-                            }
-                                .font(.title2)
-                                .bold()
-                        }
-                        Text("Jugadores: \(board.players.count)")
-                            .font(.title3)
-                            .bold()
-                        Text("Poblado: \(board.config.numTownsfolk)")
-                            .font(.body)
-                        Text("Forasteros: \(board.config.numOutsider)")
-                            .font(.body)
-                        Text("Esbirros: \(board.config.numMinions)")
-                            .font(.body)
-                        Text("Demonio: \(board.config.numDemon)")
-                            .font(.body)
-                        
-//                        NavigationLink(destination: GPTAssistantView(board: board)) {
-//                            Label("Análisis AI", systemImage: "bolt.circle.fill")
-//                        }
-                    }
-                    .multilineTextAlignment(.center)
-                    .foregroundStyle(Color.white)
-                    .padding()
-                }
-                .padding(30)
-                .padding(.bottom, 30)
-            }
-        }
+        )
         .toolbar {
             ToolbarItem(placement: .navigationBarTrailing) {
                 Menu {
                     Button("Guardar partida", systemImage: "square.and.arrow.down") {
-                        saveBoardState(board)
+                        try? modelContext.save()
                     }
                     Button("Agregar jugador", systemImage: "person.crop.circle.badge.plus") {
                         addPlayer()
                     }
-
                     Button(isVotingPhase ? "Terminar votación" : "Iniciar votación",
                            systemImage: isVotingPhase ? "flag.filled.and.flag.crossed" : "flag.pattern.checkered") {
                         isVotingPhase.toggle()
-                        // Si terminas votación, podrías limpiar o validar algo si quieres
                     }
-                    .foregroundColor(isVotingPhase ? .red : .blue)
-
-                    Button("Limpiar todos los votos", systemImage: "checkmark.circle") {
-                        clearAllVotes()
-                    }
-                    Button("Limpiar todas las acusaciones", systemImage: "exclamationmark.bubble") {
-                        clearAllNominations()
-                    }
-                    // 🚀 ¡Nuevo botón!
-                    Button("Nueva partida", systemImage: "arrow.clockwise") {
-                        showResetAlert = true
-                    }
-                    .tint(.red)
-
+                    Button("Limpiar todos los votos", systemImage: "checkmark.circle") { clearAllVotes() }
+                    Button("Limpiar todas las acusaciones", systemImage: "exclamationmark.bubble") { clearAllNominations() }
+                    Button("Nueva partida", systemImage: "arrow.clockwise") { showResetAlert = true }
+                        .tint(.red)
                 } label: {
                     Image(systemName: "ellipsis.circle")
                         .imageScale(.large)
@@ -208,7 +104,7 @@ struct BoardView: View {
             }
         }
         .onDisappear {
-            saveBoardState(board)
+            try? modelContext.save()
         }
         .alert("¿Borrar progreso?", isPresented: $showResetAlert) {
             Button("Sí, limpiar todo", role: .destructive) {
@@ -225,25 +121,19 @@ struct BoardView: View {
                 EmptyView()
             }
         }
-        .sheet(item: $editingIndex) { item in
-            let idx = item.value
-            if idx < board.players.count {
-                let isMe = board.players[idx].isMe
-                let status = board.days[board.currentDay][idx]
-                let statusHistorial = board.days.map { $0[idx] }
+        .sheet(item: $editingPlayer) { player in
+            if
+               let status = player.statuses[safe: board.currentDay] {
                 PlayerEditor(
-                    player: $board.players[idx],
+                    player: player,
                     status: status,
-                    onSave: { updated, notes in
-                        board.days[board.currentDay][idx] = updated
-                        board.players[idx].personalNotes = notes
-                        saveBoardState(board)
-                        // cierra el sheet
-                        editingIndex = nil
+                    onSave: { _, _ in
+                        try? modelContext.save()
+                        editingPlayer = nil
                     },
-                    isMe: isMe,
-                    totalDays: board.days.count,
-                    statusesByDay: statusHistorial,
+                    isMe: player.isMe,
+                    totalDays: board.players.first?.statuses.count ?? 1,
+                    statusesByDay: player.statuses,
                     currentDayIndex: board.currentDay,
                     roles: board.edition?.characters ?? []
                 )
@@ -252,61 +142,149 @@ struct BoardView: View {
             }
         }
     }
-    // suma de puntos
-    func distance(_ a: CGPoint, _ b: CGPoint) -> CGFloat {
-        sqrt(pow(a.x - b.x, 2) + pow(a.y - b.y, 2))
+
+    // ------- Funciones clave --------
+
+    func addDay() {
+        let newDayIndex = (board.players.first?.statuses.count ?? 0)
+        for player in board.players {
+            let prev = player.statuses[board.currentDay]
+            player.statuses.append(PlayerStatus(dayIndex: newDayIndex,
+                                                seatNumber: prev.seatNumber,
+                                                voted: false,
+                                                nominated: false,
+                                                dead: prev.dead,
+                                                claim: prev.claim,
+                                                notes: "")
+            )
+        }
+        clearAllVotes()
+        clearAllNominations()
+        board.currentDay = newDayIndex
+        try? modelContext.save()
     }
+
     func addPlayer() {
-        let nextSeat = board.players.count + 1
-        board.players.append(Player(seatNumber: nextSeat, name: "", claimManual: "", isMe: false, personalNotes: [:]))
-        // Añade estado a todos los días existentes para este jugador:
-        for i in 0..<board.days.count {
-            board.days[i].append(PlayerStatusPerDay(
-                seatNumber: nextSeat, voted: false, nominated: false, dead: false, claim: "", notes: ""
-            ))
-        }
+        let seatNumber = board.players.count + 1
+        let totalDays = board.players.first?.statuses.count ?? 1
+        let newPlayer = Player(
+            seatNumber: seatNumber,
+            name: "",
+            isMe: false,
+            statuses: (0..<totalDays).map { PlayerStatus(dayIndex: $0) }
+        )
+        board.players.append(newPlayer)
+        try? modelContext.save()
     }
+
     func clearAllVotes() {
-        for day in 0..<board.days.count {
-            for idx in 0..<board.days[day].count {
-                board.days[day][idx].voted = false
+        for player in board.players {
+            for status in player.statuses {
+                status.voted = false
             }
         }
+        try? modelContext.save()
     }
+
     func clearAllNominations() {
-        for day in 0..<board.days.count {
-            for idx in 0..<board.days[day].count {
-                board.days[day][idx].nominated = false
+        for player in board.players {
+            for status in player.statuses {
+                status.nominated = false
             }
         }
+        try? modelContext.save()
     }
 
     func resetBoardForNewGame() {
-        // Limpia solo lo mutable: roles, claims, notas, estados
-        var newPlayers: [Player] = []
-        for p in board.players {
-            var newPlayer = p
-            newPlayer.claimRoleId = nil
-            newPlayer.claimManual = ""
-            newPlayer.personalNotes = [:]
-            // Mantén nombre y seatNumber y isMe
-            newPlayers.append(newPlayer)
+        for player in board.players {
+            player.claimRoleId = nil
+            player.claimManual = ""
+            player.personalNotes.removeAll()
+            player.statuses = [PlayerStatus(dayIndex: 0)]
         }
-        // Crea días nuevos: 1 solo, todos vivos (asumiendo PlayerStatusPerDay básico)
-        let day0: [PlayerStatusPerDay] = newPlayers.map {
-            PlayerStatusPerDay(seatNumber: $0.seatNumber)
-        }
-        board.players = newPlayers
-        board.days = [day0]
         board.currentDay = 0
         board.suggestedName = suggestedFileName(playersCount: board.players.count)
-        board.config = getConfigForPlayerCount(board.players.count)
-        // Listo para nuevo juego, pero conserva nombres, asientos e “isMe”
-        saveBoardState(board)
+        try? modelContext.save()
+    }
+
+    @ViewBuilder
+    func playerGridView() -> some View {
+        GeometryReader { geo in
+            let orderedPlayers = board.players.sorted { $0.seatNumber < $1.seatNumber }
+            let positions = squarePerimeterPositions(count: orderedPlayers.count, in: geo.size)
+            ZStack {
+                ForEach(Array(orderedPlayers.enumerated()), id: \.1.id) { idx, player in
+                    let pos = positions[idx]
+                    if let status = player.statuses[safe: board.currentDay] {
+                        PlayerCircle(
+                            player: player,
+                            status: status,
+                            isMe: player.isMe,
+                            roles: board.edition?.characters ?? [],
+                            onTap: {
+                                if isVotingPhase {
+                                    player.statuses[safe: board.currentDay]?.voted.toggle()
+                                    try? modelContext.save()
+                                } else {
+                                    editingPlayer = player
+                                }
+                            }
+                        )
+                        .position(pos + (draggedPlayerIdx == idx ? dragOffset : .zero))
+                        .zIndex(draggedPlayerIdx == idx ? 1 : 0)
+                        .gesture(
+                            LongPressGesture(minimumDuration: 0.2)
+                                .onEnded { _ in
+                                    draggedPlayerIdx = idx
+                                    dragOffset = .zero
+                                }
+                                .sequenced(before: DragGesture())
+                                .onChanged { value in
+                                    switch value {
+                                    case .second(true, let drag?):
+                                        dragOffset = drag.translation
+                                    default:
+                                        break
+                                    }
+                                }
+                                .onEnded { _ in
+                                    if let draggedIdx = draggedPlayerIdx {
+                                        let newPosition = positions[draggedIdx] + dragOffset
+                                        if let targetIdx = positions.enumerated().min(by: {
+                                            distance($0.element, newPosition) < distance($1.element, newPosition)
+                                        })?.offset, targetIdx != draggedIdx {
+
+                                            // SWAP solo los seatNumbers:
+                                            let a = orderedPlayers[draggedIdx]
+                                            let b = orderedPlayers[targetIdx]
+                                            let tmp = a.seatNumber
+                                            a.seatNumber = b.seatNumber
+                                            b.seatNumber = tmp
+
+                                            // ⚡️ Ahora REORDENA el array principal del BoardState:
+                                            board.players.sort { $0.seatNumber < $1.seatNumber }
+
+                                            try? modelContext.save()
+                                        }
+                                        draggedPlayerIdx = nil
+                                        dragOffset = .zero
+                                    }
+                                }
+                        )
+                    }
+                }
+            }
+        }
+        .padding(.horizontal, 40)
+        .padding(.vertical, 50)
+    }
+
+    // Utilidad
+    func distance(_ a: CGPoint, _ b: CGPoint) -> CGFloat {
+        sqrt(pow(a.x - b.x, 2) + pow(a.y - b.y, 2))
     }
 
     func squarePerimeterPositions(count: Int, in size: CGSize) -> [CGPoint] {
-        // Calcula cuántos van por lado
         let sides = 4
         let perSide = max(1, count / sides)
         let remainder = count % sides
@@ -342,35 +320,105 @@ struct BoardView: View {
         }
         return result
     }
-
 }
 
-struct PlayerDropDelegate: DropDelegate {
-    let fromPlayer: Player?
-    let toPlayer: Player
-    @Binding var board: BoardState
-
-    func performDrop(info: DropInfo) -> Bool {
-        guard let from = fromPlayer, from.id != toPlayer.id else { return false }
-        if let idxFrom = board.players.firstIndex(where: { $0.id == from.id }),
-           let idxTo = board.players.firstIndex(where: { $0.id == toPlayer.id }) {
-            // Intercambia los jugadores (recuerda swap seatNumber!)
-            board.players.swapAt(idxFrom, idxTo)
-
-            // Mantén seatNumber actualizado si es necesario
-            for (i, _) in board.players.enumerated() {
-                board.players[i].seatNumber = i+1
-            }
-        }
-        return true
-    }
-}
-
-extension CGPoint {
-    static func + (a: CGPoint, b: CGSize) -> CGPoint {
-        CGPoint(x: a.x + b.width, y: a.y + b.height)
-    }
-}
 #Preview {
-    BoardView(board: BoardState.Mock.example)
+    // Crea modelo in-memory
+    let config = ModelConfiguration(isStoredInMemoryOnly: true)
+    let container = try! ModelContainer(for: BoardState.self, configurations: config)
+    let context = ModelContext(container)
+    // MOCK:
+    let playerCount = 12
+    let names = ["Ana", "Bernardo", "Erick", "Fabian", "Carlos", "Dio", "Pedro", "Quike", "Ricardo", "Sergio", "Toni", "Uriel", "Ximena", "Yair", "Zamiel", "Manuel", "Oscar", "Nuckle", "Omar", "Pithuo", "Raúl", "Quimera", "Ricardo", "Sandro", "Toni", "Uriel", "Ximena", "Yair", "Zamiel", "Manuel", "Oscar", "Nuckle", "Omar", "Pithuo", "Raúl", "Quimera"]
+    let players = (1...playerCount).map {
+        Player(seatNumber: $0, name: names[$0], claimRoleId: rolesExample[$0].name, statuses: [
+            PlayerStatus(dayIndex: 0, seatNumber: $0)
+        ])
+    }
+    // Día 0: todos vivos, nadie votó
+    let newConfig = getConfigForPlayerCount(playerCount)
+    let configGame = GameConfig(numPlayers: newConfig.numPlayers,
+                                numTownsfolk: newConfig.numTownsfolk,
+                                numOutsider: newConfig.numOutsider,
+                                numMinions: newConfig.numMinions,
+                                numDemon: newConfig.numDemon)
+    let meta = EditionMeta(id: "test", name: "Tests", author: "Me")
+    let game = BoardState(
+        suggestedName: "DemoJuego",
+        players: players,
+        currentDay: 0,
+        config: configGame,
+        edition: EditionData(meta: meta, characters: rolesExample)
+    )
+    context.insert(game)
+    return BoardView(board: game)
+        .modelContainer(container)
 }
+
+let rolesExample = [
+    RoleDefinition(id: "grandmother", name: "grandmother"),
+    RoleDefinition(id: "acrobat", name: "acrobat"),
+    RoleDefinition(id: "fortuneteller", name: "fortuneteller"),
+    RoleDefinition(id: "steward", name: "steward"),
+    RoleDefinition(id: "balloonist", name: "balloonist"),
+    RoleDefinition(id: "mayor", name: "mayor"),
+    RoleDefinition(id: "alchemist", name: "alchemist"),
+    RoleDefinition(id: "alsaahir", name: "alsaahir"),
+    RoleDefinition(id: "amnesiac", name: "amnesiac"),
+    RoleDefinition(id: "artist", name: "artist"),
+    RoleDefinition(id: "atheist", name: "atheist"),
+    RoleDefinition(id: "librarian", name: "librarian"),
+    RoleDefinition(id: "fool", name: "fool"),
+    RoleDefinition(id: "knight", name: "knight"),
+    RoleDefinition(id: "cannibal", name: "cannibal"),
+    RoleDefinition(id: "huntsman", name: "huntsman"),
+    RoleDefinition(id: "bountyhunter", name: "bountyhunter"),
+    RoleDefinition(id: "gossip", name: "gossip"),
+    RoleDefinition(id: "chef", name: "chef"),
+    RoleDefinition(id: "courtier", name: "courtier"),
+    RoleDefinition(id: "seamstress", name: "seamstress"),
+    RoleDefinition(id: "cultleader", name: "cultleader"),
+    RoleDefinition(id: "poppygrower", name: "poppygrower"),
+    RoleDefinition(id: "empath", name: "empath"),
+    RoleDefinition(id: "snakecharmer", name: "snakecharmer"),
+    RoleDefinition(id: "undertaker", name: "undertaker"),
+    RoleDefinition(id: "savant", name: "savant"),
+    RoleDefinition(id: "exorcist", name: "exorcist"),
+    RoleDefinition(id: "slayer", name: "slayer"),
+    RoleDefinition(id: "philosopher", name: "philosopher"),
+    RoleDefinition(id: "general", name: "general"),
+    RoleDefinition(id: "farmer", name: "farmer"),
+    RoleDefinition(id: "ravenkeeper", name: "ravenkeeper"),
+    RoleDefinition(id: "pixie", name: "pixie"),
+    RoleDefinition(id: "engineer", name: "engineer"),
+    RoleDefinition(id: "investigator", name: "investigator"),
+    RoleDefinition(id: "washerwoman", name: "washerwoman"),
+    RoleDefinition(id: "lycanthrope", name: "lycanthrope"),
+    RoleDefinition(id: "banshee", name: "banshee"),
+    RoleDefinition(id: "gambler", name: "gambler"),
+    RoleDefinition(id: "magician", name: "magician"),
+    RoleDefinition(id: "juggler", name: "juggler"),
+    RoleDefinition(id: "sailor", name: "sailor"),
+    RoleDefinition(id: "mathematician", name: "mathematician"),
+    RoleDefinition(id: "monk", name: "monk"),
+    RoleDefinition(id: "flowergirl", name: "flowergirl"),
+    RoleDefinition(id: "choirboy", name: "choirboy"),
+    RoleDefinition(id: "noble", name: "noble"),
+    RoleDefinition(id: "oracle", name: "oracle"),
+    RoleDefinition(id: "pacifist", name: "pacifist"),
+    RoleDefinition(id: "fisherman", name: "fisherman"),
+    RoleDefinition(id: "innkeeper", name: "innkeeper"),
+    RoleDefinition(id: "predicador", name: "predicador"),
+    RoleDefinition(id: "towncrier", name: "towncrier"),
+    RoleDefinition(id: "princess", name: "princess"),
+    RoleDefinition(id: "professor", name: "professor"),
+    RoleDefinition(id: "clockmaker", name: "clockmaker"),
+    RoleDefinition(id: "king", name: "king"),
+    RoleDefinition(id: "sage", name: "sage"),
+    RoleDefinition(id: "highpriestess", name: "highpriestess"),
+    RoleDefinition(id: "tealady", name: "tealady"),
+    RoleDefinition(id: "shugenja", name: "shugenja"),
+    RoleDefinition(id: "chambermaid", name: "chambermaid"),
+    RoleDefinition(id: "soldier", name: "soldier"),
+    RoleDefinition(id: "dreamer", name: "dreamer")
+]

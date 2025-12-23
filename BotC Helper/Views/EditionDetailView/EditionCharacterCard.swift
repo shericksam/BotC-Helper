@@ -12,9 +12,7 @@ struct EditionCharacterCard: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 10) {
             HStack(alignment: .center, spacing: 12) {
-                RolIcon(name: character.iconName)
-//                    .resizable()
-//                    .scaledToFit()
+                RolIcon(name: character.id)
                     .frame(width: 48, height: 48)
                     .clipShape(RoundedRectangle(cornerRadius: 8))
                 Text(character.name)
@@ -47,16 +45,16 @@ struct EditionCharacterCard: View {
             if let on = character.otherNightReminder {
                 Text("Otras noches: \(on)").font(.footnote).foregroundColor(.secondary)
             }
-            if let special = character.special {
-                VStack(alignment: .leading, spacing: 0) {
-                    Text("Especiales:").font(.footnote)
-                    ForEach(special, id: \.name) { s in
-                        Text("• \(s.name) (\(s.type)\(s.value != nil ? ": " + s.value! : ""))")
-                            .font(.footnote)
-                            .foregroundColor(.secondary)
-                    }
-                }
-            }
+//            if let special = character.special {
+//                VStack(alignment: .leading, spacing: 0) {
+//                    Text("Especiales:").font(.footnote)
+//                    ForEach(special, id: \.name) { s in
+//                        Text("• \(s.name) (\(s.type)\(s.value != nil ? ": " + s.value! : ""))")
+//                            .font(.footnote)
+//                            .foregroundColor(.secondary)
+//                    }
+//                }
+//            }
         }
         .padding()
         .frame(maxWidth: .infinity)

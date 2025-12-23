@@ -9,17 +9,33 @@ import SwiftUI
 import SwiftData
 
 struct MainView: View {
-    // Simuladas por ahora, luego vendrán de database/SwiftData
-//    @State private var editions: [Edition] = Edition.Mock.all()
+    @Environment(\.modelContext) var modelContext
     @State private var showingNewGameSheet = false
     @State private var showingEditionsSheet = false
     @State private var isShowingGameBoard: Bool = false
 
     @State private var showingLoadView = false
 
-    @State private var boardState: BoardState? = nil // el nuevo tablero
-
+    @State private var boardState: BoardState? = nil
+    @State private var didPreload = false
+    
     var body: some View {
+        Group {
+            if didPreload {
+                bodyLoaded
+            } else {
+                ProgressView("Cargando recursos...")
+            }
+        }
+
+        .task {
+            await PreloadContent()
+                .preloadDefaultEditionsAndRolesIfNeeded(modelContext: modelContext)
+            didPreload = true
+        }
+    }
+
+    var bodyLoaded: some View {
         NavigationStack {
             ZStack {
                 Image("background")
@@ -41,7 +57,6 @@ struct MainView: View {
                             .frame(height: 150)
                     }
                     .padding(.top, 32)
-
                     Spacer()
                     VStack(spacing: 12) {
 
@@ -107,15 +122,6 @@ struct MainView: View {
                 } else {
                     Text("No hay tablero disponible")
                 }
-            }
-        }
-    }
-
-    @ViewBuilder
-    func showBoardGame(board: BoardState?) -> some View {
-        Group {
-            if let board = board {
-                BoardView(board: board)
             }
         }
     }

@@ -6,69 +6,70 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct EditionsSheet: View {
-    @State var editions: [EditionSummary] = EditionSummary.defaultEditions
-    @State private var selectedEdition: EditionData? // Para navegación/Sheet
-    @State private var loading = false
+    @Query(sort: \EditionData.id) var allEditions: [EditionData]
+    @Environment(\.modelContext) private var modelContext
+
+    @State private var selectedEdition: EditionData?
     @State private var showDetail = false
     @State private var showingCreateEdition = false
-    @State private var editingEdition: EditionSummary? = nil
-
-    // Puedes agregar lógica para agregar/editar/borrar ediciones
+    @State private var editingEdition: EditionData? = nil
 
     var body: some View {
         NavigationStack {
-            VStack {
-                List {
-                    ForEach(editions) { edition in
-                        Button {
-                            loadEditionDetails(edition: edition)
-                        } label: {
-                            VStack(alignment: .center) {
-                                if let imageName = edition.imageName {
-                                    Image(imageName)
-                                        .resizable()
-                                        .scaledToFit()
-                                        .frame(height: 150)
-                                }
-                                Text(edition.name).font(.headline)
-                                    .padding()
+            List {
+                ForEach(allEditions) { edition in
+                    Button {
+                        selectedEdition = edition
+                        showDetail = true
+                    } label: {
+                        VStack(alignment: .center) {
+                            if let imageName = edition.meta.imageName, !imageName.isEmpty {
+                                Image(imageName)
+                                    .resizable()
+                                    .scaledToFit()
+                                    .frame(height: 150)
                             }
-                            .frame(maxWidth: .infinity)
-                            .background(.ultraThinMaterial)
-                            .cornerRadius(12)
-                            .shadow(radius: 1)
+                            Text(edition.meta.name)
+                                .font(.headline).padding()
                         }
-                        // Agrega un swipe actions solo si se puede borrar
-                        .swipeActions(edge: .trailing, allowsFullSwipe: false) {
-                            if !edition.isFromBundle {
-                                Button(role: .destructive) {
-                                    deleteEdition(edition)
-                                } label: {
-                                    Label("Borrar", systemImage: "trash")
-                                }
+                        .frame(maxWidth: .infinity)
+                        .background(.ultraThinMaterial)
+                        .cornerRadius(12)
+                        .shadow(radius: 1)
+                    }
+                    .swipeActions(edge: .trailing, allowsFullSwipe: false) {
+                        // Solo permite borrar/editar si NO es de bundle
+                        if edition.meta.author != "Oficial" { // O tu flag
+                            Button(role: .destructive) {
+                                deleteEdition(edition)
+                            } label: {
+                                Label("Borrar", systemImage: "trash")
                             }
-                            if !edition.isFromBundle {
-                                Button {
-                                    editEdition(edition)
-                                } label: {
-                                    Label("Editar", systemImage: "pencil")
-                                }
-                                .tint(.yellow)
+                            Button {
+                                editingEdition = edition
+                            } label: {
+                                Label("Editar", systemImage: "pencil")
                             }
+                            .tint(.yellow)
                         }
                     }
                 }
-                .listStyle(.plain)
             }
-            .sheet(item: $editingEdition, onDismiss: refreshEditions) { editionToEdit in
-                EditionCreationView(editingEdition: editionToEdit)
+            .listStyle(.plain)
+            // Sheet para editar/crear
+            .sheet(item: $editingEdition) { edition in
+                EditionCreationView(editingEdition: edition)
+            }
+            .sheet(isPresented: $showingCreateEdition) {
+                EditionCreationView()
             }
             .navigationTitle("Ediciones")
             .navigationDestination(isPresented: $showDetail) {
-                if let data = selectedEdition {
-                    EditionDetailView(editionMeta: data)
+                if let edition = selectedEdition {
+                    EditionDetailView(editionMeta: edition)
                 } else {
                     EmptyView()
                 }
@@ -80,51 +81,14 @@ struct EditionsSheet: View {
                     }
                 }
             }
-            .sheet(isPresented: $showingCreateEdition) {
-                EditionCreationView()
-            }
         }
     }
 
-    func deleteEdition(_ edition: EditionSummary) {
-        // Solo locales! (no las bundle)
-        guard !edition.isFromBundle else { return }
-        let url = getDocumentsDirectory().appendingPathComponent(edition.fileName)
-        do {
-            try FileManager.default.removeItem(at: url)
-            // Remueve de la lista local
-            editions.removeAll { $0.id == edition.id }
-        } catch {
-            // Manejo de error opcional
-        }
+    func deleteEdition(_ edition: EditionData) {
+        modelContext.delete(edition)
+        try? modelContext.save()
     }
 
-    func editEdition(_ edition: EditionSummary) {
-        // Abre la vista edición pre-rellena con esta edición
-        editingEdition = edition
-    }
-
-    func loadEditionDetails(edition: EditionSummary) {
-        loading = true
-        DispatchQueue.global(qos: .userInitiated).async {
-            if let url = editionURL(for: edition),
-               let loaded = try? loadEdition(from: url) {
-                DispatchQueue.main.async {
-                    self.selectedEdition = loaded
-                    self.showDetail = true
-                    self.loading = false
-                }
-            } else {
-                DispatchQueue.main.async { self.loading = false }
-                // Maneja error de carga aquí si quieres
-            }
-        }
-    }
-
-    func refreshEditions() {
-        // Tu función para recargar las ediciones de bundle+usuario
-        editions = EditionSummary.defaultEditions
-    }
 }
 
 #Preview {

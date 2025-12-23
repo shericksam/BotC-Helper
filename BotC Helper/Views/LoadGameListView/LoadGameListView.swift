@@ -6,32 +6,40 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct LoadGameListView: View {
-    var onLoad: (BoardState) -> Void
+    @Query(sort: \BoardState.suggestedName) var allGames: [BoardState]
+    @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) var dismiss
-
-    @State private var fileNames: [String] = []
+    @State private var selectedGame: BoardState?
+    var onLoad: (BoardState) -> Void
 
     var body: some View {
         NavigationView {
-            List {
-                ForEach(fileNames, id: \.self) { name in
-                    Button(action: {
-                        if let loaded = loadBoardState(fileName: name.replacingOccurrences(of: ".json", with: "")) {
-                            onLoad(loaded)
-                            dismiss()
+            VStack {
+                if allGames.isEmpty {
+                    Text("No hay partidas guardadas.")
+                } else {
+                    List {
+                        ForEach(allGames) { game in
+                            Button(action: {
+                                onLoad(game)
+                                dismiss()
+                            }) {
+                                VStack(alignment: .leading) {
+                                    Text(game.suggestedName)
+                                        .font(.headline)
+                                    if let editionName = game.edition?.meta.name {
+                                        Text("Edición: \(editionName)").font(.subheadline)
+                                    }
+                                    Text("Jugadores: \(game.players.count)")
+                                        .font(.caption)
+                                }
+                            }
                         }
-                    }) {
-                        Text(name.replacingOccurrences(of: ".json", with: ""))
+                        .onDelete(perform: deleteGames)
                     }
-                }
-                .onDelete { offsets in
-                    for i in offsets {
-                        let name = fileNames[i]
-                        deleteSavedGame(name: name)
-                    }
-                    loadFiles() // recarga archivos
                 }
             }
             .navigationTitle("Partidas Anteriores")
@@ -41,24 +49,41 @@ struct LoadGameListView: View {
                 }
             }
         }
-        .onAppear(perform: loadFiles)
     }
 
-    func loadFiles() {
-        let dir = getDocumentsDirectory()
-        if let files = try? FileManager.default.contentsOfDirectory(atPath: dir.path) {
-            self.fileNames = files.filter {
-                $0.lowercased().contains("juego") && $0.hasSuffix(".json")
-            }
+    func deleteGames(at offsets: IndexSet) {
+        for idx in offsets {
+            let game = allGames[idx]
+            modelContext.delete(game)
         }
-    }
-
-    func deleteSavedGame(name: String) {
-        let url = getDocumentsDirectory().appendingPathComponent(name)
-        try? FileManager.default.removeItem(at: url)
     }
 }
 
 #Preview {
-    LoadGameListView(onLoad: { _ in })
+    let config = ModelConfiguration(isStoredInMemoryOnly: true)
+    let container = try! ModelContainer(for: BoardState.self, configurations: config)
+    let context = ModelContext(container)
+    // Prepara datos mock:
+    let edition = EditionData(
+        meta: EditionMeta(
+            id: "tb",
+            name: "Trouble Brewing",
+            author: "Steven Medway",
+            firstNight: ["dusk"],
+            otherNight: ["dawn"]
+        ),
+        characters: []
+    )
+    let players = (1...3).map { i in Player(seatNumber: i, name: "Jugador \(i)") }
+    let game = BoardState(
+        suggestedName: "Partida Mock",
+        players: players,
+        currentDay: 0,
+        config: GameConfig(numPlayers: 3, numTownsfolk: 1, numOutsider: 1, numMinions: 1, numDemon: 0),
+        edition: edition
+    )
+    context.insert(game)
+    // Retorna la vista en un environment SwiftData
+    return LoadGameListView(onLoad: { _ in })
+        .modelContainer(container)
 }

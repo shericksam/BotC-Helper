@@ -15,12 +15,10 @@ final class Character {
     var team: String?
     var ability: String?
     var setup: Bool
-    var images: [String]      // Array de URLs
+    var images: [String]
     var reminders: [String]?
     var firstNightReminder: String?
     var otherNightReminder: String?
-
-    // Puedes añadir más campos especiales según tus necesidades
 
     init(id: String, name: String, team: String?, ability: String?, setup: Bool = false, images: [String], reminders: [String]? = nil, firstNightReminder: String? = nil, otherNightReminder: String? = nil) {
         self.id = id

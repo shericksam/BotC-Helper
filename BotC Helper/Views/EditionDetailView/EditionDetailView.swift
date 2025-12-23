@@ -11,16 +11,17 @@ struct EditionDetailView: View {
     let editionMeta: EditionData
     @State private var isExpandedFirstNigth = false
     @State private var isExpandedOtherNigth = false
+    @State private var searchText: String = ""
 
-    var teamSections: [(Team, [RoleDefinition])] {
-        // Orden de secciones deseado
-        let order: [Team] = [.townsfolk, .outsider, .minion, .demon, .traveller, .fabled]
-        return order.compactMap { team in
-            let chars = editionMeta.characters.filter { $0.team == team }
-            return chars.isEmpty ? nil : (team, chars)
+    var groupedRoles: [(Team, [RoleDefinition])] {
+        Team.allCases.compactMap { team in
+            let filtered = editionMeta.characters.filter {
+                $0.team == team &&
+                (searchText.isEmpty || $0.name.lowercased().contains(searchText.lowercased()))
+            }.sorted(by: { $0.name < $1.name })
+            return filtered.isEmpty ? nil : (team, filtered)
         }
     }
-
 
     var body: some View {
         ScrollView {
@@ -52,13 +53,13 @@ struct EditionDetailView: View {
                         .cornerRadius(10)
                         .shadow(radius: 1)
                     }
-                    if !editionMeta.meta.otherNight.isEmpty && !editionMeta.meta.firstNight.isEmpty {
+                    if !(editionMeta.meta.otherNight.isEmpty) && !(editionMeta.meta.firstNight.isEmpty) {
                         Divider()
                     }
                 }
 
                 // Personajes
-                ForEach(teamSections, id: \.0) { (team, chars) in
+                ForEach(groupedRoles, id: \.0) { (team, chars) in
                     Section(header: Text(team.displayName)
                         .font(.title2)
                         .padding(.vertical, 4)
@@ -71,6 +72,8 @@ struct EditionDetailView: View {
                         }
                     }
                 }
+                .searchable(text: $searchText, prompt: "Buscar rol por nombre")
+
             }
             .padding()
         }
@@ -86,7 +89,7 @@ struct NightOrderView: View {
             VStack(alignment: .leading, spacing: 4) {
                 ForEach(order, id: \.self) { item in
                     HStack {
-                        if let special = orderLabelsES[item] {
+                        if orderLabelsES[item] != nil {
                             // Noche, amanecer o info especial
                             HStack(spacing: 8) {
                                 Image(item)
@@ -96,12 +99,10 @@ struct NightOrderView: View {
                                 Text(item.capitalized)
                                     .font(.body)
                             }
-                        } else if item.hasPrefix("secta_"),
-                           let role = roles.first(where: { $0.id == item }) {
+                        } else if let role = roles.first(where: { $0.id == item }) {
                             // Es un rol, muestra icono y nombre bonito
                             HStack(spacing: 8) {
-                                Image(role.iconName)
-                                    .resizable()
+                                RolIcon(name: role.id)
                                     .frame(width: 50, height: 50)
                                     .cornerRadius(5)
                                 Text(role.name)
@@ -135,17 +136,17 @@ let orderLabelsES: [String: String] = [
     "demoninfo": "Info de Demonio"
 ]
 
-#Preview {
-    EditionDetailView(editionMeta: EditionData.Mock.editionData!)
-}
-
-
-func mockLoadEditionDetails(edition: EditionSummary) -> EditionData? {
-    if let url = Bundle.main.url(forResource: edition.fileName.replacingOccurrences(of: ".json", with: ""), withExtension: "json"),
-       let loaded = try? loadEdition(from: url) {
-        return loaded
-    } else {
-        return nil
-        // Maneja error de carga aquí si quieres
-    }
-}
+//#Preview {
+//    EditionDetailView(editionMeta: EditionDataModel.Mock.editionData!)
+//}
+//
+//
+//func mockLoadEditionDetails(edition: EditionSummaryModel) -> EditionDataModel? {
+//    if let url = Bundle.main.url(forResource: edition.fileName.replacingOccurrences(of: ".json", with: ""), withExtension: "json"),
+//       let loaded = try? loadEdition(from: url) {
+//        return loaded
+//    } else {
+//        return nil
+//        // Maneja error de carga aquí si quieres
+//    }
+//}
