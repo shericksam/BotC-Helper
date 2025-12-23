@@ -46,6 +46,8 @@ struct BoardView: View {
                         VStack {
                             Image(systemName: "flag.pattern.checkered")
                             Text("Votando...")
+                        }.onTapGesture {
+                            isVotingPhase.toggle()
                         }
                     }
                     Button("Nuevo Día") { addDay() }
@@ -62,6 +64,9 @@ struct BoardView: View {
                     Text("Forasteros: \(board.config.numOutsider)").font(.body)
                     Text("Esbirros: \(board.config.numMinions)").font(.body)
                     Text("Demonio: \(board.config.numDemon)").font(.body)
+//                    NavigationLink(destination: GPTAssistantView(board: board)) {
+//                        Label("Análisis AI", systemImage: "bolt.circle.fill")
+//                    }
                 }
                 .foregroundColor(.white)
                 .padding()
@@ -108,6 +113,13 @@ struct BoardView: View {
             Button("Cancelar", role: .cancel) { }
         } message: {
             Text("Esto deja las posiciones y nombres, pero borra todos los claims, notas y progreso actual. ¿Seguro que quieres reiniciar la partida?")
+        }
+        .navigationDestination(isPresented: $showDetail) {
+            if let data = board.edition {
+                EditionDetailView(editionMeta: data)
+            } else {
+                EmptyView()
+            }
         }
         .sheet(item: $editingPlayer) { player in
             if
@@ -215,7 +227,6 @@ struct BoardView: View {
                                     try? modelContext.save()
                                 } else {
                                     editingPlayer = player
-
                                 }
                             }
                         )
@@ -242,10 +253,16 @@ struct BoardView: View {
                                         if let targetIdx = positions.enumerated().min(by: {
                                             distance($0.element, newPosition) < distance($1.element, newPosition)
                                         })?.offset, targetIdx != draggedIdx {
-                                            board.players.swapAt(draggedIdx, targetIdx)
-                                            let oldSeat = board.players[targetIdx].seatNumber
-                                            board.players[targetIdx].seatNumber = board.players[draggedIdx].seatNumber
-                                            board.players[draggedIdx].seatNumber = oldSeat
+
+                                            // SWAP solo los seatNumbers:
+                                            let a = orderedPlayers[draggedIdx]
+                                            let b = orderedPlayers[targetIdx]
+                                            let tmp = a.seatNumber
+                                            a.seatNumber = b.seatNumber
+                                            b.seatNumber = tmp
+
+                                            // ⚡️ Ahora REORDENA el array principal del BoardState:
+                                            board.players.sort { $0.seatNumber < $1.seatNumber }
 
                                             try? modelContext.save()
                                         }
