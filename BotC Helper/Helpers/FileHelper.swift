@@ -114,11 +114,28 @@ func loadEdition(from url: URL) throws -> EditionDataModel {
 }
 
 func loadPredefinedRoles() -> [RoleDefinitionModel] {
-    guard let url = Bundle.main.url(forResource: "all_roles", withExtension: "json"),
+    guard let url = Bundle.main.url(forResource: "all-roles-v1", withExtension: "json"),
           let data = try? Data(contentsOf: url),
           let roles = try? JSONDecoder().decode([RoleDefinitionModel].self, from: data)
     else { return [] }
     return roles
+}
+
+func loadJinxes() -> [Jinx] {
+    guard let url = Bundle.main.url(forResource: "jinxes", withExtension: "json"),
+          let data = try? Data(contentsOf: url),
+          let raw = try? JSONSerialization.jsonObject(with: data) as? [[String: Any]]
+    else { return [] }
+
+    // Mapeo simple
+    return raw.compactMap { dict in
+        guard let id = dict["id"] as? String,
+              let roles = dict["roles"] as? [String],
+              let description = dict["description"] as? String
+        else { return nil }
+        let image = dict["image"] as? [String]
+        return Jinx(id: id, roles: roles, description: description, image: image)
+    }
 }
 
 func allEditionFiles() -> [URL] {

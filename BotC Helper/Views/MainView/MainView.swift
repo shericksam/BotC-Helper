@@ -18,6 +18,10 @@ struct MainView: View {
 
     @State private var boardState: BoardState? = nil
     @State private var didPreload = false
+
+    @Query(sort: \RoleDefinition.id) var allRoles: [RoleDefinition]
+
+    
     var body: some View {
         Group {
             if didPreload {
@@ -57,6 +61,20 @@ struct MainView: View {
                     }
                     .padding(.top, 32)
 
+                    ScrollView {
+
+                        ForEach(allRoles) { role in
+                            HStack {
+                                RolIcon(name: role.id)
+                                    .frame(width: 40, height: 40)
+                                Text(role.name)
+                                    .font(.title2)
+                                    .foregroundColor(.black)
+                                Spacer()
+                            }
+                            .padding()
+                        }
+                    }
                     Spacer()
                     VStack(spacing: 12) {
 
