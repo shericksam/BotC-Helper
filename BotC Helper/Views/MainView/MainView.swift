@@ -24,7 +24,7 @@ struct MainView: View {
             if didPreload {
                 bodyLoaded
             } else {
-                ProgressView("Cargando recursos...")
+                ProgressView(NSLocalizedString("loading_resources", comment: ""))
             }
         }
 
@@ -64,7 +64,7 @@ struct MainView: View {
                             showingNewGameSheet.toggle()
                         }) {
                             HStack {
-                                Label("Nueva Partida", systemImage: "plus.circle.fill")
+                                Label(MSG("new_game_label"), systemImage: "plus.circle.fill")
                                     .font(.title2)
                                     .padding()
                                     .frame(maxWidth: .infinity)
@@ -83,7 +83,7 @@ struct MainView: View {
                         Button(action: {
                             showingEditionsSheet.toggle()
                         }) {
-                            Label("Ver/Editar Ediciones", systemImage: "books.vertical.fill")
+                            Label(MSG("edit_editions_label"), systemImage: "books.vertical.fill")
                                 .font(.title2)
                                 .padding()
 
@@ -98,7 +98,7 @@ struct MainView: View {
                         Button(action: {
                             showingLoadView.toggle()
                         }) {
-                            Label("Partidas Anteriores", systemImage: "clock.fill")
+                            Label(MSG("previous_games_label"), systemImage: "clock.fill")
                                 .font(.title3)
                                 .padding()
                                 .frame(maxWidth: .infinity)
@@ -120,7 +120,7 @@ struct MainView: View {
                 if let board = boardState {
                     BoardView(board: board)
                 } else {
-                    Text("No hay tablero disponible")
+                    Text(MSG("no_board_available"))
                 }
             }
         }

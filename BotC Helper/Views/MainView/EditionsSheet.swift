@@ -46,12 +46,12 @@ struct EditionsSheet: View {
                             Button(role: .destructive) {
                                 deleteEdition(edition)
                             } label: {
-                                Label("Borrar", systemImage: "trash")
+                                Label(MSG("edit_sheet_delete"), systemImage: "trash")
                             }
                             Button {
                                 editingEdition = edition
                             } label: {
-                                Label("Editar", systemImage: "pencil")
+                                Label(MSG("edit_sheet_edit"), systemImage: "pencil")
                             }
                             .tint(.yellow)
                         }
@@ -66,7 +66,7 @@ struct EditionsSheet: View {
             .sheet(isPresented: $showingCreateEdition) {
                 EditionCreationView()
             }
-            .navigationTitle("Ediciones")
+            .navigationTitle(MSG("edit_sheet_title"))
             .navigationDestination(isPresented: $showDetail) {
                 if let edition = selectedEdition {
                     EditionDetailView(editionMeta: edition)
@@ -77,7 +77,7 @@ struct EditionsSheet: View {
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
                     Button(action: { showingCreateEdition = true }) {
-                        Label("Crear edición", systemImage: "plus")
+                        Label(MSG("edit_sheet_create"), systemImage: "plus")
                     }
                 }
             }

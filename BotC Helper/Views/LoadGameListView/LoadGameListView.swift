@@ -19,7 +19,7 @@ struct LoadGameListView: View {
         NavigationView {
             VStack {
                 if allGames.isEmpty {
-                    Text("No hay partidas guardadas.")
+                    Text(MSG("no_saved_games"))
                 } else {
                     List {
                         ForEach(allGames) { game in
@@ -31,9 +31,10 @@ struct LoadGameListView: View {
                                     Text(game.suggestedName)
                                         .font(.headline)
                                     if let editionName = game.edition?.meta.name {
-                                        Text("Edición: \(editionName)").font(.subheadline)
+                                        Text(MSG("edition_label", editionName, ""))
+                                            .font(.subheadline)
                                     }
-                                    Text("Jugadores: \(game.players.count)")
+                                    Text(MSG("players_count", game.players.count))
                                         .font(.caption)
                                 }
                             }
@@ -42,10 +43,10 @@ struct LoadGameListView: View {
                     }
                 }
             }
-            .navigationTitle("Partidas Anteriores")
+            .navigationTitle(MSG("previous_games_title"))
             .toolbar {
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Cerrar") { dismiss() }
+                    Button(MSG("close")) { dismiss() }
                 }
             }
         }

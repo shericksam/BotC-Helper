@@ -6,18 +6,19 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct EditionDetailView: View {
     let editionMeta: EditionData
-    @State private var isExpandedFirstNigth = false
-    @State private var isExpandedOtherNigth = false
+    @State private var isExpandedFirstNight = false
+    @State private var isExpandedOtherNight = false
     @State private var searchText: String = ""
 
     var groupedRoles: [(Team, [RoleDefinition])] {
         Team.allCases.compactMap { team in
             let filtered = editionMeta.characters.filter {
                 $0.team == team &&
-                (searchText.isEmpty || $0.name.lowercased().contains(searchText.lowercased()))
+                (searchText.isEmpty || $0.name.localizedCaseInsensitiveContains(searchText))
             }.sorted(by: { $0.name < $1.name })
             return filtered.isEmpty ? nil : (team, filtered)
         }
@@ -29,13 +30,13 @@ struct EditionDetailView: View {
                 // Encabezado edición
                 Group {
                     if let author = editionMeta.meta.author {
-                        Text("Autor: \(author)")
+                        Text(MSG("edition_author", author))
                             .font(.subheadline)
                             .foregroundColor(.secondary)
                     }
                     Divider()
                     if !editionMeta.meta.firstNight.isEmpty {
-                        DisclosureGroup("Orden de noche inicial", isExpanded: $isExpandedFirstNigth) {
+                        DisclosureGroup(MSG("edition_first_night"), isExpanded: $isExpandedFirstNight) {
                             NightOrderView(order: editionMeta.meta.firstNight, roles: editionMeta.characters)
                                 .padding()
                         }
@@ -45,7 +46,7 @@ struct EditionDetailView: View {
                     }
 
                     if !editionMeta.meta.otherNight.isEmpty {
-                        DisclosureGroup("Orden de otras noches", isExpanded: $isExpandedOtherNigth) {
+                        DisclosureGroup(MSG("edition_other_night"), isExpanded: $isExpandedOtherNight) {
                             NightOrderView(order: editionMeta.meta.otherNight, roles: editionMeta.characters)
                                 .padding()
                         }
@@ -58,7 +59,28 @@ struct EditionDetailView: View {
                     }
                 }
 
-                // Personajes
+                // Jinxes
+                if !editionMeta.jinxes.isEmpty {
+                    VStack(alignment: .leading, spacing: 8) {
+                        Divider()
+                        Text(MSG("jinxes_title")).font(.headline)
+                        ForEach(Array(editionMeta.jinxes), id: \Jinx.id) { (jinx: Jinx) in
+                            VStack(alignment: .leading, spacing: 2) {
+                                Text("• \(jinx.desc)")
+                                    .font(.body)
+                                    .foregroundColor(.yellow)
+                                if !jinx.roles.isEmpty {
+                                    Text(MSG("jinxes_impacts", jinx.roles.joined(separator: ", ")))
+                                        .font(.caption)
+                                        .foregroundColor(.secondary)
+                                }
+                            }
+                            .padding(.vertical, 4)
+                        }
+                    }
+                }
+
+                // Characters
                 ForEach(groupedRoles, id: \.0) { (team, chars) in
                     Section(header: Text(team.displayName)
                         .font(.title2)
@@ -72,8 +94,7 @@ struct EditionDetailView: View {
                         }
                     }
                 }
-                .searchable(text: $searchText, prompt: "Buscar rol por nombre")
-
+                .searchable(text: $searchText, prompt: MSG("search_role_by_name"))
             }
             .padding()
         }
@@ -86,67 +107,46 @@ struct NightOrderView: View {
     let roles: [RoleDefinition]
 
     var body: some View {
-            VStack(alignment: .leading, spacing: 4) {
-                ForEach(order, id: \.self) { item in
-                    HStack {
-                        if orderLabelsES[item] != nil {
-                            // Noche, amanecer o info especial
-                            HStack(spacing: 8) {
-                                Image(item)
-                                    .resizable()
-                                    .frame(width: 50, height: 50)
-                                    .cornerRadius(5)
-                                Text(item.capitalized)
-                                    .font(.body)
-                            }
-                        } else if let role = roles.first(where: { $0.id == item }) {
-                            // Es un rol, muestra icono y nombre bonito
-                            HStack(spacing: 8) {
-                                RolIcon(name: role.id)
-                                    .frame(width: 50, height: 50)
-                                    .cornerRadius(5)
-                                Text(role.name)
-                                    .font(.body)
-                            }
-                        } else {
-                            // ¿Otro identificador raro? Solo muestra su nombre sin prefijo
-                            Text(item.replacingOccurrences(of: "secta_", with: ""))
+        VStack(alignment: .leading, spacing: 4) {
+            ForEach(order, id: \.self) { item in
+                HStack {
+                    let label = nightOrderLabel(for: item)
+                    if label != item + "_label" {
+                        HStack(spacing: 8) {
+                            Image(item)
+                                .resizable()
+                                .frame(width: 50, height: 50)
+                                .cornerRadius(5)
+                            Text(item.capitalized)
+                                .font(.body)
                         }
+                    } else if let role = roles.first(where: { $0.id == item }) {
+                        HStack(spacing: 8) {
+                            RolIcon(name: role.id)
+                                .frame(width: 50, height: 50)
+                                .cornerRadius(5)
+                            Text(role.name)
+                                .font(.body)
+                        }
+                    } else {
+                        Text(item)
                     }
                 }
             }
         }
+    }
 
-        // Opción: Cambia el ícono para eventos especiales
-        func iconSpecial(for item: String) -> String {
-            switch item {
-            case "dusk": return "moon.stars.fill"
-            case "dawn": return "sun.max.fill"
-            case "minioninfo": return "person.2.wave.2.fill"
-            case "demoninfo": return "flame"
-            default: return "circle"
-            }
+    func iconSpecial(for item: String) -> String {
+        switch item {
+        case "dusk": return "moon.stars.fill"
+        case "dawn": return "sun.max.fill"
+        case "minioninfo": return "person.2.wave.2.fill"
+        case "demoninfo": return "flame"
+        default: return "circle"
         }
+    }
+
+    func nightOrderLabel(for key: String) -> String {
+        NSLocalizedString(key + "_label", comment: "")
+    }
 }
-
-let orderLabelsES: [String: String] = [
-    "dusk": "Anochecer",
-    "dawn": "Amanecer",
-    "minioninfo": "Info de Esbirros",
-    "demoninfo": "Info de Demonio"
-]
-
-//#Preview {
-//    EditionDetailView(editionMeta: EditionDataModel.Mock.editionData!)
-//}
-//
-//
-//func mockLoadEditionDetails(edition: EditionSummaryModel) -> EditionDataModel? {
-//    if let url = Bundle.main.url(forResource: edition.fileName.replacingOccurrences(of: ".json", with: ""), withExtension: "json"),
-//       let loaded = try? loadEdition(from: url) {
-//        return loaded
-//    } else {
-//        return nil
-//        // Maneja error de carga aquí si quieres
-//    }
-//}

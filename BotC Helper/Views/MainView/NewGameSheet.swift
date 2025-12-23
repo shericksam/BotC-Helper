@@ -16,24 +16,30 @@ struct NewGameSheet: View {
     @Environment(\.dismiss) var dismiss
     @State private var playerCount = 5
     @State private var yourSeat = 1
+    @Query(sort: \RoleDefinition.name) var allRoles: [RoleDefinition]
 
     var body: some View {
         NavigationView {
             Form {
-                Section(header: Text("Cantidad de jugadores")) {
-                    Stepper("\(playerCount) jugadores", value: $playerCount, in: 5...20)
+                Section(header: Text(MSG("new_game_players_section"))) {
+                    Stepper(
+                        MSG("new_game_players_stepper", playerCount),
+                        value: $playerCount,
+                        in: 5...20
+                    )
                 }
-                Section(header: Text("¿En qué asiento eres tú?")) {
-                    Picker("Tu asiento", selection: $yourSeat) {
+                Section(header: Text(MSG("new_game_seat_section"))) {
+                    Picker(MSG("new_game_seat_picker", yourSeat), selection: $yourSeat) {
                         ForEach(1...playerCount, id: \.self) { idx in
-                            Text("Asiento \(idx)").tag(idx)
+                            Text(MSG("new_game_seat_picker", idx)).tag(idx)
                         }
                     }
                     .pickerStyle(.wheel)
                 }
 
-                Section(header: Text("Edición")) {
-                    Picker("Nombre", selection: $editionSelected) {
+                Section(header: Text(MSG("new_game_edition_section"))) {
+                    Picker(MSG("new_game_picker_label"), selection: $editionSelected) {
+                        Text(MSG("no_edition")).tag(nil as EditionData?)
                         ForEach(allEditions, id: \.self) { edition in
                             Text(edition.meta.name)
                                 .tag(Optional(edition))
@@ -42,56 +48,50 @@ struct NewGameSheet: View {
                     .pickerStyle(.navigationLink)
                 }
             }
-            .navigationTitle("Nueva Partida")
+            .navigationTitle(MSG("new_game_title"))
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
-                    Button("Iniciar") {
+                    Button(MSG("new_game_start_button")) {
                         dismiss()
                         startGame()
                     }
                 }
                 ToolbarItem(placement: .cancellationAction) {
-                    Button("Cancelar", action: { dismiss() })
+                    Button(MSG("new_game_cancel_button"), action: { dismiss() })
                 }
-            }
-            .onAppear(){
-                print(allEditions)
             }
         }
     }
 
     func startGame() {
         DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
-            // Carga edition (opcionalmente, aquí solo guarda el id o clave, no el JSON completo)
-            guard let editionData = editionSelected else { return }
-
-            // Crea los jugadores
+            let chosenEdition = editionSelected
             let players = (1...playerCount).map { i in
-                Player(seatNumber: i,
-                       name: "",
-                       claimRoleId: nil,
-                       claimManual: "",
-                       isMe: (i == yourSeat),
-                       statuses: [PlayerStatus(dayIndex: 0, seatNumber: i)])
+                Player(
+                    seatNumber: i,
+                    name: "",
+                    claimRoleId: nil,
+                    claimManual: "",
+                    isMe: (i == yourSeat),
+                    statuses: [PlayerStatus(dayIndex: 0, seatNumber: i)]
+                )
             }
-
-            // Config
             let config = getConfigForPlayerCount(playerCount)
-
-            // Crea el objeto SwiftData principal
             let newGame = BoardState(
                 suggestedName: suggestedFileName(playersCount: playerCount),
                 players: players,
                 currentDay: 0,
                 config: config,
-                edition: editionData
+                edition: chosenEdition ?? createDefaultEdition()
             )
-
-            // Guarda en SwiftData
             modelContext.insert(newGame)
-
             onStart(newGame)
         }
+    }
+
+    func createDefaultEdition() -> EditionData {
+        let meta = EditionMeta(id: "non", name: MSG("no_edition"))
+        return EditionData(meta: meta, characters: allRoles)
     }
 }
 

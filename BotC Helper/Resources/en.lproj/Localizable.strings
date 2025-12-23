@@ -1,0 +1,64 @@
+/* 
+  Localizable.strings
+  BotC Helper
+
+  Created by Erick Samuel Guerrero Arreola on 23/12/25.
+  
+*/
+loading_resources = "Loading resources...";
+new_game_label = "New game";
+edit_editions_label = "View/Edit Editions";
+previous_games_label = "Previous Games";
+no_board_available = "No board available";
+
+no_saved_games = "No saved games.";
+previous_games_title = "Previous Games";
+edit_saved_games = "Edit";
+players_count = "Players: %d";
+edition_label = "Edition: %@";
+close = "Close";
+
+edit_sheet_title = "Editions";
+edit_sheet_create = "Create edition";
+edit_sheet_delete = "Delete";
+edit_sheet_edit = "Edit";
+
+new_game_title = "New Game";
+new_game_players_section = "Number of players";
+new_game_seat_section = "Which seat are you?";
+new_game_seat_picker = "Seat %d";
+new_game_edition_section = "Edition";
+new_game_picker_label = "Name";
+new_game_start_button = "Start";
+new_game_cancel_button = "Cancel";
+new_game_players_stepper = "%d players";
+no_edition = "No edition";
+
+edition_creation_title = "New Edition";
+edition_edit_title = "Edit Edition";
+edition_section_name = "Edition Name";
+edition_section_author = "Author";
+edition_search_roles_prompt = "Search role by name";
+edition_role_add = "Add";
+edition_role_remove = "Remove";
+edition_save = "Save";
+edition_update = "Update";
+edition_cancel = "Cancel";
+edition_team_townsfolk = "Townsfolk";
+edition_team_outsider = "Outsider";
+edition_team_minion = "Minion";
+edition_team_demon = "Demon";
+edition_team_traveller = "Traveller";
+edition_team_fabled = "Fabled";
+
+edition_author = "Author: %@";
+edition_first_night = "First Night Order";
+edition_other_night = "Other Night Order";
+search_role_by_name = "Search role by name";
+jinxes_title = "Special Jinxes:";
+jinxes_impacts = "Affects: %@";
+
+dusk_label = "Dusk";
+dawn_label = "Dawn";
+minioninfo_label = "Minion Info";
+demoninfo_label = "Demon Info";

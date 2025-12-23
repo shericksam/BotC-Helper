@@ -1,0 +1,64 @@
+/* 
+  Localizable.strings
+  BotC Helper
+
+  Created by Erick Samuel Guerrero Arreola on 23/12/25.
+  
+*/
+loading_resources = "Cargando recursos...";
+new_game_label = "Nueva Partida";
+edit_editions_label = "Ver/Editar Ediciones";
+previous_games_label = "Partidas Anteriores";
+no_board_available = "No hay tablero disponible";
+
+no_saved_games = "No hay partidas guardadas.";
+previous_games_title = "Partidas Anteriores";
+edit_saved_games = "Editar";
+players_count = "Jugadores: %d";
+edition_label = "Edición: %@";
+close = "Cerrar";
+
+edit_sheet_title = "Ediciones";
+edit_sheet_create = "Crear edición";
+edit_sheet_delete = "Borrar";
+edit_sheet_edit = "Editar";
+
+new_game_title = "Nueva Partida";
+new_game_players_section = "Cantidad de jugadores";
+new_game_seat_section = "¿En qué asiento eres tú?";
+new_game_seat_picker = "Asiento %d";
+new_game_edition_section = "Edición";
+new_game_picker_label = "Nombre";
+new_game_start_button = "Iniciar";
+new_game_cancel_button = "Cancelar";
+new_game_players_stepper = "%d jugadores";
+no_edition = "Sin edición";
+
+edition_creation_title = "Nueva Edición";
+edition_edit_title = "Editar edición";
+edition_section_name = "Nombre de la edición";
+edition_section_author = "Autor";
+edition_search_roles_prompt = "Buscar rol por nombre";
+edition_role_add = "Agregar";
+edition_role_remove = "Quitar";
+edition_save = "Guardar";
+edition_update = "Actualizar";
+edition_cancel = "Cancelar";
+edition_team_townsfolk = "Aldeanos";
+edition_team_outsider = "Forasteros";
+edition_team_minion = "Esbirros";
+edition_team_demon = "Demonio";
+edition_team_traveller = "Viajero";
+edition_team_fabled = "Fábula";
+
+edition_author = "Autor: %@";
+edition_first_night = "Orden de noche inicial";
+edition_other_night = "Orden de otras noches";
+search_role_by_name = "Buscar rol por nombre";
+jinxes_title = "Jinxes especiales:";
+jinxes_impacts = "Impacta a: %@";
+
+dusk_label = "Anochecer";
+dawn_label = "Amanecer";
+minioninfo_label = "Info de Esbirros";
+demoninfo_label = "Info de Demonio";
