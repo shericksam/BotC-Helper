@@ -6,45 +6,47 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct PlayerCircle: View {
-    var player: PlayerModel
-    var status: PlayerStatusPerDayModel
+    var player: Player
+    var status: PlayerStatus
     var isMe: Bool
-    var roles: [RoleDefinitionModel]
-
+    var roles: [RoleDefinition]
     var onTap: () -> Void
-    var claimedRole: RoleDefinitionModel? {
+
+    var claimedRole: RoleDefinition? {
         guard let id = player.claimRoleId else { return nil }
         return roles.first(where: { $0.id == id })
     }
 
     var body: some View {
-        VStack {
+        VStack(spacing: 4) {
             ZStack {
                 Circle()
                     .strokeBorder(isMe ? Color.green : (status.dead ? .red : Color.primaryBrown), lineWidth: 3)
                     .frame(width: 60, height: 60)
-                    .overlay(
-                        VStack {
-                            if !player.name.isEmpty {
-                                Text(player.name)
-                                    .foregroundColor(.black)
-                                    .font(.caption)
-                                    .lineLimit(3)
-                            } else {
-                                Text(!player.name.isEmpty ? player.initials : "#\(player.seatNumber)")
-                                    .foregroundColor(.black)
-                                    .font(.headline)
-                            }
-                        }
-                    )
+//                    .overlay(
+
+//                    )
                     .background(
                         Image("background")
                             .resizable()
                             .scaledToFill()
                             .clipShape(Circle())
                     )
+                VStack {
+                    if !player.name.isEmpty {
+                        Text(player.name)
+                            .foregroundColor(.black)
+                            .font(.caption)
+                            .lineLimit(3)
+                    } else {
+                        Text("#\(player.seatNumber)")
+                            .foregroundColor(.black)
+                            .font(.headline)
+                    }
+                }
                 // Voto
                 if status.voted {
                     Image(systemName: "checkmark.circle.fill")
@@ -97,7 +99,7 @@ struct PlayerCircle: View {
             .frame(minWidth: 0)
             .edgesIgnoringSafeArea(.all)
 
-        PlayerCircle(player: .init(seatNumber: 1, name: "Erick", claimRoleId: "secta_po", claimManual: ""), status: .init(seatNumber: 1), isMe: true, roles: [RoleDefinitionModel(id: "secta_po", name: "Po", team: .demon)]) {
+        PlayerCircle(player: .init(seatNumber: 1, name: "Erick", claimRoleId: "secta_po", claimManual: ""), status: .init(seatNumber: 1), isMe: true, roles: [RoleDefinition(id: "secta_po", name: "Po", team: .demon)]) {
             print("tapped")
         }
     }

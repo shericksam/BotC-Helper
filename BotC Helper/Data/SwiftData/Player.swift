@@ -18,15 +18,13 @@ final class Player {
     var isMe: Bool
     @Relationship(deleteRule: .cascade) var personalNotes: [PersonalNote] = []
 
-    init(
-        seatNumber: Int,
-        name: String,
-        claimRoleId: String? = nil,
-        claimManual: String = "",
-        isMe: Bool = false,
-        personalNotes: [PersonalNote] = []
-    ) {
-        id = UUID()
+    init(seatNumber: Int,
+         name: String,
+         claimRoleId: String? = nil,
+         claimManual: String = "",
+         isMe: Bool = false,
+         personalNotes: [PersonalNote] = []) {
+        self.id = UUID()
         self.seatNumber = seatNumber
         self.name = name
         self.claimRoleId = claimRoleId
