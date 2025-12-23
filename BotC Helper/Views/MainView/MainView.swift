@@ -62,12 +62,11 @@ struct MainView: View {
                     .padding(.top, 32)
 
                     ScrollView {
-
                         ForEach(allRoles) { role in
                             HStack {
                                 RolIcon(name: role.id)
                                     .frame(width: 40, height: 40)
-                                Text(role.name)
+                                Text("\(role.name)-- \(role.id)")
                                     .font(.title2)
                                     .foregroundColor(.black)
                                 Spacer()

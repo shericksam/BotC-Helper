@@ -572,7 +572,7 @@
     "otherNightReminder": "El Posadero escoge 2 jugadores."
   },
   {
-    "id": "predicador",
+    "id": "preacher",
     "name": "Predicador",
     "team": "townsfolk",
     "ability": "Cada noche, escoge un jugador: si un Secuaz ha sido escogido, él aprende esto. Todos los Secuaces escogidos no tienen su habilidad.",
@@ -715,7 +715,7 @@
     "otherNightReminder": "El Soñador apunta a un jugador. Muéstrale 1 ficha de rol bueno y 1 ficha de rol malvado, 1 de las cuales es el rol del jugador."
   },
   {
-    "id": "tonto_del_pueblo",
+    "id": "fool",
     "name": "Tonto del Pueblo",
     "team": "townsfolk",
     "ability": "Cada noche, escoge un jugador: tú aprendes su alineamiento.",

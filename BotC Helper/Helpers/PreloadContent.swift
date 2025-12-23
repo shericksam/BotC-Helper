@@ -15,11 +15,14 @@ struct PreloadContent {
     func preloadDefaultEditionsAndRolesIfNeeded(modelContext: ModelContext) async {
         let didPreload = UserDefaults.standard.bool(forKey: didPreloadKey)
         print("didPreload--->\(didPreload)")
-//        guard !didPreload else { return }
+        //        guard !didPreload else { return }
         loadAndSaveRoles(modelContext: modelContext)
+
+        loadAndSaveJinxes(modelContext: modelContext)
+
         // 1. Pre-cargar ediciones base del bundle
         saveEditions(modelContext: modelContext)
-//        UserDefaults.standard.set(true, forKey: didPreloadKey)
+        //        UserDefaults.standard.set(true, forKey: didPreloadKey)
         try? modelContext.save()
     }
 
@@ -27,7 +30,7 @@ struct PreloadContent {
         // 2. Pre-cargar todos los roles posibles (si tu modelo lo requiere aparte)
         for role in loadPredefinedRoles() {
             // 1. Crea roleEntity sin specials
-            let roleEntity = RoleDefinition(
+            _ = RoleDefinition.upsert(
                 id: role.id,
                 name: role.name,
                 team: role.team,
@@ -38,23 +41,8 @@ struct PreloadContent {
                 remindersGlobal: role.remindersGlobal,
                 firstNightReminder: role.firstNightReminder,
                 otherNightReminder: role.otherNightReminder,
-                special: [] // temporalmente vacío
+                modelContext: modelContext
             )
-            // 2. Crea los special con la relación inversa apuntando al roleEntity
-            if let specials = role.special {
-                let spEntities = specials.map { spModel in
-                    let sp = SpecialProperty(
-                        name: spModel.name,
-                        type: spModel.type,
-                        time: spModel.time,
-                        value: spModel.value
-                    )
-                    sp.parentRole = roleEntity       // RELACIÓN INVERSA CLAVE
-                    return sp
-                }
-                roleEntity.special = spEntities
-            }
-            modelContext.insert(roleEntity)
         }
 
     }
@@ -79,57 +67,65 @@ struct PreloadContent {
             }
 
             let metaEntity = EditionMeta(id: metaStruct.id, name: metaStruct.name, author: metaStruct.author, firstNight: metaStruct.firstNight, otherNight: metaStruct.otherNight)
+            modelContext.insert(metaEntity)
+
             var roleEntities: [RoleDefinition] = []
 
             for r in roles {
                 // 1. Busca si ya existe un role con ese id:
-                let fetch = FetchDescriptor<RoleDefinition>(predicate: #Predicate { $0.id == r.id })
-                let existingRoles = (try? modelContext.fetch(fetch)) ?? []
-                let roleEntity: RoleDefinition
-
-                if let existing = existingRoles.first {
-                    // 2. Si existe y tiene info incompleta, actualízalo
-                    if existing.name.isEmpty { existing.name = r.name }
-                    if existing.ability == nil || existing.ability?.isEmpty == true { existing.ability = r.ability }
-                    if existing.team == nil { existing.team = r.team }
-                    // ...otros campos como desees...
-                    roleEntity = existing
-                } else {
-                    // 3. Si no existe, lo creas normalmente
-                    roleEntity = RoleDefinition(
-                        id: r.id,
-                        name: r.name,
-                        team: r.team,
-                        ability: r.ability,
-                        setup: r.setup,
-                        iconName: r.iconName,
-                        reminders: r.reminders,
-                        remindersGlobal: r.remindersGlobal,
-                        firstNightReminder: r.firstNightReminder,
-                        otherNightReminder: r.otherNightReminder,
-                        special: []
-                    )
-                    modelContext.insert(roleEntity)
-                }
-                // specials como antes
-                if let specials = r.special {
-                    let specialEntities = specials.map { s in
-                        let special = SpecialProperty(
-                            name: s.name,
-                            type: s.type,
-                            time: s.time,
-                            value: s.value
-                        )
-                        special.parentRole = roleEntity
-                        return special
-                    }
-                    roleEntity.special = specialEntities
-                }
+                let roleEntity = RoleDefinition.upsert(id: r.id,
+                                                       name: r.name,
+                                                       team: r.team,
+                                                       ability: r.ability,
+                                                       setup: r.setup,
+                                                       iconName: r.iconName,
+                                                       reminders: r.reminders,
+                                                       remindersGlobal: r.remindersGlobal,
+                                                       firstNightReminder: r.firstNightReminder,
+                                                       otherNightReminder: r.otherNightReminder,
+                                                       modelContext: modelContext)
                 roleEntities.append(roleEntity)
             }
 
-            let editionEntity = EditionData(meta: metaEntity, characters: roleEntities)
+            let allStoredJinxes: [Jinx]
+            do {
+                allStoredJinxes = try modelContext.fetch(FetchDescriptor<Jinx>())
+            } catch {
+                allStoredJinxes = []
+            }
+            let roleIdsInEdition = Set(roleEntities.map { $0.id })
+            let applicableJinxes = allStoredJinxes.filter { jinx in
+                Set(jinx.roles).isSubset(of: roleIdsInEdition)
+            }
+
+            let editionEntity = EditionData(meta: metaEntity, characters: roleEntities, jinxes: applicableJinxes)
             modelContext.insert(editionEntity)
         }
+    }
+
+
+    func loadAndSaveJinxes(modelContext: ModelContext) {
+        for jinxModel in loadJinxes() {
+            // Busca en el modelo si ya existe jinx con este id (para evitar duplicados)
+            _ = Jinx.upsert(
+                id: jinxModel.id,
+                roles: jinxModel.roles,
+                description: jinxModel.desc,
+                image: jinxModel.image,
+                modelContext: modelContext
+            )
+        }
+    }
+
+    func loadJinxes() -> [JinxModel] {
+        guard let url = Bundle.main.url(forResource: "jinxes", withExtension: "json"),
+              let data = try? Data(contentsOf: url),
+              let raw = try? JSONSerialization.jsonObject(with: data) as? [[String: Any]],
+              let metaData = try? JSONSerialization.data(withJSONObject: raw),
+              let metaStruct = try? JSONDecoder().decode([JinxModel].self, from: metaData)
+
+        else { return [] }
+
+        return metaStruct
     }
 }

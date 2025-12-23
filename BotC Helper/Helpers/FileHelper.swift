@@ -121,23 +121,6 @@ func loadPredefinedRoles() -> [RoleDefinitionModel] {
     return roles
 }
 
-func loadJinxes() -> [Jinx] {
-    guard let url = Bundle.main.url(forResource: "jinxes", withExtension: "json"),
-          let data = try? Data(contentsOf: url),
-          let raw = try? JSONSerialization.jsonObject(with: data) as? [[String: Any]]
-    else { return [] }
-
-    // Mapeo simple
-    return raw.compactMap { dict in
-        guard let id = dict["id"] as? String,
-              let roles = dict["roles"] as? [String],
-              let description = dict["description"] as? String
-        else { return nil }
-        let image = dict["image"] as? [String]
-        return Jinx(id: id, roles: roles, description: description, image: image)
-    }
-}
-
 func allEditionFiles() -> [URL] {
     let docDir = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
     let userFiles = (try? FileManager.default.contentsOfDirectory(at: docDir, includingPropertiesForKeys: nil))?.filter { $0.pathExtension == "json" } ?? []
