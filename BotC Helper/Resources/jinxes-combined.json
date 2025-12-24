@@ -1,0 +1,1443 @@
+[
+  {
+    "id": "bountyhunter-philosopher-jinx",
+    "roles": [
+      "bountyhunter",
+      "philosopher"
+    ],
+    "text": {
+      "es": "Si el Filósofo gana la habilidad del Cazarrecompensas, un Ciudadano quizás se vuelva malvado.",
+      "en": "If the Philosopher gains the Bounty Hunter ability, a Townsfolk might turn evil."
+    }
+  },
+  {
+    "id": "bountyhunter-kazali-jinx",
+    "roles": [
+      "bountyhunter",
+      "kazali"
+    ],
+    "text": {
+      "es": "Si el Kazali convierte al Cazarrecompensas en un Secuaz, no se crea un Ciudadano malvado.",
+      "en": "If the Kazali turns the Bounty Hunter into a Minion, an evil Townsfolk is not created."
+    }
+  },
+  {
+    "id": "mathematician-chambermaid-jinx",
+    "roles": [
+      "mathematician",
+      "chambermaid"
+    ],
+    "text": {
+      "es": "La Sirvienta puede detectar si el Matemático se despertará esta noche.",
+      "en": "The Chambermaid can detect if the Mathematician will wake tonight."
+    }
+  },
+  {
+    "id": "mathematician-lunatic-jinx",
+    "roles": [
+      "mathematician",
+      "lunatic"
+    ],
+    "text": {
+      "es": "El Matemático quizás aprenda si el Lunático ataca a un jugador diferente al jugador atacado por el Demonio real.",
+      "en": "The Mathematician might learn if the Lunatic attacks a different player than the real Demon attacked."
+    }
+  },
+  {
+    "id": "mathematician-drunk-jinx",
+    "roles": [
+      "mathematician",
+      "drunk"
+    ],
+    "text": {
+      "es": "El Matemático quizás aprenda si la habilidad del Borracho resultó en información falsa, o si no logró funcionar adecuadamente.",
+      "en": "The Mathematician might learn if the Drunk's ability yielded false info or failed to work properly."
+    }
+  },
+  {
+    "id": "mathematician-marionette-jinx",
+    "roles": [
+      "mathematician",
+      "marionette"
+    ],
+    "text": {
+      "es": "El Matemático quizás aprenda si la habilidad de la Marioneta resultó en información falsa, o si no logró funcionar adecuadamente.",
+      "en": "The Mathematician might learn if the Marionette's ability yielded false info or failed to work properly."
+    }
+  },
+  {
+    "id": "alchemist-spy-jinx",
+    "roles": [
+      "alchemist",
+      "spy"
+    ],
+    "text": {
+      "es": "Un Alquimista-Espía no tiene la habilidad del Espía, y además el Espía está en juego. Luego de cada ejecución, un Alquimista-Espía vivo puede públicamente adivinar qué jugador vivo es el Espía. Si adivina correctamente, el Demonio debe escoger al Espía esta noche.",
+      "en": "An Alchemist-Spy has no Spy ability & a Spy is in play. After each execution, a living Alchemist-Spy may publicly guess a living player as the Spy. If correct, the Demon must choose the Spy tonight."
+    }
+  },
+  {
+    "id": "alchemist-widow-jinx",
+    "roles": [
+      "alchemist",
+      "widow"
+    ],
+    "text": {
+      "es": "El Alquimista-Viuda no tiene la habilidad de la Viuda, y además la Viuda está en juego. Luego de cada ejecución, un Alquimista-Viuda vivo puede públicamente adivinar qué jugador vivo es la Viuda. Si adivina correctamente, el Demonio debe escoger a la Viuda esta noche.",
+      "en": "An Alchemist-Widow has no Widow ability & a Widow is in play. After each execution, a living Alchemist-Widow may publicly guess a living player as the Widow. If correct, the Demon must choose the Widow tonight."
+    }
+  },
+  {
+    "id": "alchemist-marionette-jinx",
+    "roles": [
+      "alchemist",
+      "marionette"
+    ],
+    "text": {
+      "es": "Un Alquimista-Marioneta no tiene la habilidad de la Marioneta, y además la Marioneta está en juego.",
+      "en": "An Alchemist-Marionette has no Marionette ability & the Marionette is in play."
+    }
+  },
+  {
+    "id": "alchemist-wraith-jinx",
+    "roles": [
+      "alchemist",
+      "wraith"
+    ],
+    "text": {
+      "es": "El Alquimista-Espectro no tiene la habilidad del Espectro, y además el Espectro está en juego. Luego de cada ejecución, un Alquimista-Espectro vivo puede adivinar públicamente qué jugador vivo es el Espectro. Si adivina correctamente, el Demonio debe escoger al Espectro esta noche.",
+      "en": "An Alchemist-Wraith has no Wraith ability & a Wraith is in play. After each execution, a living Alchemist-Wraith may publicly guess a living player as the Wraith. If correct, the Demon must choose the Wraith tonight."
+    }
+  },
+  {
+    "id": "alchemist-summoner-jinx",
+    "roles": [
+      "alchemist",
+      "summoner"
+    ],
+    "text": {
+      "es": "El Alquimista-Invocador no recibe coartadas, y escoge qué Demonio pero no qué jugador. Si él muere antes de que esto pueda ocurrir, los malvados ganan. [Ningún Demonio]",
+      "en": "The Alchemist-Summoner does not get bluffs, and chooses which Demon but not which player. If they die before this happens, evil wins. [No Demon]"
+    }
+  },
+  {
+    "id": "alchemist-mastermind-jinx",
+    "roles": [
+      "alchemist",
+      "mastermind"
+    ],
+    "text": {
+      "es": "Un Alquimista-Mente Maestra no tiene la habilidad de la Mente Maestra, y además la Mente Maestra no está en juego.",
+      "en": "An Alchemist-Mastermind has no Mastermind ability & the Mastermind is not-in-play."
+    }
+  },
+  {
+    "id": "alchemist-organgrinder-jinx",
+    "roles": [
+      "alchemist",
+      "organgrinder"
+    ],
+    "text": {
+      "es": "Si el Alquimista tiene la habilidad del Organillero, el Organillero está en juego. Si ambos están sobrios, ambos están borrachos.",
+      "en": "If the Alchemist has the Organ Grinder ability, the Organ Grinder is in play. If both are sober, both are drunk."
+    }
+  },
+  {
+    "id": "alchemist-boffin-jinx",
+    "roles": [
+      "alchemist",
+      "boffin"
+    ],
+    "text": {
+      "es": "Si el Alquimista tiene la habilidad del Científico, el Alquimista no aprende qué habilidad tiene el Demonio.",
+      "en": "If the Alchemist has the Boffin ability, the Alchemist does not learn what ability the Demon has."
+    }
+  },
+  {
+    "id": "cannibal-princess-jinx",
+    "roles": [
+      "cannibal",
+      "princess"
+    ],
+    "text": {
+      "es": "Si el Caníbal nominó, ejecutó, y mató a la Princesa hoy, el Demonio no mata esta noche.",
+      "en": "If the Cannibal nominated, executed, & killed the Princess today, the Demon doesn’t kill tonight."
+    }
+  },
+  {
+    "id": "cannibal-juggler-jinx",
+    "roles": [
+      "cannibal",
+      "juggler"
+    ],
+    "text": {
+      "es": "Si el Malabarista adivina en su primer día y muere por ejecución, esta noche el Caníbal vivo aprende cuántos intentos consiguió correctamente el Malabarista.",
+      "en": "If the Juggler guesses on their first day and dies by execution, tonight the living Cannibal learns how many guesses the Juggler got correct."
+    }
+  },
+  {
+    "id": "cannibal-butler-jinx",
+    "roles": [
+      "cannibal",
+      "butler"
+    ],
+    "text": {
+      "es": "Si el Caníbal gana la habilidad del Mayordomo, el Caníbal aprende esto.",
+      "en": "If the Cannibal gains the Butler ability, the Cannibal learns this."
+    }
+  },
+  {
+    "id": "cannibal-zealot-jinx",
+    "roles": [
+      "cannibal",
+      "zealot"
+    ],
+    "text": {
+      "es": "Si el Caníbal gana la habilidad del Fanático, el Caníbal aprende esto.",
+      "en": "If the Cannibal gains the Zealot ability, the Cannibal learns this."
+    }
+  },
+  {
+    "id": "magician-spy-jinx",
+    "roles": [
+      "magician",
+      "spy"
+    ],
+    "text": {
+      "es": "Cuando el Espía mira el Grimorio, las fichas de rol del Demonio y del Mago son removidas.",
+      "en": "When the Spy sees the Grimoire, the Demon and Magician's character tokens are removed."
+    }
+  },
+  {
+    "id": "magician-widow-jinx",
+    "roles": [
+      "magician",
+      "widow"
+    ],
+    "text": {
+      "es": "Cuando la Viuda mira el Grimorio, las fichas de rol del Demonio y del Mago son removidas.",
+      "en": "When the Widow sees the Grimoire, the Demon and Magician's character tokens are removed."
+    }
+  },
+  {
+    "id": "magician-marionette-jinx",
+    "roles": [
+      "magician",
+      "marionette"
+    ],
+    "text": {
+      "es": "Si el Mago está vivo, el Demonio no sabe cuál de sus vecinos es la Marioneta.",
+      "en": "If the Magician is alive, the Demon doesn't know which neighbor is the Marionette."
+    }
+  },
+  {
+    "id": "magician-wraith-jinx",
+    "roles": [
+      "magician",
+      "wraith"
+    ],
+    "text": {
+      "es": "Luego de cada ejecución, un Mago vivo puede públicamente adivinar qué jugador vivo es el Espectro. Si adivina correctamente, el Demonio debe escoger al Espectro esta noche.",
+      "en": "After each execution, the living Magician may publicly guess a living player as the Wraith. If correct, the Demon must choose the Wraith tonight."
+    }
+  },
+  {
+    "id": "magician-vizier-jinx",
+    "roles": [
+      "magician",
+      "vizier"
+    ],
+    "text": {
+      "es": "Si el Visir está en juego, el Mago no tiene ninguna habilidad pero es inmune a la habilidad del Visir.",
+      "en": "If the Vizier is in play, the Magician has no ability but is immune to the Vizier's ability."
+    }
+  },
+  {
+    "id": "magician-legion-jinx",
+    "roles": [
+      "magician",
+      "legion"
+    ],
+    "text": {
+      "es": "El Mago se despierta junto a la Legión y quizás se registre como malvado. La Legión sabe si un Mago está en juego, pero no qué jugador es.",
+      "en": "The Magician wakes with Legion and might register as evil. Legion knows if a Magician is in play, but not which player it is."
+    }
+  },
+  {
+    "id": "butler-organgrinder-jinx",
+    "roles": [
+      "butler",
+      "organgrinder"
+    ],
+    "text": {
+      "es": "Si el Organillero está causando una votación con los ojos cerrados, el Mayordomo puede levantar su mano para votar, pero su voto se contabiliza solamente si su amo votó también.",
+      "en": "If the Organ Grinder is causing eyes closed voting, the Butler may raise their hand to vote but their vote is only counted if their master voted too."
+    }
+  },
+  {
+    "id": "recluse-sage-jinx",
+    "roles": [
+      "recluse",
+      "sage"
+    ],
+    "text": {
+      "es": "El Recluso quizás se registre como el Demonio para el Sabio.",
+      "en": "The Recluse might register as the Demon to the Sage."
+    }
+  },
+  {
+    "id": "recluse-ogre-jinx",
+    "roles": [
+      "recluse",
+      "ogre"
+    ],
+    "text": {
+      "es": "Si el Recluso se registra como malvado para el Ogro, el Ogro aprende que él es malvado.",
+      "en": "If the Recluse registers as evil to the Ogre, the Ogre learns that they are evil."
+    }
+  },
+  {
+    "id": "plaguedoctor-spy-jinx",
+    "roles": [
+      "plaguedoctor",
+      "spy"
+    ],
+    "text": {
+      "es": "Si el Narrador fuera a ganar la habilidad del Espía, en lugar de esto, un Secuaz gana esta habilidad y la aprende.",
+      "en": "If the Storyteller would gain the Spy ability, a Minion gains it, and learns this."
+    }
+  },
+  {
+    "id": "plaguedoctor-fearmonger-jinx",
+    "roles": [
+      "plaguedoctor",
+      "fearmonger"
+    ],
+    "text": {
+      "es": "Si el Narrador fuera a ganar la habilidad del Alarmista, en lugar de esto, un Secuaz gana esta habilidad y la aprende.",
+      "en": "If the Storyteller would gain the Fearmonger ability, a Minion gains it, and learns this."
+    }
+  },
+  {
+    "id": "plaguedoctor-marionette-jinx",
+    "roles": [
+      "plaguedoctor",
+      "marionette"
+    ],
+    "text": {
+      "es": "Si el Narrador fuera a ganar la habilidad de la Marioneta, uno de los vecinos buenos del Demonio se convierte en la Marioneta.",
+      "en": "If the Storyteller would gain the Marionette ability, one of the Demon's good neighbors becomes the Marionette."
+    }
+  },
+  {
+    "id": "plaguedoctor-wraith-jinx",
+    "roles": [
+      "plaguedoctor",
+      "wraith"
+    ],
+    "text": {
+      "es": "Si el Narrador fuera a ganar la habilidad del Espectro, en lugar de esto, un Secuaz gana esta habilidad y la aprende.",
+      "en": "If the Storyteller would gain the Wraith ability, a Minion gains it, and learns this."
+    }
+  },
+  {
+    "id": "plaguedoctor-eviltwin-jinx",
+    "roles": [
+      "plaguedoctor",
+      "eviltwin"
+    ],
+    "text": {
+      "es": "Si el Narrador fuera a ganar la habilidad del Gemelo Malvado, un jugador se convierte en el Gemelo Malvado.",
+      "en": "If the Storyteller would gain the Evil Twin ability, a player becomes the Evil Twin."
+    }
+  },
+  {
+    "id": "plaguedoctor-goblin-jinx",
+    "roles": [
+      "plaguedoctor",
+      "goblin"
+    ],
+    "text": {
+      "es": "Si el Narrador fuera a ganar la habilidad del Duende, en lugar de esto, un Secuaz gana esta habilidad y la aprende.",
+      "en": "If the Storyteller would gain the Goblin ability, a Minion gains it, and learns this."
+    }
+  },
+  {
+    "id": "plaguedoctor-boomdandy-jinx",
+    "roles": [
+      "plaguedoctor",
+      "boomdandy"
+    ],
+    "text": {
+      "es": "Si el Narrador fuera a ganar la habilidad del Guapetardo, un jugador se convierte en el Guapetardo.",
+      "en": "If the Storyteller would gain the Boomdandy ability, a player becomes the Boomdandy."
+    }
+  },
+  {
+    "id": "plaguedoctor-scarletwoman-jinx",
+    "roles": [
+      "plaguedoctor",
+      "scarletwoman"
+    ],
+    "text": {
+      "es": "Si el Narrador fuera a ganar la habilidad de la Mujer Escarlata, en lugar de esto, un Secuaz gana esta habilidad y la aprende.",
+      "en": "If the Storyteller would gain the Scarlet Woman ability, a Minion gains it, and learns this."
+    }
+  },
+  {
+    "id": "plaguedoctor-baron-jinx",
+    "roles": [
+      "plaguedoctor",
+      "baron"
+    ],
+    "text": {
+      "es": "Si el Narrador fuera a ganar la habilidad del Barón, hasta 2 jugadores se convierten en Extranjeros.",
+      "en": "If the Storyteller would gain the Baron ability, up to two players become Outsiders."
+    }
+  },
+  {
+    "id": "heretic-godfather-jinx",
+    "roles": [
+      "heretic",
+      "godfather"
+    ],
+    "text": {
+      "es": "Solo 1 de los roles conjurados puede estar en juego.",
+      "en": "Only 1 jinxed character can be in play."
+    }
+  },
+  {
+    "id": "heretic-spy-jinx",
+    "roles": [
+      "heretic",
+      "spy"
+    ],
+    "text": {
+      "es": "Solo 1 de los roles conjurados puede estar en juego.",
+      "en": "Only 1 jinxed character can be in play."
+    }
+  },
+  {
+    "id": "heretic-pithag-jinx",
+    "roles": [
+      "heretic",
+      "pithag"
+    ],
+    "text": {
+      "es": "Solo 1 de los roles conjurados puede estar en juego.",
+      "en": "Only 1 jinxed character can be in play."
+    }
+  },
+  {
+    "id": "heretic-widow-jinx",
+    "roles": [
+      "heretic",
+      "widow"
+    ],
+    "text": {
+      "es": "Solo 1 de los roles conjurados puede estar en juego.",
+      "en": "Only 1 jinxed character can be in play."
+    }
+  },
+  {
+    "id": "heretic-baron-jinx",
+    "roles": [
+      "heretic",
+      "baron"
+    ],
+    "text": {
+      "es": "Solo 1 de los roles conjurados puede estar en juego.",
+      "en": "Only 1 jinxed character can be in play."
+    }
+  },
+  {
+    "id": "heretic-lleech-jinx",
+    "roles": [
+      "heretic",
+      "lleech"
+    ],
+    "text": {
+      "es": "Solo 1 de los roles conjurados puede estar en juego.",
+      "en": "Only 1 jinxed character can be in play."
+    }
+  },
+  {
+    "id": "spy-poppygrower-jinx",
+    "roles": [
+      "spy",
+      "poppygrower"
+    ],
+    "text": {
+      "es": "Si el Cultivador de Amapolas posee su habilidad, el Espía no observa el Grimorio.",
+      "en": "If the Poppy Grower has their ability, the Spy does not see the Grimoire."
+    }
+  },
+  {
+    "id": "spy-ogre-jinx",
+    "roles": [
+      "spy",
+      "ogre"
+    ],
+    "text": {
+      "es": "El Espía se registra como malvado para el Ogro.",
+      "en": "The Spy registers as evil to the Ogre."
+    }
+  },
+  {
+    "id": "spy-damsel-jinx",
+    "roles": [
+      "spy",
+      "damsel"
+    ],
+    "text": {
+      "es": "Si el Espía está (o ha estado) en juego, la Damisela está envenenada.",
+      "en": "If the Spy is (or has been) in play, the Damsel is poisoned."
+    }
+  },
+  {
+    "id": "cerenovus-goblin-jinx",
+    "roles": [
+      "cerenovus",
+      "goblin"
+    ],
+    "text": {
+      "es": "El Cerenovus puede escoger hacer a un jugador loco de que es el Duende.",
+      "en": "The Cerenovus may choose to make a player mad that they are the Goblin."
+    }
+  },
+  {
+    "id": "pithag-villageidiot-jinx",
+    "roles": [
+      "pithag",
+      "villageidiot"
+    ],
+    "text": {
+      "es": "Si hay una ficha disponible, la Vieja del Pozo puede crear un Tonto del Pueblo adicional. De ser así, el Tonto del Pueblo borracho quizás cambie.",
+      "en": "If there is a spare token, the Pit-Hag can create an extra Village Idiot. If so, the drunk Village Idiot might change."
+    }
+  },
+  {
+    "id": "pithag-cultleader-jinx",
+    "roles": [
+      "pithag",
+      "cultleader"
+    ],
+    "text": {
+      "es": "Si la Vieja del Pozo convierte a un jugador malvado en el Cultista, él no puede convertirse en bueno debido a su propia habilidad.",
+      "en": "If the Pit-Hag turns an evil player into the Cult Leader, they can't turn good due to their own ability."
+    }
+  },
+  {
+    "id": "pithag-goon-jinx",
+    "roles": [
+      "pithag",
+      "goon"
+    ],
+    "text": {
+      "es": "Si la Vieja del Pozo convierte a un jugador malvado en el Matón, él no puede convertirse en bueno debido a su propia habilidad.",
+      "en": "If the Pit-Hag turns an evil player into the Goon, they can't turn good due to their own ability."
+    }
+  },
+  {
+    "id": "pithag-ogre-jinx",
+    "roles": [
+      "pithag",
+      "ogre"
+    ],
+    "text": {
+      "es": "Si la Vieja del Pozo convierte a un jugador malvado en el Ogro, él no puede convertirse en bueno debido a su propia habilidad.",
+      "en": "If the Pit-Hag turns an evil player into the Ogre, they can't turn good due to their own ability."
+    }
+  },
+  {
+    "id": "pithag-politician-jinx",
+    "roles": [
+      "pithag",
+      "politician"
+    ],
+    "text": {
+      "es": "Si la Vieja del Pozo convierte a un jugador malvado en el Político, él no puede convertirse en bueno debido a su propia habilidad.",
+      "en": "If the Pit-Hag turns an evil player into the Politician, they can't turn good due to their own ability."
+    }
+  },
+  {
+    "id": "pithag-damsel-jinx",
+    "roles": [
+      "pithag",
+      "damsel"
+    ],
+    "text": {
+      "es": "Si la Vieja del Pozo crea una Damisela, el Narrador escoge al jugador.",
+      "en": "If a Pit-Hag creates a Damsel, the Storyteller chooses which player it is."
+    }
+  },
+  {
+    "id": "widow-poppygrower-jinx",
+    "roles": [
+      "widow",
+      "poppygrower"
+    ],
+    "text": {
+      "es": "Si el Cultivador de Amapolas posee su habilidad, la Viuda no observa el Grimorio.",
+      "en": "If the Poppy Grower has their ability, the Widow does not see the Grimoire."
+    }
+  },
+  {
+    "id": "widow-damsel-jinx",
+    "roles": [
+      "widow",
+      "damsel"
+    ],
+    "text": {
+      "es": "Si la Viuda está (o ha estado) en juego, la Damisela está envenenada.",
+      "en": "If the Widow is (or has been) in play, the Damsel is poisoned."
+    }
+  },
+  {
+    "id": "marionette-balloonist-jinx",
+    "roles": [
+      "marionette",
+      "balloonist"
+    ],
+    "text": {
+      "es": "Si la Marioneta cree que es el Aeronauta, un Extranjero quizás haya sido agregado durante la preparación del juego.",
+      "en": "If the Marionette thinks that they are the Balloonist, an Outsider might have been added during setup."
+    }
+  },
+  {
+    "id": "marionette-huntsman-jinx",
+    "roles": [
+      "marionette",
+      "huntsman"
+    ],
+    "text": {
+      "es": "Si la Marioneta cree que es el Cazador, la Damisela fue añadida durante la preparación del juego.",
+      "en": "If the Marionette thinks that they are the Huntsman, the Damsel was added during setup."
+    }
+  },
+  {
+    "id": "marionette-summoner-jinx",
+    "roles": [
+      "marionette",
+      "summoner"
+    ],
+    "text": {
+      "es": "Si hubiera una Marioneta en juego, ella entra en juego luego del Demonio y debe empezar como su vecina.",
+      "en": "If there would be a Marionette in play, they enter play after the Demon & must start as their neighbor."
+    }
+  },
+  {
+    "id": "marionette-lilmonsta-jinx",
+    "roles": [
+      "marionette",
+      "lilmonsta"
+    ],
+    "text": {
+      "es": "Si hubiera una Marioneta en juego, ella entra en juego luego del Demonio y debe empezar como su vecina.",
+      "en": "If there would be a Marionette in play, they enter play after the Demon & must start as their neighbor."
+    }
+  },
+  {
+    "id": "marionette-kazali-jinx",
+    "roles": [
+      "marionette",
+      "kazali"
+    ],
+    "text": {
+      "es": "Si hubiera una Marioneta en juego, ella entra en juego luego del Demonio y debe empezar como su vecina.",
+      "en": "If there would be a Marionette in play, they enter play after the Demon & must start as their neighbor."
+    }
+  },
+  {
+    "id": "summoner-clockmaker-jinx",
+    "roles": [
+      "summoner",
+      "clockmaker"
+    ],
+    "text": {
+      "es": "El Invocador se registra como el Demonio para el Relojero.",
+      "en": "The Summoner registers as the Demon to the Clockmaker."
+    }
+  },
+  {
+    "id": "summoner-preacher-jinx",
+    "roles": [
+      "summoner",
+      "preacher"
+    ],
+    "text": {
+      "es": "Si el Invocador vivo no posee habilidad, el Narrador tiene la habilidad del Invocador.",
+      "en": "If the living Summoner has no ability, the Storyteller has the Summoner ability."
+    }
+  },
+  {
+    "id": "summoner-engineer-jinx",
+    "roles": [
+      "summoner",
+      "engineer"
+    ],
+    "text": {
+      "es": "Si el Invocador vivo sale del juego, el Narrador posee la habilidad del Invocador.",
+      "en": "If the living Summoner is removed from play, the Storyteller has the Summoner ability."
+    }
+  },
+  {
+    "id": "summoner-courtier-jinx",
+    "roles": [
+      "summoner",
+      "courtier"
+    ],
+    "text": {
+      "es": "Si el Invocador vivo no posee habilidad, el Narrador tiene la habilidad del Invocador.",
+      "en": "If the living Summoner has no ability, the Storyteller has the Summoner ability."
+    }
+  },
+  {
+    "id": "summoner-poppygrower-jinx",
+    "roles": [
+      "summoner",
+      "poppygrower"
+    ],
+    "text": {
+      "es": "Si el Cultivador de Amapolas está vivo en la 3era noche, el Invocador escoge qué Demonio pero no qué jugador.",
+      "en": "If the Poppy Grower is alive on the 3rd night, the Summoner chooses which Demon but not which player."
+    }
+  },
+  {
+    "id": "summoner-hatter-jinx",
+    "roles": [
+      "summoner",
+      "hatter"
+    ],
+    "text": {
+      "es": "Si el Invocador crea un segundo Demonio vivo, las muertes esta noche son arbitrarias.",
+      "en": "If the Summoner creates a second living Demon, deaths tonight are arbitrary."
+    }
+  },
+  {
+    "id": "summoner-pithag-jinx",
+    "roles": [
+      "summoner",
+      "pithag"
+    ],
+    "text": {
+      "es": "Si el Invocador crea un segundo Demonio vivo, las muertes esta noche son arbitrarias.",
+      "en": "If the Summoner creates a second living Demon, deaths tonight are arbitrary."
+    }
+  },
+  {
+    "id": "summoner-pukka-jinx",
+    "roles": [
+      "summoner",
+      "pukka"
+    ],
+    "text": {
+      "es": "El Invocador puede invocar al Pukka en la 2da noche en lugar de la 3era.",
+      "en": "The Summoner may summon a Pukka on the 2nd night instead of the 3rd."
+    }
+  },
+  {
+    "id": "summoner-kazali-jinx",
+    "roles": [
+      "summoner",
+      "kazali"
+    ],
+    "text": {
+      "es": "Si el Invocador crea un segundo Demonio vivo, las muertes esta noche son arbitrarias.",
+      "en": "If the Summoner creates a second living Demon, deaths tonight are arbitrary."
+    }
+  },
+  {
+    "id": "summoner-zombuul-jinx",
+    "roles": [
+      "summoner",
+      "zombuul"
+    ],
+    "text": {
+      "es": "Si el Invocador invoca al Zombuul en un jugador muerto, el Zombuul ya ha \"muerto una vez\".",
+      "en": "If the Summoner summons a dead player into the Zombuul, the Zombuul has already \"died once\"."
+    }
+  },
+  {
+    "id": "summoner-lordoftyphon-jinx",
+    "roles": [
+      "summoner",
+      "lordoftyphon"
+    ],
+    "text": {
+      "es": "Si el Señor del Tifón es invocado, deberá ser vecino de un Secuaz, y además su otro vecino se convierte en un Secuaz malvado.",
+      "en": "If a Lord of Typhon is summoned, they must neighbor a Minion & their other neighbor becomes an evil Minion."
+    }
+  },
+  {
+    "id": "mastermind-vigormortis-jinx",
+    "roles": [
+      "mastermind",
+      "vigormortis"
+    ],
+    "text": {
+      "es": "Una Mente Maestra que posee su habilidad la mantiene si el Vigormortis muere.",
+      "en": "A Mastermind that has their ability keeps it if the Vigormortis dies."
+    }
+  },
+  {
+    "id": "scarletwoman-fanggu-jinx",
+    "roles": [
+      "scarletwoman",
+      "fanggu"
+    ],
+    "text": {
+      "es": "Si hubiera dos Demonios, uno de los cuales fue la Mujer Escarlata, la Mujer Escarlata permanece como la Mujer Escarlata.",
+      "en": "If there would be two Demons, one of which was the Scarlet Woman, the Scarlet Woman remains the Scarlet Woman."
+    }
+  },
+  {
+    "id": "scarletwoman-alhadikhia-jinx",
+    "roles": [
+      "scarletwoman",
+      "alhadikhia"
+    ],
+    "text": {
+      "es": "Si hubiera dos Demonios, uno de los cuales fue anteriormente la Mujer Escarlata, la Mujer Escarlata se convierte en la Mujer Escarlata nuevamente.",
+      "en": "If there would be two Demons, one of which was the Scarlet Woman, the Scarlet Woman becomes the Scarlet Woman again."
+    }
+  },
+  {
+    "id": "vizier-investigator-jinx",
+    "roles": [
+      "vizier",
+      "investigator"
+    ],
+    "text": {
+      "es": "El Narrador no declara que el Visir está en juego.",
+      "en": "The Storyteller doesn't declare the Vizier is in play."
+    }
+  },
+  {
+    "id": "vizier-preacher-jinx",
+    "roles": [
+      "vizier",
+      "preacher"
+    ],
+    "text": {
+      "es": "Si el Visir pierde su habilidad, él aprende esto, y no puede morir durante el día.",
+      "en": "If the Vizier loses their ability, they learn this, and cannot die during the day."
+    }
+  },
+  {
+    "id": "vizier-alsaahir-jinx",
+    "roles": [
+      "vizier",
+      "alsaahir"
+    ],
+    "text": {
+      "es": "El Narrador no declara que el Visir está en juego.",
+      "en": "The Storyteller doesn't declare the Vizier is in play."
+    }
+  },
+  {
+    "id": "vizier-courtier-jinx",
+    "roles": [
+      "vizier",
+      "courtier"
+    ],
+    "text": {
+      "es": "Si el Visir pierde su habilidad, él aprende esto, y no puede morir durante el día.",
+      "en": "If the Vizier loses their ability, they learn this, and cannot die during the day."
+    }
+  },
+  {
+    "id": "vizier-politician-jinx",
+    "roles": [
+      "vizier",
+      "politician"
+    ],
+    "text": {
+      "es": "El Político quizás se registre como malvado para el Visir.",
+      "en": "The Politician might register as evil to the Vizier."
+    }
+  },
+  {
+    "id": "vizier-zealot-jinx",
+    "roles": [
+      "vizier",
+      "zealot"
+    ],
+    "text": {
+      "es": "El Fanático quizás se registre como malvado para el Visir.",
+      "en": "The Zealot might register as evil to the Vizier."
+    }
+  },
+  {
+    "id": "vizier-fearmonger-jinx",
+    "roles": [
+      "vizier",
+      "fearmonger"
+    ],
+    "text": {
+      "es": "El Visir se despierta junto al Alarmista, aprende a quién escoge, y no puede elegir ejecutar a ese jugador inmediatamente.",
+      "en": "The Vizier wakes with the Fearmonger, learns who they choose and cannot choose to immediately execute that player."
+    }
+  },
+  {
+    "id": "boffin-villageidiot-jinx",
+    "roles": [
+      "boffin",
+      "villageidiot"
+    ],
+    "text": {
+      "es": "Si hay una ficha disponible, el Científico le puede otorgar la habilidad del Tonto del Pueblo al Demonio.",
+      "en": "If there is a spare token, the Boffin can give the Demon the Village Idiot ability."
+    }
+  },
+  {
+    "id": "boffin-cultleader-jinx",
+    "roles": [
+      "boffin",
+      "cultleader"
+    ],
+    "text": {
+      "es": "Si el Demonio posee la habilidad del Cultista, él no se puede volver bueno debido a esta habilidad.",
+      "en": "If the Demon has the Cult Leader ability, they can’t turn good due to this ability."
+    }
+  },
+  {
+    "id": "boffin-goon-jinx",
+    "roles": [
+      "boffin",
+      "goon"
+    ],
+    "text": {
+      "es": "Si el Demonio posee la habilidad del Matón, él no se puede volver bueno debido a esta habilidad.",
+      "en": "If the Demon has the Goon ability, they can’t turn good due to this ability."
+    }
+  },
+  {
+    "id": "boffin-ogre-jinx",
+    "roles": [
+      "boffin",
+      "ogre"
+    ],
+    "text": {
+      "es": "El Demonio no puede poseer la habilidad del Ogro.",
+      "en": "The Demon cannot have the Ogre ability."
+    }
+  },
+  {
+    "id": "boffin-drunk-jinx",
+    "roles": [
+      "boffin",
+      "drunk"
+    ],
+    "text": {
+      "es": "El Demonio no puede poseer la habilidad del Borracho.",
+      "en": "The Demon cannot have the Drunk ability."
+    }
+  },
+  {
+    "id": "boffin-politician-jinx",
+    "roles": [
+      "boffin",
+      "politician"
+    ],
+    "text": {
+      "es": "El Demonio no puede poseer la habilidad del Político.",
+      "en": "The Demon cannot have the Politician ability."
+    }
+  },
+  {
+    "id": "boffin-heretic-jinx",
+    "roles": [
+      "boffin",
+      "heretic"
+    ],
+    "text": {
+      "es": "El Demonio no puede poseer la habilidad del Hereje.",
+      "en": "The Demon cannot have the Heretic ability."
+    }
+  },
+  {
+    "id": "yaggababble-exorcist-jinx",
+    "roles": [
+      "yaggababble",
+      "exorcist"
+    ],
+    "text": {
+      "es": "Si el Exorcista escoge al Yaggablabla, el Yaggablabla no mata esta noche.",
+      "en": "If the Exorcist chooses the Yaggababble, the Yaggababble does not kill tonight."
+    }
+  },
+  {
+    "id": "lilmonsta-magician-jinx",
+    "roles": [
+      "lilmonsta",
+      "magician"
+    ],
+    "text": {
+      "es": "Si el Mago está vivo, el Narrador escoge qué Secuaz cuida del Monstruito.",
+      "en": "If the Magician is alive, the Storyteller chooses which Minion babysits Lil' Monsta."
+    }
+  },
+  {
+    "id": "lilmonsta-poppygrower-jinx",
+    "roles": [
+      "lilmonsta",
+      "poppygrower"
+    ],
+    "text": {
+      "es": "Si el Monstruito y el Cultivador de Amapolas están vivos, los Secuaces se despiertan uno por uno, hasta que uno de ellos elija tomar la ficha del Monstruito.",
+      "en": "If Lil' Monsta & the Poppy Grower are alive, Minions wake one by one, until one of them chooses to take the Lil' Monsta token."
+    }
+  },
+  {
+    "id": "lilmonsta-hatter-jinx",
+    "roles": [
+      "lilmonsta",
+      "hatter"
+    ],
+    "text": {
+      "es": "Si el Sombrerero muere y el Demonio escoge al Monstruito, él también escoge en qué Secuaz se convierte.",
+      "en": "If the Hatter dies & the Demon chooses Lil' Monsta, they also choose a Minion to become."
+    }
+  },
+  {
+    "id": "lilmonsta-psychopath-jinx",
+    "roles": [
+      "lilmonsta",
+      "psychopath"
+    ],
+    "text": {
+      "es": "Si el Sicópata está cuidando del Monstruito, él muere cuando es ejecutado.",
+      "en": "If the Psychopath is babysitting Lil' Monsta, they die when executed."
+    }
+  },
+  {
+    "id": "lilmonsta-scarletwoman-jinx",
+    "roles": [
+      "lilmonsta",
+      "scarletwoman"
+    ],
+    "text": {
+      "es": "Si el Monstruito muere con 5 o más jugadores vivos, la Mujer Escarlata cuida del Monstruito por el resto del juego.",
+      "en": "If Lil' Monsta dies with 5 or more players alive, the Scarlet Woman babysits Lil' Monsta for the rest of the game."
+    }
+  },
+  {
+    "id": "lilmonsta-vizier-jinx",
+    "roles": [
+      "lilmonsta",
+      "vizier"
+    ],
+    "text": {
+      "es": "Si el Visir está cuidando del Monstruito, él muere cuando es ejecutado.",
+      "en": "If the Vizier is babysitting Lil' Monsta, they die when executed."
+    }
+  },
+  {
+    "id": "vortox-banshee-jinx",
+    "roles": [
+      "vortox",
+      "banshee"
+    ],
+    "text": {
+      "es": "Si el Vórtice mata a la Llorona, todos los jugadores aprenden que la Llorona ha muerto.",
+      "en": "If the Vortox kills the Banshee, all players learn that the Banshee has died."
+    }
+  },
+  {
+    "id": "legion-preacher-jinx",
+    "roles": [
+      "legion",
+      "preacher"
+    ],
+    "text": {
+      "es": "Si el Predicador escoge a la Legión, la Legión mantiene su habilidad, pero el Predicador quizás aprenda que ella es la Legión.",
+      "en": "If the Preacher chooses Legion, Legion keeps their ability, but the Preacher might learn they are Legion."
+    }
+  },
+  {
+    "id": "legion-engineer-jinx",
+    "roles": [
+      "legion",
+      "engineer"
+    ],
+    "text": {
+      "es": "Si la Legión es creada, todos los jugadores malvados se convierten en Legión. Si la Legión está en juego, el Ingeniero empieza sabiendo esto, pero no tiene ninguna habilidad.",
+      "en": "If Legion is created, all evil players become Legion. If Legion is in play, the Engineer starts knowing this but has no ability."
+    }
+  },
+  {
+    "id": "legion-minstrel-jinx",
+    "roles": [
+      "legion",
+      "minstrel"
+    ],
+    "text": {
+      "es": "Si la Legión muere por ejecución hoy, la Legión mantiene su habilidad, pero el Trovador quizás aprenda que ella es la Legión.",
+      "en": "If Legion died by execution today, Legion keeps their ability, but the Minstrel might learn they are Legion."
+    }
+  },
+  {
+    "id": "legion-hatter-jinx",
+    "roles": [
+      "legion",
+      "hatter"
+    ],
+    "text": {
+      "es": "Si la Legión es creada, todos los jugadores malvados se convierten en Legión. Si la Legión está en juego, el Sombrerero no tiene ninguna habilidad.",
+      "en": "If Legion is created, all evil players become Legion. If Legion is in play, the Hatter has no ability."
+    }
+  },
+  {
+    "id": "legion-politician-jinx",
+    "roles": [
+      "legion",
+      "politician"
+    ],
+    "text": {
+      "es": "El Político quizás se registre como malvado para la Legión.",
+      "en": "The Politician might register as evil to Legion."
+    }
+  },
+  {
+    "id": "legion-zealot-jinx",
+    "roles": [
+      "legion",
+      "zealot"
+    ],
+    "text": {
+      "es": "El Fanático quizás se registre como malvado para la Legión.",
+      "en": "The Zealot might register as evil to Legion."
+    }
+  },
+  {
+    "id": "legion-summoner-jinx",
+    "roles": [
+      "legion",
+      "summoner"
+    ],
+    "text": {
+      "es": "Si la Legión es invocada, todos los jugadores malvados se convierten en la Legión.",
+      "en": "If Legion is summoned, all evil players become Legion."
+    }
+  },
+  {
+    "id": "lleech-slayer-jinx",
+    "roles": [
+      "lleech",
+      "slayer"
+    ],
+    "text": {
+      "es": "Si el Exterminador extermina a la víctima de la Sanguijuela, la víctima muere.",
+      "en": "If the Slayer slays the Lleech host, the host dies."
+    }
+  },
+  {
+    "id": "lleech-mastermind-jinx",
+    "roles": [
+      "lleech",
+      "mastermind"
+    ],
+    "text": {
+      "es": "Si la Mente Maestra está viva y la víctima de la Sanguijuela muere por ejecución, la Sanguijuela vive pero pierde su habilidad.",
+      "en": "If the Mastermind is alive and the Lleech host dies by execution, the Lleech lives but loses their ability."
+    }
+  },
+  {
+    "id": "alhadikhia-princess-jinx",
+    "roles": [
+      "alhadikhia",
+      "princess"
+    ],
+    "text": {
+      "es": "Si la Princesa nominó y ejecutó a un jugador en su 1er día, nadie muere a manos del Al-Hadikhia esta noche.",
+      "en": "If the Princess nominated & executed a player on their 1st day, no one dies to the Al-Hadikhia tonight."
+    }
+  },
+  {
+    "id": "alhadikhia-mastermind-jinx",
+    "roles": [
+      "alhadikhia",
+      "mastermind"
+    ],
+    "text": {
+      "es": "Si el Al-Hadikhia muere por ejecución, y la Mente Maestra esta viva, el Al-Hadikhia escoge 3 jugadores buenos esta noche: si todos los 3 escogen vivir, los malvados ganan. De lo contrario, los buenos ganan.",
+      "en": "If the Al-Hadikhia dies by execution, and the Mastermind is alive, the Al-Hadikhia chooses 3 good players tonight: if all 3 choose to live, evil wins. Otherwise, good wins."
+    }
+  },
+  {
+    "id": "riot-grandmother-jinx",
+    "roles": [
+      "riot",
+      "grandmother"
+    ],
+    "text": {
+      "es": "Si el Disturbio está en juego y el Nieto muere por ejecución, los malvados ganan.",
+      "en": "If Riot is in play and the Grandchild dies by execution, evil wins."
+    }
+  },
+  {
+    "id": "riot-king-jinx",
+    "roles": [
+      "riot",
+      "king"
+    ],
+    "text": {
+      "es": "Si el Disturbio está en juego, y al menos 1 jugador está muerto, el Rey aprende un rol vivo cada noche.",
+      "en": "If Riot is in play, and at least 1 player is dead, the King learns an alive character each night."
+    }
+  },
+  {
+    "id": "riot-innkeeper-jinx",
+    "roles": [
+      "riot",
+      "innkeeper"
+    ],
+    "text": {
+      "es": "Si el Disturbio nomina y ejecuta a un jugador protegido por el Posadero, los buenos ganan.",
+      "en": "If Riot nominates and executes an Innkeeper-protected player, good wins."
+    }
+  },
+  {
+    "id": "riot-monk-jinx",
+    "roles": [
+      "riot",
+      "monk"
+    ],
+    "text": {
+      "es": "Si el Disturbio nomina y ejecuta al jugador protegido por el Monje, los buenos ganan.",
+      "en": "If Riot nominates and executes the Monk-protected player, good wins."
+    }
+  },
+  {
+    "id": "riot-exorcist-jinx",
+    "roles": [
+      "riot",
+      "exorcist"
+    ],
+    "text": {
+      "es": "Si el Disturbio nomina y ejecuta al jugador seleccionado por el Exorcista, los buenos ganan.",
+      "en": "If Riot nominates and executes the Exorcist-chosen player, good wins."
+    }
+  },
+  {
+    "id": "riot-soldier-jinx",
+    "roles": [
+      "riot",
+      "soldier"
+    ],
+    "text": {
+      "es": "Si el Disturbio nomina y ejecuta al Soldado, los buenos ganan.",
+      "en": "If Riot nominates and executes the Soldier, good wins."
+    }
+  },
+  {
+    "id": "riot-farmer-jinx",
+    "roles": [
+      "riot",
+      "farmer"
+    ],
+    "text": {
+      "es": "Cada noche*, el Disturbio escoge un jugador bueno vivo (diferente a las noches previas): un Granjero escogido usa su habilidad pero no muere.",
+      "en": "Each night*, Riot chooses an alive good player (different to previous nights): a chosen Farmer uses their ability but does not die."
+    }
+  },
+  {
+    "id": "riot-ravenkeeper-jinx",
+    "roles": [
+      "riot",
+      "ravenkeeper"
+    ],
+    "text": {
+      "es": "Cada noche*, el Disturbio escoge un jugador bueno vivo (diferente a las noches previas): un Guardián de Cuervos escogido usa su habilidad pero no muere.",
+      "en": "Each night*, Riot chooses an alive good player (different to previous nights): a chosen Ravenkeeper uses their ability but does not die."
+    }
+  },
+  {
+    "id": "riot-sage-jinx",
+    "roles": [
+      "riot",
+      "sage"
+    ],
+    "text": {
+      "es": "Cada noche*, el Disturbio escoge un jugador bueno vivo (diferente a las noches previas): un Sabio escogido usa su habilidad pero no muere.",
+      "en": "Each night*, Riot chooses an alive good player (different to previous nights): a chosen Sage uses their ability but does not die."
+    }
+  },
+  {
+    "id": "riot-banshee-jinx",
+    "roles": [
+      "riot",
+      "banshee"
+    ],
+    "text": {
+      "es": "Cada noche*, el Disturbio escoge un jugador bueno vivo (diferente a las noches previas): una Llorona escogida muere y además gana su habilidad.",
+      "en": "Each night*, Riot chooses an alive good player (different to previous nights): a chosen Banshee dies & gains their ability."
+    }
+  },
+  {
+    "id": "riot-mayor-jinx",
+    "roles": [
+      "riot",
+      "mayor"
+    ],
+    "text": {
+      "es": "El Alcalde puede elegir detener el disturbio. Si él decide hacerlo cuando solo 1 Disturbio está vivo, los buenos ganan. De lo contrario, los malvados ganan.",
+      "en": "The Mayor may choose to stop the riot. If they do so when only 1 Riot is alive, good wins. Otherwise, evil wins."
+    }
+  },
+  {
+    "id": "riot-atheist-jinx",
+    "roles": [
+      "riot",
+      "atheist"
+    ],
+    "text": {
+      "es": "Durante el disturbio, si el Narrador es nominado, los jugadores votan. Si él está \"a punto de morir\", el juego termina. Si no, él nomina nuevamente.",
+      "en": "During a riot, if the Storyteller is nominated, players vote. If they are \"about to die\", the game ends. If not, they nominate again."
+    }
+  },
+  {
+    "id": "leviathan-grandmother-jinx",
+    "roles": [
+      "leviathan",
+      "grandmother"
+    ],
+    "text": {
+      "es": "Si el Leviatán está en juego y el Nieto muere por ejecución, los malvados ganan.",
+      "en": "If the Leviathan is in play and the Grandchild dies by execution, evil wins."
+    }
+  },
+  {
+    "id": "leviathan-king-jinx",
+    "roles": [
+      "leviathan",
+      "king"
+    ],
+    "text": {
+      "es": "Si el Leviatán está en juego, y al menos 1 jugador está muerto, el Rey aprende un rol vivo cada noche.",
+      "en": "If the Leviathan is in play, and at least 1 player is dead, the King learns an alive character each night."
+    }
+  },
+  {
+    "id": "leviathan-innkeeper-jinx",
+    "roles": [
+      "leviathan",
+      "innkeeper"
+    ],
+    "text": {
+      "es": "Si el Leviatán nomina y ejecuta a un jugador protegido por el Posadero, los buenos ganan.",
+      "en": "If the Leviathan nominates and executes an Innkeeper-protected player, good wins."
+    }
+  },
+  {
+    "id": "leviathan-monk-jinx",
+    "roles": [
+      "leviathan",
+      "monk"
+    ],
+    "text": {
+      "es": "Si el Leviatán nomina y ejecuta al jugador protegido por el Monje, los buenos ganan.",
+      "en": "If the Leviathan nominates and executes the Monk-protected player, good wins."
+    }
+  },
+  {
+    "id": "leviathan-exorcist-jinx",
+    "roles": [
+      "leviathan",
+      "exorcist"
+    ],
+    "text": {
+      "es": "Si el Leviatán nomina y ejecuta al jugador seleccionado por el Exorcista, los buenos ganan.",
+      "en": "If the Leviathan nominates and executes the Exorcist-chosen player, good wins."
+    }
+  },
+  {
+    "id": "leviathan-soldier-jinx",
+    "roles": [
+      "leviathan",
+      "soldier"
+    ],
+    "text": {
+      "es": "Si el Leviatán nomina y ejecuta al Soldado, los buenos ganan.",
+      "en": "If the Leviathan nominates and executes the Soldier, good wins."
+    }
+  },
+  {
+    "id": "leviathan-farmer-jinx",
+    "roles": [
+      "leviathan",
+      "farmer"
+    ],
+    "text": {
+      "es": "Cada noche*, el Leviatán escoge un jugador bueno vivo (diferente a las noches previas): un Granjero escogido usa su habilidad pero no muere.",
+      "en": "Each night*, the Leviathan chooses an alive good player (different to previous nights): a chosen Farmer uses their ability but does not die."
+    }
+  },
+  {
+    "id": "leviathan-ravenkeeper-jinx",
+    "roles": [
+      "leviathan",
+      "ravenkeeper"
+    ],
+    "text": {
+      "es": "Cada noche*, el Leviatán escoge un jugador vivo (diferente a las noches previas): un Guardián de Cuervos escogido usa su habilidad pero no muere.",
+      "en": "Each night*, the Leviathan chooses an alive player (different to previous nights): a chosen Ravenkeeper uses their ability but does not die."
+    }
+  },
+  {
+    "id": "leviathan-sage-jinx",
+    "roles": [
+      "leviathan",
+      "sage"
+    ],
+    "text": {
+      "es": "Cada noche*, el Leviatán escoge un jugador bueno vivo (diferente a las noches previas): un Sabio escogido usa su habilidad pero no muere.",
+      "en": "Each night*, the Leviathan chooses an alive good player (different to previous nights): a chosen Sage uses their ability but does not die."
+    }
+  },
+  {
+    "id": "leviathan-banshee-jinx",
+    "roles": [
+      "leviathan",
+      "banshee"
+    ],
+    "text": {
+      "es": "Cada noche*, el Leviatán escoge un jugador bueno vivo (diferente a las noches previas): una Llorona escogida muere y además gana su habilidad.",
+      "en": "Each night*, the Leviathan chooses an alive good player (different to previous nights): a chosen Banshee dies & gains their ability."
+    }
+  },
+  {
+    "id": "leviathan-mayor-jinx",
+    "roles": [
+      "leviathan",
+      "mayor"
+    ],
+    "text": {
+      "es": "Si el Leviatán y el Alcalde están vivos en el día 5 y ninguna ejecución ocurre, los buenos ganan.",
+      "en": "If the Leviathan and the Mayor are alive on day 5 & no execution occurs, good wins."
+    }
+  },
+  {
+    "id": "leviathan-hatter-jinx",
+    "roles": [
+      "leviathan",
+      "hatter"
+    ],
+    "text": {
+      "es": "El Leviatán no puede entrar al juego luego del día 5.",
+      "en": "The Leviathan cannot enter play after day 5."
+    }
+  },
+  {
+    "id": "leviathan-pithag-jinx",
+    "roles": [
+      "leviathan",
+      "pithag"
+    ],
+    "text": {
+      "es": "El Leviatán no puede entrar al juego luego del día 5.",
+      "en": "The Leviathan cannot enter play after day 5."
+    }
+  }
+]

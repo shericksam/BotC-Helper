@@ -1,0 +1,4252 @@
+[
+  {
+    "id": "grandmother",
+    "name": {
+      "es": "Abuela",
+      "en": "Grandmother"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "Empiezas conociendo un jugador bueno y su rol. Si el Demonio lo mata, tú también mueres.",
+      "en": "You start knowing a good player & their character. If the Demon kills them, you die too."
+    },
+    "reminders": {
+      "es": [
+        "Nieto",
+        "Muerto"
+      ],
+      "en": [
+        "Grandchild",
+        "Dead"
+      ]
+    },
+    "firstNightReminder": {
+      "es": "Apunta al jugador nieto y muestra su ficha de rol.",
+      "en": "Point to the grandchild player & show their character token."
+    },
+    "otherNightReminder": {
+      "es": "Si el nieto fue asesinado por el Demonio, la Abuela muere también.",
+      "en": "Point to the grandchild player & show their character token."
+    }
+  },
+  {
+    "id": "acrobat",
+    "name": {
+      "es": "Acróbata",
+      "en": "Acrobat"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "Cada noche*, escoge un jugador: si él está, o se vuelve, borracho o envenenado esta noche, tú mueres.",
+      "en": "Each night*, choose a player: if they are or become drunk or poisoned tonight, you die."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "El Acróbata escoge un jugador.",
+      "en": "The Acrobat choose un player."
+    },
+    "otherNightReminder": {
+      "es": "El Acróbata escoge un jugador.",
+      "en": "The Acrobat choose un player."
+    }
+  },
+  {
+    "id": "fortuneteller",
+    "name": {
+      "es": "Adivino",
+      "en": "Fortuneteller"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "Cada noche, escoge 2 jugadores: tú aprendes si alguno de ellos es un Demonio. Hay un jugador bueno que se registra como un Demonio para ti.",
+      "en": "Each night, choose 2 players: you learn if either is a Demon. There is a good player that registers as a Demon to you."
+    },
+    "reminders": {
+      "es": [
+        "Cortina de humo"
+      ],
+      "en": [
+        "Cortina De Humo"
+      ]
+    },
+    "firstNightReminder": {
+      "es": "El Adivino escoge 2 jugadores. Asienta si alguno de ellos es el Demonio (o la CORTINA DE HUMO).",
+      "en": "The Fortuneteller choose 2 playeres. AIfenta If alguno de ellos es The Demonio (o The CORTINA DE HUMO)."
+    },
+    "otherNightReminder": {
+      "es": "El Adivino escoge 2 jugadores. Asienta si alguno de ellos es el Demonio (o la CORTINA DE HUMO).",
+      "en": "The Fortuneteller choose 2 playeres. AIfenta If alguno de ellos es The Demonio (o The CORTINA DE HUMO)."
+    }
+  },
+  {
+    "id": "steward",
+    "name": {
+      "es": "Administrador",
+      "en": "Steward"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "Tú empiezas conociendo 1 jugador bueno.",
+      "en": "You start knowing 1 good player."
+    },
+    "reminders": {
+      "es": [
+        "Conoce"
+      ],
+      "en": [
+        "Known"
+      ]
+    },
+    "firstNightReminder": {
+      "es": "Apunta al jugador bueno marcado CONOCE.",
+      "en": "Point to the good player marked KNOWN."
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "balloonist",
+    "name": {
+      "es": "Aeronauta",
+      "en": "Balloonist"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "Cada noche, aprendes un jugador de un tipo de rol diferente al de la noche anterior.",
+      "en": "Each night, you learn a player of a different character type than last night. [+0 or +1 Outsider]"
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "Muéstrale cualquier jugador.",
+      "en": "Show them cualquier player."
+    },
+    "otherNightReminder": {
+      "es": "Muéstrale un jugador con un tipo de rol diferente al anterior.",
+      "en": "Show them un player con un tiPo de rol diferente al anterior."
+    }
+  },
+  {
+    "id": "mayor",
+    "name": {
+      "es": "Alcalde",
+      "en": "Mayor"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "Si solo 3 jugadores viven y nadie es ejecutado, tu equipo gana. Si tú mueres en la noche, quizás otro jugador muera en tu lugar.",
+      "en": "If only 3 players live & no execution occurs, your team wins. If you die at night, another player might die instead."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "alchemist",
+    "name": {
+      "es": "Alquimista",
+      "en": "Alchemist"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "Posees una habilidad de Secuaz. Cuando la uses, el Narrador puede pedirte que escojas diferente.",
+      "en": "Posees una habilidad de Secuaz. Cuando The uses, The Narrador puede pedirte que escojas diferente."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "Muéstrale la ficha TÚ ERES y la ficha de rol de un Secuaz.",
+      "en": "Show them The ficha you You are and The ficha de rol de un Secuaz."
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "alsaahir",
+    "name": {
+      "es": "Alsaahir",
+      "en": "Alsaahir"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "Cada día, si adivinas públicamente qué jugadores son Secuaces y qué jugadores son Demonios, los buenos ganan.",
+      "en": "Each day, if you publicly guess which players are Minion(s) and which are Demon(s), good wins."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "amnesiac",
+    "name": {
+      "es": "Amnésico",
+      "en": "Amnesiac"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "No sabes cuál es tu habilidad. Cada día, adivínala en privado: tú aprendes qué tan cerca estás.",
+      "en": "You do not know what your ability is. Each day, privately guess what it is: you learn how accurate you are."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "Corre la habilidad del Amnésico, si es aplicable.",
+      "en": "Run the Amnesiac's ability, if applicable."
+    },
+    "otherNightReminder": {
+      "es": "Corre la habilidad del Amnésico si es aplicable.",
+      "en": "Run the Amnesiac's ability, if applicable."
+    }
+  },
+  {
+    "id": "artist",
+    "name": {
+      "es": "Artista",
+      "en": "Artist"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "Una vez por juego, durante el día, pregúntale en privado al Narrador cualquier pregunta de sí o no.",
+      "en": "Once per game, during the day, privately ask the Storyteller any yes/no question."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "atheist",
+    "name": {
+      "es": "Ateo",
+      "en": "Atheist"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "El Narrador puede romper las reglas del juego, y si es ejecutado, los buenos ganan, incluso si estás muerto.",
+      "en": "The Storyteller can break the game rules, and if executed, good wins, even if you are dead. [No evil characters]"
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "librarian",
+    "name": {
+      "es": "Bibliotecario",
+      "en": "Librarian"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "Empiezas sabiendo que 1 de 2 jugadores es un Extranjero en particular. (O que hay cero en juego.)",
+      "en": "You start knowing that 1 of 2 players is a particular Outsider. (Or that zero are in play.)"
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "Muéstrale la ficha de rol de un Extranjero. Apunta tanto al EXTRANJERO como al jugador EQUIVOCADO.",
+      "en": "Show them the role card de un Extranjero. Apunta tanto al EXTRANJERO como al jugador EQUIVOCADO."
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "fool",
+    "name": {
+      "es": "Bufón",
+      "en": "Fool"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "La 1era vez que mueres, no mueres.",
+      "en": "The 1st time you die, you don't."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "knight",
+    "name": {
+      "es": "Caballero",
+      "en": "Knight"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "Empiezas conociendo 2 jugadores que no son el Demonio.",
+      "en": "You start knowing 2 players that are not the Demon."
+    },
+    "reminders": {
+      "es": [
+        "Conoce"
+      ],
+      "en": [
+        "Known"
+      ]
+    },
+    "firstNightReminder": {
+      "es": "Apunta a los 2 jugadores no-Demonios marcados con CONOCE.",
+      "en": "Point to the 2 non-Demon players marked KNOWN."
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "cannibal",
+    "name": {
+      "es": "Caníbal",
+      "en": "Cannibal"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "Posees la habilidad del muerto por ejecución más reciente. Si él es malvado, estás envenenado hasta que un jugador bueno muera por ejecución.",
+      "en": "If the Cannibal nominated, executed, & killed the Princess today, the Demon doesn’t kill tonight."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "huntsman",
+    "name": {
+      "es": "Cazador",
+      "en": "Huntsman"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "Una vez por juego, por la noche, escoge un jugador vivo: la Damisela, si es escogida, se convierte en un Ciudadano fuera de juego.",
+      "en": "Once per game, at night, choose a living player: the Damsel, if chosen, becomes a not-in-play Townsfolk. [+the Damsel]"
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "El Cazador quizás escoja un jugador. Si ese jugador es la Damisela: Pon al Cazador a dormir. Despierta a la Damisela y muéstrale la ficha de TÚ ERES y su nueva ficha de rol.",
+      "en": "El Cazador quizás escoja un jugador. Si ese jugador es la Damisela: Pon al Cazador a dormir. Despierta a la Damisela y muéstrale la ficha de TÚ ERES y su nueva ficha de rol."
+    },
+    "otherNightReminder": {
+      "es": "El Cazador quizás escoja un jugador. Si ese jugador es la Damisela: Pon al Cazador a dormir. Despierta a la Damisela y muéstrale la ficha de TÚ ERES y su nueva ficha de rol.",
+      "en": "El Cazador quizás escoja un jugador. Si ese jugador es la Damisela: Pon al Cazador a dormir. Despierta a la Damisela y muéstrale la ficha de TÚ ERES y su nueva ficha de rol."
+    }
+  },
+  {
+    "id": "bountyhunter",
+    "name": {
+      "es": "Cazarrecompensas",
+      "en": "Bountyhunter"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "Empiezas conociendo 1 jugador malvado. Si el jugador que conoces muere, aprendes otro jugador malvado esta noche.",
+      "en": "You start knowing 1 evil player. If the player you know dies, you learn another evil player tonight. [1 Townsfolk is evil]"
+    },
+    "reminders": {
+      "es": [
+        "Conocido"
+      ],
+      "en": [
+        "Known"
+      ]
+    },
+    "firstNightReminder": {
+      "es": "Apunta al jugador CONOCIDO.",
+      "en": "Point to the KNOWN player."
+    },
+    "otherNightReminder": {
+      "es": "Si el jugador CONOCIDO muere hoy por el día o por la noche, apunta a un nuevo jugador CONOCIDO.",
+      "en": "If the KNOWN player dies today by day or night, point to a new KNOWN player."
+    }
+  },
+  {
+    "id": "gossip",
+    "name": {
+      "es": "Chismoso",
+      "en": "Gossip"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "Cada día, puedes hacer una declaración pública. Esta noche, si fue verdadera, un jugador muere.",
+      "en": "Each day, you may make a public statement. Tonight, if it was true, a player dies."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "Si al Chismoso le toca matar a un jugador, ese jugador muere.",
+      "en": "If al Gossip le toca matar a un player, ese player dies."
+    }
+  },
+  {
+    "id": "chef",
+    "name": {
+      "es": "Cocinero",
+      "en": "Chef"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "Empiezas conociendo cuántos pares de jugadores malvados adyacentes hay.",
+      "en": "You start knowing how many pairs of evil players there are."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "Dale una señal con los dedos.",
+      "en": "Give a finger signal."
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": "Give a finger signal."
+    }
+  },
+  {
+    "id": "courtier",
+    "name": {
+      "es": "Cortesano",
+      "en": "Courtier"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "Una vez por juego, en la noche, escoge un rol: él está borracho por 3 noches y 3 días.",
+      "en": "Once per game, at night, choose a character: they are drunk for 3 nights & 3 days."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "El Cortesano quizás escoja un rol.",
+      "en": "El Cortesano quizás escoja un rol."
+    },
+    "otherNightReminder": {
+      "es": "El Cortesano quizás escoja un rol.",
+      "en": "El Cortesano quizás escoja un rol."
+    }
+  },
+  {
+    "id": "seamstress",
+    "name": {
+      "es": "Costurera",
+      "en": "Seamstress"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "Una vez por juego, por la noche, escoge 2 jugadores (no tú mismo): tú aprendes si ellos son del mismo alineamiento.",
+      "en": "Once per game, at night, choose 2 players (not yourself): you learn if they are the same alignment."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "La Costurera quizás escoja 2 jugadores. Asiente o deniega con la cabeza.",
+      "en": "La Costurera quizás escoja 2 jugadores. Asiente o deniega con la cabeza."
+    },
+    "otherNightReminder": {
+      "es": "La Costurera quizás escoja 2 jugadores. Asiente o deniega con la cabeza.",
+      "en": "La Costurera quizás escoja 2 jugadores. Asiente o deniega con la cabeza."
+    }
+  },
+  {
+    "id": "cultleader",
+    "name": {
+      "es": "Cultista",
+      "en": "Cultleader"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "Cada noche, tú te vuelves del alineamiento de uno de tus vecinos vivos. Si todos los jugadores buenos eligen unirse a tu culto, tu equipo gana.",
+      "en": "Each night, you become the alignment of an alive neighbor. If all good players choose to join your cult, your team wins."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "El Cultista quizás cambie de alineamiento.",
+      "en": "El Cultista quizás cambie de alineamiento."
+    },
+    "otherNightReminder": {
+      "es": "El Cultista quizás cambie de alineamiento.",
+      "en": "El Cultista quizás cambie de alineamiento."
+    }
+  },
+  {
+    "id": "poppygrower",
+    "name": {
+      "es": "Cultivador de Amapolas",
+      "en": "Poppygrower"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "Los Secuaces y el Demonio no se conocen entre ellos. Si tú mueres, ellos aprenden quiénes son esa noche.",
+      "en": "Minions & Demons do not know each other. If you die, they learn who each other are that night."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "Sáltate los pasos de Información del Secuaz e Información del Demonio. Despierta al Demonio, muéstrale la ficha de ESTOS ROLES NO ESTÁN EN JUEGO y las fichas de cualquier tres roles buenos que no estén en juego.",
+      "en": "Sáltate los pasos de Información del Secuaz e Información del Demonio. Despierta al Demonio, muéstrale la ficha de ESTOS ROLES NO ESTÁN EN JUEGO y las fichas de cualquier tres roles buenos que no estén en juego."
+    },
+    "otherNightReminder": {
+      "es": "Si el Cultivador de Amapolas ha muerto hoy por el día o por la noche, despierta a los Secuaces, muéstrales la ficha de ESTE ES EL DEMONIO y apunta al Demonio. Ponlos a dormir. Despierta al Demonio, y muéstrale la ficha de ESTOS SON TUS SECUACES y apunta a los Secuaces. Pon al Demonio a dormir.",
+      "en": "Si el Cultivador de Amapolas ha muerto hoy por el día o por la noche, despierta a los Secuaces, muéstrales la ficha de ESTE ES EL DEMONIO y Point tol Demonio. Ponlos a dormir. Despierta al Demonio, y muéstrale la ficha de ESTOS SON TUS SECUACES y Point to los Secuaces. Pon al Demonio a dormir."
+    }
+  },
+  {
+    "id": "empath",
+    "name": {
+      "es": "Empático",
+      "en": "Empath"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "Cada noche, aprendes cuántos de tus 2 vecinos vivos son malvados.",
+      "en": "Each night, you learn how many of your 2 alive neighbors are evil."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "Dale una señal con los dedos.",
+      "en": "Give a finger signal."
+    },
+    "otherNightReminder": {
+      "es": "Dale una señal con los dedos.",
+      "en": "Give a finger signal."
+    }
+  },
+  {
+    "id": "snakecharmer",
+    "name": {
+      "es": "Encantador de Serpientes",
+      "en": "Snakecharmer"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "Cada noche, escoge un jugador vivo: un Demonio escogido cambia roles y alineamientos contigo y luego es envenenado.",
+      "en": "Each night, choose an alive player: a chosen Demon swaps characters & alignments with you & is then poisoned."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "El Encantador de Serpientes escoge un jugador.",
+      "en": "The Snakecharmer choose un player."
+    },
+    "otherNightReminder": {
+      "es": "El Encantador de Serpientes escoge un jugador. Si escoge al Demonio: Muéstrale la ficha de TÚ ERES y la ficha del Demonio. Dale un pulgar abajo. Cambia las fichas del Encantador de Serpientes y del Demonio. Pon al anterior Encantador de Serpientes a dormir. Despierta al anterior Demonio. Muéstrale la ficha de TÚ ERES y la ficha del Encantador de Serpientes y dale un pulgar arriba.",
+      "en": "El Encantador de Serpientes escoge un jugador. Si escoge al Demonio: Muéstrale la ficha de TÚ ERES y la ficha del Demonio. Dale un pulgar abajo. Cambia las fichas del Encantador de Serpientes y del Demonio. Pon al anterior Encantador de Serpientes a dormir. Despierta al anterior Demonio. Muéstrale la ficha de TÚ ERES y la ficha del Encantador de Serpientes y dale un pulgar arriba."
+    }
+  },
+  {
+    "id": "undertaker",
+    "name": {
+      "es": "Enterrador",
+      "en": "Undertaker"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "Cada noche*, tú aprendes qué rol murió por ejecución hoy.",
+      "en": "Each night*, you learn which character died by execution today."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": "If a player was executed today, show their character token."
+    },
+    "otherNightReminder": {
+      "es": "Si un jugador fue ejecutado hoy, muéstrale su ficha de rol.",
+      "en": "If a player was executed today, show their character token."
+    }
+  },
+  {
+    "id": "savant",
+    "name": {
+      "es": "Erudito",
+      "en": "Savant"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "Cada día, puedes visitar al Narrador para aprender 2 cosas en privado: 1 es verdadera y 1 es falsa.",
+      "en": "Each day, you may visit the Storyteller to learn 2 things in private: 1 is true & 1 is false."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "exorcist",
+    "name": {
+      "es": "Exorcista",
+      "en": "Exorcist"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "Cada noche*, escoge un jugador (diferente al de la noche anterior): el Demonio, si es escogido, aprende quién eres y no se despierta esta noche.",
+      "en": "Each night*, choose a player (different to last night): the Demon, if chosen, learns who you are then doesn't wake tonight."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "El Exorcista escoge un jugador.",
+      "en": "The Exorcist choose un player."
+    },
+    "otherNightReminder": {
+      "es": "El Exorcista escoge un jugador.",
+      "en": "The Exorcist choose un player."
+    }
+  },
+  {
+    "id": "slayer",
+    "name": {
+      "es": "Exterminador",
+      "en": "Slayer"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "Una vez por juego, durante el día, escoge un jugador públicamente: si él es el Demonio, él muere.",
+      "en": "Once per game, during the day, publicly choose a player: if they are the Demon, they die."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "philosopher",
+    "name": {
+      "es": "Filósofo",
+      "en": "Philosopher"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "Una vez por juego, por la noche, escoge un rol bueno: gana esa habilidad. Si ese rol está en juego, él está borracho.",
+      "en": "Once per game, at night, choose a good character: gain that ability. If this character is in play, they are drunk."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "El Filósofo quizás escoja un rol. Si es necesario, cambia su ficha de rol.",
+      "en": "El Filósofo quizás escoja un rol. Si es necesario, cambia su ficha de rol."
+    },
+    "otherNightReminder": {
+      "es": "El Filósofo quizás escoja un rol. Si es necesario, cambia su ficha de rol.",
+      "en": "El Filósofo quizás escoja un rol. Si es necesario, cambia su ficha de rol."
+    }
+  },
+  {
+    "id": "general",
+    "name": {
+      "es": "General",
+      "en": "General"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "Cada noche, tú aprendes qué alineamiento está ganando según el Narrador: los buenos, los malvados, o ninguno.",
+      "en": "Each night, you learn which alignment the Storyteller believes is winning: good, evil, or neither."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "Dale una señal con el pulgar.",
+      "en": "Give a thumb signal."
+    },
+    "otherNightReminder": {
+      "es": "Dale una señal con el pulgar.",
+      "en": "Give a thumb signal."
+    }
+  },
+  {
+    "id": "farmer",
+    "name": {
+      "es": "Granjero",
+      "en": "Farmer"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "Cuando mueres en la noche, un jugador vivo bueno se convierte en un Granjero.",
+      "en": "When you die at night, an alive good player becomes a Farmer."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "Si el Granjero murió esta noche, despierta un jugador bueno vivo. Muéstrale la ficha de TÚ ERES y la ficha de rol del Granjero. Reemplaza su ficha anterior por la ficha del Granjero.",
+      "en": "Si el Granjero murió esta noche, despierta un jugador bueno vivo. Muéstrale la ficha de TÚ ERES y la ficha de rol del Granjero. Reemplaza su ficha anterior por la ficha del Granjero."
+    }
+  },
+  {
+    "id": "ravenkeeper",
+    "name": {
+      "es": "Cria Cuervos",
+      "en": "Ravenkeeper"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "Si mueres en la noche, tú te despiertas para escoger un jugador: aprendes su rol.",
+      "en": "If you die at night, you are woken to choose a player: you learn their character."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": "If the Ravenkeeper died tonight, the Ravenkeeper chooses a player. Show that player's character token."
+    },
+    "otherNightReminder": {
+      "es": "Si el Cria Cuervos murió esta noche, él escoge un jugador. Muéstrale la ficha de rol del jugador escogido.",
+      "en": "If the Ravenkeeper died tonight, the Ravenkeeper chooses a player. Show that player's character token."
+    }
+  },
+  {
+    "id": "pixie",
+    "name": {
+      "es": "Hada",
+      "en": "Pixie"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "Empiezas conociendo un Ciudadano en juego. Si has estado \"loco\" de que tú eres ese rol, ganas su habilidad cuando él muere.",
+      "en": "You start knowing 1 in-play Townsfolk. If you were mad that you were this character, you gain their ability when they die."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "Muéstrale la ficha de rol del Ciudadano marcado LOCO.",
+      "en": "Show them The ficha de rol dThe Ciudadano marcado LOCO."
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "engineer",
+    "name": {
+      "es": "Ingeniero",
+      "en": "Engineer"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "Una vez por juego, por la noche, escoge qué Secuaces o qué Demonio está en juego.",
+      "en": "Once per game, at night, choose which Minions or which Demon is in play."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "El Ingeniero quizás escoja Secuaces o Demonios.",
+      "en": "El Ingeniero quizás escoja Secuaces o Demonios."
+    },
+    "otherNightReminder": {
+      "es": "El Ingeniero quizás escoja Secuaces o Demonios.",
+      "en": "El Ingeniero quizás escoja Secuaces o Demonios."
+    }
+  },
+  {
+    "id": "investigator",
+    "name": {
+      "es": "Investigador",
+      "en": "Investigator"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "Empiezas conociendo que 1 de 2 jugadores es un Secuaz en particular.",
+      "en": "You start knowing that 1 of 2 players is a particular Minion."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "Muéstrale la ficha de rol del Secuaz. Apunta tanto al SECUAZ como al jugador EQUIVOCADO.",
+      "en": "Show them the role card del Secuaz. Apunta tanto al SECUAZ como al jugador EQUIVOCADO."
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "washerwoman",
+    "name": {
+      "es": "Lavandera",
+      "en": "Washerwoman"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "Empiezas conociendo que 1 de 2 jugadores es un Ciudadano en particular.",
+      "en": "You start knowing that 1 of 2 players is a particular Townsfolk."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "Muéstrale la ficha de rol de un Ciudadano. Apunta tanto al CIUDADANO como al jugador EQUIVOCADO.",
+      "en": "Show them the role card de un Ciudadano. Apunta tanto al CIUDADANO como al jugador EQUIVOCADO."
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "lycanthrope",
+    "name": {
+      "es": "Licántropo",
+      "en": "Lycanthrope"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "Cada noche*, escoge un jugador vivo. Si es bueno, él muere y el Demonio no mata hoy. Un jugador bueno se registra como malvado.",
+      "en": "Each night*, choose an alive player. If good, they die & the Demon doesn’t kill tonight. One good player registers as evil."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "El Licántropo escoge un jugador.",
+      "en": "The Lycanthrope choose un player."
+    },
+    "otherNightReminder": {
+      "es": "El Licántropo escoge un jugador.",
+      "en": "The Lycanthrope choose un player."
+    }
+  },
+  {
+    "id": "banshee",
+    "name": {
+      "es": "Llorona (banshee)",
+      "en": "Banshee"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "Si el Demonio te mata, todos los jugadores aprenden esto. De ahora en adelante, puedes nominar dos veces por día y votar dos veces por nominación.",
+      "en": "If the Demon kills you, all players learn this. From now on, you may nominate twice per day and vote twice per nomination."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "Si la Llorona fue asesinada por el Demonio esta noche, anuncia a todos los jugadores que la Llorona ha muerto.",
+      "en": "If The Llorona fue aseIfnada Por The Demonio tonight, anuncia a todos los playeres que The Llorona ha dead."
+    }
+  },
+  {
+    "id": "gambler",
+    "name": {
+      "es": "Ludópata (gambler)",
+      "en": "Gambler"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "Cada noche*, escoge un jugador y adivina su rol: si adivinas incorrectamente, mueres.",
+      "en": "Each night*, choose a player & guess their character: if you guess wrong, you die."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "El Ludópata escoge un jugador y un rol.",
+      "en": "El Ludópata escoge un jugador y un rol."
+    }
+  },
+  {
+    "id": "magician",
+    "name": {
+      "es": "Mago",
+      "en": "Magician"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "El Demonio cree que eres un Secuaz. Los Secuaces creen que eres un Demonio.",
+      "en": "The Demonio cree que You are un Secuaz. Los Secuaces creen que You are un Demonio."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "Incluye al Mago en los pasos de Información del Demonio y de los Secuaces.",
+      "en": "Include the Magician in the Minion and Demon Info steps."
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": "Include the Magician in the Minion and Demon Info steps."
+    }
+  },
+  {
+    "id": "juggler",
+    "name": {
+      "es": "Malabarista",
+      "en": "Juggler"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "En tu 1er día, adivina públicamente los roles de hasta 5 jugadores. Esta noche, tú aprendes cuántos adivinaste correctamente.",
+      "en": "On your 1st day, publicly guess up to 5 players' characters. That night, you learn how many you got correct."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": "Give a finger signal."
+    },
+    "otherNightReminder": {
+      "es": "Dale una señal con los dedos.",
+      "en": "Give a finger signal."
+    }
+  },
+  {
+    "id": "sailor",
+    "name": {
+      "es": "Marinero",
+      "en": "Sailor"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "Cada noche, escoge un jugador vivo: o bien tú o bien él está borracho hasta el siguiente anochecer. Tú no puedes morir.",
+      "en": "Each night, choose an alive player: either you or they are drunk until dusk. You can't die."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "El Marinero escoge un jugador vivo.",
+      "en": "The Sailor choose un player alive."
+    },
+    "otherNightReminder": {
+      "es": "El Marinero escoge un jugador vivo.",
+      "en": "The Sailor choose un player alive."
+    }
+  },
+  {
+    "id": "mathematician",
+    "name": {
+      "es": "Matemático",
+      "en": "Mathematician"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "Cada noche, tú aprendes a cuantos jugadores les funcionó anormalmente su habilidad (desde el amanecer) debido a las habilidades de otros roles.",
+      "en": "The Chambermaid can detect if the Mathematician will wake tonight."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "Dale una señal con los dedos.",
+      "en": "Give a finger signal."
+    },
+    "otherNightReminder": {
+      "es": "Dale una señal con los dedos.",
+      "en": "Give a finger signal."
+    }
+  },
+  {
+    "id": "monk",
+    "name": {
+      "es": "Monje",
+      "en": "Monk"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "Cada noche*, escoge un jugador (no tú mismo): él está a salvo del Demonio esta noche.",
+      "en": "Each night*, choose a player (not yourself): they are safe from the Demon tonight."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "El Monje escoge un jugador.",
+      "en": "The Monk choose un player."
+    },
+    "otherNightReminder": {
+      "es": "El Monje escoge un jugador.",
+      "en": "The Monk choose un player."
+    }
+  },
+  {
+    "id": "flowergirl",
+    "name": {
+      "es": "Niña de las Flores",
+      "en": "Flowergirl"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "Cada noche*, tú aprendes si un Demonio votó hoy.",
+      "en": "Each night*, you learn if a Demon voted today."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": "Either nod or shake your head."
+    },
+    "otherNightReminder": {
+      "es": "Asiente o deniega con la cabeza.",
+      "en": "Either nod or shake your head."
+    }
+  },
+  {
+    "id": "choirboy",
+    "name": {
+      "es": "Niño del Coro",
+      "en": "Choirboy"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "Si el Demonio mata al Rey, tú aprendes qué jugador es el Demonio.",
+      "en": "If the Demon kills the King, you learn which player is the Demon. [+the King]"
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": "If the Demon killed the King, Point to the Demon player."
+    },
+    "otherNightReminder": {
+      "es": "Si el Demonio mató al Rey, apunta al jugador que es el Demonio.",
+      "en": "If the Demon killed the King, Point to the Demon player."
+    }
+  },
+  {
+    "id": "noble",
+    "name": {
+      "es": "Noble",
+      "en": "Noble"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "Empiezas conociendo 3 jugadores, entre los cuales 1 y solo 1 es malvado.",
+      "en": "You start knowing 3 players, 1 and only 1 of which is evil."
+    },
+    "reminders": {
+      "es": [
+        "Conoce"
+      ],
+      "en": [
+        "Known"
+      ]
+    },
+    "firstNightReminder": {
+      "es": "Apunta a todos los tres jugadores marcados CONOCE.",
+      "en": "Point to todos los tres jugadores marcados CONOCE."
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "oracle",
+    "name": {
+      "es": "Oráculo",
+      "en": "Oracle"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "Cada noche*, tú aprendes cuántos de los jugadores muertos son malvados.",
+      "en": "Each night*, you learn how many dead players are evil."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": "Give a finger signal."
+    },
+    "otherNightReminder": {
+      "es": "Dale una señal con los dedos.",
+      "en": "Give a finger signal."
+    }
+  },
+  {
+    "id": "pacifist",
+    "name": {
+      "es": "Pacifista",
+      "en": "Pacifist"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "Los jugadores buenos que sean ejecutados quizás no mueran.",
+      "en": "Executed good players might not die."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "fisherman",
+    "name": {
+      "es": "Pescador",
+      "en": "Fisherman"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "Una vez por juego, durante el día, visita al Narrador para recibir un consejo que ayude a tu equipo a ganar.",
+      "en": "Once per game, during the day, visit the Storyteller for some advice to help your team win."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "innkeeper",
+    "name": {
+      "es": "Posadero",
+      "en": "Innkeeper"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "Cada noche*, escoge 2 jugadores: ellos no pueden morir esta noche, pero 1 de ellos está borracho hasta el siguiente anochecer.",
+      "en": "Each night*, choose 2 players: they can't die tonight, but 1 is drunk until dusk."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "El Posadero escoge 2 jugadores.",
+      "en": "The Innkeeper choose 2 playeres."
+    }
+  },
+  {
+    "id": "preacher",
+    "name": {
+      "es": "Predicador",
+      "en": "Preacher"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "Cada noche, escoge un jugador: si un Secuaz ha sido escogido, él aprende esto. Todos los Secuaces escogidos no tienen su habilidad.",
+      "en": "Each night, choose a player: a Minion, if chosen, learns this. All chosen Minions have no ability."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "El Predicador escoge un jugador.",
+      "en": "The Preacher choose un player."
+    },
+    "otherNightReminder": {
+      "es": "El Predicador escoge un jugador.",
+      "en": "The Preacher choose un player."
+    }
+  },
+  {
+    "id": "towncrier",
+    "name": {
+      "es": "Pregonero",
+      "en": "Towncrier"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "Cada noche*, tú aprendes si un Secuaz nominó hoy.",
+      "en": "Each night*, you learn if a Minion nominated today."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": "Either nod or shake your head."
+    },
+    "otherNightReminder": {
+      "es": "Asiente o deniega con la cabeza.",
+      "en": "Either nod or shake your head."
+    }
+  },
+  {
+    "id": "princess",
+    "name": {
+      "es": "Princesa",
+      "en": "Princess"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "En tu 1er día, si tú nominaste y ejecutaste a un jugador, el Demonio no mata esta noche.",
+      "en": "On your 1st day, if you nominated & executed a player, the Demon doesn't kill tonight."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": "If the Princess nominated the player who was executed today, the Demon wakes as normal, but no one dies to the Demon's ability."
+    },
+    "otherNightReminder": {
+      "es": "Si la Princesa nominó al jugador que fue ejecutado hoy, el Demonio se despierta de forma normal, pero nadie muere a manos de la habilidad del Demonio.",
+      "en": "If the Princess nominated the player who was executed today, the Demon wakes as normal, but no one dies to the Demon's ability."
+    }
+  },
+  {
+    "id": "professor",
+    "name": {
+      "es": "Profesor",
+      "en": "Professor"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "Una vez por juego, por la noche*, escoge un jugador muerto: si él es un Ciudadano, es resucitado.",
+      "en": "Once per game, at night*, choose a dead player: if they are a Townsfolk, they are resurrected."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "El Profesor quizás escoja un jugador muerto.",
+      "en": "El Profesor quizás escoja un jugador muerto."
+    }
+  },
+  {
+    "id": "clockmaker",
+    "name": {
+      "es": "Relojero",
+      "en": "Clockmaker"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "Tú empiezas conociendo cuántos pasos hay del Demonio a su Secuaz más cercano.",
+      "en": "You start knowing how many steps from the Demon to its nearest Minion."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "Dale una señal con los dedos.",
+      "en": "Give a finger signal."
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": "Give a finger signal."
+    }
+  },
+  {
+    "id": "king",
+    "name": {
+      "es": "Rey",
+      "en": "King"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "Cada noche, si los muertos equiparan o superan en número a los vivos, tú aprendes 1 de los roles vivos. El Demonio sabe que tú eres el Rey.",
+      "en": "Each night, if the dead equal or outnumber the living, you learn 1 alive character. The Demon knows you are the King."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "Despierta al Demonio. Muéstrale la ficha de ÉSTE JUGADOR ES y la ficha del Rey, luego apunta al Rey.",
+      "en": "If the dead equal or outnumber the living, show the character token of an alive player."
+    },
+    "otherNightReminder": {
+      "es": "Si los muertos equiparan o superan en número a los vivos, muéstrale la ficha de rol de un jugador vivo.",
+      "en": "If the dead equal or outnumber the living, show the character token of an alive player."
+    }
+  },
+  {
+    "id": "sage",
+    "name": {
+      "es": "Sabio",
+      "en": "Sage"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "Si el Demonio te mata, tú aprendes que él es 1 de 2 jugadores.",
+      "en": "If the Demon kills you, you learn that it is 1 of 2 players."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": "If the Demon killed the Sage, wake the Sage and Point to 2 players, 1 of which is the Demon."
+    },
+    "otherNightReminder": {
+      "es": "Si el Demonio mató al Sabio, despierta al Sabio y apunta a 2 jugadores, 1 de los cuales es el Demonio.",
+      "en": "If the Demon killed the Sage, wake the Sage and Point to 2 players, 1 of which is the Demon."
+    }
+  },
+  {
+    "id": "highpriestess",
+    "name": {
+      "es": "Sacerdotisa",
+      "en": "Highpriestess"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "Cada noche, aprende con qué jugador cree el Narrador que deberías hablar con mayor urgencia.",
+      "en": "Each night, learn which player the Storyteller believes you should talk to most."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "Apunta a un jugador.",
+      "en": "Point to a player."
+    },
+    "otherNightReminder": {
+      "es": "Apunta a un jugador.",
+      "en": "Point to a player."
+    }
+  },
+  {
+    "id": "tealady",
+    "name": {
+      "es": "Señora del Té",
+      "en": "Tealady"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "Si tus 2 vecinos vivos son buenos, no pueden morir.",
+      "en": "If both your alive neighbors are good, they can't die."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "shugenja",
+    "name": {
+      "es": "Shugenja",
+      "en": "Shugenja"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "Tú empiezas conociendo si el jugador malvado más cercano a ti está en sentido horario o antihorario. Si está equidistante, esta información es arbitraria.",
+      "en": "You start knowing if your closest evil player is clockwise or anti-clockwise. If equidistant, this info is arbitrary."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "Apunta en sentido horario o antihorario alrededor del círculo.",
+      "en": "Point clockwise or anticlockwise around the circle."
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": "Point clockwise or anticlockwise around the circle."
+    }
+  },
+  {
+    "id": "chambermaid",
+    "name": {
+      "es": "Sirvienta",
+      "en": "Chambermaid"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "Cada noche, escoge 2 jugadores vivos (no tú mismo): tú aprendes cuántos de ellos despertaron esta noche debido a su propia habilidad.",
+      "en": "Each night, choose 2 alive players (not yourself): you learn how many woke tonight due to their ability."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "La Sirvienta escoge 2 jugadores vivos. Dale una señal con los dedos.",
+      "en": "The Chambermaid chooses 2 living players. Give a finger signal."
+    },
+    "otherNightReminder": {
+      "es": "La Sirvienta escoge 2 jugadores vivos. Dale una señal con los dedos.",
+      "en": "The Chambermaid chooses 2 living players. Give a finger signal."
+    }
+  },
+  {
+    "id": "soldier",
+    "name": {
+      "es": "Soldado",
+      "en": "Soldier"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "Estás a salvo del Demonio.",
+      "en": "You are safe from the Demon."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "dreamer",
+    "name": {
+      "es": "Soñador",
+      "en": "Dreamer"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "Cada noche, escoge un jugador (no tú mismo ni Viajeros): tú aprendes 1 rol bueno y 1 rol malvado, 1 de los cuales es el rol del jugador.",
+      "en": "Each night, choose a player (not yourself or Travellers): you learn 1 good & 1 evil character, 1 of which is correct."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "El Soñador apunta a un jugador. Muéstrale 1 ficha de rol bueno y 1 ficha de rol malvado, 1 de las cuales es el rol del jugador.",
+      "en": "The Dreamer Points to a player. Show 1 good & 1 evil character token, 1 of which is their character."
+    },
+    "otherNightReminder": {
+      "es": "El Soñador apunta a un jugador. Muéstrale 1 ficha de rol bueno y 1 ficha de rol malvado, 1 de las cuales es el rol del jugador.",
+      "en": "The Dreamer Points to a player. Show 1 good & 1 evil character token, 1 of which is their character."
+    }
+  },
+  {
+    "id": "fool",
+    "name": {
+      "es": "Tonto del Pueblo",
+      "en": "Fool"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "Cada noche, escoge un jugador: tú aprendes su alineamiento.",
+      "en": "The 1st time you die, you don't."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "Escoge a un Tonto del Pueblo para que esté borracho. Despierta a los Tontos del Pueblo uno por uno, ellos escogen un jugador, muéstrales pulgar arriba o pulgar abajo dependiendo del alineamiento de aquel jugador.",
+      "en": "Escoge a un Tonto del Pueblo para que esté borracho. Despierta a los Tontos del Pueblo uno por uno, ellos escogen un jugador, muéstrales pulgar arriba o pulgar abajo dependiendo del alineamiento de aquel jugador."
+    },
+    "otherNightReminder": {
+      "es": "Despierta a los Tontos del Pueblo uno por uno, ellos escogen un jugador, muéstrales pulgar arriba o pulgar abajo dependiendo del alineamiento de aquel jugador.",
+      "en": "Despierta a los Tontos dThe Pueblo uno Por uno, ellos choosen un player, Show thems pulgar arriba o pulgar abajo dependiendo dThe alineamiento de aquThe player."
+    }
+  },
+  {
+    "id": "minstrel",
+    "name": {
+      "es": "Trovador",
+      "en": "Minstrel"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "Cuando un Secuaz muere por ejecución, todos los otros jugadores (excepto Viajeros) están borrachos hasta el anochecer de mañana.",
+      "en": "When a Minion dies by execution, all other players (except Travellers) are drunk until dusk tomorrow."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "nightwatchman",
+    "name": {
+      "es": "Vigilante",
+      "en": "Nightwatchman"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "Una vez por juego, por la noche, escoge un jugador: él aprende que tú eres el Vigilante.",
+      "en": "Once per game, at night, choose a player: they learn you are the Nightwatchman."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "El Vigilante quizás escoja un jugador. Pon al Vigilante a dormir. Despierta al jugador seleccionado y muéstrale la ficha de ESTE JUGADOR ES y la ficha del Vigilante y apunta al Vigilante.",
+      "en": "El Vigilante quizás escoja un jugador. Pon al Vigilante a dormir. Despierta al jugador seleccionado y muéstrale la ficha de ESTE JUGADOR ES y la ficha del Vigilante y Point tol Vigilante."
+    },
+    "otherNightReminder": {
+      "es": "El Vigilante quizás escoja un jugador. Pon al Vigilante a dormir. Despierta al jugador seleccionado y muéstrale la ficha de ESTE JUGADOR ES y la ficha del Vigilante y apunta al Vigilante.",
+      "en": "El Vigilante quizás escoja un jugador. Pon al Vigilante a dormir. Despierta al jugador seleccionado y muéstrale la ficha de ESTE JUGADOR ES y la ficha del Vigilante y Point tol Vigilante."
+    }
+  },
+  {
+    "id": "virgin",
+    "name": {
+      "es": "Virgen",
+      "en": "Virgin"
+    },
+    "team": "townsfolk",
+    "ability": {
+      "es": "La 1era vez que seas nominada, si el nominador es un Ciudadano, él es ejecutado inmediatamente.",
+      "en": "The 1st time you are nominated, if the nominator is a Townsfolk, they are executed immediately."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "barber",
+    "name": {
+      "es": "Barbero",
+      "en": "Barber"
+    },
+    "team": "outsider",
+    "ability": {
+      "es": "Si has muerto hoy por el día o por la noche, el Demonio puede escoger 2 jugadores (pero no otro Demonio) para intercambiar roles.",
+      "en": "If you died today or tonight, the Demon may choose 2 players (not another Demon) to swap characters."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "Si el Barbero ha muerto hoy por el día o por la noche, muéstrale al Demonio la ficha de ESTE ROL TE HA SELECCIONADO y la ficha del Barbero. Si el Demonio escoge 2 jugadores, despiértalos uno por uno. Muéstrales la ficha de TÚ ERES y su nueva ficha de rol.",
+      "en": "Si el Barbero ha muerto hoy por el día o por la noche, muéstrale al Demonio la ficha de ESTE ROL TE HA SELECCIONADO y la ficha del Barbero. Si el Demonio escoge 2 jugadores, despiértalos uno por uno. Muéstrales la ficha de TÚ ERES y su nueva ficha de rol."
+    }
+  },
+  {
+    "id": "drunk",
+    "name": {
+      "es": "Borracho",
+      "en": "Drunk"
+    },
+    "team": "outsider",
+    "ability": {
+      "es": "Tú no sabes que eres el Borracho. Tú crees que eres un rol de Ciudadano, pero no lo eres.",
+      "en": "You do not know you are the Drunk. You think you are a Townsfolk character, but you are not."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "damsel",
+    "name": {
+      "es": "Damisela",
+      "en": "Damsel"
+    },
+    "team": "outsider",
+    "ability": {
+      "es": "Todos los Secuaces saben que la Damisela está en juego. Si un Secuaz te adivina como la Damisela públicamente (una sola vez), tu equipo pierde.",
+      "en": "All Minions know a Damsel is in play. If a Minion publicly guesses you (once), your team loses."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "Si la Damisela fue escogida por el Cazador, muéstrale la ficha de TÚ ERES y su nueva ficha de rol.",
+      "en": "If The DamiseThe fue escogida Por The Huntsman, Show them The ficha de you You are and su nueva ficha de rol."
+    }
+  },
+  {
+    "id": "puzzlemaster",
+    "name": {
+      "es": "Descifrador",
+      "en": "Puzzlemaster"
+    },
+    "team": "outsider",
+    "ability": {
+      "es": "1 jugador está borracho, incluso si mueres. Si adivinas (una sola vez) quién es, aprendes qué jugador es el Demonio, pero si adivinas incorrectamente, recibes información falsa.",
+      "en": "1 player is drunk, even if you die. If you guess (once) who it is, learn the Demon player, but guess wrong & get false info."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "plaguedoctor",
+    "name": {
+      "es": "Doctor de la Peste",
+      "en": "Plaguedoctor"
+    },
+    "team": "outsider",
+    "ability": {
+      "es": "Cuando mueres, el Narrador gana la habilidad de un Secuaz.",
+      "en": "Cuando diess, The Narrador gana The habilidad de un Secuaz."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": "If the Plague DocTor died, the SToryteller gained a Minion ability. If you haven’t done this yet, do so now."
+    },
+    "otherNightReminder": {
+      "es": "Si el Doctor de la Peste murió, el Narrador gana la habilidad de un Secuaz. Si aún no lo has hecho, hazlo ahora.",
+      "en": "If the Plague DocTor died, the SToryteller gained a Minion ability. If you haven’t done this yet, do so now."
+    }
+  },
+  {
+    "id": "hermit",
+    "name": {
+      "es": "Ermitaño",
+      "en": "Hermit"
+    },
+    "team": "outsider",
+    "ability": {
+      "es": "Tú posees las habilidades de todos los Extranjeros.",
+      "en": "You have all Outsider abilities. [-0 or -1 Outsider]"
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "zealot",
+    "name": {
+      "es": "Fanático",
+      "en": "Zealot"
+    },
+    "team": "outsider",
+    "ability": {
+      "es": "Si hay 5 o más jugadores vivos, debes votar en cada nominación.",
+      "en": "If there are 5 or more players alive, you must vote for every nomination."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "golem",
+    "name": {
+      "es": "Gólem",
+      "en": "Golem"
+    },
+    "team": "outsider",
+    "ability": {
+      "es": "Sólo puedes nominar una vez por juego. Cuando lo haces, si el nominado no es el Demonio, él muere.",
+      "en": "You may only nominate once per game. When you do, if the nominee is not the Demon, they die."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "heretic",
+    "name": {
+      "es": "Hereje",
+      "en": "Heretic"
+    },
+    "team": "outsider",
+    "ability": {
+      "es": "Quien gana, pierde y quien pierde, gana, incluso si estás muerto.",
+      "en": "Only 1 jinxed character can be in play."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "moonchild",
+    "name": {
+      "es": "Hijo de la Luna",
+      "en": "Moonchild"
+    },
+    "team": "outsider",
+    "ability": {
+      "es": "Cuando aprendes que has muerto, escoge 1 jugador vivo públicamente. Esta noche, si es un jugador bueno, él muere.",
+      "en": "When you learn that you died, publicly choose 1 alive player. Tonight, if it was a good player, they die."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "Si al Hijo de la Luna le toca matar a un jugador bueno, ese jugador muere.",
+      "en": "If al Hijo de The Luna le toca matar a un player bueno, ese player dies."
+    }
+  },
+  {
+    "id": "lunatic",
+    "name": {
+      "es": "Lunático",
+      "en": "Lunatic"
+    },
+    "team": "outsider",
+    "ability": {
+      "es": "Tú crees que eres un Demonio, pero no lo eres. El Demonio sabe quién eres y a quién escoges por la noche.",
+      "en": "You think you are a Demon, but you are not. The Demon knows who you are & who you choose at night."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "Si hay 7 o más jugadores, despierta al Lunático: Muéstrale la ficha de ESTOS SON TUS SECUACES. Apunta a los jugadores que desees. Muéstrale la ficha de ESTOS ROLES NO ESTÁN EN JUEGO. Muéstrale 3 fichas de roles buenos. Pon al Lunático a dormir. Despierta al Demonio. Muéstrale la ficha de TÚ ERES y la ficha del Demonio. Muéstrale la ficha de ESTE JUGADOR ES y la ficha del Lunático, luego apunta al Lunático.",
+      "en": "Do whatever needs to be done to simulate the Demon acting. Put the Lunatic to sleep. Wake the Demon. Show the Lunatic token & Point to them, then their target(s)."
+    },
+    "otherNightReminder": {
+      "es": "Has lo que sea necesario para simular al Demonio actuando. Pon al Lunático a dormir. Despierta al Demonio. Muéstrale la ficha del Lunático y apunta al Lunático, y luego a su(s) jugador(es) seleccionado(s).",
+      "en": "Do whatever needs to be done to simulate the Demon acting. Put the Lunatic to sleep. Wake the Demon. Show the Lunatic token & Point to them, then their target(s)."
+    }
+  },
+  {
+    "id": "goon",
+    "name": {
+      "es": "Matón",
+      "en": "Goon"
+    },
+    "team": "outsider",
+    "ability": {
+      "es": "Cada noche, el 1er jugador que te escoja con su habilidad está borracho hasta el siguiente anochecer. Tú te vuelves de su alineamiento.",
+      "en": "Each night, the 1st player to choose you with their ability is drunk until dusk. You become their alignment."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "butler",
+    "name": {
+      "es": "Mayordomo",
+      "en": "Butler"
+    },
+    "team": "outsider",
+    "ability": {
+      "es": "Cada noche, escoge a un jugador (no tú mismo): mañana, solo puedes votar si él también está votando.",
+      "en": "Each night, choose a player (not yourself): tomorrow, you may only vote if they are voting too."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "El Mayordomo escoge un jugador.",
+      "en": "The Maandordomo choose un player."
+    },
+    "otherNightReminder": {
+      "es": "El Mayordomo escoge un jugador.",
+      "en": "The Maandordomo choose un player."
+    }
+  },
+  {
+    "id": "tinker",
+    "name": {
+      "es": "Mil Oficios (tinker)",
+      "en": "Tinker"
+    },
+    "team": "outsider",
+    "ability": {
+      "es": "Quizás mueras en cualquier momento.",
+      "en": "You might die at any time."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "El Mil Oficios quizás muera.",
+      "en": "El Mil Oficios quizás muera."
+    }
+  },
+  {
+    "id": "mutant",
+    "name": {
+      "es": "Mutante",
+      "en": "Mutant"
+    },
+    "team": "outsider",
+    "ability": {
+      "es": "Si estás \"loco\" de que eres un Extranjero, quizás seas ejecutado.",
+      "en": "If you are “mad” about being an Outsider, you might be executed."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "ogre",
+    "name": {
+      "es": "Ogro",
+      "en": "Ogre"
+    },
+    "team": "outsider",
+    "ability": {
+      "es": "En tu 1era noche, escoge un jugador (no tú mismo): tú te vuelves de su alineamiento (sin saber cuál es) incluso si estás borracho o envenenado.",
+      "en": "On your 1st night, choose a player (not yourself): you become their alignment (you don't know which) even if drunk or poisoned."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "El Ogro apunta a un jugador.",
+      "en": "El Ogro Point to un jugador."
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "politician",
+    "name": {
+      "es": "Político",
+      "en": "Politician"
+    },
+    "team": "outsider",
+    "ability": {
+      "es": "Si fuiste el jugador más responsable de que tu equipo pierda, cambias alineamiento y ganas, incluso si estás muerto.",
+      "en": "If you were the player most responsible for your team losing, you change alignment & win, even if dead."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "recluse",
+    "name": {
+      "es": "Recluso",
+      "en": "Recluse"
+    },
+    "team": "outsider",
+    "ability": {
+      "es": "Quizás te registres como malvado y como Demonio o Secuaz, incluso si estás muerto.",
+      "en": "You might register as evil & as a Minion or Demon, even if dead."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "saint",
+    "name": {
+      "es": "Santa",
+      "en": "Saint"
+    },
+    "team": "outsider",
+    "ability": {
+      "es": "Si mueres por ejecución, tu equipo pierde.",
+      "en": "If you die by execution, your team loses."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "hatter",
+    "name": {
+      "es": "Sombrerero",
+      "en": "Hatter"
+    },
+    "team": "outsider",
+    "ability": {
+      "es": "Si has muerto hoy por el día o por la noche, los jugadores Secuaces y Demonios pueden elegir convertirse en nuevos roles de Secuaz y Demonio.",
+      "en": "If you died today or tonight, the Minion & Demon players may choose new Minion & Demon characters to be."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": "If the Hatter died today or tonight, wake Minions and Demons, allow them to choose new characters."
+    },
+    "otherNightReminder": {
+      "es": "Si el Sombrerero murió hoy por el día o por la noche, despierta a los Secuaces y Demonios, y permíteles elegir nuevos roles.",
+      "en": "If the Hatter died today or tonight, wake Minions and Demons, allow them to choose new characters."
+    }
+  },
+  {
+    "id": "snitch",
+    "name": {
+      "es": "Soplón",
+      "en": "Snitch"
+    },
+    "team": "outsider",
+    "ability": {
+      "es": "Cada Secuaz obtiene 3 coartadas.",
+      "en": "Each Minion gets 3 bluffs."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "Despierta a cada Secuaz. Muéstrale la ficha de ESTOS ROLES NO ESTÁN EN JUEGO y las fichas de 3 roles fuera de juego. Pon a cada Secuaz a dormir.",
+      "en": "Despierta a cada Secuaz. Muéstrale la ficha de ESTOS ROLES NO ESTÁN EN JUEGO y las fichas de 3 roles fuera de juego. Pon a cada Secuaz a dormir."
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "sweetheart",
+    "name": {
+      "es": "Tesorito",
+      "en": "Sweetheart"
+    },
+    "team": "outsider",
+    "ability": {
+      "es": "Cuando mueres, 1 jugador está borracho de ahora en adelante.",
+      "en": "When you die, 1 player is drunk from now on."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "Si la Tesorito muere, un jugador se vuelve borracho inmediatamente. Si aún no lo has hecho, hazlo ahora.",
+      "en": "Si la Tesorito muere, un jugador se vuelve borracho inmediatamente. Si aún no lo has hecho, hazlo ahora."
+    }
+  },
+  {
+    "id": "klutz",
+    "name": {
+      "es": "Torpe",
+      "en": "Klutz"
+    },
+    "team": "outsider",
+    "ability": {
+      "es": "Cuando aprendes que has muerto, escoge 1 jugador vivo públicamente: si él es malvado, tu equipo pierde.",
+      "en": "When you learn that you died, publicly choose 1 alive player: if they are evil, your team loses."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "devilsadvocate",
+    "name": {
+      "es": "Abogado del Diablo",
+      "en": "Devilsadvocate"
+    },
+    "team": "minion",
+    "ability": {
+      "es": "Cada noche, escoge un jugador vivo (diferente al de la noche anterior): si él es ejecutado mañana, no muere.",
+      "en": "Each night, choose a living player (different to last night): if executed tomorrow, they don't die."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "El Abogado del Diablo escoge un jugador vivo.",
+      "en": "The Abogado dThe Diablo choose un player alive."
+    },
+    "otherNightReminder": {
+      "es": "El Abogado del Diablo escoge un jugador vivo.",
+      "en": "The Abogado dThe Diablo choose un player alive."
+    }
+  },
+  {
+    "id": "fearmonger",
+    "name": {
+      "es": "Alarmista",
+      "en": "Fearmonger"
+    },
+    "team": "minion",
+    "ability": {
+      "es": "Cada noche, escoge un jugador: si tú lo nominaste y ejecutaste, su equipo pierde. Todos los jugadores saben si escoges un nuevo jugador.",
+      "en": "Each night, choose a player: if you nominate & execute them, their team loses. All players know if you choose a new player."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "El Alarmista escoge un jugador.",
+      "en": "The Fearmonger choose un player."
+    },
+    "otherNightReminder": {
+      "es": "El Alarmista escoge un jugador. Si el jugador ya no estaba marcado con la ficha de recordatorio MIEDO, declara que \"el Alarmista ha escogido un jugador.\"",
+      "en": "The Fearmonger choose un player. If The player anda no estaba marcado con The ficha de recordaTorio MIEDO, declara que \"The Fearmonger ha escogido un player.\""
+    }
+  },
+  {
+    "id": "assassin",
+    "name": {
+      "es": "Asesino",
+      "en": "Assassin"
+    },
+    "team": "minion",
+    "ability": {
+      "es": "Una vez por juego, en la noche*, escoge un jugador: él muere, incluso si por alguna razón no pudiera.",
+      "en": "Once per game, at night*, choose a player: they die, even if for some reason they could not."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "El Asesino quizás escoja a un jugador.",
+      "en": "El Asesino quizás escoja a un jugador."
+    }
+  },
+  {
+    "id": "baron",
+    "name": {
+      "es": "Barón",
+      "en": "Baron"
+    },
+    "team": "minion",
+    "ability": {
+      "es": "Hay Extranjeros extra en juego.",
+      "en": "There are extra Outsiders in play. [+2 Outsiders]"
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "witch",
+    "name": {
+      "es": "Bruja",
+      "en": "Witch"
+    },
+    "team": "minion",
+    "ability": {
+      "es": "Cada noche, escoge un jugador: si él nomina mañana, él muere. Si solo 3 jugadores viven, pierdes esta habilidad.",
+      "en": "Each night, choose a player: if they nominate tomorrow, they die. If just 3 players live, you lose this ability."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "La Bruja escoge un jugador.",
+      "en": "The Witch choose un player."
+    },
+    "otherNightReminder": {
+      "es": "La Bruja escoge un jugador.",
+      "en": "The Witch choose un player."
+    }
+  },
+  {
+    "id": "cerenovus",
+    "name": {
+      "es": "Cerenovus",
+      "en": "Cerenovus"
+    },
+    "team": "minion",
+    "ability": {
+      "es": "Cada noche, escoge un jugador y un rol bueno: él está \"loco\" que es ese rol mañana, o quizás sea ejecutado.",
+      "en": "Each night, choose a player & a good character: they are “mad” they are this character tomorrow, or might be executed."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "El Cerenovus escoge un jugador y un rol.",
+      "en": "The Cerenovus choose un player and un rol."
+    },
+    "otherNightReminder": {
+      "es": "El Cerenovus escoge un jugador y un rol.",
+      "en": "The Cerenovus choose un player and un rol."
+    }
+  },
+  {
+    "id": "boffin",
+    "name": {
+      "es": "Científico (boffin)",
+      "en": "Boffin"
+    },
+    "team": "minion",
+    "ability": {
+      "es": "El Demonio (incluso si está borracho o envenenado) posee la habilidad de un rol bueno fuera de juego. Ambos saben cuál.",
+      "en": "If there is a spare token, the Boffin can give the Demon the Village Idiot ability."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "Despierta al Científico y al Demonio. Muéstrales la ficha de rol bueno fuera de juego. Pon al Científico y al Demonio a dormir.",
+      "en": "Wake the Boffin and the Demon. Show the not-in-play good character token. Put the Boffin and the Demon to sleep."
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": "Wake the Boffin and the Demon. Show the not-in-play good character token. Put the Boffin and the Demon to sleep."
+    }
+  },
+  {
+    "id": "goblin",
+    "name": {
+      "es": "Duende",
+      "en": "Goblin"
+    },
+    "team": "minion",
+    "ability": {
+      "es": "Si declaras públicamente que eres el Duende cuando estás nominado y eres ejecutado ese día, tu equipo gana.",
+      "en": "If you publicly claim to be the Goblin when nominated & are executed that day, your team wins."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "poisoner",
+    "name": {
+      "es": "Envenenador",
+      "en": "Poisoner"
+    },
+    "team": "minion",
+    "ability": {
+      "es": "Cada noche, escoge un jugador: él está envenenado esta noche y mañana por el día.",
+      "en": "Each night, choose a player: they are poisoned tonight and tomorrow day."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "El Envenenador escoge un jugador.",
+      "en": "The Poisonedr choose un player."
+    },
+    "otherNightReminder": {
+      "es": "El Envenenador escoge un jugador.",
+      "en": "The Poisonedr choose un player."
+    }
+  },
+  {
+    "id": "wraith",
+    "name": {
+      "es": "Espectro",
+      "en": "Wraith"
+    },
+    "team": "minion",
+    "ability": {
+      "es": "Puedes escoger abrir tus ojos por la noche. Tú te despiertas cuando otros jugadores malvados se despiertan.",
+      "en": "You may choose to open your eyes at night. You wake when other evil players do."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "Despierta al Espectro cada que otros jugadores malvados se despierten.",
+      "en": "Wake the Wraith whenever other evil players wake."
+    },
+    "otherNightReminder": {
+      "es": "Despierta al Espectro cada que otros jugadores malvados se despierten.",
+      "en": "Wake the Wraith whenever other evil players wake."
+    }
+  },
+  {
+    "id": "spy",
+    "name": {
+      "es": "Espía",
+      "en": "Spy"
+    },
+    "team": "minion",
+    "ability": {
+      "es": "Cada noche, tú ves el Grimorio. Quizás te registres como bueno y como un Ciudadano o Extranjero, incluso si estás muerto.",
+      "en": "If the Poppy Grower has their ability, the Spy does not see the Grimoire."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "Muéstrale el Grimorio al Espía el tiempo que sea necesario.",
+      "en": "Show the Grimoire for as long as the Spy needs."
+    },
+    "otherNightReminder": {
+      "es": "Muéstrale el Grimorio al Espía el tiempo que sea necesario.",
+      "en": "Show the Grimoire for as long as the Spy needs."
+    }
+  },
+  {
+    "id": "eviltwin",
+    "name": {
+      "es": "Gemela Malvada",
+      "en": "Eviltwin"
+    },
+    "team": "minion",
+    "ability": {
+      "es": "Tú y un jugador del equipo contrario se conocen. Si el jugador bueno es ejecutado, los malvados ganan. Los buenos no pueden ganar si ambos viven.",
+      "en": "You & an opposing player know each other. If the good player is executed, evil wins. Good can't win if you both live."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "Despierta a ambos gemelos. Permíteles hacer contacto visual. Muéstrale la ficha del rol del gemelo bueno al Gemelo Malvado y vice versa.",
+      "en": "Wake both twins. Allow eye contact. Show the good twin's character token to the Evil Twin & vice versa."
+    },
+    "otherNightReminder": {
+      "es": "Despierta a ambos gemelos. Permíteles hacer contacto visual. Muéstrale la ficha del rol del gemelo bueno al Gemelo Malvado y vice versa.",
+      "en": "Wake both twins. Allow eye contact. Show the good twin's character token to the Evil Twin & vice versa."
+    }
+  },
+  {
+    "id": "boomdandy",
+    "name": {
+      "es": "Guapetardo (boomdandy)",
+      "en": "Boomdandy"
+    },
+    "team": "minion",
+    "ability": {
+      "es": "Si eres ejecutado, todos los jugadores mueren excepto 3. Luego de una cuenta regresiva de 10 a 1, el jugador con la mayor cantidad de jugadores apuntándole, muere.",
+      "en": "If you are executed, all but 3 players die. After a 10 to 1 countdown, the player with the most players pointing at them, dies."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "harpy",
+    "name": {
+      "es": "Harpía",
+      "en": "Harpy"
+    },
+    "team": "minion",
+    "ability": {
+      "es": "Cada noche, escoge 2 jugadores: mañana, el 1er jugador está loco de que el 2do es malvado, o uno o ambos quizás mueran.",
+      "en": "Each night, choose 2 players: tomorrow, the 1st player is mad that the 2nd is evil, or one or both might die."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "La Harpía esxcdcoge dos jugadores.",
+      "en": "The Harpy esxcdcoge dos players."
+    },
+    "otherNightReminder": {
+      "es": "La Harpía escoge dos jugadores.",
+      "en": "The Harpy choose dos players."
+    }
+  },
+  {
+    "id": "wizard",
+    "name": {
+      "es": "Hechicero",
+      "en": "Wizard"
+    },
+    "team": "minion",
+    "ability": {
+      "es": "Una vez por juego, escoge pedir un deseo. Si es concedido, quizás tenga un precio y deje una pista sobre su naturaleza.",
+      "en": "Once per game, choose to make a wish. If granted, it might have a price & leave a clue as to its nature."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "Corre la habilidad del Hechicero, si es aplicable.",
+      "en": "Run the Wizard's ability, if applicable."
+    },
+    "otherNightReminder": {
+      "es": "Corre la habilidad del Hechicero, si es aplicable.",
+      "en": "Run the Wizard's ability, if applicable."
+    }
+  },
+  {
+    "id": "summoner",
+    "name": {
+      "es": "Invocador (summoner)",
+      "en": "Summoner"
+    },
+    "team": "minion",
+    "ability": {
+      "es": "Tú obtienes 3 coartadas. En la 3era noche, escoge un jugador: él se convierte en un Demonio malvado de tu elección.",
+      "en": "The Summoner registers as the Demon to the Clockmaker."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "Muéstrale la ficha de ESTOS ROLES NO ESTÁN EN JUEGO. Muéstrale las fichas de 3 roles buenos fuera de juego.",
+      "en": "Muéstrale la ficha de ESTOS ROLES NO ESTÁN EN JUEGO. Muéstrale las fichas de 3 roles buenos fuera de juego."
+    },
+    "otherNightReminder": {
+      "es": "Cambia la ficha de recordatorio del Invocador a la noche adecuada. Si es la noche 3, el Invocador escoge a un jugador y un Demonio. Pon al Invocador a dormir. Despierta al jugador escogido. Muéstrale la ficha de TÚ ERES, un pulgar abajo y la ficha del Demonio escogido.",
+      "en": "Cambia The ficha de recordaTorio dThe Summoner a The noche adecuada. If es The noche 3, The Summoner choose a un player and un Demonio. Pon al Summoner a dormir. Despierta al player escogido. Show them The ficha de you You are, un pulgar abajo and The ficha dThe Demonio escogido."
+    }
+  },
+  {
+    "id": "marionette",
+    "name": {
+      "es": "Marioneta",
+      "en": "Marionette"
+    },
+    "team": "minion",
+    "ability": {
+      "es": "Tú crees que eres un rol bueno, pero no lo eres. El Demonio sabe quién eres.",
+      "en": "If the Marionette thinks that they are the Balloonist, an Outsider might have been added during setup."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "Despierta al Demonio. Apunta al jugador marcado ES LA MARIONETA y muéstrale la ficha de ESTE JUGADOR ES y la ficha de rol de la Marioneta.",
+      "en": "Despierta al Demonio. Point to the player marcado ES LA MARIONETA y muéstrale la ficha de ESTE JUGADOR ES y la ficha de rol de la Marioneta."
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "mastermind",
+    "name": {
+      "es": "Mente Maestra (mastermind)",
+      "en": "Mastermind"
+    },
+    "team": "minion",
+    "ability": {
+      "es": "Si el Demonio muere por ejecución, juega por 1 día más. Si un jugador es ejecutado después, su equipo pierde.",
+      "en": "If the Demon dies by execution (ending the game), play for 1 more day. If a player is then executed, their team loses."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "mezepheles",
+    "name": {
+      "es": "Mezéfeles",
+      "en": "Mezepheles"
+    },
+    "team": "minion",
+    "ability": {
+      "es": "Empiezas conociendo una palabra secreta. El 1er jugador bueno que diga esta palabra se vuelve malvado esa noche.",
+      "en": "You start knowing a secret word. The 1st good player to say this word becomes evil that night."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "Muéstrale la palabra escrita.",
+      "en": "Show the written word."
+    },
+    "otherNightReminder": {
+      "es": "Si un jugador está marcado con la ficha de SE VUELVE MALVADO, despiértalo. Muéstrale la ficha de TÚ ERES y un pulgar abajo. El Mezéfeles pierde su habilidad.",
+      "en": "Show the written word."
+    }
+  },
+  {
+    "id": "scarletwoman",
+    "name": {
+      "es": "Mujer Escarlata",
+      "en": "Scarletwoman"
+    },
+    "team": "minion",
+    "ability": {
+      "es": "Si hay 5 o más jugadores vivos y el Demonio muere, tú te conviertes en el Demonio. (Los viajeros no cuentan.)",
+      "en": "If there are 5 or more players alive & the Demon dies, you become the Demon. (Travellers don't count.)"
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "Si la Mujer Escarlata se convirtió en el Demonio hoy, muéstrale la ficha de TÚ ERES, y luego la ficha del Demonio.",
+      "en": "Si la Mujer Escarlata se convirtió en el Demonio hoy, muéstrale la ficha de TÚ ERES, y luego la ficha del Demonio."
+    }
+  },
+  {
+    "id": "organgrinder",
+    "name": {
+      "es": "Organillero",
+      "en": "Organgrinder"
+    },
+    "team": "minion",
+    "ability": {
+      "es": "Todos los jugadores mantienen sus ojos cerrados durante las votaciones, y los votos se contabilizan en secreto. Cada noche, elige si estás borracho hasta el siguiente anochecer.",
+      "en": "All players keep their eyes closed when voting and the vote tally is secret. Each night, choose if you are drunk until dusk."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "El Organillero o asiente con la cabeza para estar borracho, o deniega con la cabeza para estar sobrio.",
+      "en": "The Organgrinder o aIfente con The cabeza para estar drunk, o deniega con The cabeza para estar sobrio."
+    },
+    "otherNightReminder": {
+      "es": "El Organillero o asiente con la cabeza para estar borracho, o deniega con la cabeza para estar sobrio.",
+      "en": "The Organgrinder o aIfente con The cabeza para estar drunk, o deniega con The cabeza para estar sobrio."
+    }
+  },
+  {
+    "id": "godfather",
+    "name": {
+      "es": "Padrino",
+      "en": "Godfather"
+    },
+    "team": "minion",
+    "ability": {
+      "es": "Empiezas conociendo cuáles Extranjeros están en juego. Si 1 murió hoy, escoge un jugador esta noche: él muere.",
+      "en": "You start knowing which Outsiders are in play. If 1 died today, choose a player tonight: they die. [-1 or +1 Outsider]"
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "Muéstrale las fichas de rol de todos los Extranjeros en juego.",
+      "en": "Show the character tokens of all in-play Outsiders."
+    },
+    "otherNightReminder": {
+      "es": "Si un Extranjero murió hoy, el Padrino escoge un jugador.",
+      "en": "Show the character tokens of all in-play Outsiders."
+    }
+  },
+  {
+    "id": "psychopath",
+    "name": {
+      "es": "Sicópata",
+      "en": "Psychopath"
+    },
+    "team": "minion",
+    "ability": {
+      "es": "Cada día, antes de las nominaciones, puedes escoger un jugador públicamente: él muere. Si eres ejecutado, tú solo mueres si pierdes en piedra, papel o tijera.",
+      "en": "Each day, before nominations, you may publicly choose a player: they die. If executed, you only die if you lose roshambo."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "snitch",
+    "name": {
+      "es": "Soplón",
+      "en": "Snitch"
+    },
+    "team": "minion",
+    "ability": {
+      "es": "",
+      "en": "Each Minion gets 3 bluffs."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "summoner",
+    "name": {
+      "es": "Invocador",
+      "en": "Summoner"
+    },
+    "team": "minion",
+    "ability": {
+      "es": "",
+      "en": ""
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "vizier",
+    "name": {
+      "es": "Visir",
+      "en": "Vizier"
+    },
+    "team": "minion",
+    "ability": {
+      "es": "Todos los jugadores saben que tú eres el Visir. Tú no puedes morir durante el día. Si algún bueno votó, puedes escoger que la ejecución ocurra inmediatamente.",
+      "en": "The SToryteller doesn't declare the Vizier is in play."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "Anuncia el jugador que es el Visir al grupo.",
+      "en": "Announce the Vizier player to the group."
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": "Announce the Vizier player to the group."
+    }
+  },
+  {
+    "id": "widow",
+    "name": {
+      "es": "Viuda",
+      "en": "Widow"
+    },
+    "team": "minion",
+    "ability": {
+      "es": "En tu 1era noche, mira al Grimorio y escoge un jugador: él está envenenado. 1 jugador bueno conoce que la Viuda está en juego.",
+      "en": "On your 1st night, look at the Grimoire & choose a player: they are poisoned. 1 good player knows a Widow is in play."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "Muéstrale el Grimorio a la Viuda el tiempo que sea necesario. La Viuda escoge un jugador.",
+      "en": "Show them The Grimorio a The Widow The tiemPo que sea necesario. The Widow choose un player."
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "xaan",
+    "name": {
+      "es": "Xaan",
+      "en": "Xaan"
+    },
+    "team": "minion",
+    "ability": {
+      "es": "En la noche X, todos los Ciudadanos están envenenados hasta el siguiente anochecer.",
+      "en": "On night X, all Townsfolk are poisoned until dusk. [X Outsiders]"
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "Marca al Xaan con la ficha de recordatorio NOCHE 1.",
+      "en": "Marca al Xaan con The ficha de recordaTorio NOCHE 1."
+    },
+    "otherNightReminder": {
+      "es": "Cambia la ficha de recordatorio del Xaan a la noche adecuada. Si es la noche X, marca al Xaan con la ficha de recordatorio X.",
+      "en": "Cambia The ficha de recordaTorio dThe Xaan a The noche adecuada. If es The noche X, marca al Xaan con The ficha de recordaTorio X."
+    }
+  },
+  {
+    "id": "alhadikhia",
+    "name": {
+      "es": "Al-Hadikhia",
+      "en": "Alhadikhia"
+    },
+    "team": "demon",
+    "ability": {
+      "es": "Cada noche*, puedes escoger 3 jugadores (todos aprenden quiénes): cada uno elige en secreto si vivir o morir, pero si todos viven, todos mueren.",
+      "en": "Each night*, you may choose 3 players (all players learn who): each silently chooses to live or die, but if all live, all die."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "El Al-Hadikhia escoge 3 jugadores. Despierta al jugador marcado 1 y di \"el Al-Hadikhia ha escogido a... ¿Eliges vivir?\", etc.",
+      "en": "The Alhadikhia choose 3 playeres. Despierta al player marcado 1 and di \"The Alhadikhia ha escogido a... ¿Eliges vivir?\", etc."
+    }
+  },
+  {
+    "id": "imp",
+    "name": {
+      "es": "Diablillo",
+      "en": "Imp"
+    },
+    "team": "demon",
+    "ability": {
+      "es": "Cada noche*, escoge un jugador: él muere. Si te matas a ti mismo de esta manera, un Secuaz se convierte en el Diablillo.",
+      "en": "Each night*, choose a player: they die. If you kill yourself this way, a Minion becomes the Imp."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "El Diablillo escoge un jugador. Si el Diablillo se escoge a sí mismo: Reemplaza la ficha de 1 Secuaz vivo con una ficha extra del Diablillo, etc.",
+      "en": "El Diablillo escoge un jugador. Si el Diablillo se escoge a sí mismo: Reemplaza la ficha de 1 Secuaz vivo con una ficha extra del Diablillo, etc."
+    }
+  },
+  {
+    "id": "riot",
+    "name": {
+      "es": "Disturbio (riot)",
+      "en": "Riot"
+    },
+    "team": "demon",
+    "ability": {
+      "es": "En el día 3, los Secuaces se convierten en Disturbio y los nominados mueren pero nominan a un jugador vivo inmediatamente. Esto debe ocurrir.",
+      "en": "If Riot is in play and the Grandchild dies by execution, evil wins."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "fanggu",
+    "name": {
+      "es": "Fang Gu",
+      "en": "Fanggu"
+    },
+    "team": "demon",
+    "ability": {
+      "es": "Cada noche*, escoge un jugador: él muere. El 1er Extranjero que esto mata se convierte en un Fang Gu malvado y tú mueres en su lugar.",
+      "en": "Each night*, choose a player: they die. The 1st Outsider this kills becomes an evil Fang Gu & you die instead. [+1 Outsider]"
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "El Fang Gu escoge un jugador. Si él escoge un Extranjero (solo una vez): Reemplaza la ficha del Extranjero, etc.",
+      "en": "El Fang Gu escoge un jugador. Si él escoge un Extranjero (solo una vez): Reemplaza la ficha del Extranjero, etc."
+    }
+  },
+  {
+    "id": "kazali",
+    "name": {
+      "es": "Kazali",
+      "en": "Kazali"
+    },
+    "team": "demon",
+    "ability": {
+      "es": "Cada noche*, escoge un jugador: él muere. [Tú eliges cuáles jugadores son cuáles Secuaces. -? a +? Extranjeros]",
+      "en": "Each night*, choose a player: they die. [You choose which players are which Minions. -? to +? Outsiders]"
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "Despierta al Kazali, y permítele elegir Secuaces.",
+      "en": "Wake the Kazali, allow them to choose Minions."
+    },
+    "otherNightReminder": {
+      "es": "El Kazali escoge un jugador.",
+      "en": "Wake the Kazali, allow them to choose Minions."
+    }
+  },
+  {
+    "id": "legion",
+    "name": {
+      "es": "Legión",
+      "en": "Legion"
+    },
+    "team": "demon",
+    "ability": {
+      "es": "Cada noche*, un jugador quizás muera. Las ejecuciones fallan si sólo los malvados votan. Tú te registras como un Secuaz también.",
+      "en": "If the Preacher chooses Legion, Legion keeps their ability, but the Preacher might learn they are Legion."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "Un jugador quizás muera.",
+      "en": "Un jugador quizás muera."
+    }
+  },
+  {
+    "id": "leviathan",
+    "name": {
+      "es": "Leviatán",
+      "en": "Leviathan"
+    },
+    "team": "demon",
+    "ability": {
+      "es": "Si más de 1 jugador bueno es ejecutado, los malvados ganan. Todos los jugadores saben que estás en juego. Luego del día 5, los malvados ganan.",
+      "en": "If the Leviathan is in play and the Grandchild dies by execution, evil wins."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "Declara que \"El Leviatán está en juego\". Marca al Leviatán con la ficha de recordatorio de DÍA 1.",
+      "en": "Declara que \"El Leviatán está en juego\". Marca al Leviatán con la ficha de recordatorio de DÍA 1."
+    },
+    "otherNightReminder": {
+      "es": "Opcionalmente, declara que \"El Leviatán está en juego\". Reemplaza la ficha de recordatorio.",
+      "en": "Opcionalmente, declara que \"El Leviatán está en juego\". Reemplaza la ficha de recordatorio."
+    }
+  },
+  {
+    "id": "lilmonsta",
+    "name": {
+      "es": "Monstruito (lilmonsta)",
+      "en": "Lilmonsta"
+    },
+    "team": "demon",
+    "ability": {
+      "es": "Cada noche, los Secuaces eligen quién cuida al Monstruito y \"es el Demonio\". Cada noche*, un jugador quizás muera.",
+      "en": "Read the almanac/wiki entry\" href=\"https://wiki."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "Despierta a todos los Secuaces, permíteles elegir un cuidador.",
+      "en": "Despierta a todos los Secuaces, permíteles elegir un cuidador."
+    },
+    "otherNightReminder": {
+      "es": "Despierta a todos los Secuaces, permíteles elegir un cuidador. Un jugador quizás muera.",
+      "en": "Despierta a todos los Secuaces, permíteles elegir un cuidador. Un jugador quizás muera."
+    }
+  },
+  {
+    "id": "nodashii",
+    "name": {
+      "es": "No Dashii",
+      "en": "Nodashii"
+    },
+    "team": "demon",
+    "ability": {
+      "es": "Cada noche*, escoge un jugador: él muere. Tus 2 Ciudadanos vecinos están envenenados.",
+      "en": "Each night*, choose a player: they die. Your 2 Townsfolk neighbors are poisoned."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "El No Dashii escoge un jugador.",
+      "en": "The Nodashii choose un player."
+    }
+  },
+  {
+    "id": "ojo",
+    "name": {
+      "es": "Ojo",
+      "en": "Ojo"
+    },
+    "team": "demon",
+    "ability": {
+      "es": "Cada noche*, escoge un rol: él muere. Si ese rol no está en juego, el Narrador escoge quién muere.",
+      "en": "Each night*, choose a character: they die. If they are not in play, the Storyteller chooses who dies."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "El Ojo escoge a un jugador.",
+      "en": "The Ojo choose a un player."
+    }
+  },
+  {
+    "id": "po",
+    "name": {
+      "es": "Po",
+      "en": "Po"
+    },
+    "team": "demon",
+    "ability": {
+      "es": "Cada noche*, puedes escoger un jugador: él muere. Si tu última elección no fue nadie, escoge 3 jugadores esta noche.",
+      "en": "Each night*, you may choose a player: they die. If your last choice was no-one, choose 3 players tonight."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "El Po puede escoger un jugador O escoge 3 jugadores si no escogió a nadie anoche.",
+      "en": "El Po puede escoger un jugador O escoge 3 jugadores si no escogió a nadie anoche."
+    }
+  },
+  {
+    "id": "pukka",
+    "name": {
+      "es": "Pukka",
+      "en": "Pukka"
+    },
+    "team": "demon",
+    "ability": {
+      "es": "Cada noche, escoge un jugador: él está envenenado. El jugador envenenado previo muere y luego se vuelve saludable.",
+      "en": "Each night, choose a player: they are poisoned. The previously poisoned player dies then becomes healthy."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "El Pukka escoge un jugador. El jugador envenenado previo muere y luego se vuelve saludable.",
+      "en": "The Pukka choose un player. The player Poisoned previo dies and luego se vuelve saludable."
+    }
+  },
+  {
+    "id": "lleech",
+    "name": {
+      "es": "Sanguijuela (lleech)",
+      "en": "Lleech"
+    },
+    "team": "demon",
+    "ability": {
+      "es": "Cada noche*, escoge un jugador: él muere. Tú empiezas escogiendo un jugador: él está envenenado. Tú mueres sí y sólo sí él está muerto.",
+      "en": "Each night*, choose a player: they die. You start by choosing a player: they are poisoned. You die if & only if they are dead."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "La Sanguijuela escoge un jugador.",
+      "en": "The SanguijueThe choose un player."
+    }
+  },
+  {
+    "id": "lordoftyphon",
+    "name": {
+      "es": "Señor del Tifón (lord of typhon)",
+      "en": "Lordoftyphon"
+    },
+    "team": "demon",
+    "ability": {
+      "es": "Cada noche*, escoge un jugador: él muere. [Los roles malvados se encuentran en una línea. Tú estás en el medio. +1 Secuaz. -? a +? Extranjeros]",
+      "en": "Each night*, choose a player: they die. [Evil characters are in a line. You are in the middle. +1 Minion. -? to +? Outsiders]"
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "Reemplaza los vecinos del Señor del Tifón con Secuaces, despiértalos, muéstrales sus nuevos roles y alineamientos, y dales información del secuaz.",
+      "en": "Replace neighbors of the Lord of Typhon with Minions, wake them, tell them their new alignment and character, then do minion info."
+    },
+    "otherNightReminder": {
+      "es": "El Señor del Tifón escoge un jugador.",
+      "en": "Replace neighbors of the Lord of Typhon with Minions, wake them, tell them their new alignment and character, then do minion info."
+    }
+  },
+  {
+    "id": "shabaloth",
+    "name": {
+      "es": "Shabaloth",
+      "en": "Shabaloth"
+    },
+    "team": "demon",
+    "ability": {
+      "es": "Cada noche*, escoge 2 jugadores: ellos mueren. Un jugador muerto que escogiste la noche anterior quizás sea vomitado.",
+      "en": "Each night*, choose 2 players: they die. A dead player you chose last night might be regurgitated."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "Un jugador previamente escogido quizás sea resucitado. El Shabaloth escoge 2 jugadores.",
+      "en": "Un jugador previamente escogido quizás sea resucitado. El Shabaloth escoge 2 jugadores."
+    }
+  },
+  {
+    "id": "vigormortis",
+    "name": {
+      "es": "Vigormortis",
+      "en": "Vigormortis"
+    },
+    "team": "demon",
+    "ability": {
+      "es": "Cada noche*, escoge un jugador: él muere. Los Secuaces que tú mates mantienen su habilidad y envenenan a 1 Ciudadano vecino.",
+      "en": "Each night*, choose a player: they die. Minions you kill keep their ability & poison 1 Townsfolk neighbor. [-1 Outsider]"
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "El Vigormortis escoge un jugador. Si ese jugador es un Secuaz, envenena a un Ciudadano vecino.",
+      "en": "The Vigormortis choose un player. If ese player es un Secuaz, envenena a un Ciudadano vecino."
+    }
+  },
+  {
+    "id": "vortox",
+    "name": {
+      "es": "Vórtice",
+      "en": "Vortox"
+    },
+    "team": "demon",
+    "ability": {
+      "es": "Cada noche*, escoge un jugador: él muere. Las habilidades de Ciudadano generan información falsa. Cada día, si nadie es ejecutado, los malvados ganan.",
+      "en": "Each night*, choose a player: they die. Townsfolk abilities yield false info. Each day, if no-one is executed, evil wins."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "El Vórtice escoge un jugador.",
+      "en": "The Vortox choose un player."
+    }
+  },
+  {
+    "id": "yaggababble",
+    "name": {
+      "es": "Yaggablabla (yaggababble)",
+      "en": "Yaggababble"
+    },
+    "team": "demon",
+    "ability": {
+      "es": "Empiezas conociendo una frase secreta. Por cada vez que la digas públicamente hoy, un jugador quizás muera.",
+      "en": "You start knowing a secret phrase. For each time you said it publicly today, a player might die."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "Escoge una frase secreta. Despierta al Yaggablabla y hazle saber su frase secreta.",
+      "en": "Choose a secret phrase. Wake the Yaggababble and let them know their secret phrase."
+    },
+    "otherNightReminder": {
+      "es": "Por cada vez que el Yaggablabla haya dicho la frase hoy, puedes escoger un jugador. Él muere.",
+      "en": "Choose a secret phrase. Wake the Yaggababble and let them know their secret phrase."
+    }
+  },
+  {
+    "id": "zombuul",
+    "name": {
+      "es": "Zombuul",
+      "en": "Zombuul"
+    },
+    "team": "demon",
+    "ability": {
+      "es": "Cada noche*, si nadie murió hoy, escoge un jugador: él muere. La 1era vez que tú mueres, vives pero te registras como muerto.",
+      "en": "Each night*, if no-one died today, choose a player: they die. The 1st time you die, you live but register as dead."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "Si nadie murió hoy, el Zombuul escoge un jugador.",
+      "en": "Si nadie murió hoy, el Zombuul escoge un jugador."
+    }
+  },
+  {
+    "id": "djinn",
+    "name": {
+      "es": "Genio",
+      "en": "Djinn"
+    },
+    "team": "fabled",
+    "ability": {
+      "es": "Usa la regla especial del Genio. Todos los jugadores saben cuál es.",
+      "en": "Use the Djinn's special rule."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "spiritofivory",
+    "name": {
+      "es": "Espíritu de Marfil",
+      "en": "Spiritofivory"
+    },
+    "team": "fabled",
+    "ability": {
+      "es": "No puede haber más de 1 jugador malvado extra.",
+      "en": "Read the almanac/wiki entry\" href=\"https://wiki."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "sentinel",
+    "name": {
+      "es": "Centinela",
+      "en": "Sentinel"
+    },
+    "team": "fabled",
+    "ability": {
+      "es": "Quizás haya 1 Extranjero más o 1 Extranjero menos en juego.",
+      "en": "There might be 1 extra or 1 fewer Outsider in play."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "fibbin",
+    "name": {
+      "es": "Mentirosillo",
+      "en": "Fibbin"
+    },
+    "team": "fabled",
+    "ability": {
+      "es": "Una vez por juego, 1 jugador bueno quizás reciba información incorrecta.",
+      "en": "Once per game, 1 good player might get incorrect information."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "ferryman",
+    "name": {
+      "es": "Barquero",
+      "en": "Ferryman"
+    },
+    "team": "fabled",
+    "ability": {
+      "es": "En el último día, todos los jugadores muertos recuperan su ficha de voto.",
+      "en": "On the final day, all dead players regain their vote token."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "buddhist",
+    "name": {
+      "es": "Budista",
+      "en": "Buddhist"
+    },
+    "team": "fabled",
+    "ability": {
+      "es": "Por los primeros 2 minutos de cada día, los jugadores experimentados no pueden hablar.",
+      "en": "Por los primeros 2 minutos de Each daand, los playeres experimentados no pueden hablar."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": "Declare which players are affected by the Buddhist."
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": "Declare which players are affected by the Buddhist."
+    }
+  },
+  {
+    "id": "hellslibrarian",
+    "name": {
+      "es": "Bibliotecario del Infierno",
+      "en": "Hellslibrarian"
+    },
+    "team": "fabled",
+    "ability": {
+      "es": "Algo malo quizás le ocurra a todo aquel que hable cuando el Narrador ha pedido silencio.",
+      "en": "Read the almanac/wiki entry\" href=\"https://wiki."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "angel",
+    "name": {
+      "es": "Ángel",
+      "en": "Angel"
+    },
+    "team": "fabled",
+    "ability": {
+      "es": "Algo malo quizás le ocurra a quien sea el más responsable por la muerte de un jugador novato.",
+      "en": "Announce which players are protected by the Angel."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "deusexfiasco",
+    "name": {
+      "es": "Deus ex Fiasco",
+      "en": "Deusexfiasco"
+    },
+    "team": "fabled",
+    "ability": {
+      "es": "Al menos una vez por juego, el Narrador cometerá un error, lo corregirá, y lo admitirá públicamente.",
+      "en": "Read the almanac/wiki entry\" href=\"https://wiki."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "revolutionary",
+    "name": {
+      "es": "Revolucionario",
+      "en": "Revolutionary"
+    },
+    "team": "fabled",
+    "ability": {
+      "es": "Se conoce que 2 jugadores vecinos son del mismo alineamiento. Una vez por juego, 1 de ellos puede registrarse falsamente.",
+      "en": "Se conoce que 2 playeres vecinos son dThe mismo alineamiento. Una vez Por juego, 1 de ellos puede registrarse falsamente."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "fiddler",
+    "name": {
+      "es": "Violinista",
+      "en": "Fiddler"
+    },
+    "team": "fabled",
+    "ability": {
+      "es": "Una vez por juego, el Demonio escoge en secreto un jugador del equipo contrario: todos los jugadores eligen cuál de estos 2 jugadores gana.",
+      "en": "Once per game, the Demon secretly chooses an opPosing player: all players choose which of these 2 players win."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "doomsayer",
+    "name": {
+      "es": "Catastrofista",
+      "en": "Doomsayer"
+    },
+    "team": "fabled",
+    "ability": {
+      "es": "Si 4 o más jugadores viven, cada jugador vivo puede escoger públicamente (una vez por juego) que un jugador de su propio alineamiento muera.",
+      "en": "If 4 or more players live, each living player may publicly choose (once per game) that a player of their own alignment dies."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "toymaker",
+    "name": {
+      "es": "Juguetero",
+      "en": "Toymaker"
+    },
+    "team": "fabled",
+    "ability": {
+      "es": "El Demonio puede escoger no atacar y debe hacer esto al menos una vez por juego. Los jugadores malvados reciben información inicial como es usual.",
+      "en": "Resolve the Minion Info and Demon Info steps even though there are fewer than 7 players."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": "Resolve the Minion Info and Demon Info steps even though there are fewer than 7 players."
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": "Resolve the Minion Info and Demon Info steps even though there are fewer than 7 players."
+    }
+  },
+  {
+    "id": "duchess",
+    "name": {
+      "es": "Duquesa",
+      "en": "Duchess"
+    },
+    "team": "fabled",
+    "ability": {
+      "es": "Cada día, 3 jugadores pueden elegir visitarte. Por la noche*, cada visitante aprende cuántos de los visitantes son malvados, pero 1 obtiene información falsa.",
+      "en": "Each day, 3 players may choose to visit you."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "zenomancer",
+    "name": {
+      "es": "Zenomancer",
+      "en": "Zenomancer"
+    },
+    "team": "loric",
+    "ability": {
+      "es": "Uno o más jugadores tienen un objetivo. Al lograrlo, ese jugador aprende una pieza de información verdadera.",
+      "en": "One or more players each have a goal."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "hindu",
+    "name": {
+      "es": "Hindu",
+      "en": "Hindu"
+    },
+    "team": "loric",
+    "ability": {
+      "es": "Los primeros 4 jugadores en morir se reencarnan como Travellers de la misma alineación.",
+      "en": "The first 4 players to die are immediately reincarnated as Travellers of the same alignment."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "tor",
+    "name": {
+      "es": "Tor",
+      "en": "Tor"
+    },
+    "team": "loric",
+    "ability": {
+      "es": "Los jugadores no saben su personaje ni alineación. Lo aprenden cuando mueren.",
+      "en": "Players don't know their character or alignment."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "gardener",
+    "name": {
+      "es": "Jardinero",
+      "en": "Gardener"
+    },
+    "team": "loric",
+    "ability": {
+      "es": "El Narrador asigna 1 o más roles a los jugadores.",
+      "en": "The SToryteller assigns 1 or more players' characters."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "bigwig",
+    "name": {
+      "es": "Big Wig",
+      "en": "Bigwig"
+    },
+    "team": "loric",
+    "ability": {
+      "es": "Cada nominado elige un jugador: hasta votar, solo pueden hablar ellos & se hacen pasar por buenos o podrían morir.",
+      "en": "Read the almanac/wiki entry\" href=\"https://wiki."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "stormcatcher",
+    "name": {
+      "es": "Atrapatormentas",
+      "en": "Stormcatcher"
+    },
+    "team": "loric",
+    "ability": {
+      "es": "Nombra un rol bueno. Si está en juego, solo puede morir por ejecución, pero los malvados saben quién es.",
+      "en": "Read the almanac/wiki entry\" href=\"https://wiki."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "thief",
+    "name": {
+      "es": "Ladrón",
+      "en": "Thief"
+    },
+    "team": "traveller",
+    "ability": {
+      "es": "Cada noche, escoge un jugador (no tú mismo): su voto cuenta negativamente mañana.",
+      "en": "The Thief chooses a player."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "bureaucrat",
+    "name": {
+      "es": "Burócrata",
+      "en": "Bureaucrat"
+    },
+    "team": "traveller",
+    "ability": {
+      "es": "Cada noche, escoge un jugador (no tú mismo): su voto cuenta como 3 votos mañana.",
+      "en": "The Bureaucrat chooses a player."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "barista",
+    "name": {
+      "es": "Barista",
+      "en": "Barista"
+    },
+    "team": "traveller",
+    "ability": {
+      "es": "Cada noche, hasta el siguiente anochecer, 1) un jugador se vuelve sobrio, saludable y recibe información verdadera, o 2) su habilidad funciona dos veces. Él aprende cuál opción.",
+      "en": "Choose a player, wake them and tell them which Barista Power is affecting them."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": "Choose a player, wake them and tell them which Barista Power is affecting them. Treat them accordingly (sober/healthy/true info or activate their ability twice)."
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": "Choose a player, wake them and tell them which Barista Power is affecting them. Treat them accordingly (sober/healthy/true info or activate their ability twice)."
+    }
+  },
+  {
+    "id": "harlot",
+    "name": {
+      "es": "Meretriz",
+      "en": "Harlot"
+    },
+    "team": "traveller",
+    "ability": {
+      "es": "Cada noche*, escoge un jugador vivo: si él acepta, tú aprendes su rol, pero ambos quizás mueran.",
+      "en": "Each night*, choose a living player: if they agree, you learn their character, but you both might die."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "butcher",
+    "name": {
+      "es": "Carnicero",
+      "en": "Butcher"
+    },
+    "team": "traveller",
+    "ability": {
+      "es": "Cada día, luego de la 1era ejecución, puedes nominar nuevamente.",
+      "en": "Each day, after the 1st execution, you may nominate again."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "gunslinger",
+    "name": {
+      "es": "Pistolero",
+      "en": "Gunslinger"
+    },
+    "team": "traveller",
+    "ability": {
+      "es": "Cada día, luego de contabilizar el 1er voto, puedes escoger un jugador que votó: él muere.",
+      "en": "Each day, after the 1st vote has been tallied, you may choose a player that voted: they die."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "matron",
+    "name": {
+      "es": "Matrona",
+      "en": "Matron"
+    },
+    "team": "traveller",
+    "ability": {
+      "es": "Cada día, puedes escoger hasta 3 grupos de 2 jugadores para intercambiar asientos. Los jugadores no puedes dejar su asiento para hablar en privado.",
+      "en": "Each daand, puedes chooser hasta 3 gruPos de 2 playeres para intercambiar aIfentos. Los playeres no puedes dejar su aIfento para hablar en privado."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "gangster",
+    "name": {
+      "es": "Mafioso",
+      "en": "Gangster"
+    },
+    "team": "traveller",
+    "ability": {
+      "es": "Una vez por día, puedes elegir matar a un vecino vivo, si tu otro vecino vivo accede.",
+      "en": "Once per day, you may choose to kill an alive neighbor, if your other alive neighbor agrees."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "bonecollector",
+    "name": {
+      "es": "Coleccionista de Huesos",
+      "en": "Bonecollector"
+    },
+    "team": "traveller",
+    "ability": {
+      "es": "Una vez por juego, en la noche*, escoge un jugador muerto: él recupera su habilidad hasta el siguiente anochecer.",
+      "en": "Read the almanac/wiki entry\" href=\"https://wiki."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "judge",
+    "name": {
+      "es": "Juez",
+      "en": "Judge"
+    },
+    "team": "traveller",
+    "ability": {
+      "es": "Una vez por juego, si otro jugador nominó, puedes elegir forzar que la ejecución actual ocurra o falle.",
+      "en": "Once per game, if another player nominated, you may choose to force the current execution to pass or fail."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "apprentice",
+    "name": {
+      "es": "Aprendiz",
+      "en": "Apprentice"
+    },
+    "team": "traveller",
+    "ability": {
+      "es": "En tu 1era noche, ganas la habilidad de un Ciudadano (si eres bueno), o la habilidad de un Secuaz (si eres malvado).",
+      "en": "En your 1era noche, ganas The habilidad de un Ciudadano (If You are bueno), o The habilidad de un Secuaz (If You are malvado)."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "beggar",
+    "name": {
+      "es": "Mendigo",
+      "en": "Beggar"
+    },
+    "team": "traveller",
+    "ability": {
+      "es": "Necesitas usar una ficha de voto para poder votar. Si un jugador muerto te dona la suya, tú aprendes su alineamiento. Tú estás sobrio y saludable.",
+      "en": "You must use a vote token to vote."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "deviant",
+    "name": {
+      "es": "Chiflado",
+      "en": "Deviant"
+    },
+    "team": "traveller",
+    "ability": {
+      "es": "Si fuiste gracioso hoy, no puedes morir por exilio.",
+      "en": "If fuiste gracioso hoand, no puedes morir Por exilio."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "scapegoat",
+    "name": {
+      "es": "Chivo Expiatorio",
+      "en": "Scapegoat"
+    },
+    "team": "traveller",
+    "ability": {
+      "es": "Si un jugador de tu alineamiento es ejecutado, quizás tú seas ejecutado en su lugar.",
+      "en": "If a player of your alignment is executed, you might be executed instead."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "gnome",
+    "name": {
+      "es": "Gnomo",
+      "en": "Gnome"
+    },
+    "team": "traveller",
+    "ability": {
+      "es": "Todos los jugadores empiezan conociendo un jugador de tu alineamiento. Tú puedes elegir matar a cualquiera que lo nomine.",
+      "en": "Todos los playeres empiezan conociendo un player de your alineamiento. you puedes elegir matar a cualquiera que lo nomine."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "bishop",
+    "name": {
+      "es": "Obispo",
+      "en": "Bishop"
+    },
+    "team": "traveller",
+    "ability": {
+      "es": "Solo el Narrador puede nominar. Al menos 1 jugador del equipo contrario al tuyo debe ser nominado cada día.",
+      "en": "Solo The Narrador puede nominar. Al menos 1 player dThe equiPo contrario al yourando debe ser nominado Each daand."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  },
+  {
+    "id": "voudon",
+    "name": {
+      "es": "Vudú",
+      "en": "Voudon"
+    },
+    "team": "traveller",
+    "ability": {
+      "es": "Solo tú y los muertos pueden votar. Ellos no necesitan una ficha de voto para votar. Una mayoría del 50% no es necesaria.",
+      "en": "Only you & the dead can vote."
+    },
+    "reminders": {
+      "es": [],
+      "en": []
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    },
+    "otherNightReminder": {
+      "es": "",
+      "en": ""
+    }
+  }
+]
