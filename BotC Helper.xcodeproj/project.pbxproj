@@ -34,22 +34,9 @@
 		225D98552EDFD86000236040 /* BotC HelperUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "BotC HelperUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		22EDB27F2EFB499D00CF359B /* Exceptions for "BotC Helper" folder in "BotC Helper" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				"BotC-Helper-Info.plist",
-			);
-			target = 225D983B2EDFD85F00236040 /* BotC Helper */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		225D983E2EDFD85F00236040 /* BotC Helper */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				22EDB27F2EFB499D00CF359B /* Exceptions for "BotC Helper" folder in "BotC Helper" target */,
-			);
 			path = "BotC Helper";
 			sourceTree = "<group>";
 		};
