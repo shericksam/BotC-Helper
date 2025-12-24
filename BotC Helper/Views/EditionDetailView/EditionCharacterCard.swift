@@ -30,8 +30,8 @@ struct EditionCharacterCard: View {
                 }
                 Spacer()
             }
-            if let ability = character.ability {
-                Text(MSG("role_ability_label", ability))
+            if !character.abilityLocalized().isEmpty {
+                Text(MSG("role_ability_label", character.abilityLocalized()))
                     .font(.body)
             }
             if !character.remindersLocalized().isEmpty {
@@ -42,13 +42,13 @@ struct EditionCharacterCard: View {
                 Text(MSG("role_global_reminders", character.remindersGlobalLocalized().joined(separator: ", ")))
                     .font(.footnote)
             }
-            if let fn = character.firstNightReminder {
-                Text(MSG("role_first_night", fn))
+            if !character.firstNightReminderLocalized().isEmpty {
+                Text(MSG("role_first_night", character.firstNightReminderLocalized()))
                     .font(.footnote)
                     .foregroundColor(.secondary)
             }
-            if let on = character.otherNightReminder {
-                Text(MSG("role_other_night", on))
+            if !character.otherNightReminderLocalized().isEmpty {
+                Text(MSG("role_other_night", character.otherNightReminderLocalized()))
                     .font(.footnote)
                     .foregroundColor(.secondary)
             }
