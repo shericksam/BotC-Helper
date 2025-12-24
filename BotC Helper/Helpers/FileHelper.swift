@@ -36,7 +36,7 @@ func loadEdition(from url: URL) throws -> EditionDataModel {
 }
 
 func loadPredefinedRoles() -> [RoleDefinitionModel] {
-    guard let url = Bundle.main.url(forResource: "roles", withExtension: "json"),
+    guard let url = Bundle.main.url(forResource: "roles-combined", withExtension: "json"),
           let data = try? Data(contentsOf: url),
           let roles = try? JSONDecoder().decode([RoleDefinitionModel].self, from: data)
     else { return [] }

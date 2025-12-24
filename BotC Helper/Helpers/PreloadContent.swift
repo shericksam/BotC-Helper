@@ -14,7 +14,7 @@ struct PreloadContent {
     @MainActor
     func preloadDefaultEditionsAndRolesIfNeeded(modelContext: ModelContext) async {
         let didPreload = UserDefaults.standard.bool(forKey: didPreloadKey)
-        print("didPreload--->\(didPreload)")
+
         guard !didPreload else { return }
         loadAndSaveRoles(modelContext: modelContext)
 
@@ -120,7 +120,7 @@ struct PreloadContent {
     }
 
     func loadJinxes() -> [JinxModel] {
-        guard let url = Bundle.main.url(forResource: "jinxes", withExtension: "json"),
+        guard let url = Bundle.main.url(forResource: "jinxes-combined", withExtension: "json"),
               let data = try? Data(contentsOf: url),
               let raw = try? JSONSerialization.jsonObject(with: data) as? [[String: Any]],
               let metaData = try? JSONSerialization.data(withJSONObject: raw),

@@ -74,11 +74,11 @@
     },
     "firstNightReminder": {
       "es": "El Adivino escoge 2 jugadores. Asienta si alguno de ellos es el Demonio (o la CORTINA DE HUMO).",
-      "en": "The Fortuneteller choose 2 playeres. AIfenta If alguno de ellos es The Demonio (o The CORTINA DE HUMO)."
+      "en": "The Fortune Teller chooses 2 players. He nods if either of them is the Devil (or the SMOKESCREEN)."
     },
     "otherNightReminder": {
       "es": "El Adivino escoge 2 jugadores. Asienta si alguno de ellos es el Demonio (o la CORTINA DE HUMO).",
-      "en": "The Fortuneteller choose 2 playeres. AIfenta If alguno de ellos es The Demonio (o The CORTINA DE HUMO)."
+      "en": "The Fortune Teller chooses 2 players. He nods if either of them is the Devil (or the SMOKESCREEN)."
     }
   },
   {
@@ -130,7 +130,7 @@
     },
     "otherNightReminder": {
       "es": "Muéstrale un jugador con un tipo de rol diferente al anterior.",
-      "en": "Show them un player con un tiPo de rol diferente al anterior."
+      "en": "Show them a player with a different type of role than before."
     }
   },
   {
@@ -166,7 +166,7 @@
     "team": "townsfolk",
     "ability": {
       "es": "Posees una habilidad de Secuaz. Cuando la uses, el Narrador puede pedirte que escojas diferente.",
-      "en": "Posees una habilidad de Secuaz. Cuando The uses, The Narrador puede pedirte que escojas diferente."
+      "en": "You possess a Minion ability. When you use it, the Narrator may ask you to choose differently."
     },
     "reminders": {
       "es": [],
@@ -2950,7 +2950,7 @@
     },
     "otherNightReminder": {
       "es": "El Diablillo escoge un jugador. Si el Diablillo se escoge a sí mismo: Reemplaza la ficha de 1 Secuaz vivo con una ficha extra del Diablillo, etc.",
-      "en": "El Diablillo escoge un jugador. Si el Diablillo se escoge a sí mismo: Reemplaza la ficha de 1 Secuaz vivo con una ficha extra del Diablillo, etc."
+      "en": "The Imp chooses a player. If the Imp chooses himself: Replace the 1 live Minion token with an extra Imp token, etc."
     }
   },
   {
@@ -2998,7 +2998,7 @@
     },
     "otherNightReminder": {
       "es": "El Fang Gu escoge un jugador. Si él escoge un Extranjero (solo una vez): Reemplaza la ficha del Extranjero, etc.",
-      "en": "El Fang Gu escoge un jugador. Si él escoge un Extranjero (solo una vez): Reemplaza la ficha del Extranjero, etc."
+      "en": "The Fang Gu chooses a player. If he chooses a Foreigner (only once): Replace the Foreigner's token, etc."
     }
   },
   {
