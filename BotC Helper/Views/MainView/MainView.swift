@@ -14,29 +14,12 @@ struct MainView: View {
     @State private var showingEditionsSheet = false
     @State private var isShowingGameBoard: Bool = false
     @State private var showingAbout: Bool = false
-
     @State private var showingLoadView = false
 
     @State private var boardState: BoardState? = nil
     @State private var didPreload = false
-    
+
     var body: some View {
-        Group {
-            if didPreload {
-                bodyLoaded
-            } else {
-                ProgressView(NSLocalizedString("loading_resources", comment: ""))
-            }
-        }
-
-        .task {
-            await PreloadContent()
-                .preloadDefaultEditionsAndRolesIfNeeded(modelContext: modelContext)
-            didPreload = true
-        }
-    }
-
-    var bodyLoaded: some View {
         NavigationStack {
             ZStack {
                 Image("background")
@@ -45,13 +28,14 @@ struct MainView: View {
                     .frame(minWidth: 0)
                     .edgesIgnoringSafeArea(.all)
 
+                // Siempre muestra logo/título
                 VStack(spacing: 32) {
+                    Spacer()
                     VStack {
                         Image("title")
                             .resizable()
                             .scaledToFit()
                             .frame(height: 100)
-
                         Image("main-logo")
                             .resizable()
                             .scaledToFit()
@@ -59,59 +43,63 @@ struct MainView: View {
                     }
                     .padding(.top, 32)
                     Spacer()
-                    VStack(spacing: 12) {
+                    if didPreload {
+                        VStack(spacing: 18) {
+                            Button(action: { showingNewGameSheet = true }) {
+                                HStack {
+                                    Label(MSG("new_game_label"), systemImage: "plus.circle.fill")
+                                        .font(.title2)
+                                        .padding()
+                                        .frame(maxWidth: .infinity)
+                                        .background(Color.blue.opacity(0.1))
+                                        .cornerRadius(12)
+                                }
+                            }
+                            .sheet(isPresented: $showingNewGameSheet) {
+                                NewGameSheet { config in
+                                    boardState = config
+                                    isShowingGameBoard = true
+                                    showingNewGameSheet = false
+                                }
+                            }
 
-                        Button(action: {
-                            showingNewGameSheet.toggle()
-                        }) {
-                            HStack {
-                                Label(MSG("new_game_label"), systemImage: "plus.circle.fill")
+                            Button(action: { showingEditionsSheet = true }) {
+                                Label(MSG("edit_editions_label"), systemImage: "books.vertical.fill")
                                     .font(.title2)
                                     .padding()
                                     .frame(maxWidth: .infinity)
-                                    .background(Color.blue.opacity(0.1))
+                                    .background(Color.green.opacity(0.1))
                                     .cornerRadius(12)
                             }
-                        }
-                        .sheet(isPresented: $showingNewGameSheet) {
-                            NewGameSheet { config in
-                                boardState = config
-                                isShowingGameBoard = true
-                                showingNewGameSheet = false
+                            .sheet(isPresented: $showingEditionsSheet) {
+                                EditionsSheet()
+                            }
+
+                            Button(action: { showingLoadView = true }) {
+                                Label(MSG("previous_games_label"), systemImage: "clock.fill")
+                                    .font(.title3)
+                                    .padding()
+                                    .frame(maxWidth: .infinity)
+                                    .background(Color.gray.opacity(0.1))
+                            }
+                            .sheet(isPresented: $showingLoadView) {
+                                LoadGameListView { loadedBoard in
+                                    boardState = loadedBoard
+                                    isShowingGameBoard = true
+                                    showingLoadView = false
+                                }
                             }
                         }
-
-                        Button(action: {
-                            showingEditionsSheet.toggle()
-                        }) {
-                            Label(MSG("edit_editions_label"), systemImage: "books.vertical.fill")
-                                .font(.title2)
-                                .padding()
-
-                                .frame(maxWidth: .infinity)
-                                .background(Color.green.opacity(0.1))
-                                .cornerRadius(12)
+                        .transition(.move(edge: .bottom).combined(with: .opacity))
+                        .animation(.easeOut(duration: 0.7), value: didPreload)
+                    } else {
+                        VStack(spacing: 24) {
+                            ProgressView(MSG("loading_resources"))
+                                .progressViewStyle(CircularProgressViewStyle(tint: .accentColor))
+                                .scaleEffect(1.5)
+                                .padding(.top, 36)
                         }
-                        .sheet(isPresented: $showingEditionsSheet) {
-                            EditionsSheet()
-                        }
-
-                        Button(action: {
-                            showingLoadView.toggle()
-                        }) {
-                            Label(MSG("previous_games_label"), systemImage: "clock.fill")
-                                .font(.title3)
-                                .padding()
-                                .frame(maxWidth: .infinity)
-                                .background(Color.gray.opacity(0.1))
-                        }
-                        .sheet(isPresented: $showingLoadView) {
-                            LoadGameListView { loadedBoard in
-                                boardState = loadedBoard
-                                isShowingGameBoard = true
-                                showingLoadView = false
-                            }
-                        }
+                        .transition(.opacity)
                     }
                     Spacer()
                     Button {
@@ -127,6 +115,7 @@ struct MainView: View {
                     .sheet(isPresented: $showingAbout) {
                         AboutAppView()
                     }
+                    Spacer().frame(height: 10)
                 }
                 .padding()
             }
@@ -138,9 +127,15 @@ struct MainView: View {
                 }
             }
         }
+        .task {
+            await PreloadContent()
+                .preloadDefaultEditionsAndRolesIfNeeded(modelContext: modelContext)
+            withAnimation(.easeOut(duration: 0.6)) {
+                didPreload = true
+            }
+        }
     }
 }
-
 #Preview {
     MainView()
 }

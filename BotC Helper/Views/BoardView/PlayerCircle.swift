@@ -9,6 +9,7 @@ import SwiftUI
 import SwiftData
 
 struct PlayerCircle: View {
+    @Environment(\.horizontalSizeClass) private var sizeClass
     var player: Player
     var status: PlayerStatus
     var isMe: Bool
@@ -24,11 +25,11 @@ struct PlayerCircle: View {
         VStack(spacing: 4) {
             ZStack {
                 Circle()
-                    .strokeBorder(isMe ? Color.green : (status.dead ? .red : Color.primaryBrown), lineWidth: 3)
-                    .frame(width: 60, height: 60)
-//                    .overlay(
-
-//                    )
+                    .strokeBorder(
+                        isMe ? Color.green : (status.dead ? .red : Color.primaryBrown),
+                        lineWidth: isRegular ? 5 : 3
+                    )
+                    .frame(width: circleSize, height: circleSize)
                     .background(
                         Image("background")
                             .resizable()
@@ -39,12 +40,13 @@ struct PlayerCircle: View {
                     if !player.name.isEmpty {
                         Text(player.name)
                             .foregroundColor(.black)
-                            .font(.caption)
-                            .lineLimit(3)
+                            .font(nameFont)
+                            .lineLimit(isRegular ? 4 : 3)
+                            .multilineTextAlignment(.center)
                     } else {
                         Text("#\(player.seatNumber)")
                             .foregroundColor(.black)
-                            .font(.headline)
+                            .font(seatFont)
                     }
                 }
                 // Voto
@@ -68,9 +70,9 @@ struct PlayerCircle: View {
                 // Rol asignado (opcional)
                 if let role = claimedRole, !iAmBadGuy() {
                         RolIcon(name: role.id)
-                            .frame(width: 70, height: 50)
+                            .frame(height: rolIconSize)
                             .clipShape(Circle())
-                            .offset(x: 0, y: -22)
+                            .offset(x: 0, y: rolIconOffsetY)
                 }
             }
             Group {
@@ -81,10 +83,39 @@ struct PlayerCircle: View {
                 }
             }
             .foregroundColor(.white)
-            .font(.caption)
+            .font(footerFont)
         }
         .onTapGesture(perform: onTap)
     }
+
+    private var isRegular: Bool {
+        sizeClass == .regular
+    }
+
+    private var circleSize: CGFloat {
+        isRegular ? 100 : 60
+    }
+
+    private var rolIconOffsetY: CGFloat {
+        isRegular ? -40 : -25
+    }
+
+    private var rolIconSize: CGFloat {
+        isRegular ? 100 : 60
+    }
+
+    private var nameFont: Font {
+        isRegular ? .title2 : .caption
+    }
+
+    private var seatFont: Font {
+        isRegular ? .title2 : .headline
+    }
+
+    private var footerFont: Font {
+        isRegular ? .body : .caption
+    }
+
 
     func iAmBadGuy() -> Bool {
         isMe && (claimedRole?.team == .demon || claimedRole?.team == .minion)
@@ -98,9 +129,9 @@ struct PlayerCircle: View {
             .scaledToFill()
             .frame(minWidth: 0)
             .edgesIgnoringSafeArea(.all)
-        let player = Player(seatNumber: 1, name: "Erick", claimRoleId: "secta_po", claimManual: "")
+        let player = Player(seatNumber: 1, name: "Erick", claimRoleId: "grandmother", claimManual: "")
         let status = player.statuses.first ?? .init(dayIndex: 0)
-        PlayerCircle(player: player, status: status, isMe: true, roles: [RoleDefinition(id: "secta_po", name: ["en": "Po"], team: .demon)]) {
+        PlayerCircle(player: player, status: status, isMe: true, roles: rolesExample) {
             print("tapped")
         }
     }

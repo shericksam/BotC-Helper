@@ -15,6 +15,7 @@ struct EditingIndex: Identifiable {
 }
 
 struct BoardView: View {
+    @Environment(\.horizontalSizeClass) private var sizeClass
     @Bindable var board: BoardState
     @State private var editingPlayer: Player?
     @State private var isVotingPhase = false
@@ -24,6 +25,10 @@ struct BoardView: View {
     @State private var showResetAlert = false
     @Environment(\.modelContext) private var modelContext
 
+    private var isRegular: Bool {
+        sizeClass == .regular
+    }
+
     var body: some View {
         VStack {
             Picker(MSG("board_day", board.currentDay + 1), selection: $board.currentDay) {
@@ -32,7 +37,24 @@ struct BoardView: View {
                 }
             }
             .pickerStyle(.segmented)
-            .padding(.top, 25)
+            .onAppear {
+                let appearance = UISegmentedControl.appearance()
+
+                appearance.backgroundColor = UIColor.systemGray5
+
+                appearance.selectedSegmentTintColor = UIColor.white
+
+                let normalTextAttributes: [NSAttributedString.Key: Any] = [
+                    .foregroundColor: UIColor.systemGray
+                ]
+                appearance.setTitleTextAttributes(normalTextAttributes, for: .normal)
+
+                let selectedTextAttributes: [NSAttributedString.Key: Any] = [
+                    .foregroundColor: UIColor.darkGray
+                ]
+                appearance.setTitleTextAttributes(selectedTextAttributes, for: .selected)
+            }
+            .padding(.vertical)
 
             Spacer()
 
@@ -71,7 +93,6 @@ struct BoardView: View {
                 .padding()
             }
         }
-
         .background(
             Image("background-side")
                 .resizable()
@@ -274,8 +295,8 @@ struct BoardView: View {
                 }
             }
         }
-        .padding(.horizontal, 40)
-        .padding(.vertical, 50)
+        .padding(.horizontal, isRegular ? 80 : 40)
+        .padding(.vertical, isRegular ? 80 : 50)
     }
 
     // Utilidad
@@ -327,7 +348,7 @@ struct BoardView: View {
     let container = try! ModelContainer(for: BoardState.self, configurations: config)
     let context = ModelContext(container)
     // MOCK:
-    let playerCount = 12
+    let playerCount = 20
     let names = ["Ana", "Bernardo", "Erick", "Fabian", "Carlos", "Dio", "Pedro", "Quike", "Ricardo", "Sergio", "Toni", "Uriel", "Ximena", "Yair", "Zamiel", "Manuel", "Oscar", "Nuckle", "Omar", "Pithuo", "Raúl", "Quimera", "Ricardo", "Sandro", "Toni", "Uriel", "Ximena", "Yair", "Zamiel", "Manuel", "Oscar", "Nuckle", "Omar", "Pithuo", "Raúl", "Quimera"]
     let players = (1...playerCount).map {
         Player(seatNumber: $0,
