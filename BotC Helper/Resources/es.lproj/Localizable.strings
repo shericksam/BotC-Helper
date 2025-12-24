@@ -121,3 +121,17 @@ team_minion = "Esbirros";
 team_demon = "Demonios";
 team_traveller = "Viajeros";
 team_fabled = "Fábulas";
+
+main_more_info = "Más sobre la app";
+
+about_title = "¿Qué hace esta app?";
+about_feature_games = "Crea y administra tus partidas de Blood on the Clocktower";
+about_feature_games_es = "Gestión de partidas, jugadores y asientos";
+about_feature_notes = "Notas, asientos, roles y verificación de Jinx";
+about_feature_notes_es = "Registra votos, nominaciones, muertes y combinaciones especiales";
+about_feature_ai = "Próximamente: consejos inteligentes vía IA (ChatGPT)";
+about_feature_ai_es = "¡Recibe estrategias y bluff en tiempo real!";
+about_support_headline = "¿Te gustaría apoyar el desarrollo?";
+about_support_button = "Invítame un café en PayPal";
+about_nav_title = "Sobre la App";
+about_close = "Cerrar";

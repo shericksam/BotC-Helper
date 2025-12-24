@@ -121,3 +121,19 @@ team_minion = "Minions";
 team_demon = "Demons";
 team_traveller = "Travellers";
 team_fabled = "Fabled";
+
+
+main_more_info = "More about the app";
+
+
+about_title = "What can this app do?";
+about_feature_games = "Create and track your Blood on the Clocktower games";
+about_feature_games_es = "Game, player and seat management";
+about_feature_notes = "Notes, seats, roles & automatic Jinx checks";
+about_feature_notes_es = "Track votes, nominations, deaths and special combos";
+about_feature_ai = "Coming soon: smart tips powered by AI (ChatGPT)";
+about_feature_ai_es = "Get real-time bluff/strategy suggestions!";
+about_support_headline = "Would you like to support development?";
+about_support_button = "Buy me a coffee on PayPal";
+about_nav_title = "About the App";
+about_close = "Close";

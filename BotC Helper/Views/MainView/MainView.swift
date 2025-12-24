@@ -13,6 +13,7 @@ struct MainView: View {
     @State private var showingNewGameSheet = false
     @State private var showingEditionsSheet = false
     @State private var isShowingGameBoard: Bool = false
+    @State private var showingAbout: Bool = false
 
     @State private var showingLoadView = false
 
@@ -113,6 +114,19 @@ struct MainView: View {
                         }
                     }
                     Spacer()
+                    Button {
+                        showingAbout = true
+                    } label: {
+                        Label(MSG("main_more_info"), systemImage: "info.circle")
+                            .font(.title3)
+                            .padding()
+                            .frame(maxWidth: .infinity)
+                            .background(Color.yellow.opacity(0.15))
+                            .cornerRadius(12)
+                    }
+                    .sheet(isPresented: $showingAbout) {
+                        AboutAppView()
+                    }
                 }
                 .padding()
             }
