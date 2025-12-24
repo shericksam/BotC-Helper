@@ -59,3 +59,13 @@
 For support, reporting bugs, or to contribute, please open an issue or email the developer.
 
 ---
+
+## Privacy Policy
+
+BotC Helper does not collect, store, track, or share any personal data.
+
+The app works completely offline and does not require user accounts,
+analytics, advertising, or third-party services.
+
+If you have any questions, contact:
+shericksam@gmail.com
