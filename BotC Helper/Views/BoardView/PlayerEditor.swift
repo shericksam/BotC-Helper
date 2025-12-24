@@ -42,17 +42,17 @@ struct PlayerEditor: View {
                 }
 
                 if let selected = selectedRole, !iAmBadGuy() {
-                    Section(MSG("edit_player_section_declaredrole", selected.name)) {
+                    Section(MSG("edit_player_section_declaredrole", selected.nameLocalized())) {
                         RolIcon(name: selected.id)
                             .frame(width: 50, height: 50)
                             .clipShape(RoundedRectangle(cornerRadius: 8))
                         Text(selected.abilityLocalized().isEmpty ? MSG("edit_player_no_role_description") : selected.abilityLocalized())
                             .font(.body)
-                        if let reminder = selected.firstNightReminder {
-                            Text(MSG("edit_player_first_night", reminder)).font(.footnote)
+                        if !selected.firstNightReminderLocalized().isEmpty {
+                            Text(MSG("edit_player_first_night", selected.firstNightReminderLocalized())).font(.footnote)
                         }
-                        if let reminder = selected.otherNightReminder {
-                            Text(MSG("edit_player_other_night", reminder)).font(.footnote)
+                        if !selected.otherNightReminderLocalized().isEmpty {
+                            Text(MSG("edit_player_other_night", selected.otherNightReminderLocalized())).font(.footnote)
                         }
                     }
                 }

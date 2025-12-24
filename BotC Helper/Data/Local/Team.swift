@@ -18,14 +18,15 @@ enum Team: String, Codable, CaseIterable, Hashable {
 
     var displayName: String {
         switch self {
-        case .townsfolk: return "Aldeano"
-        case .outsider: return "Forastero"
-        case .minion: return "Esbirro"
-        case .demon: return "Demonio"
-        case .traveller: return "Viajero"
-        case .fabled: return "Fábula"
+        case .townsfolk: return MSG("team_townsfolk")
+        case .outsider: return MSG("team_outsider")
+        case .minion: return MSG("team_minion")
+        case .demon: return MSG("team_demon")
+        case .traveller: return MSG("team_traveller")
+        case .fabled: return MSG("team_fabled")
         }
     }
+
     var color: Color {
         switch self {
         case .townsfolk: return .blue

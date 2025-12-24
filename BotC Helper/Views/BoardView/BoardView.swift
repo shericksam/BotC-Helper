@@ -346,7 +346,7 @@ struct BoardView: View {
                                 numDemon: newConfig.numDemon)
     let meta = EditionMeta(id: "test", name: "Tests", author: "Me")
     let game = BoardState(
-        suggestedName: "DemoJuego",
+        suggestedName: "Demo",
         players: players,
         currentDay: 0,
         config: configGame,

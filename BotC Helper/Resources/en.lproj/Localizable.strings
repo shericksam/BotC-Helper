@@ -112,3 +112,12 @@ edit_player_search_roles_prompt = "Search role by name";
 edit_player_no_role_description = "No description";
 edit_player_first_night = "First night: %@";
 edit_player_other_night = "Other nights: %@";
+
+save_game = "Game %@ players";
+
+team_townsfolk = "Townsfolk";
+team_outsider = "Outsiders";
+team_minion = "Minions";
+team_demon = "Demons";
+team_traveller = "Travellers";
+team_fabled = "Fabled";

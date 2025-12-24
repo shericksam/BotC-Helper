@@ -112,3 +112,12 @@ edit_player_search_roles_prompt = "Buscar rol por nombre";
 edit_player_no_role_description = "Sin descripción";
 edit_player_first_night = "Noche inicial: %@";
 edit_player_other_night = "Otras noches: %@";
+
+save_game = "Juego %@ jugadores";
+
+team_townsfolk = "Aldeanos";
+team_outsider = "Forasteros";
+team_minion = "Esbirros";
+team_demon = "Demonios";
+team_traveller = "Viajeros";
+team_fabled = "Fábulas";
