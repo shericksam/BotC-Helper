@@ -75,7 +75,7 @@ struct PlayerCircle: View {
             }
             Group {
                 if let role = claimedRole, !iAmBadGuy() {
-                    Text(role.name)
+                    Text(role.nameLocalized())
                 } else {
                     Text(MSG("new_game_seat_picker", player.seatNumber))
                 }
@@ -100,7 +100,7 @@ struct PlayerCircle: View {
             .edgesIgnoringSafeArea(.all)
         let player = Player(seatNumber: 1, name: "Erick", claimRoleId: "secta_po", claimManual: "")
         let status = player.statuses.first ?? .init(dayIndex: 0)
-        PlayerCircle(player: player, status: status, isMe: true, roles: [RoleDefinition(id: "secta_po", name: "Po", team: .demon)]) {
+        PlayerCircle(player: player, status: status, isMe: true, roles: [RoleDefinition(id: "secta_po", name: ["en": "Po"], team: .demon)]) {
             print("tapped")
         }
     }

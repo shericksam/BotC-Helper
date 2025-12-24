@@ -7,41 +7,39 @@
 
 import Foundation
 import SwiftData
-
 @Model
 final class RoleDefinition {
     @Attribute(.unique) var id: String
-    var name: String
+    var name: [String: String]      // multidioma: "es" "en" etc.
     var teamRaw: String?
-    var ability: String?
+    var ability: [String: String]?
     var setup: Bool?
-    var iconName: String?
-    var reminders: [String]?
-    var remindersGlobal: [String]?
-    var firstNightReminder: String?
-    var otherNightReminder: String?
+    var reminders: [String: [String]]?
+    var remindersGlobal: [String: [String]]?
+    var firstNightReminder: [String: String]?
+    var otherNightReminder: [String: String]?
 
     var team: Team? {
         get { teamRaw.flatMap { Team(rawValue: $0) } }
         set { teamRaw = newValue?.rawValue }
     }
 
-    init(id: String,
-         name: String,
-         team: Team? = nil,
-         ability: String? = nil,
-         setup: Bool? = nil,
-         iconName: String? = nil,
-         reminders: [String]? = nil,
-         remindersGlobal: [String]? = nil,
-         firstNightReminder: String? = nil,
-         otherNightReminder: String? = nil) {
+    init(
+        id: String,
+        name: [String: String],
+        team: Team? = nil,
+        ability: [String: String]? = nil,
+        setup: Bool? = nil,
+        reminders: [String: [String]]? = nil,
+        remindersGlobal: [String: [String]]? = nil,
+        firstNightReminder: [String: String]? = nil,
+        otherNightReminder: [String: String]? = nil
+    ) {
         self.id = id
         self.name = name
         self.teamRaw = team?.rawValue
         self.ability = ability
         self.setup = setup
-        self.iconName = iconName ?? id.replacingOccurrences(of: "secta_", with: "")
         self.reminders = reminders
         self.remindersGlobal = remindersGlobal
         self.firstNightReminder = firstNightReminder
@@ -53,27 +51,23 @@ final class RoleDefinition {
 extension RoleDefinition {
     static func upsert(
         id: String,
-        name: String,
+        name: [String: String],
         team: Team?,
-        ability: String?,
+        ability: [String: String]?,
         setup: Bool?,
-        iconName: String?,
-        reminders: [String]?,
-        remindersGlobal: [String]?,
-        firstNightReminder: String?,
-        otherNightReminder: String?,
+        reminders: [String: [String]]?,
+        remindersGlobal: [String: [String]]?,
+        firstNightReminder: [String: String]?,
+        otherNightReminder: [String: String]?,
         modelContext: ModelContext
     ) -> RoleDefinition {
 
-        // Buscar uno existente
         let fetch = FetchDescriptor<RoleDefinition>(predicate: #Predicate { $0.id == id })
         let fetched = (try? modelContext.fetch(fetch)) ?? []
         if let existing = fetched.first {
-            // Actualiza solo campos que no estén completos
             if existing.name.isEmpty { existing.name = name }
             if existing.ability == nil || existing.ability?.isEmpty == true { existing.ability = ability }
             if existing.team == nil { existing.team = team }
-            if existing.iconName == nil || existing.iconName?.isEmpty == true { existing.iconName = iconName }
             if existing.reminders == nil || existing.reminders?.isEmpty == true { existing.reminders = reminders }
             if existing.remindersGlobal == nil || existing.remindersGlobal?.isEmpty == true { existing.remindersGlobal = remindersGlobal }
             if existing.firstNightReminder == nil || existing.firstNightReminder?.isEmpty == true { existing.firstNightReminder = firstNightReminder }
@@ -87,7 +81,6 @@ extension RoleDefinition {
                 team: team,
                 ability: ability,
                 setup: setup,
-                iconName: iconName,
                 reminders: reminders,
                 remindersGlobal: remindersGlobal,
                 firstNightReminder: firstNightReminder,
@@ -97,4 +90,35 @@ extension RoleDefinition {
             return new
         }
     }
+}
+
+extension RoleDefinition {
+    // Para un campo [String: String]
+    func localizedString(_ dict: [String: String]?) -> String {
+        let preferred = Locale.preferredLanguages
+            .compactMap { $0.components(separatedBy: "-").first }
+        for langCode in preferred {
+            if let txt = dict?[langCode], !txt.isEmpty { return txt }
+        }
+        if let en = dict?["en"], !en.isEmpty { return en }
+        if let any = dict?.values.first { return any }
+        return ""
+    }
+    // Para un campo [String: [String]]
+    func localizedArray(_ dict: [String: [String]]?) -> [String] {
+        let preferred = Locale.preferredLanguages
+            .compactMap { $0.components(separatedBy: "-").first }
+        for lang in preferred {
+            if let arr = dict?[lang], !arr.isEmpty { return arr }
+        }
+        if let enarr = dict?["en"], !enarr.isEmpty { return enarr }
+        if let first = dict?.values.first, !first.isEmpty { return first }
+        return []
+    }
+    func nameLocalized() -> String { localizedString(self.name) }
+    func abilityLocalized() -> String { localizedString(self.ability) }
+    func firstNightReminderLocalized() -> String { localizedString(self.firstNightReminder) }
+    func otherNightReminderLocalized() -> String { localizedString(self.otherNightReminder) }
+    func remindersLocalized() -> [String] { localizedArray(self.reminders) }
+    func remindersGlobalLocalized() -> [String] { localizedArray(self.remindersGlobal) }
 }

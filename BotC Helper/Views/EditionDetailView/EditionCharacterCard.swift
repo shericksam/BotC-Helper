@@ -16,7 +16,7 @@ struct EditionCharacterCard: View {
                 RolIcon(name: character.id)
                     .frame(width: 48, height: 48)
                     .clipShape(RoundedRectangle(cornerRadius: 8))
-                Text(character.name)
+                Text(character.nameLocalized())
                     .font(.title2)
                     .bold()
                 if let team = character.team {
@@ -34,12 +34,12 @@ struct EditionCharacterCard: View {
                 Text(MSG("role_ability_label", ability))
                     .font(.body)
             }
-            if let reminders = character.reminders, !reminders.isEmpty {
-                Text(MSG("role_reminders", reminders.joined(separator: ", ")))
+            if !character.remindersLocalized().isEmpty {
+                Text(MSG("role_reminders", character.remindersLocalized().joined(separator: ", ")))
                     .font(.footnote)
             }
-            if let global = character.remindersGlobal, !global.isEmpty {
-                Text(MSG("role_global_reminders", global.joined(separator: ", ")))
+            if !character.remindersGlobalLocalized().isEmpty {
+                Text(MSG("role_global_reminders", character.remindersGlobalLocalized().joined(separator: ", ")))
                     .font(.footnote)
             }
             if let fn = character.firstNightReminder {

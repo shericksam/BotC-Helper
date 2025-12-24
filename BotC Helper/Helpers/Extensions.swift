@@ -17,3 +17,16 @@ extension CGPoint {
 public extension Array {
     subscript(safe idx: Int) -> Element? { (startIndex..<endIndex).contains(idx) ? self[idx] : nil }
 }
+
+extension Dictionary where Key == String, Value == String {
+    func localized(_ defaultLang: String = "en") -> String {
+        let preferred = Locale.preferredLanguages
+            .compactMap { $0.components(separatedBy: "-").first }
+        for lang in preferred {
+            if let str = self[lang], !str.isEmpty { return str }
+        }
+        if let en = self[defaultLang], !en.isEmpty { return en }
+        if let any = self.values.first { return any }
+        return ""
+    }
+}

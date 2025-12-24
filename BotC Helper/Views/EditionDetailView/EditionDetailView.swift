@@ -18,8 +18,8 @@ struct EditionDetailView: View {
         Team.allCases.compactMap { team in
             let filtered = editionMeta.characters.filter {
                 $0.team == team &&
-                (searchText.isEmpty || $0.name.localizedCaseInsensitiveContains(searchText))
-            }.sorted(by: { $0.name < $1.name })
+                (searchText.isEmpty || $0.nameLocalized().localizedCaseInsensitiveContains(searchText))
+            }.sorted(by: { $0.nameLocalized() < $1.nameLocalized() })
             return filtered.isEmpty ? nil : (team, filtered)
         }
     }
@@ -125,7 +125,7 @@ struct NightOrderView: View {
                             RolIcon(name: role.id)
                                 .frame(width: 50, height: 50)
                                 .cornerRadius(5)
-                            Text(role.name)
+                            Text(role.nameLocalized())
                                 .font(.body)
                         }
                     } else {

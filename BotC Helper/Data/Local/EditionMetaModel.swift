@@ -15,22 +15,19 @@ struct EditionMetaModel: Decodable, Encodable {
     let otherNight: [String]
 }
 
-struct RoleDefinitionModel: Decodable, Identifiable, Encodable, Hashable, Equatable {
+struct RoleDefinitionModel: Codable {
     let id: String
-    let name: String
+    let name: [String: String]
     let team: Team?
-    let ability: String?
+    let ability: [String: String]?
     let setup: Bool?
-    var iconName: String {
-        getImageName()
-    }
-    let reminders: [String]?
-    let remindersGlobal: [String]?
-    let firstNightReminder: String?
-    let otherNightReminder: String?
+    let reminders: [String: [String]]?
+    let remindersGlobal: [String: [String]]?
+    let firstNightReminder: [String: String]?
+    let otherNightReminder: [String: String]?
     let special: [SpecialProperty]?
 
-    struct SpecialProperty: Decodable, Encodable, Hashable {
+    struct SpecialProperty: Codable, Hashable {
         let name: String
         let type: String
         let time: String?
@@ -38,66 +35,43 @@ struct RoleDefinitionModel: Decodable, Identifiable, Encodable, Hashable, Equata
     }
 
     enum CodingKeys: CodingKey {
-        case id
-        case name
-        case team
-        case ability
-        case setup
-        case reminders
-        case remindersGlobal
-        case firstNightReminder
-        case otherNightReminder
-        case special
+        case id, name, team, ability, setup, reminders, remindersGlobal, firstNightReminder, otherNightReminder, special
     }
 
     init(from decoder: any Decoder) throws {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         self.id = try container.decode(String.self, forKey: .id)
-        self.name = try container.decode(String.self, forKey: .name)
+
+        // Support both string and dictionary for name/ability for backward compatibility
+        self.name = try container.decodeIfPresent([String: String].self, forKey: .name)
+            ?? ["es": (try? container.decode(String.self, forKey: .name)) ?? ""]
+
         if let teamStr = try? container.decode(String.self, forKey: .team) {
             team = Team(rawValue: teamStr)
         } else {
             team = nil
         }
-        self.ability = try container.decodeIfPresent(String.self, forKey: .ability)
+
+        self.ability = try container.decodeIfPresent([String: String].self, forKey: .ability)
+            ?? (try? container.decode(String.self, forKey: .ability)).map { ["es": $0] }
+
         self.setup = try container.decodeIfPresent(Bool.self, forKey: .setup)
-        self.reminders = try container.decodeIfPresent([String].self, forKey: .reminders)
-        self.remindersGlobal = try container.decodeIfPresent([String].self, forKey: .remindersGlobal)
-        self.firstNightReminder = try container.decodeIfPresent(String.self, forKey: .firstNightReminder)
-        self.otherNightReminder = try container.decodeIfPresent(String.self, forKey: .otherNightReminder)
-        self.special = try container.decodeIfPresent([RoleDefinitionModel.SpecialProperty].self, forKey: .special)
+
+        self.reminders = try container.decodeIfPresent([String: [String]].self, forKey: .reminders)
+            ?? (try? container.decode([String].self, forKey: .reminders)).map { ["es": $0] }
+
+        self.remindersGlobal = try container.decodeIfPresent([String: [String]].self, forKey: .remindersGlobal)
+            ?? (try? container.decode([String].self, forKey: .remindersGlobal)).map { ["es": $0] }
+
+        self.firstNightReminder = try container.decodeIfPresent([String: String].self, forKey: .firstNightReminder)
+            ?? (try? container.decode(String.self, forKey: .firstNightReminder)).map { ["es": $0] }
+
+        self.otherNightReminder = try container.decodeIfPresent([String: String].self, forKey: .otherNightReminder)
+            ?? (try? container.decode(String.self, forKey: .otherNightReminder)).map { ["es": $0] }
+
+        self.special = try container.decodeIfPresent([SpecialProperty].self, forKey: .special)
     }
 
-    init(
-        id: String,
-        name: String,
-        team: Team? = nil,
-        ability: String? = nil,
-        setup: Bool? = nil,
-        reminders: [String]? = nil,
-        remindersGlobal: [String]? = nil,
-        firstNightReminder: String? = nil,
-        otherNightReminder: String? = nil,
-        special: [SpecialProperty]? = nil
-    ) {
-        self.id = id
-        self.name = name
-        self.team = team
-        self.ability = ability
-        self.setup = setup
-        self.reminders = reminders
-        self.remindersGlobal = remindersGlobal
-        self.firstNightReminder = firstNightReminder
-        self.otherNightReminder = otherNightReminder
-        self.special = special
-    }
-
-    static func == (lhs: RoleDefinitionModel, rhs: RoleDefinitionModel) -> Bool {
-        lhs.id == rhs.id
-    }
-    func getImageName() -> String {
-        id.replacing("secta_", with: "")
-    }
 }
 
 struct EditionDataModel: Decodable, Encodable, Equatable {

@@ -16,7 +16,7 @@ struct NewGameSheet: View {
     @Environment(\.dismiss) var dismiss
     @State private var playerCount = 5
     @State private var yourSeat = 1
-    @Query(sort: \RoleDefinition.name) var allRoles: [RoleDefinition]
+    @Query(sort: \RoleDefinition.id) var allRoles: [RoleDefinition]
 
     var body: some View {
         NavigationView {

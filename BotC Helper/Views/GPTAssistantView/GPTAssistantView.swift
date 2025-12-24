@@ -117,19 +117,19 @@ struct GPTAssistantView: View {
         let editionName = board.edition?.meta.name ?? "Desconocido"
         let players = board.players.sorted { $0.seatNumber < $1.seatNumber }.map { p in
             let name = p.name.isEmpty ? "Jugador \(p.seatNumber)" : p.name
-            let claim = board.edition?.characters.first(where: { $0.id == p.claimRoleId })?.name ?? ""
+            let claim = board.edition?.characters.first(where: { $0.id == p.claimRoleId })?.nameLocalized() ?? ""
             let status = p.statuses[safe: board.currentDay]?.dead == true ? "muerto" : "vivo"
             let notas = p.personalNotes.count > 0 ?
                 "Notas de \(name) por día: \(p.personalNotes.sorted(by: { $0.text < $1.text }).map {"Día \($0.dayIndex + 1): \($0.text)"}.joined(separator: "\n"))" : "No tiene"
             return "\(name) (\(status))" + (claim.isEmpty ? "" : " - CLAIM: \(claim)") + " \n notas: \(notas)"
         }
         let myPlayer = board.players.first(where: { $0.isMe })
-        let myselfClaim = board.edition?.characters.first(where: { $0.id == myPlayer?.claimRoleId })?.name ?? ""
-        let demonRoles = board.edition?.characters.filter { $0.team == .demon }.map(\.name) ?? []
-        let minionRoles = board.edition?.characters.filter { $0.team == .minion }.map(\.name) ?? []
-        let townsfolkRoles = board.edition?.characters.filter { $0.team == .townsfolk }.map(\.name) ?? []
-        let outsiderRoles = board.edition?.characters.filter { $0.team == .outsider }.map(\.name) ?? []
-        let travellerRoles = board.edition?.characters.filter { $0.team == .traveller }.map(\.name) ?? []
+        let myselfClaim = board.edition?.characters.first(where: { $0.id == myPlayer?.claimRoleId })?.nameLocalized() ?? ""
+        let demonRoles = board.edition?.characters.filter { $0.team == .demon }.map({ $0.nameLocalized() }) ?? []
+        let minionRoles = board.edition?.characters.filter { $0.team == .minion }.map({ $0.nameLocalized() }) ?? []
+        let townsfolkRoles = board.edition?.characters.filter { $0.team == .townsfolk }.map({ $0.nameLocalized() }) ?? []
+        let outsiderRoles = board.edition?.characters.filter { $0.team == .outsider }.map({ $0.nameLocalized() }) ?? []
+        let travellerRoles = board.edition?.characters.filter { $0.team == .traveller }.map({ $0.nameLocalized() }) ?? []
 
         return """
         Estado actual de la partida de Blood on the Clocktower, edición '\(editionName)', día \(board.currentDay + 1):
@@ -202,7 +202,7 @@ struct GPTAssistantView: View {
         let myNotes: [String] = myPlayer?.personalNotes.compactMap { $0.text }.filter { !$0.isEmpty } ?? []
         let claims: [String] = board.players.compactMap {
             guard let rid = $0.claimRoleId else { return nil }
-            let claimName = board.edition?.characters.first(where: { $0.id == rid })?.name ?? $0.claimManual
+            let claimName = board.edition?.characters.first(where: { $0.id == rid })?.nameLocalized() ?? $0.claimManual
             return "\($0.name) (\($0.seatNumber)): \(claimName)"
         }
 
@@ -211,7 +211,7 @@ struct GPTAssistantView: View {
         Soy un jugador en Blood on the Clocktower, jugando la edición \(board.edition?.meta.name ?? "Desconocido") con \(board.players.count) jugadores.
         Mi asiento: \(myPlayer?.seatNumber ?? -1).
         Día actual: \(board.currentDay + 1).
-        Los roles en juego son: \(board.edition?.characters.map(\.name).joined(separator: ", ") ?? "-").
+        Los roles en juego son: \(board.edition?.characters.map(\.id).joined(separator: ", ") ?? "-").
         Mis notas:
         \(myNotes.joined(separator: "\n"))
         Claims de otros jugadores:

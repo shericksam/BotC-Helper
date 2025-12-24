@@ -43,10 +43,10 @@ struct PlayerEditor: View {
 
                 if let selected = selectedRole, !iAmBadGuy() {
                     Section(MSG("edit_player_section_declaredrole", selected.name)) {
-                        RolIcon(name: selected.iconName ?? selected.id)
+                        RolIcon(name: selected.id)
                             .frame(width: 50, height: 50)
                             .clipShape(RoundedRectangle(cornerRadius: 8))
-                        Text(selected.ability ?? MSG("edit_player_no_role_description"))
+                        Text(selected.abilityLocalized().isEmpty ? MSG("edit_player_no_role_description") : selected.abilityLocalized())
                             .font(.body)
                         if let reminder = selected.firstNightReminder {
                             Text(MSG("edit_player_first_night", reminder)).font(.footnote)
@@ -139,12 +139,12 @@ struct PlayerEditor: View {
                         searchClaim = newValue
                         showRolesList = !newValue.isEmpty
                         filteredRoles = roles.filter {
-                            $0.name.localizedCaseInsensitiveContains(newValue)
+                            $0.nameLocalized().localizedCaseInsensitiveContains(newValue)
                         }
                         if newValue.isEmpty {
                             player.claimRoleId = nil
                         }
-                        if let exact = roles.first(where: { $0.name.caseInsensitiveCompare(newValue) == .orderedSame }) {
+                        if let exact = roles.first(where: { $0.nameLocalized().caseInsensitiveCompare(newValue) == .orderedSame }) {
                             player.claimRoleId = exact.id
                             player.claimManual = ""
                         } else {
@@ -156,7 +156,7 @@ struct PlayerEditor: View {
             )
             .onAppear {
                 if let rid = player.claimRoleId,
-                   let rolename = roles.first(where: { $0.id == rid })?.name {
+                   let rolename = roles.first(where: { $0.id == rid })?.nameLocalized() {
                     searchClaim = rolename
                 } else {
                     searchClaim = player.claimManual
@@ -167,14 +167,14 @@ struct PlayerEditor: View {
                     Button {
                         player.claimRoleId = role.id
                         player.claimManual = ""
-                        searchClaim = role.name
+                        searchClaim = role.nameLocalized()
                         showRolesList = false
                     } label: {
                         HStack {
-                            RolIcon(name: role.iconName ?? role.id)
+                            RolIcon(name: role.id)
                                 .frame(width: 48, height: 48)
                                 .clipShape(RoundedRectangle(cornerRadius: 8))
-                            Text(role.name)
+                            Text(role.nameLocalized())
                         }
                     }
                 }

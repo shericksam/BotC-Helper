@@ -18,7 +18,7 @@ struct EditionCreationView: View {
     @State private var author = ""
     @State private var selectedRoles: Set<RoleDefinition> = []
 
-    @Query(sort: \RoleDefinition.name) var allRoles: [RoleDefinition]
+    @Query(sort: \RoleDefinition.id) var allRoles: [RoleDefinition]
     @Query(sort: \Jinx.id) var allJinxes: [Jinx]
     @Environment(\.dismiss) var dismiss
 
@@ -26,8 +26,8 @@ struct EditionCreationView: View {
         Team.allCases.compactMap { team in
             let filtered = allRoles.filter {
                 $0.team == team &&
-                (searchText.isEmpty || $0.name.localizedCaseInsensitiveContains(searchText))
-            }.sorted(by: { $0.name < $1.name })
+                (searchText.isEmpty || $0.nameLocalized().localizedCaseInsensitiveContains(searchText))
+            }.sorted(by: { $0.nameLocalized() < $1.nameLocalized() })
             return filtered.isEmpty ? nil : (team, filtered)
         }
     }
@@ -47,7 +47,7 @@ struct EditionCreationView: View {
                             HStack {
                                 RolIcon(name: role.id)
                                     .frame(width: 32, height: 32)
-                                Text(role.name)
+                                Text(role.nameLocalized())
                                 Spacer()
                                 Button(selectedRoles.contains(role) ? MSG("edition_role_remove") : MSG("edition_role_add")) {
                                     if selectedRoles.contains(role) {
