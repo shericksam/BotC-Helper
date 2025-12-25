@@ -118,7 +118,7 @@ struct GPTAssistantView: View {
         let players = board.players.sorted { $0.seatNumber < $1.seatNumber }.map { p in
             let name = p.name.isEmpty ? "Jugador \(p.seatNumber)" : p.name
             let claim = board.edition?.characters.first(where: { $0.id == p.claimRoleId })?.nameLocalized() ?? ""
-            let status = p.statuses[safe: board.currentDay]?.dead == true ? "muerto" : "vivo"
+            let status = p.statuses.first(where: { $0.dayIndex == board.currentDay })?.dead == true ? "muerto" : "vivo"
             let notas = p.personalNotes.count > 0 ?
                 "Notas de \(name) por día: \(p.personalNotes.sorted(by: { $0.text < $1.text }).map {"Día \($0.dayIndex + 1): \($0.text)"}.joined(separator: "\n"))" : "No tiene"
             return "\(name) (\(status))" + (claim.isEmpty ? "" : " - CLAIM: \(claim)") + " \n notas: \(notas)"
