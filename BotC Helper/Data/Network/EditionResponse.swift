@@ -15,15 +15,3 @@ struct RawEdition: Decodable {
     var otherNight: [String]
     // Puedes agregar otras propiedades si quieres
 }
-
-struct RawCharacter: Decodable {
-    var id: String
-    var name: String
-    var team: String?
-    var ability: String?
-    var setup: Bool?
-    var image: [String]?
-    var reminders: [String]?
-    var firstNightReminder: String?
-    var otherNightReminder: String?
-}

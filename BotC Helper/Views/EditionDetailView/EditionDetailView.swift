@@ -80,8 +80,8 @@ struct EditionDetailView: View {
                     }
                 }
 
-                // Characters
-                ForEach(groupedRoles, id: \.0) { (team, chars) in
+                // Roles
+                ForEach(groupedRoles, id: \.0) { (team, roles) in
                     Section(header: Text(team.displayName)
                         .font(.title2)
                         .padding(.vertical, 4)
@@ -89,8 +89,8 @@ struct EditionDetailView: View {
                         .frame(maxWidth: .infinity, alignment: .center)
                         .background(team.color.opacity(0.12).cornerRadius(8))
                     ) {
-                        ForEach(chars) { character in
-                            EditionCharacterCard(character: character)
+                        ForEach(roles) { rol in
+                            RolEditionCard(rol: rol)
                         }
                     }
                 }
