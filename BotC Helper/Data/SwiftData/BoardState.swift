@@ -12,10 +12,10 @@ import SwiftData
 final class BoardState {
     @Attribute(.unique) var id: UUID
     var suggestedName: String
-    @Relationship(deleteRule: .cascade) var players: [Player] = []
+    @Relationship(deleteRule: .nullify) var players: [Player] = []
     var currentDay: Int
     var config: GameConfig
-    @Relationship var edition: EditionData?
+    @Relationship(deleteRule: .nullify) var edition: EditionData?
     var totalDays: Int { players.first?.statuses.count ?? 0 }
 
     init(id: UUID = UUID(),

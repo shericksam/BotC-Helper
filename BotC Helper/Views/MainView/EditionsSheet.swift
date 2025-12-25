@@ -41,8 +41,7 @@ struct EditionsSheet: View {
                         .shadow(radius: 1)
                     }
                     .swipeActions(edge: .trailing, allowsFullSwipe: false) {
-                        // Solo permite borrar/editar si NO es de bundle
-                        if edition.meta.author != "Oficial" { // O tu flag
+                        if edition.meta.author != "Steven Medway" {
                             Button(role: .destructive) {
                                 deleteEdition(edition)
                             } label: {

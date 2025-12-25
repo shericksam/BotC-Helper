@@ -16,7 +16,6 @@ struct NewGameSheet: View {
     @Environment(\.dismiss) var dismiss
     @State private var playerCount = 5
     @State private var yourSeat = 1
-    @Query(sort: \RoleDefinition.id) var allRoles: [RoleDefinition]
 
     var body: some View {
         NavigationView {
@@ -83,16 +82,11 @@ struct NewGameSheet: View {
                 players: players,
                 currentDay: 0,
                 config: config,
-                edition: chosenEdition ?? createDefaultEdition()
+                edition: chosenEdition
             )
             modelContext.insert(newGame)
             onStart(newGame)
         }
-    }
-
-    func createDefaultEdition() -> EditionData {
-        let meta = EditionMeta(id: "non", name: MSG("no_edition"))
-        return EditionData(meta: meta, characters: allRoles)
     }
 }
 

@@ -15,7 +15,7 @@ struct PreloadContent {
     func preloadDefaultEditionsAndRolesIfNeeded(modelContext: ModelContext) async {
         let didPreload = UserDefaults.standard.bool(forKey: didPreloadKey)
 
-        guard !didPreload else { return }
+//        guard !didPreload else { return }
         loadAndSaveRoles(modelContext: modelContext)
 
         loadAndSaveJinxes(modelContext: modelContext)

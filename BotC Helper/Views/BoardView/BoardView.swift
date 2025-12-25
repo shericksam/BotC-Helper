@@ -15,6 +15,7 @@ struct EditingIndex: Identifiable {
 }
 
 struct BoardView: View {
+    @Query(sort: \RoleDefinition.id) var allRoles: [RoleDefinition]
     @Environment(\.horizontalSizeClass) private var sizeClass
     @Bindable var board: BoardState
     @State private var editingPlayer: Player?
@@ -154,7 +155,7 @@ struct BoardView: View {
                     totalDays: board.players.first?.statuses.count ?? 1,
                     statusesByDay: player.statuses,
                     currentDayIndex: board.currentDay,
-                    roles: board.edition?.characters ?? []
+                    roles: board.edition?.characters ?? allRoles
                 )
             } else {
                 Text("No player to edit")
@@ -240,7 +241,7 @@ struct BoardView: View {
                             player: player,
                             status: status,
                             isMe: player.isMe,
-                            roles: board.edition?.characters ?? [],
+                            roles: board.edition?.characters ?? allRoles,
                             onTap: {
                                 if isVotingPhase {
                                     player.statuses.first(where: { $0.dayIndex == board.currentDay })?.voted.toggle()

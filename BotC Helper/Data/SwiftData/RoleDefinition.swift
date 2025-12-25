@@ -7,10 +7,11 @@
 
 import Foundation
 import SwiftData
+
 @Model
 final class RoleDefinition {
     @Attribute(.unique) var id: String
-    var name: [String: String]      // multidioma: "es" "en" etc.
+    var name: [String: String]
     var teamRaw: String?
     var ability: [String: String]?
     var setup: Bool?
@@ -93,7 +94,6 @@ extension RoleDefinition {
 }
 
 extension RoleDefinition {
-    // Para un campo [String: String]
     func localizedString(_ dict: [String: String]?) -> String {
         let preferred = Locale.preferredLanguages
             .compactMap { $0.components(separatedBy: "-").first }
