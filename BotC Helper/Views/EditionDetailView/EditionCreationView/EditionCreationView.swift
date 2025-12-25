@@ -93,6 +93,8 @@ struct EditionCreationView: View {
         }
 
         if let edition = editingEdition {
+            applicableJinxes.forEach({ $0.editions.append(edition) })
+            selectedRoles.forEach({ $0.editions.append(edition) })
             edition.meta.name = name
             edition.meta.author = author
             edition.characters = Array(selectedRoles)
@@ -106,11 +108,16 @@ struct EditionCreationView: View {
                 firstNight: [],
                 otherNight: []
             )
-            let edition = EditionData(
-                meta: meta,
-                characters: Array(selectedRoles),
-                jinxes: applicableJinxes
+            let edition = EditionData.upsert(id: UUID().uuidString,
+                                             meta: meta,
+                                             characters: [],
+                                             jinxes: [],
+                                             modelContext: modelContext
             )
+            applicableJinxes.forEach({ $0.editions.append(edition) })
+            selectedRoles.forEach({ $0.editions.append(edition) })
+            edition.characters = Array(selectedRoles)
+            edition.jinxes = applicableJinxes
             modelContext.insert(edition)
             try? modelContext.save()
         }

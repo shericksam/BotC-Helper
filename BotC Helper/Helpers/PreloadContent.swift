@@ -15,7 +15,7 @@ struct PreloadContent {
     func preloadDefaultEditionsAndRolesIfNeeded(modelContext: ModelContext) async {
         let didPreload = UserDefaults.standard.bool(forKey: didPreloadKey)
 
-//        guard !didPreload else { return }
+        guard !didPreload else { return }
         loadAndSaveRoles(modelContext: modelContext)
 
         loadAndSaveJinxes(modelContext: modelContext)
@@ -40,6 +40,7 @@ struct PreloadContent {
                 remindersGlobal: role.remindersGlobal,
                 firstNightReminder: role.firstNightReminder,
                 otherNightReminder: role.otherNightReminder,
+                edition: nil,
                 modelContext: modelContext
             )
         }
@@ -73,6 +74,8 @@ struct PreloadContent {
                                                 otherNight: metaStruct.otherNight,
                                                 modelContext: modelContext)
 
+            let newEditionData = EditionData.upsert(id: metaEntity.id, meta: metaEntity, characters: [], jinxes: [], modelContext: modelContext)
+
             var roleEntities: [RoleDefinition] = []
 
             for r in roles {
@@ -86,6 +89,7 @@ struct PreloadContent {
                                                        remindersGlobal: r.remindersGlobal,
                                                        firstNightReminder: r.firstNightReminder,
                                                        otherNightReminder: r.otherNightReminder,
+                                                       edition: newEditionData,
                                                        modelContext: modelContext)
                 roleEntities.append(roleEntity)
             }
@@ -100,8 +104,9 @@ struct PreloadContent {
             let applicableJinxes = allStoredJinxes.filter { jinx in
                 Set(jinx.roles).isSubset(of: roleIdsInEdition)
             }
-
-            _ = EditionData.upsert(id: metaEntity.id, meta: metaEntity, characters: roleEntities, jinxes: applicableJinxes, modelContext: modelContext)
+            newEditionData.characters = roleEntities
+            applicableJinxes.forEach({ $0.editions.append(newEditionData) })
+            newEditionData.jinxes = applicableJinxes
         }
     }
 
@@ -114,6 +119,7 @@ struct PreloadContent {
                 roles: jinxModel.roles,
                 description: jinxModel.desc,
                 image: jinxModel.image,
+                edition: nil,
                 modelContext: modelContext
             )
         }

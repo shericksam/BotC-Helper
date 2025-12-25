@@ -10,6 +10,7 @@ import SwiftData
 
 struct EditionsSheet: View {
     @Query(sort: \EditionData.id) var allEditions: [EditionData]
+    @Query(sort: \BoardState.suggestedName) var allGames: [BoardState]
     @Environment(\.modelContext) private var modelContext
 
     @State private var selectedEdition: EditionData?
@@ -84,8 +85,12 @@ struct EditionsSheet: View {
     }
 
     func deleteEdition(_ edition: EditionData) {
+        for board in allGames where board.edition == edition {
+            board.edition = nil
+        }
         modelContext.delete(edition)
         try? modelContext.save()
+
     }
 
 }

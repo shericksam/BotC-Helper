@@ -19,6 +19,7 @@ final class RoleDefinition {
     var remindersGlobal: [String: [String]]?
     var firstNightReminder: [String: String]?
     var otherNightReminder: [String: String]?
+    @Relationship(inverse: \EditionData.characters) var editions: [EditionData]
 
     var team: Team? {
         get { teamRaw.flatMap { Team(rawValue: $0) } }
@@ -34,7 +35,8 @@ final class RoleDefinition {
         reminders: [String: [String]]? = nil,
         remindersGlobal: [String: [String]]? = nil,
         firstNightReminder: [String: String]? = nil,
-        otherNightReminder: [String: String]? = nil
+        otherNightReminder: [String: String]? = nil,
+        editions: [EditionData] = []
     ) {
         self.id = id
         self.name = name
@@ -45,6 +47,7 @@ final class RoleDefinition {
         self.remindersGlobal = remindersGlobal
         self.firstNightReminder = firstNightReminder
         self.otherNightReminder = otherNightReminder
+        self.editions = editions
     }
 
 }
@@ -60,6 +63,7 @@ extension RoleDefinition {
         remindersGlobal: [String: [String]]?,
         firstNightReminder: [String: String]?,
         otherNightReminder: [String: String]?,
+        edition: EditionData?,
         modelContext: ModelContext
     ) -> RoleDefinition {
 
@@ -87,6 +91,9 @@ extension RoleDefinition {
                 firstNightReminder: firstNightReminder,
                 otherNightReminder: otherNightReminder
             )
+            if let edition {
+                new.editions.append(edition)
+            }
             modelContext.insert(new)
             return new
         }
