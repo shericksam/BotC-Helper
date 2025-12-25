@@ -142,12 +142,11 @@ struct BoardView: View {
             }
         }
         .sheet(item: $editingPlayer) { player in
-            if
-               let status = player.statuses[safe: board.currentDay] {
+            if let status = player.statuses.first(where: { $0.dayIndex == board.currentDay }) {
                 PlayerEditor(
                     player: player,
                     status: status,
-                    onSave: { _, _ in
+                    onSave: {
                         try? modelContext.save()
                         editingPlayer = nil
                     },
@@ -164,22 +163,23 @@ struct BoardView: View {
     }
 
     // ------- Funciones clave --------
-
     func addDay() {
         let newDayIndex = (board.players.first?.statuses.count ?? 0)
         for player in board.players {
-            let prev = player.statuses[board.currentDay]
-            player.statuses.append(PlayerStatus(dayIndex: newDayIndex,
-                                                seatNumber: prev.seatNumber,
-                                                voted: false,
-                                                nominated: false,
-                                                dead: prev.dead,
-                                                claim: prev.claim,
-                                                notes: "")
-            )
+            guard let prev = player.statuses.first(where: { $0.dayIndex == board.currentDay }) else {
+                continue
+            }
+            player.statuses.append(PlayerStatus(
+                dayIndex: newDayIndex,
+                seatNumber: prev.seatNumber,
+                voted: false,
+                nominated: false,
+                dead: prev.dead,
+                claim: prev.claim,
+                notes: ""
+            ))
+            player.personalNotes.append(.init(dayIndex: newDayIndex, text: ""))
         }
-        clearAllVotes()
-        clearAllNominations()
         board.currentDay = newDayIndex
         try? modelContext.save()
     }
@@ -235,7 +235,7 @@ struct BoardView: View {
             ZStack {
                 ForEach(Array(orderedPlayers.enumerated()), id: \.1.id) { idx, player in
                     let pos = positions[idx]
-                    if let status = player.statuses[safe: board.currentDay] {
+                    if let status = player.statuses.first(where: { $0.dayIndex == board.currentDay }) {
                         PlayerCircle(
                             player: player,
                             status: status,
@@ -243,7 +243,7 @@ struct BoardView: View {
                             roles: board.edition?.characters ?? [],
                             onTap: {
                                 if isVotingPhase {
-                                    player.statuses[safe: board.currentDay]?.voted.toggle()
+                                    player.statuses.first(where: { $0.dayIndex == board.currentDay })?.voted.toggle()
                                     try? modelContext.save()
                                 } else {
                                     editingPlayer = player

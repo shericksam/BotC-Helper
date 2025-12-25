@@ -28,7 +28,6 @@ struct MainView: View {
                     .frame(minWidth: 0)
                     .edgesIgnoringSafeArea(.all)
 
-                // Siempre muestra logo/título
                 VStack(spacing: 32) {
                     Spacer()
                     VStack {
@@ -115,7 +114,7 @@ struct MainView: View {
                     .sheet(isPresented: $showingAbout) {
                         AboutAppView()
                     }
-                    Spacer().frame(height: 10)
+                    Spacer()
                 }
                 .padding()
             }

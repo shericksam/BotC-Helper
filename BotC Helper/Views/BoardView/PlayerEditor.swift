@@ -10,7 +10,7 @@ import SwiftUI
 struct PlayerEditor: View {
     @Bindable var player: Player
     @Bindable var status: PlayerStatus
-    var onSave: (PlayerStatus, [Int: String]) -> Void
+    var onSave: () -> Void
     @Environment(\.dismiss) var dismiss
     var isMe: Bool
     var totalDays: Int
@@ -26,92 +26,130 @@ struct PlayerEditor: View {
         guard let id = player.claimRoleId else { return nil }
         return roles.first { $0.id == id }
     }
-    @State var localPersonalNotes: [Int: String] = [:]
+    @FocusState private var claimFieldFocused: Bool
+    @State private var roleJustChosen = false
 
     var body: some View {
         NavigationView {
-            Form {
-                Section(MSG("edit_player_section_data")) {
-                    TextField(MSG("edit_player_section_data"), text: $player.name)
-                    if isMe {
-                        Button(MSG("edit_player_section_editrole")) { editRole.toggle() }
-                    }
-                    if editRole || !isMe {
-                        claimRol()
+            ScrollView(.vertical, showsIndicators: false) {
+                StyledSection(header: MSG("edit_player_section_data")) {
+                    VStack {
+                        TextField(MSG("edit_player_section_data"), text: $player.name)
+                        if isMe {
+                            Divider()
+                            Button(MSG("edit_player_section_editrole")) { editRole.toggle() }
+                        }
+                        if editRole || !isMe {
+                            Divider()
+                            claimRolField()
+                        }
                     }
                 }
 
                 if let selected = selectedRole, !iAmBadGuy() {
-                    Section(MSG("edit_player_section_declaredrole", selected.nameLocalized())) {
-                        RolIcon(name: selected.id)
-                            .frame(width: 50, height: 50)
-                            .clipShape(RoundedRectangle(cornerRadius: 8))
-                        Text(selected.abilityLocalized().isEmpty ? MSG("edit_player_no_role_description") : selected.abilityLocalized())
-                            .font(.body)
-                        if !selected.firstNightReminderLocalized().isEmpty {
-                            Text(MSG("edit_player_first_night", selected.firstNightReminderLocalized())).font(.footnote)
-                        }
-                        if !selected.otherNightReminderLocalized().isEmpty {
-                            Text(MSG("edit_player_other_night", selected.otherNightReminderLocalized())).font(.footnote)
+                    StyledSection(header: MSG("edit_player_section_declaredrole", selected.nameLocalized())) {
+                        VStack {
+                            RolIcon(name: selected.id)
+                                .frame(width: 50, height: 50)
+                                .clipShape(RoundedRectangle(cornerRadius: 8))
+                            Divider()
+                            Text(selected.abilityLocalized().isEmpty ? MSG("edit_player_no_role_description") : selected.abilityLocalized())
+                            if !selected.firstNightReminderLocalized().isEmpty {
+                                Divider()
+                                Text(MSG("edit_player_first_night", selected.firstNightReminderLocalized()))
+                                    .font(.footnote)
+                                    .multilineTextAlignment(.leading)
+                            }
+                            if !selected.otherNightReminderLocalized().isEmpty {
+                                Divider()
+                                Text(MSG("edit_player_other_night", selected.otherNightReminderLocalized()))
+                                    .font(.footnote)
+                                    .multilineTextAlignment(.leading)
+                            }
                         }
                     }
                 }
 
-                Section(MSG("edit_player_section_actions")) {
-                    Toggle(MSG("edit_player_toggle_vote"), isOn: $status.voted)
-                    Toggle(MSG("edit_player_toggle_nominate"), isOn: $status.nominated)
-                    Toggle(MSG("edit_player_toggle_dead"), isOn: $status.dead)
+                StyledSection(header: MSG("edit_player_section_actions")) {
+                    VStack {
+                        Toggle(MSG("edit_player_toggle_vote"), isOn: $status.voted)
+                        Divider()
+                        Toggle(MSG("edit_player_toggle_nominate"), isOn: $status.nominated)
+                        Divider()
+                        Toggle(MSG("edit_player_toggle_dead"), isOn: $status.dead)
+                    }
                 }
-                Section(MSG("edit_player_section_notes_today")) {
+
+                StyledSection(header: MSG("edit_player_section_notes_today")) {
                     TextEditor(text: $status.notes)
                         .frame(height: 80)
+                        .overlay(
+                            RoundedRectangle(cornerRadius: 9)
+                                .stroke(Color(.separator), lineWidth: 1)
+                        )
+                        .clipShape(RoundedRectangle(cornerRadius: 9))
+                        .padding(.vertical, 6)
                 }
-                Section(MSG("edit_player_section_notes_days")) {
-                    ForEach(0..<totalDays, id: \.self) { dayIdx in
-                        let s = statusesByDay[safe: dayIdx] ?? PlayerStatus(dayIndex: 0, seatNumber: player.seatNumber)
+                StyledSection(header: MSG("edit_player_section_notes_days")) {
+                    ForEach(player.personalNotes.sorted { $0.dayIndex < $1.dayIndex }, id: \.dayIndex) { note in
+                        let dayIdx = note.dayIndex
+                        let s = statusesByDay.first(where: { $0.dayIndex == dayIdx }) ?? PlayerStatus(dayIndex: dayIdx, seatNumber: player.seatNumber)
                         VStack(alignment: .leading, spacing: 6) {
                             HStack {
-                                Text(MSG("edit_player_day", dayIdx + 1)).font(.headline)
+                                Text(MSG("edit_player_day", dayIdx + 1))
+                                    .font(.headline.weight(dayIdx == currentDayIndex ? .bold : .regular))
+                                    .foregroundColor(dayIdx == currentDayIndex ? .yellow : .primary)
+                                Spacer()
                                 if s.voted {
                                     Label(MSG("edit_player_toggle_vote"), systemImage: "checkmark.circle")
-                                        .labelStyle(.iconOnly)
-                                        .foregroundColor(.green)
+                                        .labelStyle(.iconOnly).foregroundColor(.green)
                                 }
                                 if s.nominated {
                                     Label(MSG("edit_player_toggle_nominate"), systemImage: "hand.point.up.left.fill")
-                                        .labelStyle(.iconOnly)
-                                        .foregroundColor(.blue)
+                                        .labelStyle(.iconOnly).foregroundColor(.blue)
                                 }
                                 if s.dead {
                                     Label(MSG("edit_player_toggle_dead"), systemImage: "xmark")
-                                        .labelStyle(.iconOnly)
-                                        .foregroundColor(.red)
+                                        .labelStyle(.iconOnly).foregroundColor(.red)
                                 }
                             }
+
                             TextEditor(
                                 text: Binding(
-                                    get: { localPersonalNotes[dayIdx] ?? "" },
-                                    set: { localPersonalNotes[dayIdx] = $0 }
+                                    get: { note.text },
+                                    set: { note.text = $0 }
                                 )
                             )
                             .frame(height: dayIdx == currentDayIndex ? 100 : 60)
-                            .background(dayIdx == currentDayIndex ? Color.yellow.opacity(0.2) : Color(.systemGray6))
-                            .cornerRadius(8)
+                            .background(dayIdx == currentDayIndex ? Color.yellow.opacity(0.18) : Color(.systemGray6))
+                            .overlay(
+                                RoundedRectangle(cornerRadius: 9)
+                                    .stroke(dayIdx == currentDayIndex ? Color.yellow.opacity(0.7) : Color(.separator), lineWidth: dayIdx == currentDayIndex ? 2.5 : 1)
+                            )
+                            .shadow(color: dayIdx == currentDayIndex ? Color.yellow.opacity(0.21) : .clear, radius: 3)
+                            .opacity(dayIdx == currentDayIndex ? 1 : 0.80)
+                            .clipShape(RoundedRectangle(cornerRadius: 9))
+                            if dayIdx != player.personalNotes.count - 1 {
+                                Divider()
+                            }
                         }
                         .padding(.vertical, 2)
                     }
                 }
             }
             .onAppear {
-                for note in player.personalNotes {
-                    self.localPersonalNotes[note.dayIndex] = note.text
+                for dayIdx in 0..<totalDays {
+                    if player.personalNotes.first(where: { $0.dayIndex == dayIdx }) == nil {
+                        player.personalNotes.append(PersonalNote(dayIndex: dayIdx, text: ""))
+                        player.personalNotes.sort { $0.dayIndex < $1.dayIndex }
+                    }
                 }
             }
             .navigationTitle(titleNav())
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
                     Button(MSG("edit_player_save")) {
-                        onSave(status, localPersonalNotes)
+                        onSave()
                         dismiss()
                     }
                 }
@@ -129,61 +167,93 @@ struct PlayerEditor: View {
     }
 
     @ViewBuilder
-    func claimRol() -> some View {
-        VStack(alignment: .leading) {
-            TextField(
-                MSG("edit_player_claim_placeholder"),
-                text: Binding(
-                    get: { searchClaim },
-                    set: { newValue in
-                        searchClaim = newValue
-                        showRolesList = !newValue.isEmpty
-                        filteredRoles = roles.filter {
-                            $0.nameLocalized().localizedCaseInsensitiveContains(newValue)
-                        }
-                        if newValue.isEmpty {
-                            player.claimRoleId = nil
-                        }
-                        if let exact = roles.first(where: { $0.nameLocalized().caseInsensitiveCompare(newValue) == .orderedSame }) {
-                            player.claimRoleId = exact.id
-                            player.claimManual = ""
-                        } else {
-                            player.claimRoleId = nil
-                            player.claimManual = newValue
-                        }
-                    }
+    func claimRolField() -> some View {
+        VStack(alignment: .leading, spacing: 4) {
+            ZStack(alignment: .topLeading) {
+                TextField(
+                    MSG("edit_player_claim_placeholder"),
+                    text: $searchClaim
                 )
-            )
-            .onAppear {
-                if let rid = player.claimRoleId,
-                   let rolename = roles.first(where: { $0.id == rid })?.nameLocalized() {
-                    searchClaim = rolename
-                } else {
-                    searchClaim = player.claimManual
-                }
-            }
-            if showRolesList && !filteredRoles.isEmpty {
-                List(filteredRoles.prefix(3), id: \.id) { role in
-                    Button {
-                        player.claimRoleId = role.id
+                .focused($claimFieldFocused)
+                .onChange(of: searchClaim) { _, newValue in
+                    showRolesList = !newValue.isEmpty
+                    filteredRoles = roles.filter { $0.nameLocalized().localizedCaseInsensitiveContains(newValue) }
+                    if newValue.isEmpty {
+                        player.claimRoleId = nil
+                    }
+                    if let exact = roles.first(where: { $0.nameLocalized().caseInsensitiveCompare(newValue) == .orderedSame }) {
+                        player.claimRoleId = exact.id
                         player.claimManual = ""
-                        searchClaim = role.nameLocalized()
-                        showRolesList = false
-                    } label: {
-                        HStack {
-                            RolIcon(name: role.id)
-                                .frame(width: 48, height: 48)
-                                .clipShape(RoundedRectangle(cornerRadius: 8))
-                            Text(role.nameLocalized())
-                        }
+                    } else {
+                        player.claimRoleId = nil
+                        player.claimManual = newValue
                     }
                 }
-                .frame(maxHeight: 180)
+                .onAppear {
+                    if let rid = player.claimRoleId,
+                       let rolename = roles.first(where: { $0.id == rid })?.nameLocalized() {
+                        searchClaim = rolename
+                    } else {
+                        searchClaim = player.claimManual
+                    }
+                }
+
+                if showRolesList && !filteredRoles.isEmpty && !roleJustChosen && claimFieldFocused {
+                    VStack(alignment: .leading, spacing: 0) {
+                        ForEach(filteredRoles.prefix(8), id: \.id) { role in
+                            Button {
+                                guard !roleJustChosen else { return }
+                                roleJustChosen = true
+                                player.claimRoleId = role.id
+                                player.claimManual = ""
+                                searchClaim = role.nameLocalized()
+                                showRolesList = false
+                                claimFieldFocused = false
+                                DispatchQueue.main.asyncAfter(deadline: .now()+0.3) {
+                                    roleJustChosen = false
+                                }
+                            } label: {
+                                HStack {
+                                    RolIcon(name: role.id)
+                                        .frame(width: 42, height: 42)
+                                    Text(role.nameLocalized()).fontWeight(.medium)
+                                    Spacer()
+                                }
+                                .padding(.vertical, 4)
+                                .padding(.horizontal, 4)
+                                .frame(maxWidth: .infinity, alignment: .leading)
+                            }
+                            if role != filteredRoles.prefix(8).last { Divider() }
+                        }
+                    }
+                    .background(Color(.systemBackground).opacity(0.99))
+                    .clipShape(RoundedRectangle(cornerRadius: 10))
+                    .shadow(radius: 6)
+                    .frame(maxWidth: .infinity)
+                    .padding(.top, 44) // para dejar debajo del TextField
+                    .zIndex(101)
+                    .transition(.opacity)
+                }
             }
+            .padding(.bottom, 6)
         }
     }
 
     func iAmBadGuy() -> Bool {
         isMe && (selectedRole?.team == .demon || selectedRole?.team == .minion)
     }
+}
+
+#Preview {
+    let player = Player(seatNumber: 2, name: "test")
+    let playerStatus: PlayerStatus = .init(dayIndex: 0)
+
+    return PlayerEditor(player: player,
+                        status: playerStatus,
+                        onSave: { },
+                        isMe: false,
+                        totalDays: 10,
+                        statusesByDay: [playerStatus],
+                        currentDayIndex: 0,
+                        roles: rolesExample)
 }

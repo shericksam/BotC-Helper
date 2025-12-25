@@ -73,6 +73,7 @@ struct NewGameSheet: View {
                     claimRoleId: nil,
                     claimManual: "",
                     isMe: (i == yourSeat),
+                    personalNotes: [PersonalNote(dayIndex: 0, text: "")],
                     statuses: [PlayerStatus(dayIndex: 0, seatNumber: i)]
                 )
             }
