@@ -39,6 +39,7 @@ struct MainView: View {
                             .resizable()
                             .scaledToFit()
                             .frame(height: 150)
+                            .clipShape(Circle())
                     }
                     .padding(.top, 32)
                     Spacer()

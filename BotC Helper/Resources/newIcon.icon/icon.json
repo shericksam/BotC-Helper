@@ -1,0 +1,83 @@
+{
+  "fill" : {
+    "automatic-gradient" : "display-p3:0.45092,0.15807,0.48952,1.00000"
+  },
+  "groups" : [
+    {
+      "blend-mode" : "multiply",
+      "blur-material" : null,
+      "hidden" : false,
+      "layers" : [
+        {
+          "glass" : false,
+          "hidden" : false,
+          "image-name" : "new icon.png",
+          "name" : "new icon",
+          "position" : {
+            "scale" : 0.85,
+            "translation-in-points" : [
+              10.779050356132636,
+              -35.301265790927246
+            ]
+          }
+        }
+      ],
+      "lighting" : "combined",
+      "name" : "Group",
+      "position" : {
+        "scale" : 1,
+        "translation-in-points" : [
+          15.123439606070942,
+          21.14600436055684
+        ]
+      },
+      "shadow" : {
+        "kind" : "layer-color",
+        "opacity" : 0.5
+      },
+      "translucency" : {
+        "enabled" : false,
+        "value" : 0.5
+      }
+    },
+    {
+      "blend-mode" : "normal",
+      "hidden" : false,
+      "layers" : [
+        {
+          "glass" : false,
+          "image-name" : "Gemini_Generated_Image_2l27h32l27h32l27 (1).png",
+          "name" : "Gemini_Generated_Image_2l27h32l27h32l27 (1)",
+          "position" : {
+            "scale" : 0.85,
+            "translation-in-points" : [
+              -385.1,
+              -380.8207318847954
+            ]
+          }
+        }
+      ],
+      "position" : {
+        "scale" : 1,
+        "translation-in-points" : [
+          383.6953125,
+          375.78125
+        ]
+      },
+      "shadow" : {
+        "kind" : "neutral",
+        "opacity" : 0.5
+      },
+      "translucency" : {
+        "enabled" : true,
+        "value" : 0.5
+      }
+    }
+  ],
+  "supported-platforms" : {
+    "circles" : [
+      "watchOS"
+    ],
+    "squares" : "shared"
+  }
+}
