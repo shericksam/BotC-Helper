@@ -9,27 +9,30 @@ import Foundation
 import SwiftData
 
 struct PreloadContent {
-    let didPreloadKey = "didPreloadInitialData"
+
+    // Bump this number whenever the bundled JSON data changes
+    // (new roles, updated jinxes, new editions, etc.)
+    // Existing users will re-run preload automatically on next launch.
+    // All operations use upsert — no user data is lost.
+    static let currentDataVersion = 2
+
+    private let versionKey = "dataVersion"
 
     @MainActor
     func preloadDefaultEditionsAndRolesIfNeeded(modelContext: ModelContext) async {
-        let didPreload = UserDefaults.standard.bool(forKey: didPreloadKey)
+        let storedVersion = UserDefaults.standard.integer(forKey: versionKey)
+        guard storedVersion < Self.currentDataVersion else { return }
 
-        guard !didPreload else { return }
         loadAndSaveRoles(modelContext: modelContext)
-
         loadAndSaveJinxes(modelContext: modelContext)
-
-        // 1. Pre-cargar ediciones base del bundle
         saveEditions(modelContext: modelContext)
-        UserDefaults.standard.set(true, forKey: didPreloadKey)
+
+        UserDefaults.standard.set(Self.currentDataVersion, forKey: versionKey)
         try? modelContext.save()
     }
 
     func loadAndSaveRoles(modelContext: ModelContext) {
-        // 2. Pre-cargar todos los roles posibles (si tu modelo lo requiere aparte)
         for role in loadPredefinedRoles() {
-            // 1. Crea roleEntity sin specials
             _ = RoleDefinition.upsert(
                 id: role.id,
                 name: role.name,
@@ -44,7 +47,6 @@ struct PreloadContent {
                 modelContext: modelContext
             )
         }
-
     }
 
     func saveEditions(modelContext: ModelContext) {
@@ -66,54 +68,51 @@ struct PreloadContent {
                 return character
             }
 
-            let metaEntity = EditionMeta.upsert(id: metaStruct.id,
-                                                name: metaStruct.name,
-                                                author: metaStruct.author,
-                                                imageName: editionSummary.imageName,
-                                                firstNight: metaStruct.firstNight,
-                                                otherNight: metaStruct.otherNight,
-                                                modelContext: modelContext)
+            let metaEntity = EditionMeta.upsert(
+                id: metaStruct.id,
+                name: metaStruct.name,
+                author: metaStruct.author,
+                imageName: editionSummary.imageName,
+                firstNight: metaStruct.firstNight,
+                otherNight: metaStruct.otherNight,
+                modelContext: modelContext
+            )
 
-            let newEditionData = EditionData.upsert(id: metaEntity.id, meta: metaEntity, characters: [], jinxes: [], modelContext: modelContext)
+            let newEditionData = EditionData.upsert(
+                id: metaEntity.id, meta: metaEntity,
+                characters: [], jinxes: [],
+                modelContext: modelContext
+            )
 
             var roleEntities: [RoleDefinition] = []
-
             for r in roles {
-                // 1. Busca si ya existe un role con ese id:
-                let roleEntity = RoleDefinition.upsert(id: r.id,
-                                                       name: r.name,
-                                                       team: r.team,
-                                                       ability: r.ability,
-                                                       setup: r.setup,
-                                                       reminders: r.reminders,
-                                                       remindersGlobal: r.remindersGlobal,
-                                                       firstNightReminder: r.firstNightReminder,
-                                                       otherNightReminder: r.otherNightReminder,
-                                                       edition: newEditionData,
-                                                       modelContext: modelContext)
+                let roleEntity = RoleDefinition.upsert(
+                    id: r.id,
+                    name: r.name,
+                    team: r.team,
+                    ability: r.ability,
+                    setup: r.setup,
+                    reminders: r.reminders,
+                    remindersGlobal: r.remindersGlobal,
+                    firstNightReminder: r.firstNightReminder,
+                    otherNightReminder: r.otherNightReminder,
+                    edition: newEditionData,
+                    modelContext: modelContext
+                )
                 roleEntities.append(roleEntity)
             }
 
-            let allStoredJinxes: [Jinx]
-            do {
-                allStoredJinxes = try modelContext.fetch(FetchDescriptor<Jinx>())
-            } catch {
-                allStoredJinxes = []
-            }
+            let allStoredJinxes: [Jinx] = (try? modelContext.fetch(FetchDescriptor<Jinx>())) ?? []
             let roleIdsInEdition = Set(roleEntities.map { $0.id })
-            let applicableJinxes = allStoredJinxes.filter { jinx in
-                Set(jinx.roles).isSubset(of: roleIdsInEdition)
-            }
+            let applicableJinxes = allStoredJinxes.filter { Set($0.roles).isSubset(of: roleIdsInEdition) }
             newEditionData.characters = roleEntities
-            applicableJinxes.forEach({ $0.editions.append(newEditionData) })
+            applicableJinxes.forEach { $0.editions.append(newEditionData) }
             newEditionData.jinxes = applicableJinxes
         }
     }
 
-
     func loadAndSaveJinxes(modelContext: ModelContext) {
         for jinxModel in loadJinxes() {
-            // Busca en el modelo si ya existe jinx con este id (para evitar duplicados)
             _ = Jinx.upsert(
                 id: jinxModel.id,
                 roles: jinxModel.roles,
@@ -131,9 +130,7 @@ struct PreloadContent {
               let raw = try? JSONSerialization.jsonObject(with: data) as? [[String: Any]],
               let metaData = try? JSONSerialization.data(withJSONObject: raw),
               let metaStruct = try? JSONDecoder().decode([JinxModel].self, from: metaData)
-
         else { return [] }
-
         return metaStruct
     }
 }

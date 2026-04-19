@@ -484,15 +484,18 @@ struct BoardView: View {
         guard count > 0 else { return [] }
         let cx = size.width / 2
         let cy = size.height / 2
-        // Ellipse radii hug the rectangle edges; token size (~78pt) is ~half the margin
-        let rx = cx * 0.90
-        let ry = cy * 0.90
+        let rx = cx * 1.0
+        let ry = cy * 1.0
+        // Superellipse: 2 = puro óvalo, 4 = squircle, >4 = más rectangular
+        let n: CGFloat = 4.0
         let angleStep = 2 * CGFloat.pi / CGFloat(count)
-        // Seat 1 starts at 12 o'clock (−π/2)
+        // Seat 1 empieza a las 12 en punto (−π/2)
         return (0..<count).map { i in
-            let angle = -CGFloat.pi / 2 + CGFloat(i) * angleStep
-            return CGPoint(x: cx + rx * cos(angle),
-                           y: cy + ry * sin(angle))
+            let t = -CGFloat.pi / 2 + CGFloat(i) * angleStep
+            let cosT = cos(t), sinT = sin(t)
+            let x = cx + rx * (cosT < 0 ? -1 : 1) * pow(abs(cosT), 2 / n)
+            let y = cy + ry * (sinT < 0 ? -1 : 1) * pow(abs(sinT), 2 / n)
+            return CGPoint(x: x, y: y)
         }
     }
 
@@ -544,8 +547,8 @@ struct BoardView: View {
     let config = ModelConfiguration(isStoredInMemoryOnly: true)
     let container = try! ModelContainer(for: BoardState.self, configurations: config)
     let context = ModelContext(container)
-    let playerCount = 12
-    let names = ["Ana", "Bernardo", "Erick", "Fabian", "Carlos", "Dio", "Pedro", "Quike", "Ricardo", "Sergio", "Toni", "Uriel"]
+    let playerCount = 15
+    let names = ["Ana", "Bernardo", "Erick", "Fabian", "Carlos", "Dio", "Pedro", "Quike", "Ricardo", "Sergio", "Toni", "Uriel", "Homer", "Zamiel", "Sharar"]
     let players = (1...playerCount).map {
         Player(seatNumber: $0, name: names[$0 - 1],
                statuses: [PlayerStatus(dayIndex: 0, seatNumber: $0)])
