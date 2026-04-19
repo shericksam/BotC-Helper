@@ -172,6 +172,16 @@ struct BoardView: View {
                     player: player,
                     status: status,
                     onSave: {
+                        // Propagate dead state forward to all days after the edited day.
+                        // If the player is marked dead on day D, they must still appear
+                        // dead on days D+1, D+2, etc. If un-marked, clear future days too.
+                        let editedDayIndex = status.dayIndex
+                        let isDead = status.dead
+                        let deathType = status.deathType
+                        for futureStatus in player.statuses where futureStatus.dayIndex > editedDayIndex {
+                            futureStatus.dead = isDead
+                            futureStatus.deathType = isDead ? deathType : nil
+                        }
                         try? modelContext.save()
                         editingPlayer = nil
                     },
