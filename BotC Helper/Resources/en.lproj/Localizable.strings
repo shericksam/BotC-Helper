@@ -151,3 +151,19 @@ about_support_headline = "Would you like to support development?";
 about_support_button = "Buy me a coffee on PayPal";
 about_nav_title = "About the App";
 about_close = "Close";
+
+board_add_reminder = "Add Reminder";
+board_reminder_custom = "Custom reminder";
+board_reminder_custom_placeholder = "Reminder text";
+board_reminder_from_roles = "From roles";
+
+death_type_label = "Cause of death";
+death_night_kill = "Night Kill";
+death_execution = "Execution";
+death_other = "Other";
+
+import_script = "Import Script";
+import_script_error = "Invalid or unreadable script file.";
+import_script_empty = "No roles matched the database. Is this a valid BotC script?";
+import_script_partial = "Script imported. Unrecognised roles skipped: %@";
+import_script_default_name = "Imported Script";

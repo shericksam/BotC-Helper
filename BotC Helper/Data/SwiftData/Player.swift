@@ -16,6 +16,8 @@ final class Player {
     var claimRoleId: String?
     var claimManual: String
     var isMe: Bool
+    var posX: Double = -1.0
+    var posY: Double = -1.0
     @Relationship(deleteRule: .cascade) var personalNotes: [PersonalNote] = []
     @Relationship(deleteRule: .cascade) var statuses: [PlayerStatus] = []
 
@@ -25,6 +27,8 @@ final class Player {
          claimRoleId: String? = nil,
          claimManual: String = "",
          isMe: Bool = false,
+         posX: Double = -1.0,
+         posY: Double = -1.0,
          personalNotes: [PersonalNote] = [],
          statuses: [PlayerStatus] = []) {
         self.id = id
@@ -33,6 +37,8 @@ final class Player {
         self.claimRoleId = claimRoleId
         self.claimManual = claimManual
         self.isMe = isMe
+        self.posX = posX
+        self.posY = posY
         self.personalNotes = personalNotes
         self.statuses = statuses
     }

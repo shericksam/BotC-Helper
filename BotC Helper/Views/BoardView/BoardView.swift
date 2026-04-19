@@ -23,7 +23,11 @@ struct BoardView: View {
     @State private var showDetail = false
     @State private var dragOffset: CGSize = .zero
     @State private var draggedPlayerIdx: Int? = nil
+    @State private var draggedReminderId: UUID? = nil
+    @State private var reminderDragOffset: CGSize = .zero
     @State private var showNewGameSetup = false
+    @State private var showAddReminder = false
+    @State private var boardCanvasSize: CGSize = .zero
     @Environment(\.modelContext) private var modelContext
 
     private let feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
@@ -42,20 +46,10 @@ struct BoardView: View {
             .pickerStyle(.segmented)
             .onAppear {
                 let appearance = UISegmentedControl.appearance()
-
                 appearance.backgroundColor = UIColor.systemGray5
-
                 appearance.selectedSegmentTintColor = UIColor.white
-
-                let normalTextAttributes: [NSAttributedString.Key: Any] = [
-                    .foregroundColor: UIColor.systemGray
-                ]
-                appearance.setTitleTextAttributes(normalTextAttributes, for: .normal)
-
-                let selectedTextAttributes: [NSAttributedString.Key: Any] = [
-                    .foregroundColor: UIColor.darkGray
-                ]
-                appearance.setTitleTextAttributes(selectedTextAttributes, for: .selected)
+                appearance.setTitleTextAttributes([.foregroundColor: UIColor.systemGray], for: .normal)
+                appearance.setTitleTextAttributes([.foregroundColor: UIColor.darkGray], for: .selected)
             }
             .padding(.vertical)
 
@@ -64,7 +58,6 @@ struct BoardView: View {
             ZStack {
                 playerGridView()
 
-                // --- Configuración central ---
                 VStack {
                     if isVotingPhase {
                         VStack {
@@ -108,6 +101,9 @@ struct BoardView: View {
                     Button(MSG("board_add_player"), systemImage: "person.crop.circle.badge.plus") {
                         addPlayer()
                     }
+                    Button(MSG("board_add_reminder"), systemImage: "tag.fill") {
+                        showAddReminder = true
+                    }
                     Button(isVotingPhase ? MSG("board_stop_voting") : MSG("board_start_voting"),
                            systemImage: isVotingPhase ? "flag.filled.and.flag.crossed" : "flag.pattern.checkered") {
                         isVotingPhase.toggle()
@@ -127,9 +123,10 @@ struct BoardView: View {
             try? modelContext.save()
         }
         .sheet(isPresented: $showNewGameSetup) {
-            NewGameSetupSheet(board: board) {
-                // Board already updated by sheet; nothing else needed
-            }
+            NewGameSetupSheet(board: board) { }
+        }
+        .sheet(isPresented: $showAddReminder) {
+            AddReminderSheet(board: board, roles: board.edition?.characters ?? allRoles)
         }
         .navigationDestination(isPresented: $showDetail) {
             if let data = board.edition {
@@ -159,19 +156,210 @@ struct BoardView: View {
         }
     }
 
-    // ------- Funciones clave --------
+    // MARK: - Board layout
+
+    @ViewBuilder
+    func playerGridView() -> some View {
+        GeometryReader { geo in
+            let orderedPlayers = board.players.sorted { $0.seatNumber < $1.seatNumber }
+            let fallbackPositions: [CGPoint] = {
+                guard orderedPlayers.contains(where: { $0.posX < 0 }) else { return [] }
+                return squarePerimeterPositions(count: orderedPlayers.count, in: geo.size)
+            }()
+
+            ZStack {
+                ForEach(Array(orderedPlayers.enumerated()), id: \.1.id) { idx, player in
+                    let basePos: CGPoint = {
+                        if player.posX >= 0 {
+                            return CGPoint(x: player.posX * geo.size.width,
+                                           y: player.posY * geo.size.height)
+                        }
+                        if idx < fallbackPositions.count { return fallbackPositions[idx] }
+                        return CGPoint(x: geo.size.width / 2, y: geo.size.height / 2)
+                    }()
+                    let isDragging = draggedPlayerIdx == idx
+
+                    if let status = player.statuses.first(where: { $0.dayIndex == board.currentDay }) {
+                        PlayerCircle(
+                            player: player,
+                            status: status,
+                            isMe: player.isMe,
+                            roles: board.edition?.characters ?? allRoles,
+                            onTap: {
+                                if isVotingPhase {
+                                    player.statuses.first(where: { $0.dayIndex == board.currentDay })?.voted.toggle()
+                                    try? modelContext.save()
+                                } else {
+                                    editingPlayer = player
+                                }
+                            }
+                        )
+                        .position(basePos + (isDragging ? dragOffset : .zero))
+                        .scaleEffect(isDragging ? 1.15 : 1.0)
+                        .shadow(color: isDragging ? .black.opacity(0.45) : .clear,
+                                radius: isDragging ? 12 : 0, x: 0, y: isDragging ? 6 : 0)
+                        .zIndex(isDragging ? 2 : 0)
+                        .animation(.spring(response: 0.3, dampingFraction: 0.65), value: isDragging)
+                        .gesture(
+                            LongPressGesture(minimumDuration: 0.15)
+                                .onEnded { _ in
+                                    feedbackGenerator.impactOccurred()
+                                    draggedPlayerIdx = idx
+                                    dragOffset = .zero
+                                }
+                                .sequenced(before: DragGesture())
+                                .onChanged { value in
+                                    switch value {
+                                    case .second(true, let drag?):
+                                        dragOffset = drag.translation
+                                    default: break
+                                    }
+                                }
+                                .onEnded { _ in
+                                    if let draggedIdx = draggedPlayerIdx {
+                                        let p = orderedPlayers[draggedIdx]
+                                        let currentPos: CGPoint = p.posX >= 0
+                                            ? CGPoint(x: p.posX * geo.size.width, y: p.posY * geo.size.height)
+                                            : (draggedIdx < fallbackPositions.count
+                                                ? fallbackPositions[draggedIdx]
+                                                : CGPoint(x: geo.size.width / 2, y: geo.size.height / 2))
+                                        let newX = min(max(currentPos.x + dragOffset.width, 0), geo.size.width)
+                                        let newY = min(max(currentPos.y + dragOffset.height, 0), geo.size.height)
+                                        p.posX = newX / geo.size.width
+                                        p.posY = newY / geo.size.height
+                                        try? modelContext.save()
+                                        withAnimation(.spring(response: 0.4, dampingFraction: 0.7)) {
+                                            draggedPlayerIdx = nil
+                                            dragOffset = .zero
+                                        }
+                                    }
+                                }
+                        )
+                    }
+                }
+
+                // Reminder tokens overlay
+                ForEach(board.reminders) { reminder in
+                    let rBase = CGPoint(x: reminder.posX * geo.size.width,
+                                       y: reminder.posY * geo.size.height)
+                    let isRDragging = draggedReminderId == reminder.id
+                    ReminderChip(text: reminder.text, color: reminder.uiColor)
+                        .position(rBase + (isRDragging ? reminderDragOffset : .zero))
+                        .scaleEffect(isRDragging ? 1.1 : 1.0)
+                        .shadow(color: isRDragging ? .black.opacity(0.3) : .clear,
+                                radius: isRDragging ? 6 : 0)
+                        .zIndex(isRDragging ? 3 : 1)
+                        .animation(.spring(response: 0.3, dampingFraction: 0.7), value: isRDragging)
+                        .gesture(
+                            LongPressGesture(minimumDuration: 0.15)
+                                .onEnded { _ in
+                                    feedbackGenerator.impactOccurred()
+                                    draggedReminderId = reminder.id
+                                    reminderDragOffset = .zero
+                                }
+                                .sequenced(before: DragGesture())
+                                .onChanged { value in
+                                    switch value {
+                                    case .second(true, let drag?):
+                                        reminderDragOffset = drag.translation
+                                    default: break
+                                    }
+                                }
+                                .onEnded { _ in
+                                    if draggedReminderId == reminder.id {
+                                        let newX = min(max(reminder.posX * geo.size.width + reminderDragOffset.width, 0), geo.size.width)
+                                        let newY = min(max(reminder.posY * geo.size.height + reminderDragOffset.height, 0), geo.size.height)
+                                        reminder.posX = newX / geo.size.width
+                                        reminder.posY = newY / geo.size.height
+                                        try? modelContext.save()
+                                        withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
+                                            draggedReminderId = nil
+                                            reminderDragOffset = .zero
+                                        }
+                                    }
+                                }
+                        )
+                        .onTapGesture(count: 2) {
+                            board.reminders.removeAll(where: { $0.id == reminder.id })
+                            try? modelContext.save()
+                        }
+                }
+            }
+            .onAppear {
+                boardCanvasSize = geo.size
+                initPositionsIfNeeded(geo.size, players: board.players.sorted { $0.seatNumber < $1.seatNumber })
+            }
+            .onChange(of: geo.size) { _, newSize in
+                boardCanvasSize = newSize
+            }
+        }
+        .padding(.horizontal, isRegular ? 80 : 40)
+        .padding(.vertical, isRegular ? 80 : 50)
+    }
+
+    // MARK: - Helpers
+
+    func initPositionsIfNeeded(_ size: CGSize, players: [Player]) {
+        guard size.width > 0, size.height > 0 else { return }
+        guard players.contains(where: { $0.posX < 0 }) else { return }
+        let positions = squarePerimeterPositions(count: players.count, in: size)
+        var changed = false
+        for (idx, player) in players.enumerated() where player.posX < 0 {
+            guard idx < positions.count else { continue }
+            player.posX = positions[idx].x / size.width
+            player.posY = positions[idx].y / size.height
+            changed = true
+        }
+        if changed { try? modelContext.save() }
+    }
+
+    func distance(_ a: CGPoint, _ b: CGPoint) -> CGFloat {
+        sqrt(pow(a.x - b.x, 2) + pow(a.y - b.y, 2))
+    }
+
+    func squarePerimeterPositions(count: Int, in size: CGSize) -> [CGPoint] {
+        guard count > 0 else { return [] }
+        let sides = 4
+        let perSide = max(1, count / sides)
+        let remainder = count % sides
+
+        var result: [CGPoint] = []
+        var placed = 0
+
+        for side in 0..<sides {
+            var nOnThisSide = perSide
+            if side < remainder { nOnThisSide += 1 }
+            for i in 0..<nOnThisSide {
+                let fraction = nOnThisSide == 1 ? 0.5 : CGFloat(i) / CGFloat(nOnThisSide - 0)
+                var x: CGFloat = 0, y: CGFloat = 0
+                switch side {
+                case 0: x = fraction; y = 0.0
+                case 1: x = 1.0;      y = fraction
+                case 2: x = 1.0 - fraction; y = 1.0
+                case 3: x = 0.0;      y = 1.0 - fraction
+                default: break
+                }
+                result.append(CGPoint(x: x * size.width, y: y * size.height))
+                placed += 1
+                if placed == count { return result }
+            }
+        }
+        return result
+    }
+
+    // MARK: - Actions
+
     func addDay() {
         let newDayIndex = (board.players.first?.statuses.count ?? 0)
         for player in board.players {
-            guard let prev = player.statuses.first(where: { $0.dayIndex == board.currentDay }) else {
-                continue
-            }
+            guard let prev = player.statuses.first(where: { $0.dayIndex == board.currentDay }) else { continue }
             player.statuses.append(PlayerStatus(
                 dayIndex: newDayIndex,
                 seatNumber: prev.seatNumber,
                 voted: false,
                 nominated: false,
                 dead: prev.dead,
+                deathType: prev.deathType,
                 claim: prev.claim,
                 notes: ""
             ))
@@ -191,162 +379,39 @@ struct BoardView: View {
             statuses: (0..<totalDays).map { PlayerStatus(dayIndex: $0) }
         )
         board.players.append(newPlayer)
+        if boardCanvasSize != .zero {
+            initPositionsIfNeeded(boardCanvasSize, players: board.players.sorted { $0.seatNumber < $1.seatNumber })
+        }
         try? modelContext.save()
     }
 
     func clearAllVotes() {
         for player in board.players {
-            for status in player.statuses {
-                status.voted = false
-            }
+            for status in player.statuses { status.voted = false }
         }
         try? modelContext.save()
     }
 
     func clearAllNominations() {
         for player in board.players {
-            for status in player.statuses {
-                status.nominated = false
-            }
+            for status in player.statuses { status.nominated = false }
         }
         try? modelContext.save()
-    }
-
-    @ViewBuilder
-    func playerGridView() -> some View {
-        GeometryReader { geo in
-            let orderedPlayers = board.players.sorted { $0.seatNumber < $1.seatNumber }
-            let positions = squarePerimeterPositions(count: orderedPlayers.count, in: geo.size)
-            ZStack {
-                ForEach(Array(orderedPlayers.enumerated()), id: \.1.id) { idx, player in
-                    let pos = positions[idx]
-                    let isDragging = draggedPlayerIdx == idx
-                    if let status = player.statuses.first(where: { $0.dayIndex == board.currentDay }) {
-                        PlayerCircle(
-                            player: player,
-                            status: status,
-                            isMe: player.isMe,
-                            roles: board.edition?.characters ?? allRoles,
-                            onTap: {
-                                if isVotingPhase {
-                                    player.statuses.first(where: { $0.dayIndex == board.currentDay })?.voted.toggle()
-                                    try? modelContext.save()
-                                } else {
-                                    editingPlayer = player
-                                }
-                            }
-                        )
-                        .position(pos + (isDragging ? dragOffset : .zero))
-                        .scaleEffect(isDragging ? 1.15 : 1.0)
-                        .shadow(color: isDragging ? .black.opacity(0.45) : .clear,
-                                radius: isDragging ? 12 : 0, x: 0, y: isDragging ? 6 : 0)
-                        .zIndex(isDragging ? 2 : 0)
-                        .animation(.spring(response: 0.3, dampingFraction: 0.65), value: isDragging)
-                        .gesture(
-                            LongPressGesture(minimumDuration: 0.15)
-                                .onEnded { _ in
-                                    feedbackGenerator.impactOccurred()
-                                    draggedPlayerIdx = idx
-                                    dragOffset = .zero
-                                }
-                                .sequenced(before: DragGesture())
-                                .onChanged { value in
-                                    switch value {
-                                    case .second(true, let drag?):
-                                        dragOffset = drag.translation
-                                    default:
-                                        break
-                                    }
-                                }
-                                .onEnded { _ in
-                                    if let draggedIdx = draggedPlayerIdx {
-                                        let newPosition = positions[draggedIdx] + dragOffset
-                                        if let targetIdx = positions.enumerated().min(by: {
-                                            distance($0.element, newPosition) < distance($1.element, newPosition)
-                                        })?.offset, targetIdx != draggedIdx {
-                                            let a = orderedPlayers[draggedIdx]
-                                            let b = orderedPlayers[targetIdx]
-                                            let tmp = a.seatNumber
-                                            a.seatNumber = b.seatNumber
-                                            b.seatNumber = tmp
-                                            board.players.sort { $0.seatNumber < $1.seatNumber }
-                                            try? modelContext.save()
-                                        }
-                                        withAnimation(.spring(response: 0.4, dampingFraction: 0.7)) {
-                                            draggedPlayerIdx = nil
-                                            dragOffset = .zero
-                                        }
-                                    }
-                                }
-                        )
-                    }
-                }
-            }
-        }
-        .padding(.horizontal, isRegular ? 80 : 40)
-        .padding(.vertical, isRegular ? 80 : 50)
-    }
-
-    // Utilidad
-    func distance(_ a: CGPoint, _ b: CGPoint) -> CGFloat {
-        sqrt(pow(a.x - b.x, 2) + pow(a.y - b.y, 2))
-    }
-
-    func squarePerimeterPositions(count: Int, in size: CGSize) -> [CGPoint] {
-        let sides = 4
-        let perSide = max(1, count / sides)
-        let remainder = count % sides
-
-        var result: [CGPoint] = []
-        var placed = 0
-
-        for side in 0..<sides {
-            var nOnThisSide = perSide
-            if side < remainder { nOnThisSide += 1 }
-            for i in 0..<nOnThisSide {
-                let fraction = nOnThisSide == 1 ? 0.5 : CGFloat(i) / CGFloat(nOnThisSide - 0)
-                var x: CGFloat = 0, y: CGFloat = 0
-                switch side {
-                case 0: // Top (left to right)
-                    x = fraction
-                    y = 0.0
-                case 1: // Right (top to bottom)
-                    x = 1.0
-                    y = fraction
-                case 2: // Bottom (right to left)
-                    x = 1.0 - fraction
-                    y = 1.0
-                case 3: // Left (bottom to top)
-                    x = 0.0
-                    y = 1.0 - fraction
-                default: break
-                }
-                result.append(CGPoint(x: x * size.width, y: y * size.height))
-                placed += 1
-                if placed == count { return result }
-            }
-        }
-        return result
     }
 }
 
 #Preview {
-    // Crea modelo in-memory
     let config = ModelConfiguration(isStoredInMemoryOnly: true)
     let container = try! ModelContainer(for: BoardState.self, configurations: config)
     let context = ModelContext(container)
-    // MOCK:
     let playerCount = 20
     let names = ["Ana", "Bernardo", "Erick", "Fabian", "Carlos", "Dio", "Pedro", "Quike", "Ricardo", "Sergio", "Toni", "Uriel", "Ximena", "Yair", "Zamiel", "Manuel", "Oscar", "Nuckle", "Omar", "Pithuo", "Raúl", "Quimera", "Ricardo", "Sandro", "Toni", "Uriel", "Ximena", "Yair", "Zamiel", "Manuel", "Oscar", "Nuckle", "Omar", "Pithuo", "Raúl", "Quimera"]
     let players = (1...playerCount).map {
         Player(seatNumber: $0,
                name: names[$0],
                claimRoleId: rolesExample[$0].nameLocalized(),
-               statuses: [
-            PlayerStatus(dayIndex: 0, seatNumber: $0)
-        ])
+               statuses: [PlayerStatus(dayIndex: 0, seatNumber: $0)])
     }
-    // Día 0: todos vivos, nadie votó
     let newConfig = getConfigForPlayerCount(playerCount)
     let configGame = GameConfig(numPlayers: newConfig.numPlayers,
                                 numTownsfolk: newConfig.numTownsfolk,

@@ -7,16 +7,21 @@
 
 import SwiftUI
 import SwiftData
+internal import UniformTypeIdentifiers
 
 struct EditionsSheet: View {
     @Query(sort: \EditionData.id) var allEditions: [EditionData]
     @Query(sort: \BoardState.suggestedName) var allGames: [BoardState]
+    @Query(sort: \RoleDefinition.id) var allRoles: [RoleDefinition]
     @Environment(\.modelContext) private var modelContext
 
     @State private var selectedEdition: EditionData?
     @State private var showDetail = false
     @State private var showingCreateEdition = false
     @State private var editingEdition: EditionData? = nil
+    @State private var showingImportScript = false
+    @State private var showImportAlert = false
+    @State private var importAlertMessage = ""
 
     var body: some View {
         NavigationStack {
@@ -59,7 +64,6 @@ struct EditionsSheet: View {
                 }
             }
             .listStyle(.plain)
-            // Sheet para editar/crear
             .sheet(item: $editingEdition) { edition in
                 EditionCreationView(editingEdition: edition)
             }
@@ -76,10 +80,31 @@ struct EditionsSheet: View {
             }
             .toolbar {
                 ToolbarItem(placement: .primaryAction) {
-                    Button(action: { showingCreateEdition = true }) {
-                        Label(MSG("edit_sheet_create"), systemImage: "plus")
+                    Menu {
+                        Button(action: { showingCreateEdition = true }) {
+                            Label(MSG("edit_sheet_create"), systemImage: "plus")
+                        }
+                        Button(action: { showingImportScript = true }) {
+                            Label(MSG("import_script"), systemImage: "arrow.down.doc")
+                        }
+                    } label: {
+                        Image(systemName: "ellipsis.circle")
                     }
                 }
+            }
+            .fileImporter(
+                isPresented: $showingImportScript,
+                allowedContentTypes: [.json]
+            ) { result in
+                switch result {
+                case .success(let url): performImport(from: url)
+                case .failure: showError(MSG("import_script_error"))
+                }
+            }
+            .alert(MSG("import_script_error"), isPresented: $showImportAlert) {
+                Button(MSG("close"), role: .cancel) { }
+            } message: {
+                Text(importAlertMessage)
             }
         }
     }
@@ -90,9 +115,43 @@ struct EditionsSheet: View {
         }
         modelContext.delete(edition)
         try? modelContext.save()
-
     }
 
+    private func performImport(from url: URL) {
+        guard url.startAccessingSecurityScopedResource() else {
+            showError(MSG("import_script_error"))
+            return
+        }
+        defer { url.stopAccessingSecurityScopedResource() }
+
+        do {
+            let data = try Data(contentsOf: url)
+            let result = try ScriptImporter.importScript(from: data, allRoles: allRoles)
+
+            let meta = EditionMeta(
+                id: UUID().uuidString,
+                name: result.scriptName,
+                author: result.author
+            )
+            modelContext.insert(meta)
+
+            let edition = EditionData(meta: meta, characters: result.matchedRoles)
+            modelContext.insert(edition)
+            try? modelContext.save()
+
+            if !result.unmatchedIds.isEmpty {
+                importAlertMessage = MSG("import_script_partial", result.unmatchedIds.joined(separator: ", "))
+                showImportAlert = true
+            }
+        } catch {
+            showError(error.localizedDescription)
+        }
+    }
+
+    private func showError(_ message: String) {
+        importAlertMessage = message
+        showImportAlert = true
+    }
 }
 
 #Preview {

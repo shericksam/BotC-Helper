@@ -149,3 +149,19 @@ about_support_headline = "¿Te gustaría apoyar el desarrollo?";
 about_support_button = "Invítame un café en PayPal";
 about_nav_title = "Sobre la App";
 about_close = "Cerrar";
+
+board_add_reminder = "Agregar Recordatorio";
+board_reminder_custom = "Recordatorio personalizado";
+board_reminder_custom_placeholder = "Texto del recordatorio";
+board_reminder_from_roles = "Desde los roles";
+
+death_type_label = "Causa de muerte";
+death_night_kill = "Muerte nocturna";
+death_execution = "Ejecución";
+death_other = "Otro";
+
+import_script = "Importar Script";
+import_script_error = "Archivo de script inválido o ilegible.";
+import_script_empty = "Ningún rol coincide con la base de datos. ¿Es un script BotC válido?";
+import_script_partial = "Script importado. Roles no reconocidos omitidos: %@";
+import_script_default_name = "Script Importado";

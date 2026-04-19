@@ -91,7 +91,29 @@ struct PlayerEditor: View {
                         Divider()
                         Toggle(MSG("edit_player_toggle_nominate"), isOn: $status.nominated)
                         Divider()
-                        Toggle(MSG("edit_player_toggle_dead"), isOn: $status.dead)
+                        Toggle(MSG("edit_player_toggle_dead"), isOn: Binding(
+                            get: { status.dead },
+                            set: { isDead in
+                                status.dead = isDead
+                                if !isDead {
+                                    status.deathType = nil
+                                } else if status.deathType == nil {
+                                    status.deathType = "other"
+                                }
+                            }
+                        ))
+                        if status.dead {
+                            Divider()
+                            Picker(MSG("death_type_label"), selection: Binding(
+                                get: { status.deathType ?? "other" },
+                                set: { status.deathType = $0 }
+                            )) {
+                                Text(MSG("death_night_kill")).tag("nightKill")
+                                Text(MSG("death_execution")).tag("execution")
+                                Text(MSG("death_other")).tag("other")
+                            }
+                            .pickerStyle(.segmented)
+                        }
                     }
                 }
 
@@ -191,17 +213,27 @@ struct PlayerEditor: View {
                 )
                 .focused($claimFieldFocused)
                 .onChange(of: searchClaim) { _, newValue in
-                    showRolesList = !newValue.isEmpty
-                    filteredRoles = roles.filter { $0.nameLocalized().localizedCaseInsensitiveContains(newValue) }
+                    filteredRoles = newValue.isEmpty
+                        ? roles
+                        : roles.filter { $0.nameLocalized().localizedCaseInsensitiveContains(newValue) }
+                    showRolesList = !filteredRoles.isEmpty
                     if newValue.isEmpty {
                         player.claimRoleId = nil
-                    }
-                    if let exact = roles.first(where: { $0.nameLocalized().caseInsensitiveCompare(newValue) == .orderedSame }) {
+                        player.claimManual = ""
+                    } else if let exact = roles.first(where: { $0.nameLocalized().caseInsensitiveCompare(newValue) == .orderedSame }) {
                         player.claimRoleId = exact.id
                         player.claimManual = ""
                     } else {
                         player.claimRoleId = nil
                         player.claimManual = newValue
+                    }
+                }
+                .onChange(of: claimFieldFocused) { _, focused in
+                    if focused {
+                        filteredRoles = searchClaim.isEmpty
+                            ? roles
+                            : roles.filter { $0.nameLocalized().localizedCaseInsensitiveContains(searchClaim) }
+                        showRolesList = !filteredRoles.isEmpty
                     }
                 }
                 .onAppear {

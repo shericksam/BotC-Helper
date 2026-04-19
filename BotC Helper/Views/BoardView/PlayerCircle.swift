@@ -61,11 +61,9 @@ struct PlayerCircle: View {
                         .foregroundColor(.blue)
                         .offset(x: 22, y: -22)
                 }
-                // Muerto (tachado X)
+                // Muerto — icon varies by death type
                 if status.dead {
-                    Image(systemName: "xmark")
-                        .font(.largeTitle)
-                        .foregroundColor(.red)
+                    deathIcon(for: status.deathType)
                 }
                 // Rol asignado (opcional)
                 if let role = claimedRole, !iAmBadGuy() {
@@ -119,6 +117,24 @@ struct PlayerCircle: View {
 
     func iAmBadGuy() -> Bool {
         isMe && (claimedRole?.team == .demon || claimedRole?.team == .minion)
+    }
+
+    @ViewBuilder
+    private func deathIcon(for type: String?) -> some View {
+        switch type {
+        case "nightKill":
+            Image(systemName: "moon.zzz.fill")
+                .font(.largeTitle)
+                .foregroundColor(.purple)
+        case "execution":
+            Image(systemName: "hammer.fill")
+                .font(.largeTitle)
+                .foregroundColor(.orange)
+        default:
+            Image(systemName: "xmark")
+                .font(.largeTitle)
+                .foregroundColor(.red)
+        }
     }
 }
 

@@ -134,6 +134,16 @@ struct NewGameSetupSheet: View {
         board.edition = editionSelected
         board.config = getConfigForPlayerCount(playerCount)
         board.suggestedName = suggestedFileName(playersCount: playerCount)
+
+        // Reset positions so BoardView re-initializes them from the perimeter algorithm
+        for player in board.players {
+            player.posX = -1.0
+            player.posY = -1.0
+        }
+
+        // Clear reminder tokens — new game, fresh board
+        board.reminders.removeAll()
+
         try? modelContext.save()
     }
 }
