@@ -66,7 +66,7 @@
     },
     "firstNightReminder": {
       "es": "Apunta al jugador marcado como Nieto y muestra su ficha de personaje.",
-      "en": "Target the grandson player and show his role token."
+      "en": "Target the grandson player and show their role token."
     },
     "otherNightReminder": {
       "es": "Si el jugador marcado como Nieto ha sido asesinado por el Demonio, la Abuela también muere. :reminder:",
@@ -128,11 +128,11 @@
     },
     "firstNightReminder": {
       "es": "La Sirvienta elige a 2 jugadores vivos, no a ella misma. Haz una señal con los dedos.",
-      "en": "The Maid chooses 2 living players. Give him a finger signal."
+      "en": "The Chambermaid chooses 2 living players. Give them a finger signal."
     },
     "otherNightReminder": {
       "es": "La Sirvienta elige a 2 jugadores vivos, no a ella misma. Haz una señal con los dedos.",
-      "en": "The Maid chooses 2 living players. Give him a finger signal."
+      "en": "The Chambermaid chooses 2 living players. Give them a finger signal."
     },
     "image": [
       "http://villacuervos.es/personajes/icono/chambermaid",
@@ -268,7 +268,7 @@
     },
     "otherNightReminder": {
       "es": "Si el Chismoso debe matar a un jugador, el jugador muere. :reminder:",
-      "en": "If the Gossipster's turn is to kill a player, that player dies."
+      "en": "If the Gossip's turn is to kill a player, that player dies."
     },
     "image": [
       "http://villacuervos.es/personajes/icono/gossip",
@@ -426,7 +426,7 @@
     },
     "team": "townsfolk",
     "ability": {
-      "es": "Cada noche, escoge un jugador: tú aprendes su alineamiento.",
+      "es": "La primera vez que mueres, no mueres.",
       "en": "The 1st time you die, you don't."
     },
     "reminders": {
@@ -438,12 +438,12 @@
       ]
     },
     "firstNightReminder": {
-      "es": "Escoge a un Tonto del Pueblo para que esté borracho. Despierta a los Tontos del Pueblo uno por uno, ellos escogen un jugador, muéstrales pulgar arriba o pulgar abajo dependiendo del alineamiento de aquel jugador.",
-      "en": "Pick a Village Idiot to be drunk. Wake up the Village Fools one by one, they choose a player, show them thumbs up or thumbs down depending on that player's alignment."
+      "es": "Escoge a un Tonto para que esté borracho. Despierta a los Tontos uno por uno, ellos escogen un jugador, muéstrales pulgar arriba o pulgar abajo dependiendo del alineamiento de aquel jugador.",
+      "en": "Pick a Fool to be drunk. Wake up the Fools one by one, they choose a player, show them thumbs up or thumbs down depending on that player's alignment."
     },
     "otherNightReminder": {
-      "es": "Despierta a los Tontos del Pueblo uno por uno, ellos escogen un jugador, muéstrales pulgar arriba o pulgar abajo dependiendo del alineamiento de aquel jugador.",
-      "en": "Wake up the Village Fools one by one, they choose a player, show them thumbs up or thumbs down depending on that player's alignment."
+      "es": "Despierta a los Tontos uno por uno, ellos escogen un jugador, muéstrales pulgar arriba o pulgar abajo dependiendo del alineamiento de aquel jugador.",
+      "en": "Wake up the Fools one by one, they choose a player, show them thumbs up or thumbs down depending on that player's alignment."
     },
     "image": [
       "http://villacuervos.es/personajes/icono/fool",
@@ -538,11 +538,11 @@
     },
     "firstNightReminder": {
       "es": "Si hay 7 o más jugadores, despierta al Lunático: Muestra la ficha ESTOS SON TUS ESBIRROS. Apunta a cualquier jugador o jugadores. Muestra la ficha ESTOS PERSONAJES NO ESTÁN EN JUEGO. Muestra 3 fichas de personaje bueno. Duerme al Lunático. Despierta al Demonio. Muestra la ficha de información TÚ ERES y la ficha de Demonio. Muestra la ficha de información ESTE JUGADOR ES y la ficha de Lunático, luego apunta al Lunático.",
-      "en": "If there are 7 or more players, wake up the Lunatic: Show him the THESE ARE YOUR MINIONS token. Target the players you want. Show him the THESE ROLES ARE NOT IN PLAY sheet. Show him 3 good role tokens. Put the Lunatic to sleep. Wake up the Demon. Show him the YOU ARE token and the Demon token. Show him the THIS PLAYER IS token and the Lunatic token, then target the Lunatic."
+      "en": "If there are 7 or more players, wake up the Lunatic: Show them the THESE ARE YOUR MINIONS token. Target the players you want. Show them the THESE ROLES ARE NOT IN PLAY sheet. Show them 3 good role tokens. Put the Lunatic to sleep. Wake up the Demon. Show them the YOU ARE token and the Demon token. Show them the THIS PLAYER IS token and the Lunatic token, then target the Lunatic."
     },
     "otherNightReminder": {
       "es": "Haz lo que sea necesario para simular la actuación del Demonio. Duerme al Lunático. Despierta al Demonio. Muestra la ficha del Lunático y señálalo, a continuación a su(s) objetivo(s).",
-      "en": "Do whatever it takes to simulate the Demon at work. Put the Lunatic to sleep. Wake up the Demon. Show him the Lunatic token and target the Lunatic, then his selected player(s)."
+      "en": "Do whatever it takes to simulate the Demon at work. Put the Lunatic to sleep. Wake up the Demon. Show them the Lunatic token and target the Lunatic, then their selected player(s)."
     },
     "image": [
       "http://villacuervos.es/personajes/icono/lunatic",
@@ -575,7 +575,7 @@
     },
     "otherNightReminder": {
       "es": "El Manitas podría morir. :reminder:",
-      "en": "The Thousand Trades may die."
+      "en": "The Tinker may die."
     },
     "image": [
       "http://villacuervos.es/personajes/icono/tinker",
@@ -608,7 +608,7 @@
     },
     "otherNightReminder": {
       "es": "Si la Niña de la Luna debe matar a 1 jugadora buena, muere. :reminder:",
-      "en": "If the Son of the Moon has to kill a good player, that player dies."
+      "en": "If the Moonchild has to kill a good player, that player dies."
     },
     "image": [
       "http://villacuervos.es/personajes/icono/moonchild",
@@ -639,11 +639,11 @@
     },
     "firstNightReminder": {
       "es": "Muestra las fichas de personaje de todos los Forasteros que estén en juego.",
-      "en": "Show him the role tokens for all the Aliens in play."
+      "en": "Show them the role tokens for all the Outsiders in play."
     },
     "otherNightReminder": {
       "es": "Si un Forastero ha muerto hoy, el Padrino elige a un jugador. :reminder:",
-      "en": "If a Foreigner died today, the Godfather chooses a player."
+      "en": "If a Outsider died today, the Godfather chooses a player."
     },
     "image": [
       "http://villacuervos.es/personajes/icono/godfather",
@@ -711,7 +711,7 @@
     },
     "otherNightReminder": {
       "es": "El Asesino podría elegir a un jugador: :reminder: :reminder:",
-      "en": "The Killer may choose a player."
+      "en": "The Assassin may choose a player."
     },
     "image": [
       "http://villacuervos.es/personajes/icono/assassin",
@@ -853,7 +853,7 @@
     },
     "otherNightReminder": {
       "es": "El Po puede elegir a un jugador o a 3 jugadores si la noche anterior no eligió a nadie. :reminder: o :reminder: :reminder: :reminder:",
-      "en": "The Po can pick one player OR pick 3 players if he didn't pick anyone last night."
+      "en": "The Po can pick one player OR pick 3 players if they didn't pick anyone last night."
     },
     "image": [
       "http://villacuervos.es/personajes/icono/po",
@@ -976,7 +976,7 @@
         "Es el Aprendiz"
       ],
       "en": [
-        "He is the Apprentice"
+        "Is the Apprentice"
       ]
     },
     "firstNightReminder": {

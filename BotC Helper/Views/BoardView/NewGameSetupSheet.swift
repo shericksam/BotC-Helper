@@ -1,24 +1,38 @@
 //
-//  NewGameSheet.swift
+//  NewGameSetupSheet.swift
 //  BotC Helper
 //
-//  Created by Erick Samuel Guerrero Arreola on 03/12/25.
+//  Created by Erick Samuel Guerrero Arreola on 19/04/26.
 //
 
 import SwiftUI
 import SwiftData
 
-struct NewGameSheet: View {
+struct NewGameSetupSheet: View {
     @Environment(\.modelContext) private var modelContext
+    @Environment(\.dismiss) private var dismiss
     @Query(sort: \EditionData.id) var allEditions: [EditionData]
     @Query(sort: \Friend.name) var friends: [Friend]
 
+    @Bindable var board: BoardState
+    var onConfirm: () -> Void
+
+    @State private var playerCount: Int
+    @State private var playerNames: [Int: String]
+    @State private var yourSeat: Int
     @State private var editionSelected: EditionData?
-    var onStart: (BoardState) -> Void
-    @Environment(\.dismiss) var dismiss
-    @State private var playerCount = 5
-    @State private var yourSeat = 1
-    @State private var playerNames: [Int: String] = [:]
+
+    init(board: BoardState, onConfirm: @escaping () -> Void) {
+        self.board = board
+        self.onConfirm = onConfirm
+        let count = board.players.count
+        _playerCount = State(initialValue: count)
+        _yourSeat = State(initialValue: board.players.first(where: { $0.isMe })?.seatNumber ?? 1)
+        _editionSelected = State(initialValue: board.edition)
+        var names: [Int: String] = [:]
+        for p in board.players { names[p.seatNumber] = p.name }
+        _playerNames = State(initialValue: names)
+    }
 
     var body: some View {
         NavigationView {
@@ -47,8 +61,7 @@ struct NewGameSheet: View {
                     Picker(MSG("new_game_picker_label"), selection: $editionSelected) {
                         Text(MSG("no_edition")).tag(nil as EditionData?)
                         ForEach(allEditions, id: \.self) { edition in
-                            Text(edition.meta.name)
-                                .tag(Optional(edition))
+                            Text(edition.meta.name).tag(Optional(edition))
                         }
                     }
                     .pickerStyle(.navigationLink)
@@ -56,7 +69,7 @@ struct NewGameSheet: View {
 
                 Section(header: Text(MSG("new_game_seats_section"))) {
                     ForEach(1...playerCount, id: \.self) { seat in
-                        SeatNameRow(
+                        SeatRow(
                             seat: seat,
                             name: Binding(
                                 get: { playerNames[seat] ?? "" },
@@ -68,50 +81,64 @@ struct NewGameSheet: View {
                     }
                 }
             }
-            .navigationTitle(MSG("new_game_title"))
+            .navigationTitle(MSG("board_new_game"))
             .toolbar {
                 ToolbarItem(placement: .confirmationAction) {
                     Button(MSG("new_game_start_button")) {
+                        applyChanges()
                         dismiss()
-                        startGame()
+                        onConfirm()
                     }
                 }
                 ToolbarItem(placement: .cancellationAction) {
-                    Button(MSG("new_game_cancel_button"), action: { dismiss() })
+                    Button(MSG("new_game_cancel_button")) { dismiss() }
                 }
             }
         }
     }
 
-    func startGame() {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 0.4) {
-            let chosenEdition = editionSelected
-            let players = (1...playerCount).map { i in
-                Player(
-                    seatNumber: i,
-                    name: playerNames[i] ?? "",
-                    claimRoleId: nil,
-                    claimManual: "",
-                    isMe: (i == yourSeat),
-                    personalNotes: [PersonalNote(dayIndex: 0, text: "")],
-                    statuses: [PlayerStatus(dayIndex: 0, seatNumber: i)]
-                )
-            }
-            let config = getConfigForPlayerCount(playerCount)
-            let newGame = BoardState(
-                suggestedName: suggestedFileName(playersCount: playerCount),
-                players: players,
-                currentDay: 0,
-                config: config,
-                edition: chosenEdition
-            )
-            modelContext.insert(newGame)
-            onStart(newGame)
+    private func applyChanges() {
+        let existing = board.players.sorted { $0.seatNumber < $1.seatNumber }
+        let existingSeats = Set(existing.map { $0.seatNumber })
+        let targetSeats = Set(1...playerCount)
+
+        // Remove players that no longer have a seat
+        for player in existing where !targetSeats.contains(player.seatNumber) {
+            board.players.removeAll { $0.id == player.id }
+            modelContext.delete(player)
         }
+
+        // Update/reset existing seats that remain
+        for player in board.players {
+            player.name = playerNames[player.seatNumber] ?? player.name
+            player.isMe = (player.seatNumber == yourSeat)
+            player.claimRoleId = nil
+            player.claimManual = ""
+            player.personalNotes = [PersonalNote(dayIndex: 0, text: "")]
+            player.statuses = [PlayerStatus(dayIndex: 0, seatNumber: player.seatNumber)]
+        }
+
+        // Add new players for newly added seats
+        for seat in targetSeats where !existingSeats.contains(seat) {
+            let newPlayer = Player(
+                seatNumber: seat,
+                name: playerNames[seat] ?? "",
+                isMe: (seat == yourSeat),
+                personalNotes: [PersonalNote(dayIndex: 0, text: "")],
+                statuses: [PlayerStatus(dayIndex: 0, seatNumber: seat)]
+            )
+            board.players.append(newPlayer)
+        }
+
+        board.currentDay = 0
+        board.edition = editionSelected
+        board.config = getConfigForPlayerCount(playerCount)
+        board.suggestedName = suggestedFileName(playersCount: playerCount)
+        try? modelContext.save()
     }
 }
 
-private struct SeatNameRow: View {
+private struct SeatRow: View {
     let seat: Int
     @Binding var name: String
     let friends: [Friend]
@@ -148,8 +175,4 @@ private struct SeatNameRow: View {
             }
         }
     }
-}
-
-#Preview {
-    NewGameSheet(onStart: { _ in print("Started game!") })
 }

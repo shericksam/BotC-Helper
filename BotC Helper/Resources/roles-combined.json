@@ -22,7 +22,7 @@
     },
     "firstNightReminder": {
       "es": "Apunta al jugador nieto y muestra su ficha de rol.",
-      "en": "Target the grandson player and show his role token."
+      "en": "Target the grandson player and show their role token."
     },
     "otherNightReminder": {
       "es": "Si el nieto fue asesinado por el Demonio, la Abuela muere también.",
@@ -126,11 +126,11 @@
     },
     "firstNightReminder": {
       "es": "Muéstrale cualquier jugador.",
-      "en": "Show him any player."
+      "en": "Show them any player."
     },
     "otherNightReminder": {
       "es": "Muéstrale un jugador con un tipo de rol diferente al anterior.",
-      "en": "Show him a player with a different type of role than the previous one."
+      "en": "Show them a player with a different type of role than the previous one."
     }
   },
   {
@@ -174,7 +174,7 @@
     },
     "firstNightReminder": {
       "es": "Muéstrale la ficha TÚ ERES y la ficha de rol de un Secuaz.",
-      "en": "Show him the YOU ARE token and the Henchman role token."
+      "en": "Show them the YOU ARE token and the Henchman role token."
     },
     "otherNightReminder": {
       "es": "",
@@ -294,7 +294,7 @@
     },
     "firstNightReminder": {
       "es": "Muéstrale la ficha de rol de un Extranjero. Apunta tanto al EXTRANJERO como al jugador EQUIVOCADO.",
-      "en": "Show him the role sheet for an Alien. Target both the ALIEN and the WRONG player."
+      "en": "Show them the role sheet for an Alien. Target both the ALIEN and the WRONG player."
     },
     "otherNightReminder": {
       "es": "",
@@ -470,7 +470,7 @@
     },
     "firstNightReminder": {
       "es": "Dale una señal con los dedos.",
-      "en": "Give him a finger signal."
+      "en": "Give them a finger signal."
     },
     "otherNightReminder": {
       "es": "",
@@ -566,11 +566,11 @@
     },
     "firstNightReminder": {
       "es": "Sáltate los pasos de Información del Secuaz e Información del Demonio. Despierta al Demonio, muéstrale la ficha de ESTOS ROLES NO ESTÁN EN JUEGO y las fichas de cualquier tres roles buenos que no estén en juego.",
-      "en": "Skip the Henchman Information and Demon Information steps. Wake up the Demon, show him the THESE ROLES ARE NOT IN PLAY token and the tokens for any three good roles that are not in play."
+      "en": "Skip the Henchman Information and Demon Information steps. Wake up the Demon, show them the THESE ROLES ARE NOT IN PLAY token and the tokens for any three good roles that are not in play."
     },
     "otherNightReminder": {
       "es": "Si el Cultivador de Amapolas ha muerto hoy por el día o por la noche, despierta a los Secuaces, muéstrales la ficha de ESTE ES EL DEMONIO y apunta al Demonio. Ponlos a dormir. Despierta al Demonio, y muéstrale la ficha de ESTOS SON TUS SECUACES y apunta a los Secuaces. Pon al Demonio a dormir.",
-      "en": "If the Poppy Grower has died today during the day or at night, wake up the Henchmen, show them the THIS IS THE DEMON token, and aim at the Demon. Put them to sleep. Wake up the Demon, and show him the THESE ARE YOUR MIX token and target the Minions. Put the Demon to sleep."
+      "en": "If the Poppy Grower has died today during the day or at night, wake up the Henchmen, show them the THIS IS THE DEMON token, and aim at the Demon. Put them to sleep. Wake up the Demon, and show them the THESE ARE YOUR MIX token and target the Minions. Put the Demon to sleep."
     }
   },
   {
@@ -590,11 +590,11 @@
     },
     "firstNightReminder": {
       "es": "Dale una señal con los dedos.",
-      "en": "Give him a finger signal."
+      "en": "Give them a finger signal."
     },
     "otherNightReminder": {
       "es": "Dale una señal con los dedos.",
-      "en": "Give him a finger signal."
+      "en": "Give them a finger signal."
     }
   },
   {
@@ -618,7 +618,7 @@
     },
     "otherNightReminder": {
       "es": "El Encantador de Serpientes escoge un jugador. Si escoge al Demonio: Muéstrale la ficha de TÚ ERES y la ficha del Demonio. Dale un pulgar abajo. Cambia las fichas del Encantador de Serpientes y del Demonio. Pon al anterior Encantador de Serpientes a dormir. Despierta al anterior Demonio. Muéstrale la ficha de TÚ ERES y la ficha del Encantador de Serpientes y dale un pulgar arriba.",
-      "en": "The Snake Charmer chooses a player. If he chooses the Demon: Show him the YOU ARE token and the Demon token. Give it a thumbs down. Change the Snake Charmer and Demon tokens. Put the previous Snake Charmer to sleep. Wake up the previous Demon. Show him the YOU ARE token and the Snake Charmer token and give him a thumbs up."
+      "en": "The Snake Charmer chooses a player. If they chooses the Demon: Show them the YOU ARE token and the Demon token. Give it a thumbs down. Change the Snake Charmer and Demon tokens. Put the previous Snake Charmer to sleep. Wake up the previous Demon. Show them the YOU ARE token and the Snake Charmer token and give them a thumbs up."
     }
   },
   {
@@ -642,7 +642,7 @@
     },
     "otherNightReminder": {
       "es": "Si un jugador fue ejecutado hoy, muéstrale su ficha de rol.",
-      "en": "If a player was executed today, show him his role token."
+      "en": "If a player was executed today, show them their role token."
     }
   },
   {
@@ -758,11 +758,11 @@
     },
     "firstNightReminder": {
       "es": "Dale una señal con el pulgar.",
-      "en": "Give him a thumb signal."
+      "en": "Give them a thumb signal."
     },
     "otherNightReminder": {
       "es": "Dale una señal con el pulgar.",
-      "en": "Give him a thumb signal."
+      "en": "Give them a thumb signal."
     }
   },
   {
@@ -786,7 +786,7 @@
     },
     "otherNightReminder": {
       "es": "Si el Granjero murió esta noche, despierta un jugador bueno vivo. Muéstrale la ficha de TÚ ERES y la ficha de rol del Granjero. Reemplaza su ficha anterior por la ficha del Granjero.",
-      "en": "If the Farmer died tonight, wake up a good player alive. Show him the YOU ARE token and the Farmer role token. He replaces his previous token with the Farmer's token."
+      "en": "If the Farmer died tonight, wake up a good player alive. Show them the YOU ARE token and the Farmer role token. He replaces his previous token with the Farmer's token."
     }
   },
   {
@@ -810,7 +810,7 @@
     },
     "otherNightReminder": {
       "es": "Si el Cria Cuervos murió esta noche, él escoge un jugador. Muéstrale la ficha de rol del jugador escogido.",
-      "en": "If the Cria Cuervos died tonight, he chooses a player. Show him the role sheet of the chosen player."
+      "en": "If the Cria Cuervos died tonight, they choose a player. Show them the role sheet of the chosen player."
     }
   },
   {
@@ -830,7 +830,7 @@
     },
     "firstNightReminder": {
       "es": "Muéstrale la ficha de rol del Ciudadano marcado LOCO.",
-      "en": "Show him the role sheet of the Citizen marked CRAZY."
+      "en": "Show them the role sheet of the Citizen marked CRAZY."
     },
     "otherNightReminder": {
       "es": "",
@@ -878,7 +878,7 @@
     },
     "firstNightReminder": {
       "es": "Muéstrale la ficha de rol del Secuaz. Apunta tanto al SECUAZ como al jugador EQUIVOCADO.",
-      "en": "Show him the Henchman role token. Target both the HEICHMAN and the WRONG player."
+      "en": "Show them the Henchman role token. Target both the HEICHMAN and the WRONG player."
     },
     "otherNightReminder": {
       "es": "",
@@ -902,7 +902,7 @@
     },
     "firstNightReminder": {
       "es": "Muéstrale la ficha de rol de un Ciudadano. Apunta tanto al CIUDADANO como al jugador EQUIVOCADO.",
-      "en": "Show him the role sheet for a Citizen. Target both the CITIZEN and the WRONG player."
+      "en": "Show them the role sheet for a Citizen. Target both the CITIZEN and the WRONG player."
     },
     "otherNightReminder": {
       "es": "",
@@ -1026,7 +1026,7 @@
     },
     "otherNightReminder": {
       "es": "Dale una señal con los dedos.",
-      "en": "Give him a finger signal."
+      "en": "Give them a finger signal."
     }
   },
   {
@@ -1070,11 +1070,11 @@
     },
     "firstNightReminder": {
       "es": "Dale una señal con los dedos.",
-      "en": "Give him a finger signal."
+      "en": "Give them a finger signal."
     },
     "otherNightReminder": {
       "es": "Dale una señal con los dedos.",
-      "en": "Give him a finger signal."
+      "en": "Give them a finger signal."
     }
   },
   {
@@ -1198,7 +1198,7 @@
     },
     "otherNightReminder": {
       "es": "Dale una señal con los dedos.",
-      "en": "Give him a finger signal."
+      "en": "Give them a finger signal."
     }
   },
   {
@@ -1386,7 +1386,7 @@
     },
     "firstNightReminder": {
       "es": "Dale una señal con los dedos.",
-      "en": "Give him a finger signal."
+      "en": "Give them a finger signal."
     },
     "otherNightReminder": {
       "es": "",
@@ -1410,11 +1410,11 @@
     },
     "firstNightReminder": {
       "es": "Despierta al Demonio. Muéstrale la ficha de ÉSTE JUGADOR ES y la ficha del Rey, luego apunta al Rey.",
-      "en": "Wake up the Demon. Show him the THIS PLAYER IS token and the King token, then point to the King."
+      "en": "Wake up the Demon. Show them the THIS PLAYER IS token and the King token, then point to the King."
     },
     "otherNightReminder": {
       "es": "Si los muertos equiparan o superan en número a los vivos, muéstrale la ficha de rol de un jugador vivo.",
-      "en": "If the dead equal or outnumber the living, show him the role token of a living player."
+      "en": "If the dead equal or outnumber the living, show them the role token of a living player."
     }
   },
   {
@@ -1530,11 +1530,11 @@
     },
     "firstNightReminder": {
       "es": "La Sirvienta escoge 2 jugadores vivos. Dale una señal con los dedos.",
-      "en": "The Maid chooses 2 living players. Give him a finger signal."
+      "en": "The Maid chooses 2 living players. Give them a finger signal."
     },
     "otherNightReminder": {
       "es": "La Sirvienta escoge 2 jugadores vivos. Dale una señal con los dedos.",
-      "en": "The Maid chooses 2 living players. Give him a finger signal."
+      "en": "The Maid chooses 2 living players. Give them a finger signal."
     }
   },
   {
@@ -1578,11 +1578,11 @@
     },
     "firstNightReminder": {
       "es": "El Soñador apunta a un jugador. Muéstrale 1 ficha de rol bueno y 1 ficha de rol malvado, 1 de las cuales es el rol del jugador.",
-      "en": "The Dreamer points to a player. Show him 1 good role token and 1 evil role token, 1 of which is the player's role."
+      "en": "The Dreamer points to a player. Show them 1 good role token and 1 evil role token, 1 of which is the player's role."
     },
     "otherNightReminder": {
       "es": "El Soñador apunta a un jugador. Muéstrale 1 ficha de rol bueno y 1 ficha de rol malvado, 1 de las cuales es el rol del jugador.",
-      "en": "The Dreamer points to a player. Show him 1 good role token and 1 evil role token, 1 of which is the player's role."
+      "en": "The Dreamer points to a player. Show them 1 good role token and 1 evil role token, 1 of which is the player's role."
     }
   },
   {
@@ -1650,11 +1650,11 @@
     },
     "firstNightReminder": {
       "es": "El Vigilante quizás escoja un jugador. Pon al Vigilante a dormir. Despierta al jugador seleccionado y muéstrale la ficha de ESTE JUGADOR ES y la ficha del Vigilante y apunta al Vigilante.",
-      "en": "The Ranger may choose a player. Put the Watcher to sleep. Wake up the selected player and show him the THIS PLAYER IS token and the Watcher token and aim at the Watcher."
+      "en": "The Ranger may choose a player. Put the Watcher to sleep. Wake up the selected player and show them the THIS PLAYER IS token and the Watcher token and aim at the Watcher."
     },
     "otherNightReminder": {
       "es": "El Vigilante quizás escoja un jugador. Pon al Vigilante a dormir. Despierta al jugador seleccionado y muéstrale la ficha de ESTE JUGADOR ES y la ficha del Vigilante y apunta al Vigilante.",
-      "en": "The Ranger may choose a player. Put the Watcher to sleep. Wake up the selected player and show him the THIS PLAYER IS token and the Watcher token and aim at the Watcher."
+      "en": "The Ranger may choose a player. Put the Watcher to sleep. Wake up the selected player and show them the THIS PLAYER IS token and the Watcher token and aim at the Watcher."
     }
   },
   {
@@ -1938,11 +1938,11 @@
     },
     "firstNightReminder": {
       "es": "Si hay 7 o más jugadores, despierta al Lunático: Muéstrale la ficha de ESTOS SON TUS SECUACES. Apunta a los jugadores que desees. Muéstrale la ficha de ESTOS ROLES NO ESTÁN EN JUEGO. Muéstrale 3 fichas de roles buenos. Pon al Lunático a dormir. Despierta al Demonio. Muéstrale la ficha de TÚ ERES y la ficha del Demonio. Muéstrale la ficha de ESTE JUGADOR ES y la ficha del Lunático, luego apunta al Lunático.",
-      "en": "If there are 7 or more players, wake up the Lunatic: Show him the THESE ARE YOUR MINIONS token. Target the players you want. Show him the THESE ROLES ARE NOT IN PLAY sheet. Show him 3 good role tokens. Put the Lunatic to sleep. Wake up the Demon. Show him the YOU ARE token and the Demon token. Show him the THIS PLAYER IS token and the Lunatic token, then target the Lunatic."
+      "en": "If there are 7 or more players, wake up the Lunatic: Show them the THESE ARE YOUR MINIONS token. Target the players you want. Show them the THESE ROLES ARE NOT IN PLAY sheet. Show them 3 good role tokens. Put the Lunatic to sleep. Wake up the Demon. Show them the YOU ARE token and the Demon token. Show them the THIS PLAYER IS token and the Lunatic token, then target the Lunatic."
     },
     "otherNightReminder": {
       "es": "Has lo que sea necesario para simular al Demonio actuando. Pon al Lunático a dormir. Despierta al Demonio. Muéstrale la ficha del Lunático y apunta al Lunático, y luego a su(s) jugador(es) seleccionado(s).",
-      "en": "Do whatever it takes to simulate the Demon at work. Put the Lunatic to sleep. Wake up the Demon. Show him the Lunatic token and target the Lunatic, then his selected player(s)."
+      "en": "Do whatever it takes to simulate the Demon at work. Put the Lunatic to sleep. Wake up the Demon. Show them the Lunatic token and target the Lunatic, then their selected player(s)."
     }
   },
   {
@@ -2178,7 +2178,7 @@
     },
     "firstNightReminder": {
       "es": "Despierta a cada Secuaz. Muéstrale la ficha de ESTOS ROLES NO ESTÁN EN JUEGO y las fichas de 3 roles fuera de juego. Pon a cada Secuaz a dormir.",
-      "en": "Wake up each Henchman. Show him the THESE ROLES ARE NOT IN PLAY token and the 3 roles out of play tokens. Put each Henchman to sleep."
+      "en": "Wake up each Henchman. Show them the THESE ROLES ARE NOT IN PLAY token and the 3 roles out of play tokens. Put each Henchman to sleep."
     },
     "otherNightReminder": {
       "es": "",
@@ -2610,11 +2610,11 @@
     },
     "firstNightReminder": {
       "es": "Muéstrale la ficha de ESTOS ROLES NO ESTÁN EN JUEGO. Muéstrale las fichas de 3 roles buenos fuera de juego.",
-      "en": "Show him the THESE ROLES ARE NOT IN PLAY sheet. Show him the pieces of 3 good offside roles."
+      "en": "Show them the THESE ROLES ARE NOT IN PLAY sheet. Show them the pieces of 3 good offside roles."
     },
     "otherNightReminder": {
       "es": "Cambia la ficha de recordatorio del Invocador a la noche adecuada. Si es la noche 3, el Invocador escoge a un jugador y un Demonio. Pon al Invocador a dormir. Despierta al jugador escogido. Muéstrale la ficha de TÚ ERES, un pulgar abajo y la ficha del Demonio escogido.",
-      "en": "Change the Summoner's reminder token to the appropriate night. If it is night 3, the Summoner chooses one player and one Demon. Put the Summoner to sleep. Wake up the chosen player. Show him the YOU ARE token, a thumbs down, and the chosen Demon token."
+      "en": "Change the Summoner's reminder token to the appropriate night. If it is night 3, the Summoner chooses one player and one Demon. Put the Summoner to sleep. Wake up the chosen player. Show them the YOU ARE token, a thumbs down, and the chosen Demon token."
     }
   },
   {
@@ -2634,7 +2634,7 @@
     },
     "firstNightReminder": {
       "es": "Despierta al Demonio. Apunta al jugador marcado ES LA MARIONETA y muéstrale la ficha de ESTE JUGADOR ES y la ficha de rol de la Marioneta.",
-      "en": "Wake up the Demon. Target the player marked IS THE PUPPET and show him the THIS PLAYER IS token and the Puppet role token."
+      "en": "Wake up the Demon. Target the player marked IS THE PUPPET and show them the THIS PLAYER IS token and the Puppet role token."
     },
     "otherNightReminder": {
       "es": "",
@@ -2682,11 +2682,11 @@
     },
     "firstNightReminder": {
       "es": "Muéstrale la palabra escrita.",
-      "en": "Show him the written word."
+      "en": "Show them the written word."
     },
     "otherNightReminder": {
       "es": "Si un jugador está marcado con la ficha de SE VUELVE MALVADO, despiértalo. Muéstrale la ficha de TÚ ERES y un pulgar abajo. El Mezéfeles pierde su habilidad.",
-      "en": "If a player is marked with the GOES EVIL token, wake him up. Show him the YOU ARE tab and a thumbs down. The Mezefeles loses its ability."
+      "en": "If a player is marked with the GOES EVIL token, wake them up. Show them the YOU ARE tab and a thumbs down. The Mezefeles loses its ability."
     }
   },
   {
@@ -2754,7 +2754,7 @@
     },
     "firstNightReminder": {
       "es": "Muéstrale las fichas de rol de todos los Extranjeros en juego.",
-      "en": "Show him the role tokens for all the Aliens in play."
+      "en": "Show them the role tokens for all the Aliens in play."
     },
     "otherNightReminder": {
       "es": "Si un Extranjero murió hoy, el Padrino escoge un jugador.",
@@ -2998,7 +2998,7 @@
     },
     "otherNightReminder": {
       "es": "El Fang Gu escoge un jugador. Si él escoge un Extranjero (solo una vez): Reemplaza la ficha del Extranjero, etc.",
-      "en": "The Fang Gu chooses a player. If he chooses a Foreigner (only once): Replace the Foreigner token, etc."
+      "en": "The Fang Gu chooses a player. If they chooses a Foreigner (only once): Replace the Foreigner token, etc."
     }
   },
   {
@@ -3166,7 +3166,7 @@
     },
     "otherNightReminder": {
       "es": "El Po puede escoger un jugador O escoge 3 jugadores si no escogió a nadie anoche.",
-      "en": "The Po can pick one player OR pick 3 players if he didn't pick anyone last night."
+      "en": "The Po can pick one player OR pick 3 players if they didn't pick anyone last night."
     }
   },
   {
@@ -3365,12 +3365,12 @@
     "id": "djinn",
     "name": {
       "es": "Genio",
-      "en": "Genius"
+      "en": "Djinn"
     },
     "team": "fabled",
     "ability": {
       "es": "Usa la regla especial del Genio. Todos los jugadores saben cuál es.",
-      "en": "Use the Genie's special rule. All the players know which one it is."
+      "en": "Use the Djinn's special rule. All players know which rule it is."
     },
     "reminders": {
       "es": [],

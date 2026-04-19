@@ -64,7 +64,7 @@
     },
     "firstNightReminder": {
       "es": "Haz una señal con los dedos.",
-      "en": "Give him a finger signal."
+      "en": "Give them a finger signal."
     },
     "otherNightReminder": {
       "es": "",
@@ -101,7 +101,7 @@
     },
     "otherNightReminder": {
       "es": "El Encantador de Serpientes elige a un jugador. Si elige al Demonio: Muestra las fichas TÚ ERES y Demonio. Pon el pulgar hacia abajo. Intercambia las fichas de Encantador de Serpientes y Demonio. Pon al antiguo Encantador de Serpientes a dormir. Despierta al antiguo Demonio. Muestra las fichas de TÚ ERES y Encantador de Serpientes y pon el pulgar hacia arriba. :reminder:",
-      "en": "The Snake Charmer chooses a player. If he chooses the Demon: Show him the YOU ARE token and the Demon token. Give it a thumbs down. Change the Snake Charmer and Demon tokens. Put the previous Snake Charmer to sleep. Wake up the previous Demon. Show him the YOU ARE token and the Snake Charmer token and give him a thumbs up."
+      "en": "The Snake Charmer chooses a player. If they chooses the Demon: Show them the YOU ARE token and the Demon token. Give it a thumbs down. Change the Snake Charmer and Demon tokens. Put the previous Snake Charmer to sleep. Wake up the previous Demon. Show them the YOU ARE token and the Snake Charmer token and give them a thumbs up."
     },
     "image": [
       "http://villacuervos.es/personajes/icono/snakecharmer",
@@ -138,11 +138,11 @@
     },
     "firstNightReminder": {
       "es": "Haz una señal con los dedos.",
-      "en": "Give him a finger signal."
+      "en": "Give them a finger signal."
     },
     "otherNightReminder": {
       "es": "Haz una señal con los dedos.",
-      "en": "Give him a finger signal."
+      "en": "Give them a finger signal."
     },
     "image": [
       "http://villacuervos.es/personajes/icono/mathematician",
@@ -167,11 +167,11 @@
     },
     "firstNightReminder": {
       "es": "El Soñador apunta a un jugador. Muéstrale 1 ficha de personaje bueno y 1 de personaje malvado, 1 de los cuales es su personaje.",
-      "en": "The Dreamer points to a player. Show him 1 good role token and 1 evil role token, 1 of which is the player's role."
+      "en": "The Dreamer points to a player. Show them 1 good role token and 1 evil role token, 1 of which is the player's role."
     },
     "otherNightReminder": {
       "es": "El Soñador apunta a un jugador. Muéstrale 1 ficha de personaje bueno y 1 de personaje malvado, 1 de los cuales es su personaje.",
-      "en": "The Dreamer points to a player. Show him 1 good role token and 1 evil role token, 1 of which is the player's role."
+      "en": "The Dreamer points to a player. Show them 1 good role token and 1 evil role token, 1 of which is the player's role."
     },
     "image": [
       "http://villacuervos.es/personajes/icono/dreamer",
@@ -270,7 +270,7 @@
     },
     "otherNightReminder": {
       "es": "Haz una señal con los dedos.",
-      "en": "Give him a finger signal."
+      "en": "Give them a finger signal."
     },
     "image": [
       "http://villacuervos.es/personajes/icono/oracle",
@@ -378,9 +378,14 @@
         "type": "reveal"
       }
     ],
-    "remindersGlobal": [
-      "Es el Filósofo"
-    ]
+    "remindersGlobal": {
+      "es": [
+        "Es el Filósofo"
+      ],
+      "en": [
+        "Is the Philosopher"
+      ]
+    }
   },
   {
     "id": "artist",
@@ -448,7 +453,7 @@
     },
     "otherNightReminder": {
       "es": "Haz una señal con los dedos.",
-      "en": "Give him a finger signal."
+      "en": "Give them a finger signal."
     },
     "image": [
       "http://villacuervos.es/personajes/icono/juggler",
@@ -510,7 +515,7 @@
     },
     "otherNightReminder": {
       "es": "Si la Adorable ha muerto, un jugador se emborracha inmediatamente. Si aún no has hecho esto, hazlo ahora. :reminder:",
-      "en": "If Little Treasure dies, a player immediately becomes drunk. If you haven't done it yet, do it now."
+      "en": "If Sweetheart dies, a player immediately becomes drunk. If you haven't done it yet, do it now."
     },
     "image": [
       "http://villacuervos.es/personajes/icono/sweetheart",
@@ -677,15 +682,36 @@
   },
   {
     "id": "pithag",
-    "name": "Pit-Hag",
+    "name": {
+      "es": "Pit-Hag",
+      "en": "Pit-Hag"
+    },
     "team": "minion",
-    "ability": "Cada noche*, elige a un jugador y a un personaje en el que se convierte (si no está en juego). Si se crea un Demonio, las muertes de esa noche serán arbitrarias.",
+    "ability": {
+      "es": "Cada noche*, elige a un jugador y a un personaje en el que se convierte (si no está en juego). Si se crea un Demonio, las muertes de esa noche serán arbitrarias.",
+      "en": "Each night*, choose a player & a character they become (if not in play). If a Demon is created, tonight's deaths are arbitrary."
+    },
     "setup": false,
     "image": [
       "http://villacuervos.es/personajes/icono/pithag",
       "http://villacuervos.es/personajes/icono/pithag/alterno"
     ],
-    "otherNightReminder": "El Pit-Hag elige un jugador y un personaje. Si elige un personaje que no está en juego: Duerme al Pit-Hag. Despierta al objetivo. Muestra la ficha TÚ ERES y su nueva ficha de personaje."
+    "otherNightReminder": {
+      "es": "El Pit-Hag elige un jugador y un personaje. Si elige un personaje que no está en juego: Duerme al Pit-Hag. Despierta al objetivo. Muestra la ficha TÚ ERES y su nueva ficha de personaje.",
+      "en": "The Pit-Hag chooses a player & a character. If that character is not in play: put the Pit-Hag to sleep. Wake the target. Show the YOU ARE token and their new character token."
+    },
+    "reminders": {
+      "es": [
+        "Transformado"
+      ],
+      "en": [
+        "Transformed"
+      ]
+    },
+    "firstNightReminder": {
+      "es": "",
+      "en": ""
+    }
   },
   {
     "id": "eviltwin",
@@ -794,7 +820,7 @@
     },
     "otherNightReminder": {
       "es": "El Vigormortis elige a un jugador. :reminder: Si ese jugador es un Esbirro, envenena a un vecino Aldeano. :reminder: :reminder:",
-      "en": "The Vigormortis chooses a player. If that player is a Henchman, poison a neighboring Citizen."
+      "en": "The Vigormortis chooses a player. If that player is a Minion, poison a neighboring Townsfolk."
     },
     "image": [
       "http://villacuervos.es/personajes/icono/vigormortis",
@@ -827,7 +853,7 @@
     },
     "otherNightReminder": {
       "es": "El Vortox elige a un jugador. :reminder:",
-      "en": "The Vortex chooses a player."
+      "en": "The Vortox chooses a player."
     },
     "image": [
       "http://villacuervos.es/personajes/icono/vortox",
@@ -862,7 +888,7 @@
     },
     "otherNightReminder": {
       "es": "El Fang Gu elige un jugador. :reminder: Si elige a un Forastero (solo una vez): Sustituye la ficha de Forastero por la ficha de Fang Gu. Duerme al Fang Gu. Despierta al objetivo. Muestra las fichas TÚ ERES y Fang Gu y pon un pulgar hacia abajo. :reminder:",
-      "en": "The Fang Gu chooses a player. If he chooses a Foreigner (only once): Replace the Foreigner token, etc."
+      "en": "The Fang Gu chooses a player. If they chooses a Outsider (only once): Replace the Outsider token, etc."
     },
     "image": [
       "http://villacuervos.es/personajes/icono/fanggu",
@@ -890,18 +916,16 @@
       ],
       "en": [
         "Sober and Healthy",
-        "Act twice",
-        null,
-        null
+        "Act twice"
       ]
     },
     "firstNightReminder": {
       "es": "Elige a 1 jugador, despiértale y dile qué poder del Barista está afectándole. Trata su habilidad según eso (información sobria/sana/verdadera o activar su habilidad 2 veces).",
-      "en": "Choose 1 player, wake them up and tell them which Barista power is affecting them. Treat his ability accordingly (sober/sane/true information or activate his ability 2 times)."
+      "en": "Choose 1 player, wake them up and tell them which Barista power is affecting them. Treat their ability accordingly (sober/sane/true information or activate their ability 2 times)."
     },
     "otherNightReminder": {
       "es": "Elige a 1 jugador, despiértale y dile qué poder del Barista está afectándole. Trata su habilidad según eso (información sobria/sana/verdadera o activar su habilidad 2 veces).",
-      "en": "Choose 1 player, wake them up and tell them which Barista power is affecting them. Treat his ability accordingly (sober/sane/true information or activate his ability 2 times)."
+      "en": "Choose 1 player, wake them up and tell them which Barista power is affecting them. Treat their ability accordingly (sober/sane/true information or activate their ability 2 times)."
     },
     "image": [
       "http://villacuervos.es/personajes/icono/barista",
@@ -937,7 +961,7 @@
     },
     "otherNightReminder": {
       "es": "La Meretriz elige a 1 jugadora viva. Manda a la Meretriz a dormir. Despierta a la jugadora elegida y enséñale las fichas de ESTE PERSONAJE TE HA ELEGIDO y Meretriz. La jugadora elegida afirma o niega con la cabeza. Si afirma, despierta a la Meretriz y enséñale el personaje de la jugadora elegida. Después puedes decidir matar a ambas jugadoras. :reminder: :reminder:",
-      "en": "The Whore chooses 1 living player. Send the Whore to sleep. Wake up the chosen player and show her the THIS CHARACTER HAS CHOSEN YOU and Meretriz tokens. The chosen player nods or shakes her head. If yes, wake up the Whore and show her the character of the chosen player. You can then decide to kill both players. :reminder: :reminder:"
+      "en": "The Harlot chooses 1 living player. Send the Harlot to sleep. Wake up the chosen player and show her the THIS CHARACTER HAS CHOSEN YOU and Harlot tokens. The chosen player nods or shakes her head. If yes, wake up the Harlot and show her the character of the chosen player. You can then decide to kill both players. :reminder: :reminder:"
     },
     "image": [
       "http://villacuervos.es/personajes/icono/harlot",

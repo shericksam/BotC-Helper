@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct PlayerEditor: View {
     @Bindable var player: Player
@@ -17,6 +18,8 @@ struct PlayerEditor: View {
     var statusesByDay: [PlayerStatus]
     var currentDayIndex: Int
     var roles: [RoleDefinition]
+
+    @Query(sort: \Friend.name) private var friends: [Friend]
 
     @State private var searchClaim: String = ""
     @State private var filteredRoles: [RoleDefinition] = []
@@ -34,7 +37,19 @@ struct PlayerEditor: View {
             ScrollView(.vertical, showsIndicators: false) {
                 StyledSection(header: MSG("edit_player_section_data")) {
                     VStack {
-                        TextField(MSG("edit_player_section_data"), text: $player.name)
+                        HStack {
+                            TextField(MSG("edit_player_section_data"), text: $player.name)
+                            if !friends.isEmpty {
+                                Menu {
+                                    ForEach(friends) { friend in
+                                        Button(friend.name) { player.name = friend.name }
+                                    }
+                                } label: {
+                                    Image(systemName: "person.crop.circle")
+                                        .foregroundColor(.accentColor)
+                                }
+                            }
+                        }
                         if isMe {
                             Divider()
                             Button(MSG("edit_player_section_editrole")) { editRole.toggle() }

@@ -23,8 +23,10 @@ struct BoardView: View {
     @State private var showDetail = false
     @State private var dragOffset: CGSize = .zero
     @State private var draggedPlayerIdx: Int? = nil
-    @State private var showResetAlert = false
+    @State private var showNewGameSetup = false
     @Environment(\.modelContext) private var modelContext
+
+    private let feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
 
     private var isRegular: Bool {
         sizeClass == .regular
@@ -86,9 +88,6 @@ struct BoardView: View {
                     Text(MSG("board_outsider", board.config.numOutsider)).font(.body)
                     Text(MSG("board_minion", board.config.numMinions)).font(.body)
                     Text(MSG("board_demon", board.config.numDemon)).font(.body)
-//                    NavigationLink(destination: GPTAssistantView(board: board)) {
-//                        Label("Análisis AI", systemImage: "bolt.circle.fill")
-//                    }
                 }
                 .foregroundColor(.white)
                 .padding()
@@ -115,7 +114,7 @@ struct BoardView: View {
                     }
                     Button(MSG("board_clear_votes"), systemImage: "checkmark.circle") { clearAllVotes() }
                     Button(MSG("board_clear_nominations"), systemImage: "exclamationmark.bubble") { clearAllNominations() }
-                    Button(MSG("board_new_game"), systemImage: "arrow.clockwise") { showResetAlert = true }
+                    Button(MSG("board_new_game"), systemImage: "arrow.clockwise") { showNewGameSetup = true }
                         .tint(.red)
                 } label: {
                     Image(systemName: "ellipsis.circle")
@@ -127,13 +126,10 @@ struct BoardView: View {
         .onDisappear {
             try? modelContext.save()
         }
-        .alert(MSG("board_reset_title"), isPresented: $showResetAlert) {
-            Button(MSG("board_reset_button"), role: .destructive) {
-                resetBoardForNewGame()
+        .sheet(isPresented: $showNewGameSetup) {
+            NewGameSetupSheet(board: board) {
+                // Board already updated by sheet; nothing else needed
             }
-            Button(MSG("board_reset_cancel"), role: .cancel) { }
-        } message: {
-            Text(MSG("board_reset_message"))
         }
         .navigationDestination(isPresented: $showDetail) {
             if let data = board.edition {
@@ -216,18 +212,6 @@ struct BoardView: View {
         try? modelContext.save()
     }
 
-    func resetBoardForNewGame() {
-        for player in board.players {
-            player.claimRoleId = nil
-            player.claimManual = ""
-            player.personalNotes.removeAll()
-            player.statuses = [PlayerStatus(dayIndex: 0)]
-        }
-        board.currentDay = 0
-        board.suggestedName = suggestedFileName(playersCount: board.players.count)
-        try? modelContext.save()
-    }
-
     @ViewBuilder
     func playerGridView() -> some View {
         GeometryReader { geo in
@@ -236,6 +220,7 @@ struct BoardView: View {
             ZStack {
                 ForEach(Array(orderedPlayers.enumerated()), id: \.1.id) { idx, player in
                     let pos = positions[idx]
+                    let isDragging = draggedPlayerIdx == idx
                     if let status = player.statuses.first(where: { $0.dayIndex == board.currentDay }) {
                         PlayerCircle(
                             player: player,
@@ -251,11 +236,16 @@ struct BoardView: View {
                                 }
                             }
                         )
-                        .position(pos + (draggedPlayerIdx == idx ? dragOffset : .zero))
-                        .zIndex(draggedPlayerIdx == idx ? 1 : 0)
+                        .position(pos + (isDragging ? dragOffset : .zero))
+                        .scaleEffect(isDragging ? 1.15 : 1.0)
+                        .shadow(color: isDragging ? .black.opacity(0.45) : .clear,
+                                radius: isDragging ? 12 : 0, x: 0, y: isDragging ? 6 : 0)
+                        .zIndex(isDragging ? 2 : 0)
+                        .animation(.spring(response: 0.3, dampingFraction: 0.65), value: isDragging)
                         .gesture(
-                            LongPressGesture(minimumDuration: 0.2)
+                            LongPressGesture(minimumDuration: 0.15)
                                 .onEnded { _ in
+                                    feedbackGenerator.impactOccurred()
                                     draggedPlayerIdx = idx
                                     dragOffset = .zero
                                 }
@@ -274,21 +264,18 @@ struct BoardView: View {
                                         if let targetIdx = positions.enumerated().min(by: {
                                             distance($0.element, newPosition) < distance($1.element, newPosition)
                                         })?.offset, targetIdx != draggedIdx {
-
-                                            // SWAP solo los seatNumbers:
                                             let a = orderedPlayers[draggedIdx]
                                             let b = orderedPlayers[targetIdx]
                                             let tmp = a.seatNumber
                                             a.seatNumber = b.seatNumber
                                             b.seatNumber = tmp
-
-                                            // ⚡️ Ahora REORDENA el array principal del BoardState:
                                             board.players.sort { $0.seatNumber < $1.seatNumber }
-
                                             try? modelContext.save()
                                         }
-                                        draggedPlayerIdx = nil
-                                        dragOffset = .zero
+                                        withAnimation(.spring(response: 0.4, dampingFraction: 0.7)) {
+                                            draggedPlayerIdx = nil
+                                            dragOffset = .zero
+                                        }
                                     }
                                 }
                         )

@@ -21,7 +21,8 @@ struct BotC_HelperApp: App {
             EditionData.self,
             EditionMeta.self,
             RoleDefinition.self,
-            SpecialProperty.self
+            SpecialProperty.self,
+            Friend.self
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 

@@ -123,6 +123,18 @@ team_traveller = "Travellers";
 team_fabled = "Fabled";
 
 
+new_game_seats_section = "Player Names";
+new_game_seat_name_placeholder = "Name (optional)";
+new_game_clear_name = "Clear name";
+
+friends_title = "Friends List";
+friends_name_placeholder = "Friend's name";
+friends_add_confirm = "Add";
+friends_add = "Add friend";
+friends_empty_title = "No friends yet";
+friends_empty_description = "Add your regular players to quickly assign them to seats.";
+friends_all_assigned = "All friends already assigned";
+
 main_more_info = "More about the app";
 
 

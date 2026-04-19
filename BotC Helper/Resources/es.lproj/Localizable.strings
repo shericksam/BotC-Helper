@@ -122,6 +122,18 @@ team_demon = "Demonios";
 team_traveller = "Viajeros";
 team_fabled = "Fábulas";
 
+new_game_seats_section = "Nombres de jugadores";
+new_game_seat_name_placeholder = "Nombre (opcional)";
+new_game_clear_name = "Limpiar nombre";
+
+friends_title = "Lista de Amigos";
+friends_name_placeholder = "Nombre del amigo";
+friends_add_confirm = "Agregar";
+friends_add = "Agregar amigo";
+friends_empty_title = "Sin amigos aún";
+friends_empty_description = "Agrega a tus jugadores habituales para asignarlos fácilmente a los asientos.";
+friends_all_assigned = "Todos los amigos ya están asignados";
+
 main_more_info = "Más sobre la app";
 
 about_title = "¿Qué hace esta app?";

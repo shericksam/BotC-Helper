@@ -15,6 +15,7 @@ struct MainView: View {
     @State private var isShowingGameBoard: Bool = false
     @State private var showingAbout: Bool = false
     @State private var showingLoadView = false
+    @State private var showingFriendsList = false
 
     @State private var boardState: BoardState? = nil
     @State private var didPreload = false
@@ -88,6 +89,18 @@ struct MainView: View {
                                     isShowingGameBoard = true
                                     showingLoadView = false
                                 }
+                            }
+
+                            Button(action: { showingFriendsList = true }) {
+                                Label(MSG("friends_title"), systemImage: "person.2.fill")
+                                    .font(.title3)
+                                    .padding()
+                                    .frame(maxWidth: .infinity)
+                                    .background(Color.purple.opacity(0.1))
+                                    .cornerRadius(12)
+                            }
+                            .sheet(isPresented: $showingFriendsList) {
+                                FriendsListView()
                             }
                         }
                         .transition(.move(edge: .bottom).combined(with: .opacity))

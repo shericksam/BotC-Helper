@@ -55,7 +55,7 @@
     },
     "firstNightReminder": {
       "es": "Haz una señal con los dedos.",
-      "en": "Give him a finger signal."
+      "en": "Give them a finger signal."
     },
     "otherNightReminder": {
       "es": "",
@@ -90,7 +90,7 @@
     },
     "firstNightReminder": {
       "es": "Muestra la ficha de un personaje Esbirro en juego. Apunta tanto al jugador ESBIRRO como al EQUIVOCADO.",
-      "en": "Show him the Henchman role token. Target both the HEICHMAN and the WRONG player."
+      "en": "Show them the Minion role token. Target both the MINION and the WRONG player."
     },
     "otherNightReminder": {
       "es": "",
@@ -125,7 +125,7 @@
     },
     "firstNightReminder": {
       "es": "Muestra la ficha de un personaje Aldeano en juego. Apunta tanto al jugador ALDEANO como al EQUIVOCADO.",
-      "en": "Show him the role sheet for a Citizen. Target both the CITIZEN and the WRONG player."
+      "en": "Show them the role token for a Townsfolk. Target both the TOWNSFOLK and the WRONG player."
     },
     "otherNightReminder": {
       "es": "",
@@ -159,8 +159,8 @@
       ]
     },
     "firstNightReminder": {
-      "es": "Muestra la ficha de un personaje Forastero en juego. Apunta tanto al jugador ALDEANO como al EQUIVOCADO.",
-      "en": "Show him the role sheet for an Alien. Target both the ALIEN and the WRONG player."
+      "es": "Muestra la ficha de un personaje Forastero en juego. Apunta tanto al jugador FORASTERO como al EQUIVOCADO.",
+      "en": "Show them the role token for an Outsider. Target both the OUTSIDER and the WRONG player."
     },
     "otherNightReminder": {
       "es": "",
@@ -189,11 +189,11 @@
     },
     "firstNightReminder": {
       "es": "Haz una señal con los dedos.",
-      "en": "Give him a finger signal."
+      "en": "Give them a finger signal."
     },
     "otherNightReminder": {
       "es": "Haz una señal con los dedos.",
-      "en": "Give him a finger signal."
+      "en": "Give them a finger signal."
     },
     "image": [
       "http://villacuervos.es/personajes/icono/empath",
@@ -214,19 +214,19 @@
     },
     "reminders": {
       "es": [
-        "Cortina de Humo"
+        "Señuelo"
       ],
       "en": [
-        "Smokescreen"
+        "Red Herring"
       ]
     },
     "firstNightReminder": {
-      "es": "La Pitonisa elige a 2 jugadores. Asiente si alguno de ellos es el Demonio, o es percibido como tal, (o la CORTINA DE HUMO).",
-      "en": "The Fortune Teller chooses 2 players. Decide if any of them are the Demon (or the SMOKESCREEN)."
+      "es": "La Pitonisa elige a 2 jugadores. Asiente si alguno de ellos es el Demonio, o es percibido como tal, (o la SEÑUELO).",
+      "en": "The Fortune Teller chooses 2 players. Decide if any of them are the Demon (or the RED HERRING)."
     },
     "otherNightReminder": {
-      "es": "La Pitonisa elige a 2 jugadores. Asiente si alguno de ellos es el Demonio, o es percibido como tal, (o la CORTINA DE HUMO).",
-      "en": "The Fortune Teller chooses 2 players. Decide if any of them are the Demon (or the SMOKESCREEN)."
+      "es": "La Pitonisa elige a 2 jugadores. Asiente si alguno de ellos es el Demonio, o es percibido como tal, (o la SEÑUELO).",
+      "en": "The Fortune Teller chooses 2 players. Decide if any of them are the Demon (or the RED HERRING)."
     },
     "image": [
       "http://villacuervos.es/personajes/icono/fortuneteller",
@@ -259,7 +259,7 @@
     },
     "otherNightReminder": {
       "es": "Si un jugador ha sido ejecutado en el día de hoy, muéstrale la ficha del personaje ejecutado.",
-      "en": "If a player was executed today, show him his role token."
+      "en": "If a player was executed today, show them their role token."
     },
     "image": [
       "http://villacuervos.es/personajes/icono/undertaker",
@@ -383,7 +383,7 @@
     },
     "otherNightReminder": {
       "es": "Si el Guardián de Cuervos ha muerto esta noche, el Guardián de Cuervos elige a un jugador. Muéstrale la ficha de personaje de ese jugador.",
-      "en": "If the Cria Cuervos died tonight, he chooses a player. Show him the role sheet of the chosen player."
+      "en": "If the Ravenkeeper died tonight, they choose a player. Show them the role token of the chosen player."
     },
     "image": [
       "http://villacuervos.es/personajes/icono/ravenkeeper",
@@ -525,9 +525,14 @@
         "type": "reveal"
       }
     ],
-    "remindersGlobal": [
-      "Es el Borracho"
-    ]
+    "remindersGlobal": {
+      "es": [
+        "Es el Borracho"
+      ],
+      "en": [
+        "Is the Drunk"
+      ]
+    }
   },
   {
     "id": "recluse",
@@ -672,7 +677,7 @@
         "Es el Demonio"
       ],
       "en": [
-        "It's the devil"
+        "Is the Demon"
       ]
     },
     "firstNightReminder": {
