@@ -30,8 +30,29 @@ struct BoardView: View {
     @Environment(\.modelContext) private var modelContext
 
     private let feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
+    private let snapFeedback = UISelectionFeedbackGenerator()
 
     private var isRegular: Bool { sizeClass == .regular }
+
+    // MARK: - Snap to grid
+
+    /// Snaps `point` to the nearest invisible grid intersection if within threshold.
+    /// Returns the (possibly snapped) point and whether a snap occurred.
+    private func snapToGrid(_ point: CGPoint, in size: CGSize) -> (CGPoint, Bool) {
+        let columns: CGFloat = isRegular ? 12 : 8
+        let rows: CGFloat    = isRegular ? 14 : 11
+        let cellW = size.width  / columns
+        let cellH = size.height / rows
+        // Snap radius: 38 % of the smaller cell dimension
+        let threshold = min(cellW, cellH) * 0.38
+
+        let col = min(max((point.x / cellW).rounded(), 0), columns)
+        let row = min(max((point.y / cellH).rounded(), 0), rows)
+        let snapped = CGPoint(x: col * cellW, y: row * cellH)
+
+        let dist = hypot(point.x - snapped.x, point.y - snapped.y)
+        return dist < threshold ? (snapped, true) : (point, false)
+    }
 
     // Jinxes where both roles are currently claimed
     var activeJinxes: [Jinx] {
@@ -422,11 +443,14 @@ struct BoardView: View {
                                         ? CGPoint(x: p.posX * geo.size.width, y: p.posY * geo.size.height)
                                         : (idx < fallbackPositions.count ? fallbackPositions[idx]
                                             : CGPoint(x: geo.size.width / 2, y: geo.size.height / 2))
-                                    let newX = min(max(currentPos.x + value.translation.width, 0), geo.size.width)
-                                    let newY = min(max(currentPos.y + value.translation.height, 0), geo.size.height)
+                                    let rawX = min(max(currentPos.x + value.translation.width, 0), geo.size.width)
+                                    let rawY = min(max(currentPos.y + value.translation.height, 0), geo.size.height)
+                                    // Snap to invisible grid if close enough
+                                    let (finalPos, didSnap) = snapToGrid(CGPoint(x: rawX, y: rawY), in: geo.size)
+                                    if didSnap { snapFeedback.selectionChanged() }
                                     // Set position and reset drag state atomically — avoids double-offset jump
-                                    p.posX = newX / geo.size.width
-                                    p.posY = newY / geo.size.height
+                                    p.posX = finalPos.x / geo.size.width
+                                    p.posY = finalPos.y / geo.size.height
                                     draggedPlayerIdx = nil
                                     dragOffset = .zero
                                     try? modelContext.save()
