@@ -20,118 +20,124 @@ struct MainView: View {
     @State private var boardState: BoardState? = nil
     @State private var didPreload = false
 
+    private let columns = [GridItem(.flexible()), GridItem(.flexible())]
+
     var body: some View {
         NavigationStack {
             ZStack {
+                VStack(spacing: 0) {
+                    // Logo header
+                    VStack(spacing: 8) {
+                        Text("BotC Notes")
+                            .font(.custom("UnifrakturMaguntia", size: 65))
+                            .foregroundColor(.accentColor)
+                            .shadow(color: .black.opacity(0.65), radius: 6, x: 0, y: 3)
+
+
+                            Image("main-logo")
+                                .resizable()
+                                .scaledToFit()
+                                .frame(width: 150, height: 150)
+
+                        .shadow(color: .black.opacity(0.5), radius: 12, x: 0, y: 6)
+                    }
+                    .padding(.top, 36)
+                    .padding(.bottom, 24)
+
+                    // Main content
+                    if didPreload {
+                        // 2×2 action grid
+                        LazyVGrid(columns: columns, spacing: 14) {
+                            menuCard(
+                                title: MSG("new_game_label"),
+                                icon: "plus.circle.fill",
+                                color: Color(red: 0.7, green: 0.1, blue: 0.1)
+                            ) { showingNewGameSheet = true }
+
+                            menuCard(
+                                title: MSG("edit_editions_label"),
+                                icon: "books.vertical.fill",
+                                color: Color(red: 0.55, green: 0.35, blue: 0.1)
+                            ) { showingEditionsSheet = true }
+
+                            menuCard(
+                                title: MSG("previous_games_label"),
+                                icon: "clock.arrow.circlepath",
+                                color: Color(red: 0.15, green: 0.25, blue: 0.55)
+                            ) { showingLoadView = true }
+
+                            menuCard(
+                                title: MSG("friends_title"),
+                                icon: "person.2.fill",
+                                color: Color(red: 0.35, green: 0.1, blue: 0.5)
+                            ) { showingFriendsList = true }
+                        }
+                        .padding(.horizontal, 20)
+                        .transition(.move(edge: .bottom).combined(with: .opacity))
+                        .animation(.easeOut(duration: 0.55), value: didPreload)
+
+                        Spacer(minLength: 16)
+
+                        // Disclaimer
+                        Text(MSG("app_disclaimer"))
+                            .font(.system(size: 10))
+                            .foregroundColor(.black.opacity(0.45))
+                            .multilineTextAlignment(.center)
+                            .padding(.horizontal, 28)
+                            .padding(.bottom, 10)
+
+                        // About button
+                        Button {
+                            showingAbout = true
+                        } label: {
+                            Label(MSG("main_more_info"), systemImage: "info.circle")
+                                .font(.footnote.weight(.medium))
+                                .foregroundColor(.black.opacity(0.75))
+                                .padding(.horizontal, 16)
+                                .padding(.vertical, 8)
+                                .background(Color.white.opacity(0.1))
+                                .clipShape(Capsule())
+                        }
+                        .padding(.bottom, 24)
+
+                    } else {
+                        Spacer()
+                        VStack(spacing: 20) {
+                            ProgressView(MSG("loading_resources"))
+                                .progressViewStyle(CircularProgressViewStyle(tint: .white))
+                                .scaleEffect(1.4)
+                                .foregroundColor(.white)
+                        }
+                        .transition(.opacity)
+                        Spacer()
+                    }
+                }
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            }
+            .background(
                 Image("background")
                     .resizable()
                     .scaledToFill()
-                    .frame(minWidth: 0)
-                    .edgesIgnoringSafeArea(.all)
-
-                VStack(spacing: 32) {
-                    Spacer()
-                    VStack {
-                        Image("title")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(height: 100)
-                        Image("main-logo")
-                            .resizable()
-                            .scaledToFit()
-                            .frame(height: 150)
-                            .clipShape(Circle())
-                    }
-                    .padding(.top, 32)
-                    Spacer()
-                    if didPreload {
-                        VStack(spacing: 18) {
-                            Button(action: { showingNewGameSheet = true }) {
-                                HStack {
-                                    Label(MSG("new_game_label"), systemImage: "plus.circle.fill")
-                                        .font(.title2)
-                                        .padding()
-                                        .frame(maxWidth: .infinity)
-                                        .background(Color.blue.opacity(0.1))
-                                        .cornerRadius(12)
-                                }
-                            }
-                            .sheet(isPresented: $showingNewGameSheet) {
-                                NewGameSheet { config in
-                                    boardState = config
-                                    isShowingGameBoard = true
-                                    showingNewGameSheet = false
-                                }
-                            }
-
-                            Button(action: { showingEditionsSheet = true }) {
-                                Label(MSG("edit_editions_label"), systemImage: "books.vertical.fill")
-                                    .font(.title2)
-                                    .padding()
-                                    .frame(maxWidth: .infinity)
-                                    .background(Color.green.opacity(0.1))
-                                    .cornerRadius(12)
-                            }
-                            .sheet(isPresented: $showingEditionsSheet) {
-                                EditionsSheet()
-                            }
-
-                            Button(action: { showingLoadView = true }) {
-                                Label(MSG("previous_games_label"), systemImage: "clock.fill")
-                                    .font(.title3)
-                                    .padding()
-                                    .frame(maxWidth: .infinity)
-                                    .background(Color.gray.opacity(0.1))
-                            }
-                            .sheet(isPresented: $showingLoadView) {
-                                LoadGameListView { loadedBoard in
-                                    boardState = loadedBoard
-                                    isShowingGameBoard = true
-                                    showingLoadView = false
-                                }
-                            }
-
-                            Button(action: { showingFriendsList = true }) {
-                                Label(MSG("friends_title"), systemImage: "person.2.fill")
-                                    .font(.title3)
-                                    .padding()
-                                    .frame(maxWidth: .infinity)
-                                    .background(Color.purple.opacity(0.1))
-                                    .cornerRadius(12)
-                            }
-                            .sheet(isPresented: $showingFriendsList) {
-                                FriendsListView()
-                            }
-                        }
-                        .transition(.move(edge: .bottom).combined(with: .opacity))
-                        .animation(.easeOut(duration: 0.7), value: didPreload)
-                    } else {
-                        VStack(spacing: 24) {
-                            ProgressView(MSG("loading_resources"))
-                                .progressViewStyle(CircularProgressViewStyle(tint: .accentColor))
-                                .scaleEffect(1.5)
-                                .padding(.top, 36)
-                        }
-                        .transition(.opacity)
-                    }
-                    Spacer()
-                    Button {
-                        showingAbout = true
-                    } label: {
-                        Label(MSG("main_more_info"), systemImage: "info.circle")
-                            .font(.title3)
-                            .padding()
-                            .frame(maxWidth: .infinity)
-                            .background(Color.yellow.opacity(0.15))
-                            .cornerRadius(12)
-                    }
-                    .sheet(isPresented: $showingAbout) {
-                        AboutAppView()
-                    }
-                    Spacer()
+                    .ignoresSafeArea()
+            )
+            // Sheets
+            .sheet(isPresented: $showingNewGameSheet) {
+                NewGameSheet { config in
+                    boardState = config
+                    isShowingGameBoard = true
+                    showingNewGameSheet = false
                 }
-                .padding()
             }
+            .sheet(isPresented: $showingEditionsSheet) { EditionsSheet() }
+            .sheet(isPresented: $showingLoadView) {
+                LoadGameListView { loadedBoard in
+                    boardState = loadedBoard
+                    isShowingGameBoard = true
+                    showingLoadView = false
+                }
+            }
+            .sheet(isPresented: $showingFriendsList) { FriendsListView() }
+            .sheet(isPresented: $showingAbout) { AboutAppView() }
             .navigationDestination(isPresented: $isShowingGameBoard) {
                 if let board = boardState {
                     BoardView(board: board)
@@ -143,12 +149,46 @@ struct MainView: View {
         .task {
             await PreloadContent()
                 .preloadDefaultEditionsAndRolesIfNeeded(modelContext: modelContext)
-            withAnimation(.easeOut(duration: 0.6)) {
-                didPreload = true
-            }
+            withAnimation(.easeOut(duration: 0.6)) { didPreload = true }
         }
     }
+
+    @ViewBuilder
+    private func menuCard(title: String, icon: String, color: Color, action: @escaping () -> Void) -> some View {
+        Button(action: action) {
+            VStack(spacing: 14) {
+                ZStack {
+                    Circle()
+                        .fill(color.opacity(0.25))
+                        .frame(width: 60, height: 60)
+                    Image(systemName: icon)
+                        .font(.system(size: 28, weight: .medium))
+                        .foregroundColor(.white)
+                }
+                Text(title)
+                    .font(.system(size: 13, weight: .semibold))
+                    .foregroundColor(.white)
+                    .multilineTextAlignment(.center)
+                    .lineLimit(2)
+            }
+            .frame(maxWidth: .infinity)
+            .padding(.vertical, 22)
+            .background(
+                RoundedRectangle(cornerRadius: 18)
+                    .fill(color.opacity(0.18))
+                    .overlay(
+                        RoundedRectangle(cornerRadius: 18)
+                            .stroke(Color.white.opacity(0.12), lineWidth: 1)
+                    )
+            )
+            .background(.ultraThinMaterial)
+            .clipShape(RoundedRectangle(cornerRadius: 18))
+            .shadow(color: color.opacity(0.35), radius: 8, x: 0, y: 4)
+        }
+        .buttonStyle(.plain)
+    }
 }
+
 #Preview {
     MainView()
 }

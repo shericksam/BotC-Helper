@@ -167,3 +167,21 @@ import_script_error = "Invalid or unreadable script file.";
 import_script_empty = "No roles matched the database. Is this a valid BotC script?";
 import_script_partial = "Script imported. Unrecognised roles skipped: %@";
 import_script_default_name = "Imported Script";
+
+app_disclaimer = "This is an independent companion app for Blood on the Clocktower and is not affiliated with, endorsed by, or connected to Steven Medway, Pandemonium Institute, or the official Blood on the Clocktower game.";
+
+about_section_gameplay = "Gameplay";
+about_section_tracking = "Tracking";
+about_section_scripts = "Scripts & Roles";
+about_feature_freeform_drag = "Free-form token placement";
+about_feature_freeform_drag_es = "Drag player tokens anywhere on the board — arrange them just like a real grimoire.";
+about_feature_reminders = "Reminder tokens";
+about_feature_reminders_es = "Add visual reminder chips to the board; drag to reposition, double-tap to remove.";
+about_feature_death_types = "Death types";
+about_feature_death_types_es = "Mark a death as Night Kill, Execution, or Other — each shows a distinct icon.";
+about_feature_jinxes = "Active jinx detection";
+about_feature_jinxes_es = "Automatically highlights special jinx rules for roles currently in play.";
+about_feature_custom_script = "Custom script import";
+about_feature_custom_script_es = "Import any community .json script from the BotC Script Tool.";
+about_feature_friends = "Friends list";
+about_feature_friends_es = "Save regular players and assign them to seats in one tap.";

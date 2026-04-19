@@ -9,13 +9,9 @@ import SwiftUI
 import SwiftData
 internal import UniformTypeIdentifiers
 
-struct EditingIndex: Identifiable {
-    var id: Int { value }
-    var value: Int
-}
-
 struct BoardView: View {
     @Query(sort: \RoleDefinition.id) var allRoles: [RoleDefinition]
+    @Query(sort: \Jinx.id) var allJinxes: [Jinx]
     @Environment(\.horizontalSizeClass) private var sizeClass
     @Bindable var board: BoardState
     @State private var editingPlayer: Player?
@@ -27,17 +23,29 @@ struct BoardView: View {
     @State private var reminderDragOffset: CGSize = .zero
     @State private var showNewGameSetup = false
     @State private var showAddReminder = false
+    @State private var showInfoPanel = false
     @State private var boardCanvasSize: CGSize = .zero
     @Environment(\.modelContext) private var modelContext
 
     private let feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
 
-    private var isRegular: Bool {
-        sizeClass == .regular
+    private var isRegular: Bool { sizeClass == .regular }
+
+    // Jinxes where both roles are currently claimed
+    var activeJinxes: [Jinx] {
+        let claimedIds = Set(board.players.compactMap { $0.claimRoleId })
+        guard claimedIds.count >= 2 else { return [] }
+        let source: [Jinx] = (board.edition?.jinxes.isEmpty == false)
+            ? board.edition!.jinxes
+            : allJinxes
+        return source.filter { jinx in
+            jinx.roles.filter { claimedIds.contains($0) }.count >= 2
+        }
     }
 
     var body: some View {
-        VStack {
+        VStack(spacing: 0) {
+            // Day selector
             Picker(MSG("board_day", board.currentDay + 1), selection: $board.currentDay) {
                 ForEach(0..<board.totalDays, id: \.self) { idx in
                     Text(MSG("board_day", idx + 1)).tag(idx)
@@ -51,40 +59,38 @@ struct BoardView: View {
                 appearance.setTitleTextAttributes([.foregroundColor: UIColor.systemGray], for: .normal)
                 appearance.setTitleTextAttributes([.foregroundColor: UIColor.darkGray], for: .selected)
             }
-            .padding(.vertical)
+            .padding(.horizontal)
+            .padding(.top, 8)
 
-            Spacer()
-
+            // Board canvas – fills remaining space
             ZStack {
                 playerGridView()
+                    .padding(.vertical)
 
-                VStack {
-                    if isVotingPhase {
-                        VStack {
-                            Image(systemName: "flag.pattern.checkered")
-                            Text(MSG("board_voting"))
-                        }.onTapGesture {
-                            isVotingPhase.toggle()
+                // Voting banner overlaid at top of board
+                if isVotingPhase {
+                    VStack {
+                        HStack {
+                            Spacer()
+                            Label(MSG("board_voting"), systemImage: "flag.pattern.checkered")
+                                .font(.headline)
+                                .foregroundColor(.white)
+                                .padding(.horizontal, 16)
+                                .padding(.vertical, 8)
+                                .background(Color.red.opacity(0.75))
+                                .clipShape(Capsule())
+                                .onTapGesture { isVotingPhase = false }
+                            Spacer()
                         }
+                        .padding(.top, 8)
+                        Spacer()
                     }
-                    Button(MSG("board_new_day")) { addDay() }
-                        .buttonStyle(.borderedProminent)
-                        .padding(.vertical, 5)
-                    if let edition = board.edition {
-                        Button(edition.meta.name) {
-                            showDetail.toggle()
-                        }
-                        .font(.title2)
-                    }
-                    Text(MSG("board_players_count", board.players.count)).font(.title3).bold()
-                    Text(MSG("board_townsfolk", board.config.numTownsfolk)).font(.body)
-                    Text(MSG("board_outsider", board.config.numOutsider)).font(.body)
-                    Text(MSG("board_minion", board.config.numMinions)).font(.body)
-                    Text(MSG("board_demon", board.config.numDemon)).font(.body)
                 }
-                .foregroundColor(.white)
-                .padding()
             }
+            .frame(maxWidth: .infinity, maxHeight: .infinity)
+
+            // Bottom action & info bar
+            bottomBar()
         }
         .background(
             Image("background-side")
@@ -119,9 +125,7 @@ struct BoardView: View {
                 }
             }
         }
-        .onDisappear {
-            try? modelContext.save()
-        }
+        .onDisappear { try? modelContext.save() }
         .sheet(isPresented: $showNewGameSetup) {
             NewGameSetupSheet(board: board) { }
         }
@@ -150,13 +154,103 @@ struct BoardView: View {
                     currentDayIndex: board.currentDay,
                     roles: board.edition?.characters ?? allRoles
                 )
-            } else {
-                Text("No player to edit")
             }
         }
     }
 
-    // MARK: - Board layout
+    // MARK: - Bottom bar
+
+    @ViewBuilder
+    func bottomBar() -> some View {
+        VStack(spacing: 0) {
+            // Expandable info panel
+            if showInfoPanel {
+                VStack(spacing: 10) {
+                    // Player count summary
+                    HStack(spacing: 14) {
+                        boardStat(value: board.players.count, label: "main-logo-old")
+                        boardStat(value: board.config.numTownsfolk, label: "logo_townsfolk")
+                        boardStat(value: board.config.numOutsider, label: "logo_outsider")
+                        boardStat(value: board.config.numMinions, label: "logo_minion")
+                        boardStat(value: board.config.numDemon, label: "logo_demon")
+                    }
+
+                    // Active jinxes
+                    if !activeJinxes.isEmpty {
+                        Divider().overlay(Color.white.opacity(0.25))
+                        ScrollView(.vertical, showsIndicators: false) {
+                            VStack(alignment: .leading, spacing: 6) {
+                                Text(MSG("jinxes_title"))
+                                    .font(.caption.weight(.semibold))
+                                    .foregroundColor(.white.opacity(0.7))
+                                ForEach(activeJinxes) { jinx in
+                                    HStack(alignment: .top, spacing: 6) {
+                                        Image(systemName: "exclamationmark.triangle.fill")
+                                            .font(.caption2)
+                                            .foregroundColor(.yellow)
+                                        Text(jinx.desc)
+                                            .font(.caption2)
+                                            .foregroundColor(.white.opacity(0.9))
+                                    }
+                                }
+                            }
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                        }
+                        .frame(maxHeight: 110)
+                    }
+                }
+                .padding(.horizontal, 16)
+                .padding(.vertical, 12)
+                .background(.ultraThinMaterial.opacity(0.9))
+                .transition(.move(edge: .bottom).combined(with: .opacity))
+            }
+
+            // Always-visible action strip
+            HStack(spacing: 0) {
+                Button(MSG("board_new_day")) { addDay() }
+                    .buttonStyle(.borderedProminent)
+                    .padding(.leading, 16)
+
+                Spacer()
+
+                if let edition = board.edition {
+                    Button(edition.meta.name) { showDetail = true }
+                        .font(.caption.weight(.medium))
+                        .foregroundColor(.white.opacity(0.85))
+                        .lineLimit(1)
+                }
+
+                Spacer()
+
+                Button {
+                    withAnimation(.easeInOut(duration: 0.22)) { showInfoPanel.toggle() }
+                } label: {
+                    Image(systemName: showInfoPanel ? "chevron.down.circle.fill" : "info.circle.fill")
+                        .font(.title3)
+                        .foregroundColor(.white.opacity(0.85))
+                }
+                .padding(.trailing, 16)
+            }
+            .padding(.vertical, 10)
+            .background(Color.black.opacity(0.4))
+        }
+    }
+
+    @ViewBuilder
+    func boardStat(value: Int, label: String) -> some View {
+        VStack(spacing: 2) {
+            Image(label)
+                .resizable()
+                .frame(width: 50, height: 50)
+                .scaledToFit()
+            Text("\(value)")
+                .font(.title)
+                .foregroundColor(.white.opacity(0.6))
+        }
+    }
+//    logo_townsfolk
+
+    // MARK: - Board canvas
 
     @ViewBuilder
     func playerGridView() -> some View {
@@ -168,6 +262,7 @@ struct BoardView: View {
             }()
 
             ZStack {
+                // Player tokens
                 ForEach(Array(orderedPlayers.enumerated()), id: \.1.id) { idx, player in
                     let basePos: CGPoint = {
                         if player.posX >= 0 {
@@ -199,46 +294,37 @@ struct BoardView: View {
                         .shadow(color: isDragging ? .black.opacity(0.45) : .clear,
                                 radius: isDragging ? 12 : 0, x: 0, y: isDragging ? 6 : 0)
                         .zIndex(isDragging ? 2 : 0)
-                        .animation(.spring(response: 0.3, dampingFraction: 0.65), value: isDragging)
+                        .animation(.spring(response: 0.25, dampingFraction: 0.88), value: isDragging)
                         .gesture(
-                            LongPressGesture(minimumDuration: 0.15)
-                                .onEnded { _ in
-                                    feedbackGenerator.impactOccurred()
-                                    draggedPlayerIdx = idx
-                                    dragOffset = .zero
-                                }
-                                .sequenced(before: DragGesture())
+                            DragGesture(minimumDistance: 8)
                                 .onChanged { value in
-                                    switch value {
-                                    case .second(true, let drag?):
-                                        dragOffset = drag.translation
-                                    default: break
+                                    if draggedPlayerIdx != idx {
+                                        feedbackGenerator.impactOccurred()
+                                        draggedPlayerIdx = idx
                                     }
+                                    dragOffset = value.translation
                                 }
-                                .onEnded { _ in
-                                    if let draggedIdx = draggedPlayerIdx {
-                                        let p = orderedPlayers[draggedIdx]
-                                        let currentPos: CGPoint = p.posX >= 0
-                                            ? CGPoint(x: p.posX * geo.size.width, y: p.posY * geo.size.height)
-                                            : (draggedIdx < fallbackPositions.count
-                                                ? fallbackPositions[draggedIdx]
-                                                : CGPoint(x: geo.size.width / 2, y: geo.size.height / 2))
-                                        let newX = min(max(currentPos.x + dragOffset.width, 0), geo.size.width)
-                                        let newY = min(max(currentPos.y + dragOffset.height, 0), geo.size.height)
-                                        p.posX = newX / geo.size.width
-                                        p.posY = newY / geo.size.height
-                                        try? modelContext.save()
-                                        withAnimation(.spring(response: 0.4, dampingFraction: 0.7)) {
-                                            draggedPlayerIdx = nil
-                                            dragOffset = .zero
-                                        }
-                                    }
+                                .onEnded { value in
+                                    guard draggedPlayerIdx == idx else { return }
+                                    let p = orderedPlayers[idx]
+                                    let currentPos: CGPoint = p.posX >= 0
+                                        ? CGPoint(x: p.posX * geo.size.width, y: p.posY * geo.size.height)
+                                        : (idx < fallbackPositions.count ? fallbackPositions[idx]
+                                            : CGPoint(x: geo.size.width / 2, y: geo.size.height / 2))
+                                    let newX = min(max(currentPos.x + value.translation.width, 0), geo.size.width)
+                                    let newY = min(max(currentPos.y + value.translation.height, 0), geo.size.height)
+                                    // Set position and reset drag state atomically — avoids double-offset jump
+                                    p.posX = newX / geo.size.width
+                                    p.posY = newY / geo.size.height
+                                    draggedPlayerIdx = nil
+                                    dragOffset = .zero
+                                    try? modelContext.save()
                                 }
                         )
                     }
                 }
 
-                // Reminder tokens overlay
+                // Reminder tokens (rendered on top of player tokens)
                 ForEach(board.reminders) { reminder in
                     let rBase = CGPoint(x: reminder.posX * geo.size.width,
                                        y: reminder.posY * geo.size.height)
@@ -246,37 +332,28 @@ struct BoardView: View {
                     ReminderChip(text: reminder.text, color: reminder.uiColor)
                         .position(rBase + (isRDragging ? reminderDragOffset : .zero))
                         .scaleEffect(isRDragging ? 1.1 : 1.0)
-                        .shadow(color: isRDragging ? .black.opacity(0.3) : .clear,
+                        .shadow(color: isRDragging ? .black.opacity(0.35) : .clear,
                                 radius: isRDragging ? 6 : 0)
-                        .zIndex(isRDragging ? 3 : 1)
-                        .animation(.spring(response: 0.3, dampingFraction: 0.7), value: isRDragging)
+                        .zIndex(isRDragging ? 5 : 3)
+                        .animation(.spring(response: 0.25, dampingFraction: 0.88), value: isRDragging)
                         .gesture(
-                            LongPressGesture(minimumDuration: 0.15)
-                                .onEnded { _ in
-                                    feedbackGenerator.impactOccurred()
-                                    draggedReminderId = reminder.id
-                                    reminderDragOffset = .zero
-                                }
-                                .sequenced(before: DragGesture())
+                            DragGesture(minimumDistance: 5)
                                 .onChanged { value in
-                                    switch value {
-                                    case .second(true, let drag?):
-                                        reminderDragOffset = drag.translation
-                                    default: break
+                                    if draggedReminderId != reminder.id {
+                                        feedbackGenerator.impactOccurred()
+                                        draggedReminderId = reminder.id
                                     }
+                                    reminderDragOffset = value.translation
                                 }
-                                .onEnded { _ in
-                                    if draggedReminderId == reminder.id {
-                                        let newX = min(max(reminder.posX * geo.size.width + reminderDragOffset.width, 0), geo.size.width)
-                                        let newY = min(max(reminder.posY * geo.size.height + reminderDragOffset.height, 0), geo.size.height)
-                                        reminder.posX = newX / geo.size.width
-                                        reminder.posY = newY / geo.size.height
-                                        try? modelContext.save()
-                                        withAnimation(.spring(response: 0.3, dampingFraction: 0.7)) {
-                                            draggedReminderId = nil
-                                            reminderDragOffset = .zero
-                                        }
-                                    }
+                                .onEnded { value in
+                                    guard draggedReminderId == reminder.id else { return }
+                                    let newX = min(max(reminder.posX * geo.size.width + value.translation.width, 0), geo.size.width)
+                                    let newY = min(max(reminder.posY * geo.size.height + value.translation.height, 0), geo.size.height)
+                                    reminder.posX = newX / geo.size.width
+                                    reminder.posY = newY / geo.size.height
+                                    draggedReminderId = nil
+                                    reminderDragOffset = .zero
+                                    try? modelContext.save()
                                 }
                         )
                         .onTapGesture(count: 2) {
@@ -287,14 +364,14 @@ struct BoardView: View {
             }
             .onAppear {
                 boardCanvasSize = geo.size
-                initPositionsIfNeeded(geo.size, players: board.players.sorted { $0.seatNumber < $1.seatNumber })
+                initPositionsIfNeeded(geo.size, players: orderedPlayers)
             }
             .onChange(of: geo.size) { _, newSize in
                 boardCanvasSize = newSize
             }
         }
-        .padding(.horizontal, isRegular ? 80 : 40)
-        .padding(.vertical, isRegular ? 80 : 50)
+        .padding(.horizontal, isRegular ? 80 : 36)
+        .padding(.vertical, isRegular ? 60 : 36)
     }
 
     // MARK: - Helpers
@@ -313,30 +390,24 @@ struct BoardView: View {
         if changed { try? modelContext.save() }
     }
 
-    func distance(_ a: CGPoint, _ b: CGPoint) -> CGFloat {
-        sqrt(pow(a.x - b.x, 2) + pow(a.y - b.y, 2))
-    }
-
     func squarePerimeterPositions(count: Int, in size: CGSize) -> [CGPoint] {
         guard count > 0 else { return [] }
         let sides = 4
         let perSide = max(1, count / sides)
         let remainder = count % sides
-
         var result: [CGPoint] = []
         var placed = 0
-
         for side in 0..<sides {
-            var nOnThisSide = perSide
-            if side < remainder { nOnThisSide += 1 }
-            for i in 0..<nOnThisSide {
-                let fraction = nOnThisSide == 1 ? 0.5 : CGFloat(i) / CGFloat(nOnThisSide - 0)
+            var n = perSide
+            if side < remainder { n += 1 }
+            for i in 0..<n {
+                let frac = n == 1 ? 0.5 : CGFloat(i) / CGFloat(n)
                 var x: CGFloat = 0, y: CGFloat = 0
                 switch side {
-                case 0: x = fraction; y = 0.0
-                case 1: x = 1.0;      y = fraction
-                case 2: x = 1.0 - fraction; y = 1.0
-                case 3: x = 0.0;      y = 1.0 - fraction
+                case 0: x = frac;       y = 0.0
+                case 1: x = 1.0;        y = frac
+                case 2: x = 1.0 - frac; y = 1.0
+                case 3: x = 0.0;        y = 1.0 - frac
                 default: break
                 }
                 result.append(CGPoint(x: x * size.width, y: y * size.height))
@@ -350,18 +421,15 @@ struct BoardView: View {
     // MARK: - Actions
 
     func addDay() {
-        let newDayIndex = (board.players.first?.statuses.count ?? 0)
+        let newDayIndex = board.players.first?.statuses.count ?? 0
         for player in board.players {
             guard let prev = player.statuses.first(where: { $0.dayIndex == board.currentDay }) else { continue }
             player.statuses.append(PlayerStatus(
                 dayIndex: newDayIndex,
                 seatNumber: prev.seatNumber,
-                voted: false,
-                nominated: false,
-                dead: prev.dead,
-                deathType: prev.deathType,
-                claim: prev.claim,
-                notes: ""
+                voted: false, nominated: false,
+                dead: prev.dead, deathType: prev.deathType,
+                claim: prev.claim, notes: ""
             ))
             player.personalNotes.append(.init(dayIndex: newDayIndex, text: ""))
         }
@@ -373,9 +441,7 @@ struct BoardView: View {
         let seatNumber = board.players.count + 1
         let totalDays = board.players.first?.statuses.count ?? 1
         let newPlayer = Player(
-            seatNumber: seatNumber,
-            name: "",
-            isMe: false,
+            seatNumber: seatNumber, name: "", isMe: false,
             statuses: (0..<totalDays).map { PlayerStatus(dayIndex: $0) }
         )
         board.players.append(newPlayer)
@@ -386,16 +452,12 @@ struct BoardView: View {
     }
 
     func clearAllVotes() {
-        for player in board.players {
-            for status in player.statuses { status.voted = false }
-        }
+        board.players.forEach { p in p.statuses.forEach { $0.voted = false } }
         try? modelContext.save()
     }
 
     func clearAllNominations() {
-        for player in board.players {
-            for status in player.statuses { status.nominated = false }
-        }
+        board.players.forEach { p in p.statuses.forEach { $0.nominated = false } }
         try? modelContext.save()
     }
 }
@@ -404,31 +466,20 @@ struct BoardView: View {
     let config = ModelConfiguration(isStoredInMemoryOnly: true)
     let container = try! ModelContainer(for: BoardState.self, configurations: config)
     let context = ModelContext(container)
-    let playerCount = 20
-    let names = ["Ana", "Bernardo", "Erick", "Fabian", "Carlos", "Dio", "Pedro", "Quike", "Ricardo", "Sergio", "Toni", "Uriel", "Ximena", "Yair", "Zamiel", "Manuel", "Oscar", "Nuckle", "Omar", "Pithuo", "Raúl", "Quimera", "Ricardo", "Sandro", "Toni", "Uriel", "Ximena", "Yair", "Zamiel", "Manuel", "Oscar", "Nuckle", "Omar", "Pithuo", "Raúl", "Quimera"]
+    let playerCount = 12
+    let names = ["Ana", "Bernardo", "Erick", "Fabian", "Carlos", "Dio", "Pedro", "Quike", "Ricardo", "Sergio", "Toni", "Uriel"]
     let players = (1...playerCount).map {
-        Player(seatNumber: $0,
-               name: names[$0],
-               claimRoleId: rolesExample[$0].nameLocalized(),
+        Player(seatNumber: $0, name: names[$0 - 1],
                statuses: [PlayerStatus(dayIndex: 0, seatNumber: $0)])
     }
     let newConfig = getConfigForPlayerCount(playerCount)
-    let configGame = GameConfig(numPlayers: newConfig.numPlayers,
-                                numTownsfolk: newConfig.numTownsfolk,
-                                numOutsider: newConfig.numOutsider,
-                                numMinions: newConfig.numMinions,
-                                numDemon: newConfig.numDemon)
-    let meta = EditionMeta(id: "test", name: "Tests", author: "Me")
-    let game = BoardState(
-        suggestedName: "Demo",
-        players: players,
-        currentDay: 0,
-        config: configGame,
-        edition: EditionData(meta: meta, characters: rolesExample)
-    )
+    let configGame = GameConfig(numPlayers: newConfig.numPlayers, numTownsfolk: newConfig.numTownsfolk,
+                                numOutsider: newConfig.numOutsider, numMinions: newConfig.numMinions, numDemon: newConfig.numDemon)
+    let meta = EditionMeta(id: "test", name: "Trouble Brewing", author: "Me")
+    let game = BoardState(suggestedName: "Demo", players: players, currentDay: 0,
+                          config: configGame, edition: EditionData(meta: meta, characters: rolesExample))
     context.insert(game)
-    return BoardView(board: game)
-        .modelContainer(container)
+    return BoardView(board: game).modelContainer(container)
 }
 
 let rolesExample = [
@@ -452,49 +503,4 @@ let rolesExample = [
     RoleDefinition(id: "gossip", name: ["es": "gossip"]),
     RoleDefinition(id: "chef", name: ["es": "chef"]),
     RoleDefinition(id: "courtier", name: ["es": "courtier"]),
-    RoleDefinition(id: "seamstress", name: ["es": "seamstress"]),
-    RoleDefinition(id: "cultleader", name: ["es": "cultleader"]),
-    RoleDefinition(id: "poppygrower", name: ["es": "poppygrower"]),
-    RoleDefinition(id: "empath", name: ["es": "empath"]),
-    RoleDefinition(id: "snakecharmer", name: ["es": "snakecharmer"]),
-    RoleDefinition(id: "undertaker", name: ["es": "undertaker"]),
-    RoleDefinition(id: "savant", name: ["es": "savant"]),
-    RoleDefinition(id: "exorcist", name: ["es": "exorcist"]),
-    RoleDefinition(id: "slayer", name: ["es": "slayer"]),
-    RoleDefinition(id: "philosopher", name: ["es": "philosopher"]),
-    RoleDefinition(id: "general", name: ["es": "general"]),
-    RoleDefinition(id: "farmer", name: ["es": "farmer"]),
-    RoleDefinition(id: "ravenkeeper", name: ["es": "ravenkeeper"]),
-    RoleDefinition(id: "pixie", name: ["es": "pixie"]),
-    RoleDefinition(id: "engineer", name: ["es": "engineer"]),
-    RoleDefinition(id: "investigator", name: ["es": "investigator"]),
-    RoleDefinition(id: "washerwoman", name: ["es": "washerwoman"]),
-    RoleDefinition(id: "lycanthrope", name: ["es": "lycanthrope"]),
-    RoleDefinition(id: "banshee", name: ["es": "banshee"]),
-    RoleDefinition(id: "gambler", name: ["es": "gambler"]),
-    RoleDefinition(id: "magician", name: ["es": "magician"]),
-    RoleDefinition(id: "juggler", name: ["es": "juggler"]),
-    RoleDefinition(id: "sailor", name: ["es": "sailor"]),
-    RoleDefinition(id: "mathematician", name: ["es": "mathematician"]),
-    RoleDefinition(id: "monk", name: ["es": "monk"]),
-    RoleDefinition(id: "flowergirl", name: ["es": "flowergirl"]),
-    RoleDefinition(id: "choirboy", name: ["es": "choirboy"]),
-    RoleDefinition(id: "noble", name: ["es": "noble"]),
-    RoleDefinition(id: "oracle", name: ["es": "oracle"]),
-    RoleDefinition(id: "pacifist", name: ["es": "pacifist"]),
-    RoleDefinition(id: "fisherman", name: ["es": "fisherman"]),
-    RoleDefinition(id: "innkeeper", name: ["es": "innkeeper"]),
-    RoleDefinition(id: "predicador", name: ["es": "predicador"]),
-    RoleDefinition(id: "towncrier", name: ["es": "towncrier"]),
-    RoleDefinition(id: "princess", name: ["es": "princess"]),
-    RoleDefinition(id: "professor", name: ["es": "professor"]),
-    RoleDefinition(id: "clockmaker", name: ["es": "clockmaker"]),
-    RoleDefinition(id: "king", name: ["es": "king"]),
-    RoleDefinition(id: "sage", name: ["es": "sage"]),
-    RoleDefinition(id: "highpriestess", name: ["es": "highpriestess"]),
-    RoleDefinition(id: "tealady", name: ["es": "tealady"]),
-    RoleDefinition(id: "shugenja", name: ["es": "shugenja"]),
-    RoleDefinition(id: "chambermaid", name: ["es": "chambermaid"]),
-    RoleDefinition(id: "soldier", name: ["es": "soldier"]),
-    RoleDefinition(id: "dreamer", name: ["es": "dreamer"])
 ]

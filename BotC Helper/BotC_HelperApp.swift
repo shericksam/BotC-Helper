@@ -22,6 +22,7 @@ struct BotC_HelperApp: App {
             EditionMeta.self,
             RoleDefinition.self,
             SpecialProperty.self,
+            Jinx.self,
             Friend.self,
             ReminderToken.self
         ])

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2295B9732F9579CD0089923C /* UnifrakturMaguntia.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2295B9722F9579CD0089923C /* UnifrakturMaguntia.ttf */; };
 		22B80CF52EE4E13900DAEB9B /* OpenAIKit in Frameworks */ = {isa = PBXBuildFile; productRef = 22B80CF42EE4E13900DAEB9B /* OpenAIKit */; };
 		22B80D032EE501EC00DAEB9B /* MarkdownUI in Frameworks */ = {isa = PBXBuildFile; productRef = 22B80D022EE501EC00DAEB9B /* MarkdownUI */; };
 /* End PBXBuildFile section */
@@ -32,6 +33,7 @@
 		225D983C2EDFD85F00236040 /* BotC Helper.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "BotC Helper.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		225D984B2EDFD86000236040 /* BotC HelperTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "BotC HelperTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		225D98552EDFD86000236040 /* BotC HelperUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "BotC HelperUITests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
+		2295B9722F9579CD0089923C /* UnifrakturMaguntia.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = UnifrakturMaguntia.ttf; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -82,6 +84,7 @@
 		225D98332EDFD85F00236040 = {
 			isa = PBXGroup;
 			children = (
+				2295B9722F9579CD0089923C /* UnifrakturMaguntia.ttf */,
 				225D983E2EDFD85F00236040 /* BotC Helper */,
 				225D984E2EDFD86000236040 /* BotC HelperTests */,
 				225D98582EDFD86000236040 /* BotC HelperUITests */,
@@ -226,6 +229,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2295B9732F9579CD0089923C /* UnifrakturMaguntia.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

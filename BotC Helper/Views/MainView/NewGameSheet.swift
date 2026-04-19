@@ -27,7 +27,7 @@ struct NewGameSheet: View {
                     Stepper(
                         MSG("new_game_players_stepper", playerCount),
                         value: $playerCount,
-                        in: 5...20
+                        in: 5...15
                     )
                     .onChange(of: playerCount) { _, _ in
                         yourSeat = min(yourSeat, playerCount)
