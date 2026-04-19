@@ -2,8 +2,6 @@
 //  FriendsListView.swift
 //  BotC Helper
 //
-//  Created by Erick Samuel Guerrero Arreola on 19/04/26.
-//
 
 import SwiftUI
 import SwiftData
@@ -16,6 +14,7 @@ struct FriendsListView: View {
     @State private var newName = ""
     @State private var showingAddField = false
     @FocusState private var isAddFieldFocused: Bool
+    @State private var editingFriend: Friend? = nil
 
     var body: some View {
         NavigationView {
@@ -26,15 +25,24 @@ struct FriendsListView: View {
                             .focused($isAddFieldFocused)
                             .onSubmit { addFriend() }
                         Button(action: addFriend) {
-                            Text(MSG("friends_add_confirm"))
-                                .bold()
+                            Text(MSG("friends_add_confirm")).bold()
                         }
                         .disabled(newName.trimmingCharacters(in: .whitespaces).isEmpty)
                     }
                 }
 
                 ForEach(friends) { friend in
-                    Text(friend.name)
+                    HStack {
+                        Text(friend.name)
+                        Spacer()
+                        Button {
+                            editingFriend = friend
+                        } label: {
+                            Image(systemName: "pencil")
+                                .foregroundColor(.accentColor)
+                        }
+                        .buttonStyle(.borderless)
+                    }
                 }
                 .onDelete(perform: deleteFriends)
             }
@@ -61,24 +69,67 @@ struct FriendsListView: View {
                     )
                 }
             }
+            .sheet(item: $editingFriend) { friend in
+                EditFriendSheet(friend: friend)
+            }
         }
     }
 
     private func addFriend() {
         let trimmed = newName.trimmingCharacters(in: .whitespaces)
         guard !trimmed.isEmpty else { return }
-        let friend = Friend(name: trimmed)
-        modelContext.insert(friend)
+        modelContext.insert(Friend(name: trimmed))
         try? modelContext.save()
         newName = ""
         showingAddField = false
     }
 
     private func deleteFriends(at offsets: IndexSet) {
-        for idx in offsets {
-            modelContext.delete(friends[idx])
-        }
+        for idx in offsets { modelContext.delete(friends[idx]) }
         try? modelContext.save()
+    }
+}
+
+// MARK: - Edit Sheet
+
+private struct EditFriendSheet: View {
+    @Bindable var friend: Friend
+    @Environment(\.modelContext) private var modelContext
+    @Environment(\.dismiss) private var dismiss
+    @State private var editedName: String = ""
+    @FocusState private var focused: Bool
+
+    var body: some View {
+        NavigationView {
+            Form {
+                Section {
+                    TextField(MSG("friends_name_placeholder"), text: $editedName)
+                        .focused($focused)
+                }
+            }
+            .navigationTitle(MSG("friends_edit_title"))
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .confirmationAction) {
+                    Button(MSG("edit_player_save")) {
+                        let trimmed = editedName.trimmingCharacters(in: .whitespaces)
+                        guard !trimmed.isEmpty else { return }
+                        friend.name = trimmed
+                        try? modelContext.save()
+                        dismiss()
+                    }
+                    .disabled(editedName.trimmingCharacters(in: .whitespaces).isEmpty)
+                }
+                ToolbarItem(placement: .cancellationAction) {
+                    Button(MSG("edition_cancel")) { dismiss() }
+                }
+            }
+            .onAppear {
+                editedName = friend.name
+                focused = true
+            }
+        }
+        .presentationDetents([.height(200)])
     }
 }
 

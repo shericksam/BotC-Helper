@@ -17,6 +17,9 @@ final class BoardState {
     var config: GameConfig
     @Relationship(deleteRule: .nullify) var edition: EditionData?
     @Relationship(deleteRule: .cascade) var reminders: [ReminderToken] = []
+    var activeFabledIds: [String] = []
+    var createdAt: Date = Date()
+    var winner: String? = nil  // "good", "evil", or nil
     var totalDays: Int { players.first?.statuses.count ?? 0 }
 
     init(id: UUID = UUID(),

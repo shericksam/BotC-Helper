@@ -84,6 +84,19 @@ struct EditionDataModel: Decodable, Encodable, Equatable {
     }
 }
 
+extension RoleDefinitionModel {
+    func nameLocalized() -> String {
+        let preferred = Locale.preferredLanguages.compactMap { $0.components(separatedBy: "-").first }
+        for lang in preferred { if let t = name[lang], !t.isEmpty { return t } }
+        return name["en"] ?? name.values.first ?? id
+    }
+    func abilityLocalized() -> String {
+        let preferred = Locale.preferredLanguages.compactMap { $0.components(separatedBy: "-").first }
+        for lang in preferred { if let t = ability?[lang], !t.isEmpty { return t } }
+        return ability?["en"] ?? ability?.values.first ?? ""
+    }
+}
+
 extension EditionDataModel {
     struct Mock {
         static var editionData: EditionDataModel? {

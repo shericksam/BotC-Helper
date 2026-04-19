@@ -168,6 +168,16 @@ import_script_empty = "No roles matched the database. Is this a valid BotC scrip
 import_script_partial = "Script imported. Unrecognised roles skipped: %@";
 import_script_default_name = "Imported Script";
 
+fabled_manage_title = "Fabled in Play";
+fabled_in_play = "Fabled in play";
+
+game_set_winner = "Set result";
+game_winner_good = "Good wins";
+game_winner_evil = "Evil wins";
+game_winner_none = "No result";
+
+friends_edit_title = "Edit friend";
+
 app_disclaimer = "This is an independent companion app for Blood on the Clocktower and is not affiliated with, endorsed by, or connected to Steven Medway, Pandemonium Institute, or the official Blood on the Clocktower game.";
 
 about_section_gameplay = "Gameplay";

@@ -91,27 +91,27 @@ struct PlayerCircle: View {
     }
 
     private var circleSize: CGFloat {
-        isRegular ? 100 : 60
+        isRegular ? 110 : 78
     }
 
     private var rolIconOffsetY: CGFloat {
-        isRegular ? -40 : -25
+        isRegular ? -44 : -32
     }
 
     private var rolIconSize: CGFloat {
-        isRegular ? 100 : 60
+        isRegular ? 110 : 78
     }
 
     private var nameFont: Font {
-        isRegular ? .title2 : .caption
+        isRegular ? .title2 : .system(size: 12, weight: .semibold)
     }
 
     private var seatFont: Font {
-        isRegular ? .title2 : .headline
+        isRegular ? .title2 : .system(size: 14, weight: .bold)
     }
 
     private var footerFont: Font {
-        isRegular ? .body : .caption
+        isRegular ? .body : .system(size: 11, weight: .medium)
     }
 
 

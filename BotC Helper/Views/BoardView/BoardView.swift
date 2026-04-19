@@ -24,7 +24,9 @@ struct BoardView: View {
     @State private var showNewGameSetup = false
     @State private var showAddReminder = false
     @State private var showInfoPanel = false
+    @State private var showManageFabled = false
     @State private var boardCanvasSize: CGSize = .zero
+    @State private var bundleFabled: [RoleDefinitionModel] = []
     @Environment(\.modelContext) private var modelContext
 
     private let feedbackGenerator = UIImpactFeedbackGenerator(style: .medium)
@@ -41,6 +43,11 @@ struct BoardView: View {
         return source.filter { jinx in
             jinx.roles.filter { claimedIds.contains($0) }.count >= 2
         }
+    }
+
+    // Loaded from bundle — no SwiftData dependency
+    var activeFabled: [RoleDefinitionModel] {
+        board.activeFabledIds.compactMap { id in bundleFabled.first(where: { $0.id == id }) }
     }
 
     var body: some View {
@@ -110,6 +117,9 @@ struct BoardView: View {
                     Button(MSG("board_add_reminder"), systemImage: "tag.fill") {
                         showAddReminder = true
                     }
+                    Button(MSG("fabled_manage_title"), systemImage: "star.circle.fill") {
+                        showManageFabled = true
+                    }
                     Button(isVotingPhase ? MSG("board_stop_voting") : MSG("board_start_voting"),
                            systemImage: isVotingPhase ? "flag.filled.and.flag.crossed" : "flag.pattern.checkered") {
                         isVotingPhase.toggle()
@@ -126,11 +136,17 @@ struct BoardView: View {
             }
         }
         .onDisappear { try? modelContext.save() }
+        .task {
+            bundleFabled = loadPredefinedRoles().filter { $0.team == .fabled }
+        }
         .sheet(isPresented: $showNewGameSetup) {
             NewGameSetupSheet(board: board) { }
         }
         .sheet(isPresented: $showAddReminder) {
             AddReminderSheet(board: board, roles: board.edition?.characters ?? allRoles)
+        }
+        .sheet(isPresented: $showManageFabled) {
+            ManageFabledSheet(board: board, allFabled: bundleFabled)
         }
         .navigationDestination(isPresented: $showDetail) {
             if let data = board.edition {
@@ -165,7 +181,7 @@ struct BoardView: View {
         VStack(spacing: 0) {
             // Expandable info panel
             if showInfoPanel {
-                VStack(spacing: 10) {
+                VStack(alignment: .center, spacing: 10) {
                     // Player count summary
                     HStack(spacing: 14) {
                         boardStat(value: board.players.count, label: "main-logo-old")
@@ -173,30 +189,45 @@ struct BoardView: View {
                         boardStat(value: board.config.numOutsider, label: "logo_outsider")
                         boardStat(value: board.config.numMinions, label: "logo_minion")
                         boardStat(value: board.config.numDemon, label: "logo_demon")
+                        if !activeFabled.isEmpty {
+                            Spacer()
+                        }
+                    }
+
+                    // Active fabled
+                    if !activeFabled.isEmpty {
+                        Divider().overlay(Color.white.opacity(0.2))
+                        VStack(alignment: .leading, spacing: 6) {
+                            Text(MSG("fabled_in_play"))
+                                .font(.caption.weight(.semibold))
+                                .foregroundColor(.yellow.opacity(0.9))
+                            ScrollView(.horizontal, showsIndicators: false) {
+                                HStack(spacing: 8) {
+                                    ForEach(activeFabled, id: \.id) { fabled in
+                                        fabledChip(fabled)
+                                    }
+                                }
+                            }
+                        }
                     }
 
                     // Active jinxes
                     if !activeJinxes.isEmpty {
-                        Divider().overlay(Color.white.opacity(0.25))
-                        ScrollView(.vertical, showsIndicators: false) {
-                            VStack(alignment: .leading, spacing: 6) {
-                                Text(MSG("jinxes_title"))
-                                    .font(.caption.weight(.semibold))
-                                    .foregroundColor(.white.opacity(0.7))
-                                ForEach(activeJinxes) { jinx in
-                                    HStack(alignment: .top, spacing: 6) {
-                                        Image(systemName: "exclamationmark.triangle.fill")
-                                            .font(.caption2)
-                                            .foregroundColor(.yellow)
-                                        Text(jinx.desc)
-                                            .font(.caption2)
-                                            .foregroundColor(.white.opacity(0.9))
+                        Divider().overlay(Color.white.opacity(0.2))
+                        VStack(alignment: .leading, spacing: 6) {
+                            Text(MSG("jinxes_title"))
+                                .font(.caption.weight(.semibold))
+                                .foregroundColor(.orange.opacity(0.9))
+                            ScrollView(.vertical, showsIndicators: false) {
+                                VStack(alignment: .leading, spacing: 8) {
+                                    ForEach(activeJinxes) { jinx in
+                                        jinxRow(jinx)
                                     }
                                 }
+                                .frame(maxWidth: .infinity, alignment: .leading)
                             }
-                            .frame(maxWidth: .infinity, alignment: .leading)
+                            .frame(maxHeight: 120)
                         }
-                        .frame(maxHeight: 110)
                     }
                 }
                 .padding(.horizontal, 16)
@@ -222,6 +253,26 @@ struct BoardView: View {
 
                 Spacer()
 
+                // Compact badge when panel is hidden
+                if !showInfoPanel && (!activeFabled.isEmpty || !activeJinxes.isEmpty) {
+                    HStack(spacing: 4) {
+                        if !activeFabled.isEmpty {
+                            Label("\(activeFabled.count)", systemImage: "star.fill")
+                                .font(.caption2.weight(.bold))
+                                .foregroundColor(.yellow)
+                        }
+                        if !activeJinxes.isEmpty {
+                            Label("\(activeJinxes.count)", systemImage: "exclamationmark.triangle.fill")
+                                .font(.caption2.weight(.bold))
+                                .foregroundColor(.orange)
+                        }
+                    }
+                    .padding(.horizontal, 8)
+                    .padding(.vertical, 4)
+                    .background(Color.black.opacity(0.3))
+                    .clipShape(Capsule())
+                }
+
                 Button {
                     withAnimation(.easeInOut(duration: 0.22)) { showInfoPanel.toggle() }
                 } label: {
@@ -229,10 +280,50 @@ struct BoardView: View {
                         .font(.title3)
                         .foregroundColor(.white.opacity(0.85))
                 }
+                .padding(.leading, 6)
                 .padding(.trailing, 16)
             }
             .padding(.vertical, 10)
             .background(Color.black.opacity(0.4))
+        }
+    }
+
+    @ViewBuilder
+    private func fabledChip(_ fabled: RoleDefinitionModel) -> some View {
+        HStack(spacing: 4) {
+            Image(systemName: "star.fill")
+                .font(.caption2)
+                .foregroundColor(.yellow)
+            Text(fabled.nameLocalized())
+                .font(.caption2.weight(.semibold))
+                .foregroundColor(.white)
+        }
+        .padding(.horizontal, 10)
+        .padding(.vertical, 5)
+        .background(Color.yellow.opacity(0.2))
+        .overlay(Capsule().stroke(Color.yellow.opacity(0.4), lineWidth: 1))
+        .clipShape(Capsule())
+    }
+
+    @ViewBuilder
+    private func jinxRow(_ jinx: Jinx) -> some View {
+        let roleNames = jinx.roles.compactMap { id in
+            allRoles.first(where: { $0.id == id })?.nameLocalized()
+        }
+        VStack(alignment: .leading, spacing: 2) {
+            HStack(spacing: 5) {
+                Image(systemName: "exclamationmark.triangle.fill")
+                    .font(.caption2)
+                    .foregroundColor(.orange)
+                Text(roleNames.joined(separator: " + "))
+                    .font(.caption2.weight(.bold))
+                    .foregroundColor(.white)
+            }
+            Text(jinx.desc)
+                .font(.caption2)
+                .foregroundColor(.white.opacity(0.8))
+                .fixedSize(horizontal: false, vertical: true)
+                .padding(.leading, 17)
         }
     }
 
@@ -248,7 +339,6 @@ struct BoardView: View {
                 .foregroundColor(.white.opacity(0.6))
         }
     }
-//    logo_townsfolk
 
     // MARK: - Board canvas
 
@@ -258,7 +348,7 @@ struct BoardView: View {
             let orderedPlayers = board.players.sorted { $0.seatNumber < $1.seatNumber }
             let fallbackPositions: [CGPoint] = {
                 guard orderedPlayers.contains(where: { $0.posX < 0 }) else { return [] }
-                return squarePerimeterPositions(count: orderedPlayers.count, in: geo.size)
+                return circlePerimeterPositions(count: orderedPlayers.count, in: geo.size)
             }()
 
             ZStack {
@@ -379,7 +469,7 @@ struct BoardView: View {
     func initPositionsIfNeeded(_ size: CGSize, players: [Player]) {
         guard size.width > 0, size.height > 0 else { return }
         guard players.contains(where: { $0.posX < 0 }) else { return }
-        let positions = squarePerimeterPositions(count: players.count, in: size)
+        let positions = circlePerimeterPositions(count: players.count, in: size)
         var changed = false
         for (idx, player) in players.enumerated() where player.posX < 0 {
             guard idx < positions.count else { continue }
@@ -390,32 +480,20 @@ struct BoardView: View {
         if changed { try? modelContext.save() }
     }
 
-    func squarePerimeterPositions(count: Int, in size: CGSize) -> [CGPoint] {
+    func circlePerimeterPositions(count: Int, in size: CGSize) -> [CGPoint] {
         guard count > 0 else { return [] }
-        let sides = 4
-        let perSide = max(1, count / sides)
-        let remainder = count % sides
-        var result: [CGPoint] = []
-        var placed = 0
-        for side in 0..<sides {
-            var n = perSide
-            if side < remainder { n += 1 }
-            for i in 0..<n {
-                let frac = n == 1 ? 0.5 : CGFloat(i) / CGFloat(n)
-                var x: CGFloat = 0, y: CGFloat = 0
-                switch side {
-                case 0: x = frac;       y = 0.0
-                case 1: x = 1.0;        y = frac
-                case 2: x = 1.0 - frac; y = 1.0
-                case 3: x = 0.0;        y = 1.0 - frac
-                default: break
-                }
-                result.append(CGPoint(x: x * size.width, y: y * size.height))
-                placed += 1
-                if placed == count { return result }
-            }
+        let cx = size.width / 2
+        let cy = size.height / 2
+        // Ellipse radii hug the rectangle edges; token size (~78pt) is ~half the margin
+        let rx = cx * 0.90
+        let ry = cy * 0.90
+        let angleStep = 2 * CGFloat.pi / CGFloat(count)
+        // Seat 1 starts at 12 o'clock (−π/2)
+        return (0..<count).map { i in
+            let angle = -CGFloat.pi / 2 + CGFloat(i) * angleStep
+            return CGPoint(x: cx + rx * cos(angle),
+                           y: cy + ry * sin(angle))
         }
-        return result
     }
 
     // MARK: - Actions

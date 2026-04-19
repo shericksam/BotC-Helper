@@ -166,6 +166,16 @@ import_script_empty = "Ningún rol coincide con la base de datos. ¿Es un script
 import_script_partial = "Script importado. Roles no reconocidos omitidos: %@";
 import_script_default_name = "Script Importado";
 
+fabled_manage_title = "Fábulas en Juego";
+fabled_in_play = "Fábulas en juego";
+
+game_set_winner = "Registrar resultado";
+game_winner_good = "Gana el bien";
+game_winner_evil = "Gana el mal";
+game_winner_none = "Sin resultado";
+
+friends_edit_title = "Editar amigo";
+
 app_disclaimer = "Esta es una aplicación de apoyo independiente para Blood on the Clocktower y no está afiliada, respaldada ni conectada con Steven Medway, Pandemonium Institute, ni el juego oficial Blood on the Clocktower.";
 
 about_section_gameplay = "Jugabilidad";
