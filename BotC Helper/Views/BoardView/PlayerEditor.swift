@@ -21,6 +21,11 @@ struct PlayerEditor: View {
 
     @Query(sort: \Friend.name) private var friends: [Friend]
 
+    /// Roles that players can claim — excludes Fabled (storyteller-only characters)
+    private var claimableRoles: [RoleDefinition] {
+        roles.filter { $0.team != .fabled }
+    }
+
     @State private var searchClaim: String = ""
     @State private var filteredRoles: [RoleDefinition] = []
     @State private var showRolesList = false
@@ -214,13 +219,13 @@ struct PlayerEditor: View {
                 .focused($claimFieldFocused)
                 .onChange(of: searchClaim) { _, newValue in
                     filteredRoles = newValue.isEmpty
-                        ? roles
-                        : roles.filter { $0.nameLocalized().localizedCaseInsensitiveContains(newValue) }
+                        ? claimableRoles
+                        : claimableRoles.filter { $0.nameLocalized().localizedCaseInsensitiveContains(newValue) }
                     showRolesList = !filteredRoles.isEmpty
                     if newValue.isEmpty {
                         player.claimRoleId = nil
                         player.claimManual = ""
-                    } else if let exact = roles.first(where: { $0.nameLocalized().caseInsensitiveCompare(newValue) == .orderedSame }) {
+                    } else if let exact = claimableRoles.first(where: { $0.nameLocalized().caseInsensitiveCompare(newValue) == .orderedSame }) {
                         player.claimRoleId = exact.id
                         player.claimManual = ""
                     } else {
@@ -231,14 +236,14 @@ struct PlayerEditor: View {
                 .onChange(of: claimFieldFocused) { _, focused in
                     if focused {
                         filteredRoles = searchClaim.isEmpty
-                            ? roles
-                            : roles.filter { $0.nameLocalized().localizedCaseInsensitiveContains(searchClaim) }
+                            ? claimableRoles
+                            : claimableRoles.filter { $0.nameLocalized().localizedCaseInsensitiveContains(searchClaim) }
                         showRolesList = !filteredRoles.isEmpty
                     }
                 }
                 .onAppear {
                     if let rid = player.claimRoleId,
-                       let rolename = roles.first(where: { $0.id == rid })?.nameLocalized() {
+                       let rolename = claimableRoles.first(where: { $0.id == rid })?.nameLocalized() {
                         searchClaim = rolename
                     } else {
                         searchClaim = player.claimManual

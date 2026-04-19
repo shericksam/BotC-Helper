@@ -167,6 +167,7 @@ import_script_partial = "Script importado. Roles no reconocidos omitidos: %@";
 import_script_default_name = "Script Importado";
 
 fabled_manage_title = "Fábulas en Juego";
+fabled_detail_note = "Las fábulas son controladas por el Narrador y no se asignan a jugadores.";
 fabled_in_play = "Fábulas en juego";
 
 game_set_winner = "Registrar resultado";

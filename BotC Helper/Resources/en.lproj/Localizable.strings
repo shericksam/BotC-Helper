@@ -169,6 +169,7 @@ import_script_partial = "Script imported. Unrecognised roles skipped: %@";
 import_script_default_name = "Imported Script";
 
 fabled_manage_title = "Fabled in Play";
+fabled_detail_note = "Fabled characters are controlled by the Storyteller and are not assigned to players.";
 fabled_in_play = "Fabled in play";
 
 game_set_winner = "Set result";

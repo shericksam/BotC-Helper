@@ -50,6 +50,17 @@ struct BoardView: View {
         board.activeFabledIds.compactMap { id in bundleFabled.first(where: { $0.id == id }) }
     }
 
+    /// Edition characters + all travellers from the global pool.
+    /// Travellers are never part of a script JSON but can be assigned to any player.
+    var rolesForClaiming: [RoleDefinition] {
+        guard let editionChars = board.edition?.characters, !editionChars.isEmpty else {
+            return allRoles
+        }
+        let editionIds = Set(editionChars.map { $0.id })
+        let extraTravellers = allRoles.filter { $0.team == .traveller && !editionIds.contains($0.id) }
+        return editionChars + extraTravellers
+    }
+
     var body: some View {
         VStack(spacing: 0) {
             // Day selector
@@ -168,7 +179,7 @@ struct BoardView: View {
                     totalDays: board.players.first?.statuses.count ?? 1,
                     statusesByDay: player.statuses,
                     currentDayIndex: board.currentDay,
-                    roles: board.edition?.characters ?? allRoles
+                    roles: rolesForClaiming
                 )
             }
         }
@@ -369,7 +380,7 @@ struct BoardView: View {
                             player: player,
                             status: status,
                             isMe: player.isMe,
-                            roles: board.edition?.characters ?? allRoles,
+                            roles: rolesForClaiming,
                             onTap: {
                                 if isVotingPhase {
                                     player.statuses.first(where: { $0.dayIndex == board.currentDay })?.voted.toggle()
@@ -525,10 +536,11 @@ struct BoardView: View {
             seatNumber: seatNumber, name: "", isMe: false,
             statuses: (0..<totalDays).map { PlayerStatus(dayIndex: $0) }
         )
+        // Place at center so the new token is always visible and not overlapping
+        // existing dragged tokens. User can drag it to the desired spot.
+        newPlayer.posX = 0.5
+        newPlayer.posY = 0.5
         board.players.append(newPlayer)
-        if boardCanvasSize != .zero {
-            initPositionsIfNeeded(boardCanvasSize, players: board.players.sorted { $0.seatNumber < $1.seatNumber })
-        }
         try? modelContext.save()
     }
 
@@ -547,7 +559,7 @@ struct BoardView: View {
     let config = ModelConfiguration(isStoredInMemoryOnly: true)
     let container = try! ModelContainer(for: BoardState.self, configurations: config)
     let context = ModelContext(container)
-    let playerCount = 15
+    let playerCount = 8
     let names = ["Ana", "Bernardo", "Erick", "Fabian", "Carlos", "Dio", "Pedro", "Quike", "Ricardo", "Sergio", "Toni", "Uriel", "Homer", "Zamiel", "Sharar"]
     let players = (1...playerCount).map {
         Player(seatNumber: $0, name: names[$0 - 1],

@@ -26,7 +26,7 @@ struct PlayerCircle: View {
             ZStack {
                 Circle()
                     .strokeBorder(
-                        isMe ? Color.green : (status.dead ? .red : Color.primaryBrown),
+                        isMe ? Color.green : (status.dead ? Color.purple : Color.primaryBrown),
                         lineWidth: isRegular ? 5 : 3
                     )
                     .frame(width: circleSize, height: circleSize)
@@ -123,17 +123,17 @@ struct PlayerCircle: View {
     private func deathIcon(for type: String?) -> some View {
         switch type {
         case "nightKill":
-            Image(systemName: "moon.zzz.fill")
+            Image(systemName: "moon.fill")
                 .font(.largeTitle)
                 .foregroundColor(.purple)
         case "execution":
-            Image(systemName: "hammer.fill")
+            Image(systemName: "person.fill.xmark")
                 .font(.largeTitle)
                 .foregroundColor(.orange)
         default:
-            Image(systemName: "xmark")
+            Image(systemName: "xmark.circle.fill")
                 .font(.largeTitle)
-                .foregroundColor(.red)
+                .foregroundColor(.gray)
         }
     }
 }
